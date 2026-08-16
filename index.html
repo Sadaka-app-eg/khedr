@@ -670,12 +670,29 @@ document.addEventListener("DOMContentLoaded", () => {
 </script>
 
 <script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-app.js";
   import {
-    auth, db, googleProvider,
-    signInWithEmailAndPassword, createUserWithEmailAndPassword,
-    signInWithPopup, updateProfile,
-    doc, setDoc, serverTimestamp
-  } from "./firebase-config.js";
+    getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword,
+    signInWithPopup, GoogleAuthProvider, updateProfile
+  } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-auth.js";
+  import {
+    getFirestore, doc, setDoc, serverTimestamp
+  } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-firestore.js";
+
+  // 🔴 غيّر القيم دي ببيانات مشروعك من Firebase Console
+  const firebaseConfig = {
+    apiKey: "REPLACE_ME",
+    authDomain: "REPLACE_ME.firebaseapp.com",
+    projectId: "REPLACE_ME",
+    storageBucket: "REPLACE_ME.appspot.com",
+    messagingSenderId: "REPLACE_ME",
+    appId: "REPLACE_ME"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
+  const db = getFirestore(app);
+  const googleProvider = new GoogleAuthProvider();
 
   function showError(elId, message) {
     const el = document.getElementById(elId);
