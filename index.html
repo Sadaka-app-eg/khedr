@@ -116,63 +116,46 @@
 <body class="antialiased">
 
 <!-- ============ NAVBAR ============ -->
-<header class="sticky top-0 z-50 backdrop-blur-md bg-white/90 dark:bg-[#07111D]/90 border-b border-theme border-slate-200 dark:border-slate-800 transition-colors">
-  <div id="scrollProgress"></div>
-  <div class="max-w-7xl mx-auto px-5 md:px-8 h-20 flex items-center justify-between">
+<header class="sticky top-0 z-50 backdrop-blur-md bg-white/90 dark:bg-[#07111D]/90 border-b border-slate-200 dark:border-slate-800 transition-colors">
+  <div class="max-w-7xl mx-auto px-4 md:px-8 h-16 flex items-center justify-between">
 
-    <!-- Brand Logo -->
-<a href="#" onclick="window.scrollTo({top: 0, behavior: 'smooth'}); return false;" class="flex items-center gap-2 cursor-pointer">
-  <span class="w-9 h-9 rounded-xl bg-[#8E0E38] text-white font-black flex items-center justify-center text-sm shadow-md">خِـ</span>
-  <span class="font-black text-base text-[#8E0E38] dark:text-rose-400">KHEDR & PHYSIO</span>
-</a>
+    <!-- اللوجو والاسم -->
+    <a href="#" onclick="window.scrollTo({top: 0, behavior: 'smooth'}); return false;" class="flex items-center gap-2 shrink-0">
+      <span class="w-8 h-8 rounded-xl bg-brand text-white font-black flex items-center justify-center text-sm shadow-md">خِـ</span>
+      <span class="font-black text-sm md:text-base text-slate-900 dark:text-white" data-i18n="brand">KHEDR & PHYSIO</span>
+    </a>
 
-<!-- Desktop Navigation Links -->
+    <!-- روابط التنقل الهامة -->
     <nav class="hidden xl:flex items-center gap-5 lg:gap-6 text-xs xl:text-sm font-bold text-slate-700 dark:text-slate-200 shrink-0">
       <a href="#hero" class="hover:text-brand dark:hover:text-rose-400 transition" data-i18n="nav_home">الرئيسية</a>
       <a href="#years" class="hover:text-brand dark:hover:text-rose-400 transition" data-i18n="nav_years">الفرق الدراسية</a>
-      <a href="#courses" class="hover:text-brand dark:hover:text-rose-400 transition" data-i18n="nav_courses">الكورسات</a>
+      <a href="#courses" class="hover:text-brand dark:hover:text-rose-400 transition" data-i18n="nav_courses">الكورسات والباقات</a>
       <a href="#features" class="hover:text-brand dark:hover:text-rose-400 transition" data-i18n="nav_features">مميزات المنصة</a>
       <a href="#honors" class="hover:text-brand dark:hover:text-rose-400 transition" data-i18n="nav_honors">لوحة الشرف</a>
-      <a href="#instructor" class="hover:text-brand dark:hover:text-rose-400 transition" data-i18n="nav_instructor">المحاضر</a>
+      <a href="#instructor" class="hover:text-brand dark:hover:text-rose-400 transition" data-i18n="nav_instructor">عن الشارح</a>
       <a href="#reviews" class="hover:text-brand dark:hover:text-rose-400 transition" data-i18n="nav_reviews">آراء الطلاب</a>
     </nav>
 
-    <!-- Header Actions -->
+    <!-- الأزرار والتحكم -->
     <div class="flex items-center gap-2 md:gap-3 shrink-0">
-      <!-- Language Switcher -->
-      <button id="langBtn" class="text-xs font-bold px-2.5 h-8 md:h-9 rounded-full border border-slate-300 dark:border-slate-700 flex items-center gap-1 hover:border-brand transition">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.7 2.5 15.3 0 18M12 3c-2.5 2.7-2.5 15.3 0 18"/></svg>
-        <span id="langLabel">EN</span>
-      </button>
-
-      <!-- Custom Dark Mode Switcher -->
+      <!-- زر الثيم -->
       <div id="themeBtn" class="theme-toggle-pill" title="Toggle Dark/Light Mode">
-        <span class="text-[11px] z-10">☀️</span>
-        <span class="text-[11px] z-10">🌙</span>
+        <span class="text-[10px] z-10">☀️</span>
+        <span class="text-[10px] z-10">🌙</span>
         <div class="theme-toggle-thumb"></div>
       </div>
 
-      <!-- Auth CTAs -->
-      <a href="#auth" class="hidden md:inline-flex items-center text-xs font-bold px-3 h-9 leading-9 text-slate-800 dark:text-slate-200 hover:text-brand transition whitespace-nowrap" data-i18n="nav_login">تسجيل الدخول</a>
-      <a href="#auth" class="text-xs font-bold text-white px-4 h-9 leading-9 rounded-full bg-brand hover:bg-rose-900 transition shadow-md whitespace-nowrap" data-i18n="nav_cta">ابدأ الآن</a>
-
-      <!-- Mobile Drawer Button -->
-      <button id="drawerBtn" class="xl:hidden w-9 h-9 flex items-center justify-center text-slate-800 dark:text-slate-200">
-        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+      <!-- زر اللغة -->
+      <button id="langBtn" class="text-xs font-bold px-2.5 h-7 rounded-full border border-slate-300 dark:border-slate-700 flex items-center gap-1 hover:border-brand transition">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.7 2.5 15.3 0 18M12 3c-2.5 2.7-2.5 15.3 0 18"/></svg>
+        <span id="langLabel">EN</span>
       </button>
-    </div>
-  </div>
 
-  <!-- Mobile Drawer -->
-  <div id="drawer" class="lg:hidden hidden border-t border-slate-200 dark:border-slate-800 px-5 py-4 flex flex-col gap-3 text-sm font-bold bg-white dark:bg-[#07111D]">
-    <a href="#hero" data-i18n="nav_home">الرئيسية</a>
-    <a href="#years" data-i18n="nav_years">الفرق الدراسية</a>
-    <a href="#courses" data-i18n="nav_courses">الكورسات</a>
-    <a href="#features" data-i18n="nav_features">مميزات المنصة</a>
-    <a href="#honors" data-i18n="nav_honors">لوحة الشرف</a>
-    <a href="#instructor" data-i18n="nav_instructor">المحاضر</a>
-    <a href="#reviews" data-i18n="nav_reviews">آراء الطلاب</a>
-    <a href="#auth" class="mt-2 text-center py-2.5 rounded-xl text-white bg-brand text-xs font-black" data-i18n="nav_login">تسجيل الدخول / حساب جديد</a>
+      <!-- الدخول والتسجيل -->
+      <a href="#auth" onclick="setAuthTab('login')" class="text-xs font-bold px-3.5 h-8 leading-8 rounded-xl border border-slate-300 dark:border-slate-700 text-slate-800 dark:text-slate-200 hover:border-brand transition whitespace-nowrap" data-i18n="nav_login">تسجيل الدخول</a>
+      <a href="#auth" onclick="setAuthTab('register')" class="text-xs font-bold text-white px-4 h-8 leading-8 rounded-xl bg-brand hover:bg-rose-900 transition shadow-md whitespace-nowrap" data-i18n="auth_tab_register">حساب جديد</a>
+    </div>
+
   </div>
 </header>
 
@@ -514,16 +497,16 @@
 </section>
 
 <!-- ============ INSTRUCTOR SECTION ============ -->
-<section id="instructor" class="max-w-7xl mx-auto px-5 md:px-8 py-16 border-b border-theme border-slate-200 dark:border-slate-800">
+<section id="instructor" class="max-w-7xl mx-auto px-5 md:px-8 py-16 border-b border-slate-200 dark:border-slate-800">
   <div class="rounded-3xl bg-gradient-to-r from-[#7A0B30] to-[#4A051B] p-8 md:p-12 text-white grid md:grid-cols-[auto,1fr] gap-8 items-center shadow-xl">
-    <div class="w-28 h-28 md:w-32 md:h-32 rounded-2xl bg-white/10 backdrop-blur-md flex items-center justify-center shrink-0 border border-white/20 mx-auto md:mx-0">
-      <span class="text-4xl">👨‍⚕️</span>
+    <div class="w-28 h-28 md:w-32 md:h-32 rounded-2xl bg-white/10 backdrop-blur-md flex items-center justify-center shrink-0 border border-white/20 mx-auto md:mx-0 overflow-hidden">
+      <img src="khedr.jpg" alt="محمود خضر" class="w-full h-full object-cover" onerror="this.src='khedr.png'" />
     </div>
     <div class="text-center md:text-start">
-      <span class="text-xs font-bold px-3 py-1 rounded-full bg-white/10 text-rose-200" data-i18n="inst_eyebrow">المحاضر</span>
-      <h3 class="text-2xl md:text-3xl font-black mt-2 text-amber-300" data-i18n="inst_name">د. محمود خضر</h3>
+      <span class="text-xs font-bold px-3 py-1 rounded-full bg-white/10 text-rose-200" data-i18n="inst_eyebrow">عن الشارح ومؤسس المنصة</span>
+      <h3 class="text-2xl md:text-3xl font-black mt-2 text-amber-300" data-i18n="inst_name">محمود خضر</h3>
       <p class="opacity-90 mt-3 leading-7 text-xs md:text-sm font-medium max-w-2xl text-rose-100" data-i18n="inst_bio">
-        أخصائي ومحاضر العلاج الطبيعي والتأهيل الحركي، بخبرة أكثر من 9 سنوات في التدريس الأكاديمي والتأهيل الإكلينيكي لإصابات العظام والأعصاب، وهدفه تبسيط المفاهيم الطبية وربطها بالواقع العملي.
+        طالب مجتهد بالفرقة الثالثة بكلية العلاج الطبيعي، يمتلك مهارة ممتازة في تبسيط العلوم الأكاديمية والميكانيكا الحيوية وإعداد مذكرات ومراجعات شاملة لمساعدة زملائه في مختلف الفرق الدراسية على التفوق باقتدار.
       </p>
     </div>
   </div>
@@ -657,7 +640,7 @@
   <!-- Bottom Copyright & Credits -->
   <div class="max-w-7xl mx-auto border-t border-slate-800 pt-6 flex flex-col md:flex-row items-center justify-between gap-3 text-xs text-slate-500 font-semibold text-center">
     <div data-i18n="foot_rights">جميع الحقوق محفوظة © 2026 KHEDR & PHYSIO</div>
-    <div class="font-mono text-[11px] text-slate-400">&lt;Developed by="KHEDR Team" andPowered=true /&gt;</div>
+<div class="font-mono text-[11px] text-amber-400 font-bold">&lt;Developed & Designed by="Ahmed Mohamed" andPowered=true /&gt;</div>
   </div>
 </footer>
 <!-- ============ PACKAGE DETAILS VIEW (صفحة منفصلة) ============ -->
@@ -814,9 +797,10 @@ const translations = {
     r1_text: "\"بعد ما انضميت للمنصة مع دكتور خضر، بقيت أفهم الميكانيكا الحيوية من أول محاضرة بدل الحفظ.\"",
     r2_text: "\"الشرح بسيط وفعلاً بحس إني فاهم مش بحفظ وخلاص عشان الامتحان.\"",
 
-    inst_eyebrow: "المحاضر",
-    inst_name: "د. محمود خضر",
-    inst_bio: "أخصائي ومحاضر العلاج الطبيعي والتأهيل الحركي، بخبرة أكثر من 9 سنوات في التدريس الأكاديمي والتأهيل الإكلينيكي لإصابات العظام والأعصاب، وهدفه تبسيط المفاهيم الطبية وربطها بالواقع العملي.",
+hero_eyebrow: "محمود خضر — طالب ومحاضر بالفرقة الثالثة علاج طبيعي",
+    inst_eyebrow: "عن الشارح ومؤسس المنصة",
+    inst_name: "محمود خضر",
+    inst_bio: "طالب مجتهد بالفرقة الثالثة بكلية العلاج الطبيعي، يمتلك مهارة ممتازة في تبسيط العلوم الأكاديمية والميكانيكا الحيوية وإعداد مذكرات ومراجعات شاملة لمساعدة زملائه في مختلف الفرق الدراسية على التفوق باقتدار.",
 
     auth_tab_login: "تسجيل الدخول",
     auth_tab_register: "حساب جديد",
@@ -852,7 +836,7 @@ const translations = {
     sm_yt: "YouTube",
     sm_li: "LinkedIn",
 
-    hero_eyebrow: "Dr. Mahmoud Khedr — PT Specialist & Lecturer",
+hero_eyebrow: "Mahmoud Khedr — 3rd Year Physical Therapy Student & Tutor",
     hero_title: "Your Academic Journey Starts with<br/><span class='text-4xl md:text-6xl text-amber-300 block mt-1 tracking-wider'>KHEDR</span> Take the First Step with Confidence",
     hero_sub: "A complete university learning experience designed for physical therapy students — in-depth lectures, OSCE & MCQ exams, and real clinical practice.",
     hero_cta1: "Sign Up & Start",
@@ -917,10 +901,9 @@ const translations = {
     r1_text: "\"After joining Dr. Khedr's platform, Biomechanics became crystal clear from lecture one.\"",
     r2_text: "\"The explanations are so logical that I actually understand instead of memorizing blindly.\"",
 
-    inst_eyebrow: "Instructor",
+inst_eyebrow: "About The Tutor & Founder",    
     inst_name: "Dr. Mahmoud Khedr",
-    inst_bio: "Physical therapy specialist and lecturer with over 9 years of academic teaching and clinical practice in orthopedic and neurological rehabilitation.",
-
+inst_bio: "A dedicated 3rd-year Physical Therapy student with an exceptional passion for simplifying academic sciences, Biomechanics, and creating comprehensive revision notes to help fellow students excel.",
     auth_tab_login: "Log In",
     auth_tab_register: "New Account",
     auth_name: "Full Name",
