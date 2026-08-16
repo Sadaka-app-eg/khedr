@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>لوحة التحكم | KHEDR & PHYSIO</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800;900&family=IBM+Plex+Sans+Arabic:wght@400;500;600&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+<script src="https://cdn.tailwindcss.com"></script>
+
+<style>
+  :root{
+    --ink:      #0E2A38;
+    --ink-2:    #123A4C;
+    --teal:     #2D6A6A;
+    --coral:    #FF7A45;
+    --coral-2:  #FF9466;
+    --mist:     #F5F8F8;
+    --mist-line:#E3EBEC;
+    --dark-bg:  #081820;
+    --dark-panel:#0F2733;
+    --success:  #3FB68B;
+    --amber:    #E8A33D;
+  }
+  html[lang="ar"] body, html[lang="ar"] * { font-family:'Tajawal','IBM Plex Sans Arabic',sans-serif; }
+  html[lang="en"] body, html[lang="en"] * { font-family:'Plus Jakarta Sans',sans-serif; }
+  html[lang="ar"] .num-font { font-family:'Plus Jakarta Sans',sans-serif; }
+
+  body{ background:var(--mist); color:var(--ink); }
+  body.dark{ background:var(--dark-bg); color:#EAF3F3; }
+
+  .grad-cta{ background:linear-gradient(135deg, var(--coral), var(--coral-2)); }
+  .grad-hero-panel{ background:linear-gradient(160deg, var(--ink-2), var(--ink)); }
+
+  .side-link{ color:var(--ink); opacity:.6; transition:.2s; }
+  .side-link:hover{ opacity:1; background:rgba(45,106,106,.07); }
+  .side-link.active{ opacity:1; background:rgba(255,122,69,.1); color:var(--coral); font-weight:800; }
+  body.dark .side-link{ color:#EAF3F3; }
+
+  .skel{ background:linear-gradient(90deg,#e7edee 25%,#f2f6f6 37%,#e7edee 63%); background-size:400% 100%; animation:shimmer 1.4s ease infinite; }
+  body.dark .skel{ background:linear-gradient(90deg,#0F2733 25%,#173445 37%,#0F2733 63%); background-size:400% 100%; }
+  @keyframes shimmer{ 0%{background-position:100% 0;} 100%{background-position:0 0;} }
+
+  ::selection{ background:var(--coral); color:#fff; }
+  :focus-visible{ outline:2px solid var(--coral); outline-offset:3px; }
+  [dir="rtl"] .rtl-flip{ transform:scaleX(-1); }
+</style>
+</head>
+
+<body class="antialiased">
+
+<!-- شاشة تحميل أولية لحد ما نتأكد من حالة تسجيل الدخول -->
+<div id="authGate" class="fixed inset-0 z-[100] flex items-center justify-center" style="background:var(--mist)">
+  <div class="flex flex-col items-center gap-3">
+    <div class="w-10 h-10 rounded-full border-4 border-t-transparent animate-spin" style="border-color:var(--coral) transparent transparent transparent"></div>
+    <span class="text-xs font-bold opacity-50" data-i18n="loading">جاري التحقق من الحساب...</span>
+  </div>
+</div>
+
+<div class="lg:grid lg:grid-cols-[260px,1fr]">
+
+  <!-- ============ SIDEBAR ============ -->
+  <aside class="hidden lg:flex flex-col gap-1 h-screen sticky top-0 border-e p-5" style="border-color:var(--mist-line)">
+    <a href="index.html" class="flex items-center gap-2.5 px-2 py-3 mb-4">
+      <span class="w-9 h-9 rounded-xl flex items-center justify-center grad-hero-panel">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" class="rtl-flip"><path d="M4 12h4l2-6 4 12 2-6h4" stroke="#FF7A45" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </span>
+      <span class="font-extrabold text-sm">𝐊𝐇𝐄𝐃𝐑 & 𝐏𝐇𝐘𝐒𝐈𝐎</span>
+    </a>
+
+    <nav class="flex flex-col gap-1 text-sm">
+      <a href="#" class="side-link active flex items-center gap-3 px-3.5 h-11 rounded-xl" data-i18n="side_home">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M4 11.5 12 4l8 7.5M6 10v9a1 1 0 0 0 1 1h3v-6h4v6h3a1 1 0 0 0 1-1v-9" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <span>الرئيسية</span>
+      </a>
+      <a href="#" class="side-link flex items-center gap-3 px-3.5 h-11 rounded-xl" data-i18n="side_my_courses">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M4 5.5A1.5 1.5 0 0 1 5.5 4H12v16H5.5A1.5 1.5 0 0 1 4 18.5v-13ZM12 4h6.5A1.5 1.5 0 0 1 20 5.5v13a1.5 1.5 0 0 1-1.5 1.5H12" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <span>كورساتي</span>
+      </a>
+      <a href="#" class="side-link flex items-center gap-3 px-3.5 h-11 rounded-xl" data-i18n="side_assignments">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M9 3h6l1 3H8l1-3ZM6 6h12v14a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V6Zm3 5h6M9 15h6" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <span>الواجبات</span>
+      </a>
+      <a href="#" class="side-link flex items-center gap-3 px-3.5 h-11 rounded-xl" data-i18n="side_exams">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M9 11.5 11 13.5 15.5 9" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.7"/></svg>
+        <span>الاختبارات</span>
+      </a>
+      <a href="#" class="side-link flex items-center gap-3 px-3.5 h-11 rounded-xl" data-i18n="side_live">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><rect x="3" y="6" width="14" height="12" rx="2" stroke="currentColor" stroke-width="1.7"/><path d="m17 10 4-2.5v9L17 14" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/></svg>
+        <span>الحصص المباشرة</span>
+      </a>
+      <a href="#" class="side-link flex items-center gap-3 px-3.5 h-11 rounded-xl" data-i18n="side_certificates">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="9" r="5" stroke="currentColor" stroke-width="1.7"/><path d="m9 13-2 8 5-2.5L17 21l-2-8" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/></svg>
+        <span>الشهادات</span>
+      </a>
+      <a href="#" class="side-link flex items-center gap-3 px-3.5 h-11 rounded-xl" data-i18n="side_achievements">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M12 3 8 6H5v3l-3 4 3 4v3h3l4 3 4-3h3v-3l3-4-3-4V6h-3l-4-3Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg>
+        <span>الإنجازات</span>
+      </a>
+      <a href="#" class="side-link flex items-center gap-3 px-3.5 h-11 rounded-xl" data-i18n="side_messages">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M4 5h16v11H8l-4 4V5Z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/></svg>
+        <span>الرسائل</span>
+      </a>
+      <a href="#" class="side-link flex items-center gap-3 px-3.5 h-11 rounded-xl" data-i18n="side_settings">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="1.7"/><path d="M19 12a7 7 0 0 0-.1-1.2l2-1.6-2-3.4-2.3.9a7 7 0 0 0-2-1.2L14.2 3H9.8l-.4 2.5a7 7 0 0 0-2 1.2l-2.3-.9-2 3.4 2 1.6a7 7 0 0 0 0 2.4l-2 1.6 2 3.4 2.3-.9a7 7 0 0 0 2 1.2l.4 2.5h4.4l.4-2.5a7 7 0 0 0 2-1.2l2.3.9 2-3.4-2-1.6c.07-.4.1-.8.1-1.2Z" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/></svg>
+        <span>الإعدادات</span>
+      </a>
+    </nav>
+
+    <button id="logoutBtn" class="mt-auto flex items-center gap-3 px-3.5 h-11 rounded-xl text-sm font-bold text-red-500 hover:bg-red-50">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M9 21H5a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h4M16 17l5-5-5-5M21 12H9" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <span data-i18n="logout">تسجيل الخروج</span>
+    </button>
+  </aside>
+
+  <!-- ============ MAIN ============ -->
+  <main class="px-5 md:px-8 py-8 max-w-5xl w-full mx-auto pb-28 lg:pb-8">
+
+    <!-- Top bar -->
+    <div class="flex items-center justify-between mb-8">
+      <div>
+        <h1 class="text-2xl font-black" id="greeting" data-i18n-template="greeting">مرحبًا 👋</h1>
+        <p class="text-sm opacity-55 font-semibold mt-1" data-i18n="dashboard_sub">إليك ملخص رحلتك التعليمية اليوم</p>
+      </div>
+      <div id="userAvatar" class="w-11 h-11 rounded-full grad-hero-panel flex items-center justify-center text-white font-bold skel"></div>
+    </div>
+
+    <!-- Continue learning -->
+    <section class="rounded-[2rem] grad-hero-panel p-7 md:p-9 text-white relative overflow-hidden mb-8">
+      <span class="text-xs font-bold px-3 py-1 rounded-full bg-white/10" data-i18n="continue_label">أكمل التعلم</span>
+      <h2 id="continueCourseTitle" class="text-xl md:text-2xl font-black mt-4 skel h-7 w-56 rounded"></h2>
+      <p id="continueLessonTitle" class="text-sm opacity-70 mt-2 skel h-4 w-40 rounded"></p>
+
+      <div class="mt-5 flex items-center gap-3">
+        <div class="flex-1 h-2 rounded-full bg-white/10 overflow-hidden">
+          <div id="continueProgressBar" class="h-full rounded-full grad-cta transition-all duration-700" style="width:0%"></div>
+        </div>
+        <span id="continueProgressLabel" class="text-xs font-bold num-font">0%</span>
+      </div>
+
+      <button class="mt-6 text-sm font-bold text-white px-6 h-11 rounded-full grad-cta shadow-lg" data-i18n="continue_btn">
+        متابعة الدرس
+      </button>
+    </section>
+
+    <!-- Today's learning -->
+    <section class="mb-8">
+      <h3 class="text-sm font-black opacity-60 mb-3" data-i18n="today_title">مهام اليوم</h3>
+      <div id="todayList" class="grid sm:grid-cols-3 gap-4">
+        <!-- يتملى ديناميكيًا من Firestore -->
+        <div class="skel h-24 rounded-2xl"></div>
+        <div class="skel h-24 rounded-2xl"></div>
+        <div class="skel h-24 rounded-2xl"></div>
+      </div>
+    </section>
+
+    <!-- Progress overview -->
+    <section class="mb-8">
+      <h3 class="text-sm font-black opacity-60 mb-3" data-i18n="progress_title">نظرة عامة على التقدم</h3>
+      <div class="rounded-2xl border p-6 bg-white dark:bg-[#0F2733]" style="border-color:var(--mist-line)">
+        <div class="flex items-end justify-between gap-2 h-36" id="weekChart">
+          <!-- أعمدة الأسبوع تتحدث بـ JS -->
+        </div>
+        <div class="flex justify-between mt-3 text-[11px] font-bold opacity-45" id="weekLabels"></div>
+      </div>
+    </section>
+
+    <!-- Achievements -->
+    <section class="mb-8">
+      <h3 class="text-sm font-black opacity-60 mb-3" data-i18n="achievements_title">الإنجازات</h3>
+      <div id="achievementsList" class="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <div class="skel h-20 rounded-2xl"></div>
+        <div class="skel h-20 rounded-2xl"></div>
+        <div class="skel h-20 rounded-2xl"></div>
+        <div class="skel h-20 rounded-2xl"></div>
+      </div>
+    </section>
+
+  </main>
+</div>
+
+<!-- Mobile bottom nav -->
+<nav class="lg:hidden fixed bottom-0 inset-x-0 z-40 border-t bg-white/95 dark:bg-[#081820]/95 backdrop-blur flex items-center justify-around h-16" style="border-color:var(--mist-line)">
+  <a href="#" class="flex flex-col items-center gap-1 text-[10px] font-bold" style="color:var(--coral)">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M4 11.5 12 4l8 7.5M6 10v9a1 1 0 0 0 1 1h3v-6h4v6h3a1 1 0 0 0 1-1v-9" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    الرئيسية
+  </a>
+  <a href="#" class="flex flex-col items-center gap-1 text-[10px] font-bold opacity-50">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M4 5.5A1.5 1.5 0 0 1 5.5 4H12v16H5.5A1.5 1.5 0 0 1 4 18.5v-13ZM12 4h6.5A1.5 1.5 0 0 1 20 5.5v13a1.5 1.5 0 0 1-1.5 1.5H12" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    كورساتي
+  </a>
+  <a href="#" class="flex flex-col items-center gap-1 text-[10px] font-bold opacity-50">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M9 11.5 11 13.5 15.5 9" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.7"/></svg>
+    الاختبارات
+  </a>
+  <a href="#" class="flex flex-col items-center gap-1 text-[10px] font-bold opacity-50">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="8" r="4" stroke="currentColor" stroke-width="1.6"/><path d="M4 20c1.5-4 4.5-6 8-6s6.5 2 8 6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+    حسابي
+  </a>
+</nav>
+
+<script type="module">
+  import {
+    auth, db, onAuthStateChanged, signOut, doc, getDoc
+  } from "./firebase-config.js";
+
+  const authGate = document.getElementById("authGate");
+
+  // 🔒 حراسة الصفحة: لو مفيش يوزر لوجن، يرجع لصفحة الدخول
+  onAuthStateChanged(auth, async (user) => {
+    if (!user) {
+      window.location.href = "index.html#auth";
+      return;
+    }
+
+    // هات بيانات الطالب من Firestore (مجموعة students)
+    let studentData = null;
+    try {
+      const snap = await getDoc(doc(db, "students", user.uid));
+      if (snap.exists()) studentData = snap.data();
+    } catch (e) {
+      console.error("خطأ في جلب بيانات الطالب:", e);
+    }
+
+    renderDashboard(user, studentData);
+    authGate.style.display = "none";
+  });
+
+  document.getElementById("logoutBtn").addEventListener("click", async () => {
+    await signOut(auth);
+    window.location.href = "index.html";
+  });
+
+  function renderDashboard(user, data) {
+    const name = data?.fullName || user.displayName || "طالب";
+    document.getElementById("greeting").textContent = `مرحبًا ${name} 👋`;
+    document.getElementById("userAvatar").textContent = name.trim().charAt(0);
+    document.getElementById("userAvatar").classList.remove("skel");
+
+    // بيانات "أكمل التعلم" — لو مفيش بيانات حقيقية لسه، تظهر قيم افتراضية
+    const continueData = data?.continueLearning || {
+      courseTitle: "أساسيات العلاج الطبيعي العظمي",
+      lessonTitle: "تشريح المفصل الركبي — الدرس 4",
+      progress: 42
+    };
+    document.getElementById("continueCourseTitle").textContent = continueData.courseTitle;
+    document.getElementById("continueCourseTitle").classList.remove("skel");
+    document.getElementById("continueLessonTitle").textContent = continueData.lessonTitle;
+    document.getElementById("continueLessonTitle").classList.remove("skel");
+    document.getElementById("continueProgressBar").style.width = continueData.progress + "%";
+    document.getElementById("continueProgressLabel").textContent = continueData.progress + "%";
+
+    renderToday(data?.today);
+    renderWeekChart(data?.weeklyHours || [2, 3.5, 1, 4, 2.5, 0, 1.5]);
+    renderAchievements(data?.achievements);
+  }
+
+  function renderToday(today) {
+    const items = today || [
+      { icon: "▶", label: "الدرس القادم", value: "تقييم الحركة الوظيفية" },
+      { icon: "📝", label: "واجب", value: "تسليم غدًا" },
+      { icon: "🧠", label: "اختبار قادم", value: "خلال 3 أيام" }
+    ];
+    const el = document.getElementById("todayList");
+    el.innerHTML = items.map(i => `
+      <div class="rounded-2xl border p-4 bg-white dark:bg-[#0F2733]" style="border-color:var(--mist-line)">
+        <span class="text-xl">${i.icon}</span>
+        <div class="text-xs font-bold opacity-50 mt-2">${i.label}</div>
+        <div class="text-sm font-extrabold mt-0.5">${i.value}</div>
+      </div>
+    `).join("");
+  }
+
+  function renderWeekChart(hours) {
+    const days = ["س", "أ", "ن", "ث", "ر", "خ", "ج"];
+    const max = Math.max(...hours, 1);
+    document.getElementById("weekChart").innerHTML = hours.map(h => `
+      <div class="flex-1 rounded-lg" style="height:${(h / max) * 100}%; background:linear-gradient(180deg, var(--coral-2), var(--coral))"></div>
+    `).join("");
+    document.getElementById("weekLabels").innerHTML = days.map(d => `<span class="flex-1 text-center">${d}</span>`).join("");
+  }
+
+  function renderAchievements(list) {
+    const items = list || [
+      { icon: "🏆", label: "أول كورس مكتمل" },
+      { icon: "🔥", label: "7 أيام متتالية" },
+      { icon: "🎯", label: "90% في اختبار" },
+      { icon: "📚", label: "50 درس مكتمل" }
+    ];
+    document.getElementById("achievementsList").innerHTML = items.map(a => `
+      <div class="rounded-2xl border p-4 text-center bg-white dark:bg-[#0F2733]" style="border-color:var(--mist-line)">
+        <div class="text-2xl">${a.icon}</div>
+        <div class="text-[11px] font-bold opacity-60 mt-1.5">${a.label}</div>
+      </div>
+    `).join("");
+  }
+</script>
+</body>
+</html>
