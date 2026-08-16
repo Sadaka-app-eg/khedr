@@ -26,7 +26,17 @@
     --dark-line:     #1E2E42;
     --success:       #3FB68B;
   }
-
+/* شريط التقدم الأصفر تحت الهيدر */
+#scrollProgress {
+  position: fixed;
+  top: 64px; /* ارتفاع الهيدر */
+  right: 0;
+  height: 3px;
+  background-color: #FFB800; /* أصفر الجوهري */
+  width: 0%;
+  z-index: 51;
+  transition: width 0.1s ease-out;
+}
   /* Font assignments */
   html[lang="ar"] body, html[lang="ar"] * { font-family: 'Tajawal', 'IBM Plex Sans Arabic', sans-serif; }
   html[lang="en"] body, html[lang="en"] * { font-family: 'Plus Jakarta Sans', sans-serif; }
@@ -107,18 +117,14 @@
 
 <!-- ============ NAVBAR ============ -->
 <header class="sticky top-0 z-50 backdrop-blur-md bg-white/90 dark:bg-[#07111D]/90 border-b border-theme border-slate-200 dark:border-slate-800 transition-colors">
+  <div id="scrollProgress"></div>
   <div class="max-w-7xl mx-auto px-5 md:px-8 h-20 flex items-center justify-between">
 
     <!-- Brand Logo -->
-    <a href="#" class="flex items-center gap-3 shrink-0">
-      <span class="relative w-11 h-11 rounded-2xl flex items-center justify-center bg-brand text-white font-black text-lg shadow-md shadow-rose-900/20">
-        خِـ
-      </span>
-      <div class="flex flex-col">
-        <span class="font-black text-base md:text-lg tracking-tight text-slate-900 dark:text-white" data-i18n="brand">KHEDR & PHYSIO</span>
-        <span class="text-[10px] font-bold tracking-widest text-brand dark:text-rose-400 -mt-1" data-i18n="brand_sub">منصة تعليم العلاج الطبيعي</span>
-      </div>
-    </a>
+<a href="#" onclick="window.scrollTo({top: 0, behavior: 'smooth'}); return false;" class="flex items-center gap-2 cursor-pointer">
+  <span class="w-9 h-9 rounded-xl bg-[#8E0E38] text-white font-black flex items-center justify-center text-sm shadow-md">خِـ</span>
+  <span class="font-black text-base text-[#8E0E38] dark:text-rose-400">KHEDR & PHYSIO</span>
+</a>
 
     <!-- Desktop Navigation Links -->
     <nav class="hidden lg:flex items-center gap-8 text-sm font-bold text-slate-700 dark:text-slate-200">
@@ -171,70 +177,48 @@
   </div>
 </header>
 
-<!-- ============ HERO SECTION ============ -->
-<section id="hero" class="relative overflow-hidden bg-gradient-to-b from-[#7A0B30] to-[#4A051B] min-h-[580px] md:min-h-[620px] flex flex-col justify-between items-center text-center text-white px-5 pt-12 pb-10 shadow-2xl">
+<!-- ============ HERO SECTION (تصميم مطابق للصور) ============ -->
+<section id="hero" class="max-w-7xl mx-auto px-4 sm:px-6 pt-6 pb-12">
+  <div class="relative overflow-hidden rounded-3xl bg-gradient-to-l from-[#5E0824] via-[#7A0B30] to-[#4A051B] min-h-[520px] flex items-center px-6 md:px-16 py-10 shadow-2xl">
+    
+    <div class="w-full grid md:grid-cols-2 gap-8 items-center z-10">
+      
+      <!-- النص والزراير على اليمين -->
+      <div class="text-right text-white space-y-4">
+        <span class="inline-block text-xs md:text-sm font-extrabold text-rose-300">
+          د / محمود خِضر
+        </span>
 
-  <!-- Doctor Image background overlay -->
-  <div class="absolute inset-0 flex items-end justify-center pointer-events-none opacity-30 md:opacity-45">
-    <img src="khedr.png" alt="د. محمود خضر" class="h-[92%] max-h-[540px] object-contain object-bottom scale-105" onerror="this.style.display='none'" />
-  </div>
+        <h1 class="text-3xl md:text-5xl font-black leading-tight tracking-tight">
+          رحلتك بتبدأ مع <span class="text-amber-300">خِـضـر</span><br/>
+          خُد أول خطوة.. وأنت واثق
+        </h1>
 
-  <!-- Floating Clinical Range-of-Motion Graphic (Side element) -->
-  <div class="hidden xl:block absolute top-12 start-12 w-64 p-4 rounded-2xl bg-white/10 backdrop-blur-md border border-white/15 text-start text-xs font-bold text-white shadow-xl">
-    <div class="flex items-center justify-between mb-2">
-      <span class="text-[10px] text-rose-300" data-i18n="hero_badge1">تقييم المدى الحركي</span>
-      <span class="num-font text-amber-300">ROM 135°</span>
+        <p class="text-xs md:text-sm font-semibold opacity-85 leading-6 max-w-md text-rose-100">
+          تجربة تعليمية متكاملة تستحق تبدأ بيها لأن كل تفصيلة مصممة علشانك
+        </p>
+
+        <div class="pt-4">
+          <a href="#auth" class="inline-block bg-white text-[#7A0B30] font-black text-xs md:text-sm px-8 py-3.5 rounded-2xl shadow-xl hover:bg-rose-50 transition transform hover:scale-105">
+            سجل وخد أول خطوة
+          </a>
+        </div>
+
+        <!-- تذييل صغير تحت الزرار -->
+        <div class="pt-6 border-t border-white/10 text-[11px] font-bold opacity-70">
+          منصة خِضر: أفضل منصة تعليمية مخصصة لطلاب علاج طبيعي
+        </div>
+      </div>
+
+      <!-- صورة الدكتور على الشمال -->
+      <div class="relative flex justify-center md:justify-end items-end h-full">
+        <img src="khedr.jpg" alt="د. محمود خضر" class="max-h-[460px] object-contain drop-shadow-2xl scale-105" onerror="this.src='khedr.png'" />
+      </div>
+
     </div>
-    <div class="w-full bg-white/20 h-1.5 rounded-full overflow-hidden">
-      <div class="bg-amber-400 h-full w-[75%]"></div>
-    </div>
-    <span class="block text-[10px] opacity-75 mt-2" data-i18n="hero_card1">تشريح وحركية المفصل الركبي</span>
-  </div>
 
-  <!-- Main Hero Content -->
-  <div class="relative z-10 max-w-2xl mx-auto flex flex-col items-center">
-    <span class="inline-flex items-center gap-2 text-xs font-extrabold px-4 py-1.5 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-rose-200 mb-4 shadow-sm" data-i18n="hero_eyebrow">
-      <span class="w-2 h-2 rounded-full bg-amber-400"></span>
-      د. محمود خضر — أخصائي ومحاضر العلاج الطبيعي
-    </span>
-
-    <h1 class="text-3xl md:text-5xl font-black leading-tight tracking-tight" data-i18n="hero_title">
-      رحلتك الأكاديمية تبدأ مع<br/>
-      <span class="text-4xl md:text-6xl text-amber-300 block mt-1 tracking-wider">خِـــضـــر</span>
-      خُد أول خطوة.. وأنت واثق
-    </h1>
-
-    <p class="mt-4 text-xs md:text-sm font-semibold opacity-90 leading-7 max-w-lg text-rose-100" data-i18n="hero_sub">
-      تجربة تعليمية جامعية متكاملة تستحق تبدأ بيها لأن كل تفصيلة مصممة علشانك — شروحات تفصيلية، امتحانات OSCE وMCQ، وتدريب إكلينيكي حقيقي.
-    </p>
-
-    <div class="mt-8 flex flex-wrap items-center justify-center gap-4">
-      <a href="#auth" class="bg-white text-brand font-black text-xs md:text-sm px-8 py-3.5 rounded-2xl shadow-2xl hover:bg-rose-50 transition transform hover:scale-105" data-i18n="hero_cta1">
-        سجل وخد أول خطوة
-      </a>
-      <a href="#years" class="border border-white/30 bg-white/10 backdrop-blur-md text-white font-bold text-xs md:text-sm px-7 py-3.5 rounded-2xl hover:bg-white/20 transition" data-i18n="hero_cta2">
-        استكشف الفرق الدراسية
-      </a>
-    </div>
-  </div>
-
-  <!-- Stats Bar inside Hero -->
-  <div class="relative z-10 w-full max-w-3xl grid grid-cols-3 gap-4 pt-8 border-t border-white/15 mt-8 text-center">
-    <div>
-      <div class="text-xl md:text-3xl font-black num-font text-amber-300" data-count="4200">0</div>
-      <div class="text-[10px] md:text-xs font-bold opacity-80 mt-0.5" data-i18n="hero_stat1">طالب علاج طبيعي</div>
-    </div>
-    <div>
-      <div class="text-xl md:text-3xl font-black num-font text-amber-300" data-count="98">0</div>
-      <div class="text-[10px] md:text-xs font-bold opacity-80 mt-0.5" data-i18n="hero_stat2">نسبة الامتياز والنجاح %</div>
-    </div>
-    <div>
-      <div class="text-xl md:text-3xl font-black num-font text-amber-300" data-count="9">0</div>
-      <div class="text-[10px] md:text-xs font-bold opacity-80 mt-0.5" data-i18n="hero_stat3">سنوات خبرة إكلينيكية</div>
-    </div>
   </div>
 </section>
-
 <!-- ============ ACADEMIC YEARS SECTION ============ -->
 <section id="years" class="max-w-7xl mx-auto px-5 md:px-8 py-16 border-b border-theme border-slate-200 dark:border-slate-800">
   <div class="text-center max-w-2xl mx-auto mb-12 fade-up">
@@ -937,13 +921,13 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 </script>
+  <script>
+window.addEventListener('scroll', () => {
+  const winScroll = document.documentElement.scrollTop || document.body.scrollTop;
+  const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+  const scrolled = (winScroll / height) * 100;
+  document.getElementById('scrollProgress').style.width = scrolled + '%';
+});
+</script>
 </body>
 </html>
-```eof
-
-### Key Updates Made:
-1. **Merged Brand & Visual Identity:** Combined the custom interactive goniometer animation, counts, and modern design system from your original code with the burgundy theme (`#8E0E38`) and doctor photo hero layout.
-2. **Fixed Dark Mode & Contrast:** Custom CSS classes (`.bg-card-theme`, `.text-theme-main`, `.text-theme-sub`) ensure that when dark mode is toggled, all text elements and cards transition to dark slate containers (`#0F1D2D`) with clear, high-contrast light text.
-3. **Fixed Dark Mode Toggle Button:** Created a pill-style slider switch (`.theme-toggle-pill` with sliding white thumb) that smoothly switches between Light and Dark mode.
-4. **Restored Full Bilingual (Arabic / English) Support:** Integrated the complete `translations` engine so clicking the language toggle instantly translates all content and switches document direction between RTL and LTR.
-5. **Added Rich Footer:** Added a full footer containing platform overview, page links, working social media icons (Facebook, Instagram, YouTube), contact button, copyright, and developer credits.
