@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>لوحة المدرس | KHEDR & PHYSIO</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800;900&family=IBM+Plex+Sans+Arabic:wght@400;500;600&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+<script src="https://cdn.tailwindcss.com"></script>
+
+<style>
+  :root{
+    --ink:      #0E2A38;
+    --ink-2:    #123A4C;
+    --teal:     #2D6A6A;
+    --coral:    #FF7A45;
+    --coral-2:  #FF9466;
+    --mist:     #F5F8F8;
+    --mist-line:#E3EBEC;
+    --dark-bg:  #081820;
+    --dark-panel:#0F2733;
+    --success:  #3FB68B;
+    --amber:    #E8A33D;
+    --danger:   #E5484D;
+  }
+  html[lang="ar"] body, html[lang="ar"] * { font-family:'Tajawal','IBM Plex Sans Arabic',sans-serif; }
+  html[lang="en"] body, html[lang="en"] * { font-family:'Plus Jakarta Sans',sans-serif; }
+  html[lang="ar"] .num-font { font-family:'Plus Jakarta Sans',sans-serif; }
+
+  body{ background:var(--mist); color:var(--ink); }
+  body.dark{ background:var(--dark-bg); color:#EAF3F3; }
+
+  .grad-cta{ background:linear-gradient(135deg, var(--coral), var(--coral-2)); }
+  .grad-hero-panel{ background:linear-gradient(160deg, var(--ink-2), var(--ink)); }
+
+  .side-link{ color:var(--ink); opacity:.6; transition:.2s; }
+  .side-link:hover{ opacity:1; background:rgba(45,106,106,.07); }
+  .side-link.active{ opacity:1; background:rgba(255,122,69,.1); color:var(--coral); font-weight:800; }
+  body.dark .side-link{ color:#EAF3F3; }
+
+  .skel{ background:linear-gradient(90deg,#e7edee 25%,#f2f6f6 37%,#e7edee 63%); background-size:400% 100%; animation:shimmer 1.4s ease infinite; }
+  body.dark .skel{ background:linear-gradient(90deg,#0F2733 25%,#173445 37%,#0F2733 63%); background-size:400% 100%; }
+  @keyframes shimmer{ 0%{background-position:100% 0;} 100%{background-position:0 0;} }
+
+  ::selection{ background:var(--coral); color:#fff; }
+  :focus-visible{ outline:2px solid var(--coral); outline-offset:3px; }
+  [dir="rtl"] .rtl-flip{ transform:scaleX(-1); }
+
+  table th, table td{ text-align:start; }
+  .status-dot{ width:7px; height:7px; border-radius:99px; display:inline-block; }
+</style>
+</head>
+
+<body class="antialiased">
+
+<!-- شاشة تحقق من الحساب + الصلاحية -->
+<div id="authGate" class="fixed inset-0 z-[100] flex items-center justify-center" style="background:var(--mist)">
+  <div class="flex flex-col items-center gap-3">
+    <div class="w-10 h-10 rounded-full border-4 border-t-transparent animate-spin" style="border-color:var(--coral) transparent transparent transparent"></div>
+    <span class="text-xs font-bold opacity-50">جاري التحقق من صلاحية الحساب...</span>
+  </div>
+</div>
+
+<!-- شاشة رفض الدخول لو مش مدرس -->
+<div id="forbiddenGate" class="hidden fixed inset-0 z-[100] flex items-center justify-center" style="background:var(--mist)">
+  <div class="text-center px-6">
+    <div class="text-4xl mb-3">🚫</div>
+    <h2 class="font-black text-lg">مفيش صلاحية دخول للوحة المدرس</h2>
+    <p class="text-sm opacity-60 mt-1.5">الحساب ده مش مسجل كمدرس على المنصة</p>
+    <a href="index.html" class="inline-block mt-5 text-sm font-bold px-5 h-11 leading-[44px] rounded-full text-white grad-cta">الرجوع للرئيسية</a>
+  </div>
+</div>
+
+<div class="lg:grid lg:grid-cols-[260px,1fr]">
+
+  <!-- ============ SIDEBAR ============ -->
+  <aside class="hidden lg:flex flex-col gap-1 h-screen sticky top-0 border-e p-5" style="border-color:var(--mist-line)">
+    <a href="index.html" class="flex items-center gap-2.5 px-2 py-3 mb-4">
+      <span class="w-9 h-9 rounded-xl flex items-center justify-center grad-hero-panel">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" class="rtl-flip"><path d="M4 12h4l2-6 4 12 2-6h4" stroke="#FF7A45" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </span>
+      <span class="font-extrabold text-sm">𝐊𝐇𝐄𝐃𝐑 & 𝐏𝐇𝐘𝐒𝐈𝐎</span>
+    </a>
+    <span class="px-3 text-[10px] font-black uppercase tracking-wider opacity-40 mb-1">لوحة المدرس</span>
+
+    <nav class="flex flex-col gap-1 text-sm">
+      <a href="#" class="side-link active flex items-center gap-3 px-3.5 h-11 rounded-xl" data-view="overview">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="8" height="8" rx="2" stroke="currentColor" stroke-width="1.7"/><rect x="13" y="3" width="8" height="5" rx="2" stroke="currentColor" stroke-width="1.7"/><rect x="13" y="12" width="8" height="9" rx="2" stroke="currentColor" stroke-width="1.7"/><rect x="3" y="14" width="8" height="7" rx="2" stroke="currentColor" stroke-width="1.7"/></svg>
+        <span>نظرة عامة</span>
+      </a>
+      <a href="#" class="side-link flex items-center gap-3 px-3.5 h-11 rounded-xl" data-view="courses">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M4 5.5A1.5 1.5 0 0 1 5.5 4H12v16H5.5A1.5 1.5 0 0 1 4 18.5v-13ZM12 4h6.5A1.5 1.5 0 0 1 20 5.5v13a1.5 1.5 0 0 1-1.5 1.5H12" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <span>إدارة الكورسات</span>
+      </a>
+      <a href="#" class="side-link flex items-center gap-3 px-3.5 h-11 rounded-xl" data-view="students">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><circle cx="9" cy="8" r="3.2" stroke="currentColor" stroke-width="1.7"/><path d="M3.5 19c1-3.3 3-5 5.5-5s4.5 1.7 5.5 5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/><circle cx="17" cy="9" r="2.4" stroke="currentColor" stroke-width="1.5"/><path d="M15 19c.5-2.2 1.7-3.6 3-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+        <span>الطلاب</span>
+      </a>
+      <a href="#" class="side-link flex items-center gap-3 px-3.5 h-11 rounded-xl" data-view="qbank">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M9 9a3 3 0 1 1 4 2.8c-.8.4-1 .9-1 1.7" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><circle cx="12" cy="17" r=".6" fill="currentColor"/><rect x="3" y="3" width="18" height="18" rx="4" stroke="currentColor" stroke-width="1.6"/></svg>
+        <span>بنك الأسئلة</span>
+      </a>
+      <a href="#" class="side-link flex items-center gap-3 px-3.5 h-11 rounded-xl" data-view="live">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><rect x="3" y="6" width="14" height="12" rx="2" stroke="currentColor" stroke-width="1.7"/><path d="m17 10 4-2.5v9L17 14" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/></svg>
+        <span>الحصص المباشرة</span>
+      </a>
+      <a href="#" class="side-link flex items-center gap-3 px-3.5 h-11 rounded-xl" data-view="payments">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><rect x="3" y="5" width="18" height="14" rx="2" stroke="currentColor" stroke-width="1.7"/><path d="M3 10h18" stroke="currentColor" stroke-width="1.7"/></svg>
+        <span>المدفوعات</span>
+      </a>
+      <a href="#" class="side-link flex items-center gap-3 px-3.5 h-11 rounded-xl" data-view="messages">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M4 5h16v11H8l-4 4V5Z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/></svg>
+        <span>الرسائل</span>
+      </a>
+      <a href="#" class="side-link flex items-center gap-3 px-3.5 h-11 rounded-xl" data-view="settings">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="1.7"/><path d="M19 12a7 7 0 0 0-.1-1.2l2-1.6-2-3.4-2.3.9a7 7 0 0 0-2-1.2L14.2 3H9.8l-.4 2.5a7 7 0 0 0-2 1.2l-2.3-.9-2 3.4 2 1.6a7 7 0 0 0 0 2.4l-2 1.6 2 3.4 2.3-.9a7 7 0 0 0 2 1.2l.4 2.5h4.4l.4-2.5a7 7 0 0 0 2-1.2l2.3.9 2-3.4-2-1.6c.07-.4.1-.8.1-1.2Z" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/></svg>
+        <span>إعدادات المنصة</span>
+      </a>
+    </nav>
+
+    <button id="logoutBtn" class="mt-auto flex items-center gap-3 px-3.5 h-11 rounded-xl text-sm font-bold text-red-500 hover:bg-red-50">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M9 21H5a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h4M16 17l5-5-5-5M21 12H9" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <span>تسجيل الخروج</span>
+    </button>
+  </aside>
+
+  <!-- ============ MAIN ============ -->
+  <main class="px-5 md:px-8 py-8 max-w-6xl w-full mx-auto pb-24 lg:pb-8">
+
+    <!-- Top bar -->
+    <div class="flex items-center justify-between mb-8">
+      <div>
+        <h1 id="teacherGreeting" class="text-2xl font-black skel h-8 w-52 rounded">مرحبًا 👋</h1>
+        <p class="text-sm opacity-55 font-semibold mt-1">نظرة عامة على أداء منصتك اليوم</p>
+      </div>
+      <button class="text-sm font-bold text-white px-5 h-11 rounded-full grad-cta shadow-lg flex items-center gap-2 shrink-0">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M12 5v14M5 12h14" stroke="#fff" stroke-width="2" stroke-linecap="round"/></svg>
+        <span class="hidden sm:inline">كورس جديد</span>
+      </button>
+    </div>
+
+    <!-- Stats grid -->
+    <section class="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+      <div class="rounded-2xl border p-5 bg-white dark:bg-[#0F2733]" style="border-color:var(--mist-line)">
+        <div class="flex items-center justify-between">
+          <span class="text-xs font-bold opacity-50">إجمالي الطلاب</span>
+          <span class="text-[11px] font-bold" style="color:var(--success)">↑ 12%</span>
+        </div>
+        <div id="statStudents" class="text-2xl font-black num-font mt-2 skel h-8 w-16 rounded"></div>
+      </div>
+      <div class="rounded-2xl border p-5 bg-white dark:bg-[#0F2733]" style="border-color:var(--mist-line)">
+        <div class="flex items-center justify-between">
+          <span class="text-xs font-bold opacity-50">طلاب نشطون</span>
+          <span class="text-[11px] font-bold" style="color:var(--success)">↑ 8%</span>
+        </div>
+        <div id="statActive" class="text-2xl font-black num-font mt-2 skel h-8 w-16 rounded"></div>
+      </div>
+      <div class="rounded-2xl border p-5 bg-white dark:bg-[#0F2733]" style="border-color:var(--mist-line)">
+        <div class="flex items-center justify-between">
+          <span class="text-xs font-bold opacity-50">الإيرادات الشهرية</span>
+          <span class="text-[11px] font-bold" style="color:var(--success)">↑ 21%</span>
+        </div>
+        <div id="statRevenue" class="text-2xl font-black num-font mt-2 skel h-8 w-24 rounded"></div>
+      </div>
+      <div class="rounded-2xl border p-5 bg-white dark:bg-[#0F2733]" style="border-color:var(--mist-line)">
+        <div class="flex items-center justify-between">
+          <span class="text-xs font-bold opacity-50">متوسط الإكمال</span>
+          <span class="text-[11px] font-bold" style="color:var(--amber)">— ثابت</span>
+        </div>
+        <div id="statCompletion" class="text-2xl font-black num-font mt-2 skel h-8 w-16 rounded"></div>
+      </div>
+    </section>
+
+    <div class="grid lg:grid-cols-[1.4fr,1fr] gap-6 mb-8">
+      <!-- Student growth chart -->
+      <section class="rounded-2xl border p-6 bg-white dark:bg-[#0F2733]" style="border-color:var(--mist-line)">
+        <h3 class="text-sm font-black opacity-60 mb-5">نمو الطلاب — آخر 6 شهور</h3>
+        <div class="flex items-end justify-between gap-3 h-40" id="growthChart"></div>
+        <div class="flex justify-between mt-3 text-[11px] font-bold opacity-45" id="growthLabels"></div>
+      </section>
+
+      <!-- Course performance -->
+      <section class="rounded-2xl border p-6 bg-white dark:bg-[#0F2733]" style="border-color:var(--mist-line)">
+        <h3 class="text-sm font-black opacity-60 mb-5">أداء الكورسات</h3>
+        <div id="coursePerf" class="flex flex-col gap-4"></div>
+      </section>
+    </div>
+
+    <!-- Recent students table -->
+    <section class="rounded-2xl border bg-white dark:bg-[#0F2733] overflow-hidden" style="border-color:var(--mist-line)">
+      <div class="flex items-center justify-between p-5 pb-0">
+        <h3 class="text-sm font-black opacity-60">آخر الطلاب المسجلين</h3>
+        <a href="#" class="text-xs font-bold" style="color:var(--coral)">عرض الكل ←</a>
+      </div>
+      <div class="overflow-x-auto">
+        <table class="w-full mt-4 text-sm">
+          <thead>
+            <tr class="text-[11px] font-bold opacity-45 border-b" style="border-color:var(--mist-line)">
+              <th class="px-5 py-3">الطالب</th>
+              <th class="px-5 py-3">الكورس</th>
+              <th class="px-5 py-3">التقدم</th>
+              <th class="px-5 py-3">آخر نشاط</th>
+              <th class="px-5 py-3">الحالة</th>
+            </tr>
+          </thead>
+          <tbody id="studentsTableBody">
+            <tr><td colspan="5" class="px-5 py-6"><div class="skel h-4 w-full rounded"></div></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+  </main>
+</div>
+
+<script type="module">
+  import {
+    auth, db, onAuthStateChanged, signOut, doc, getDoc
+  } from "./firebase-config.js";
+
+  const authGate = document.getElementById("authGate");
+  const forbiddenGate = document.getElementById("forbiddenGate");
+
+  // 🔒 حراسة الصفحة: لازم يوزر لوجن + مسجل في مجموعة teachers
+  onAuthStateChanged(auth, async (user) => {
+    if (!user) {
+      window.location.href = "index.html#auth";
+      return;
+    }
+
+    let teacherData = null;
+    try {
+      const snap = await getDoc(doc(db, "teachers", user.uid));
+      if (snap.exists()) teacherData = snap.data();
+    } catch (e) {
+      console.error("خطأ في التحقق من صلاحية المدرس:", e);
+    }
+
+    if (!teacherData) {
+      authGate.style.display = "none";
+      forbiddenGate.classList.remove("hidden");
+      return;
+    }
+
+    renderTeacherDashboard(user, teacherData);
+    authGate.style.display = "none";
+  });
+
+  document.getElementById("logoutBtn").addEventListener("click", async () => {
+    await signOut(auth);
+    window.location.href = "index.html";
+  });
+
+  function renderTeacherDashboard(user, data) {
+    const name = data?.fullName || user.displayName || "دكتور";
+    document.getElementById("teacherGreeting").textContent = `أهلًا ${name} 👋`;
+    document.getElementById("teacherGreeting").classList.remove("skel");
+
+    const stats = data?.stats || {
+      totalStudents: 4200,
+      activeStudents: 2860,
+      monthlyRevenue: 38500,
+      avgCompletion: 74
+    };
+
+    fillStat("statStudents", stats.totalStudents.toLocaleString());
+    fillStat("statActive", stats.activeStudents.toLocaleString());
+    fillStat("statRevenue", stats.monthlyRevenue.toLocaleString() + " ج.م");
+    fillStat("statCompletion", stats.avgCompletion + "%");
+
+    renderGrowthChart(data?.studentGrowth || [1800, 2300, 2900, 3400, 3850, 4200]);
+    renderCoursePerf(data?.coursePerformance || [
+      { title: "أساسيات العلاج الطبيعي العظمي", completion: 82 },
+      { title: "إعادة تأهيل إصابات الرباط الصليبي", completion: 65 },
+      { title: "العلاج الطبيعي العصبي التطبيقي", completion: 48 }
+    ]);
+    renderStudentsTable(data?.recentStudents || [
+      { name: "أحمد سامي", course: "أساسيات العلاج الطبيعي العظمي", progress: 78, lastActive: "منذ ساعتين", status: "active" },
+      { name: "منة الله كمال", course: "إعادة تأهيل إصابات الرباط الصليبي", progress: 45, lastActive: "أمس", status: "active" },
+      { name: "يوسف عبد الرحمن", course: "العلاج الطبيعي العصبي التطبيقي", progress: 12, lastActive: "منذ 5 أيام", status: "inactive" }
+    ]);
+  }
+
+  function fillStat(id, value) {
+    const el = document.getElementById(id);
+    el.textContent = value;
+    el.classList.remove("skel");
+  }
+
+  function renderGrowthChart(values) {
+    const months = ["مارس", "إبريل", "مايو", "يونيو", "يوليو", "أغسطس"];
+    const max = Math.max(...values, 1);
+    document.getElementById("growthChart").innerHTML = values.map(v => `
+      <div class="flex-1 rounded-lg" style="height:${(v / max) * 100}%; background:linear-gradient(180deg, var(--coral-2), var(--coral))"></div>
+    `).join("");
+    document.getElementById("growthLabels").innerHTML = months.map(m => `<span class="flex-1 text-center">${m}</span>`).join("");
+  }
+
+  function renderCoursePerf(list) {
+    document.getElementById("coursePerf").innerHTML = list.map(c => `
+      <div>
+        <div class="flex items-center justify-between text-xs font-bold mb-1.5">
+          <span class="truncate pe-2">${c.title}</span>
+          <span class="opacity-50 num-font shrink-0">${c.completion}%</span>
+        </div>
+        <div class="h-2 rounded-full bg-black/5 dark:bg-white/10 overflow-hidden">
+          <div class="h-full rounded-full" style="width:${c.completion}%; background:linear-gradient(90deg, var(--teal), var(--coral))"></div>
+        </div>
+      </div>
+    `).join("");
+  }
+
+  function renderStudentsTable(list) {
+    document.getElementById("studentsTableBody").innerHTML = list.map(s => `
+      <tr class="border-b last:border-0" style="border-color:var(--mist-line)">
+        <td class="px-5 py-3.5 font-bold">${s.name}</td>
+        <td class="px-5 py-3.5 opacity-70">${s.course}</td>
+        <td class="px-5 py-3.5">
+          <div class="flex items-center gap-2">
+            <div class="w-16 h-1.5 rounded-full bg-black/5 dark:bg-white/10 overflow-hidden">
+              <div class="h-full rounded-full" style="width:${s.progress}%; background:var(--coral)"></div>
+            </div>
+            <span class="text-xs font-bold opacity-60 num-font">${s.progress}%</span>
+          </div>
+        </td>
+        <td class="px-5 py-3.5 text-xs opacity-50">${s.lastActive}</td>
+        <td class="px-5 py-3.5">
+          <span class="inline-flex items-center gap-1.5 text-xs font-bold">
+            <span class="status-dot" style="background:${s.status === 'active' ? 'var(--success)' : '#B0B8BA'}"></span>
+            ${s.status === 'active' ? 'نشط' : 'غير نشط'}
+          </span>
+        </td>
+      </tr>
+    `).join("");
+  }
+</script>
+</body>
+</html>
