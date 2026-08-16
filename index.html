@@ -281,107 +281,163 @@
 </section>
 
 <!-- ============ FEATURED COURSES SECTION ============ -->
+<!-- ============ PACKAGES & COURSES SECTION ============ -->
 <section id="courses" class="max-w-7xl mx-auto px-5 md:px-8 py-16 border-b border-theme border-slate-200 dark:border-slate-800">
   <div class="flex items-end justify-between mb-10 fade-up">
     <div>
-      <span class="text-xs font-extrabold uppercase tracking-widest text-brand dark:text-rose-400" data-i18n="courses_eyebrow">مكتبة الكورسات</span>
-      <h2 class="text-2xl md:text-3xl font-black mt-2 text-slate-900 dark:text-white" data-i18n="courses_title">الكورسات المُقترحة</h2>
+      <span class="text-xs font-extrabold uppercase tracking-widest text-brand dark:text-rose-400">باقات المنصة والمواد</span>
+      <h2 class="text-2xl md:text-3xl font-black mt-2 text-slate-900 dark:text-white">اختر الباقة المناسبة لفرقتك</h2>
     </div>
-    <a href="#auth" class="hidden md:inline text-xs font-black text-brand dark:text-rose-400 hover:underline" data-i18n="courses_all">عرض الكل ←</a>
   </div>
 
   <div class="grid md:grid-cols-3 gap-7">
 
-    <!-- Course Card 1 -->
+    <!-- باقة سنة أولى ترم 1 -->
     <article class="fade-up card-hover rounded-3xl overflow-hidden border border-slate-200 dark:border-slate-800 bg-white bg-card-theme p-3 shadow-sm flex flex-col justify-between">
       <div class="rounded-2xl overflow-hidden relative bg-gradient-to-r from-[#7A0B30] to-[#4A051B] h-44 flex items-center justify-center text-white">
-        <span class="absolute top-3 start-3 text-[10px] font-black bg-amber-400 text-slate-900 px-2.5 py-1 rounded-md" data-i18n="badge_bestseller">الأكثر طلباً</span>
+        <span class="absolute top-3 start-3 text-[10px] font-black bg-amber-400 text-slate-900 px-2.5 py-1 rounded-md">وفر 397 ج</span>
         <div class="text-center p-4">
-          <span class="text-xs font-bold opacity-80">كورس</span>
-          <h3 class="text-lg font-black mt-1" data-i18n="c1_head">الميكانيكا الحيوية + الورشة</h3>
+          <span class="text-xs font-bold opacity-80">باقة متكاملة</span>
+          <h3 class="text-lg font-black mt-1">First Year — Semester 1</h3>
         </div>
       </div>
-
       <div class="p-4 flex-1 flex flex-col justify-between">
         <div>
-          <span class="text-[11px] font-black text-brand dark:text-rose-400 block mb-1" data-i18n="c1_sub">الفرقة الثانية • ترم أول</span>
-          <h4 class="font-extrabold text-sm leading-snug text-theme-main" data-i18n="c1_title">كورس Biomechanics & Movement Analysis 🩻</h4>
-          <p class="text-xs text-theme-sub mt-2 leading-5" data-i18n="c1_desc">تحليل القوى والعزوم وحركات المشي (Gait Analysis) مع بنك أسئلة شامل.</p>
+          <span class="text-[11px] font-black text-brand dark:text-rose-400 block mb-1">الفرقة الأولى • 4 مواد</span>
+          <h4 class="font-extrabold text-sm leading-snug text-theme-main">Anatomy 1, Physiology 1, Histology 1, Biophysics 1</h4>
+          <p class="text-xs text-theme-sub mt-2 leading-5">شرح مسجل، لايفات أسبوعية، بنوك أسئلة، ومذكرات PDF.</p>
         </div>
-        
         <div class="mt-5 pt-3 border-t border-slate-200 dark:border-slate-800 flex items-center justify-between">
           <div class="flex items-baseline gap-1.5">
-            <span class="text-base font-black text-brand dark:text-rose-400 num-font">280 <span class="text-xs font-bold" data-i18n="egp">ج.م</span></span>
-            <span class="text-[11px] font-bold text-slate-400 line-through num-font">380.00</span>
+            <span class="text-base font-black text-brand dark:text-rose-400 num-font">1,499 <span class="text-xs font-bold">ج.م</span></span>
+            <span class="text-[11px] font-bold text-slate-400 line-through num-font">1,896</span>
           </div>
-          <a href="#auth" class="px-4 py-2 rounded-xl bg-brand text-white font-black text-xs hover:bg-rose-900 transition" data-i18n="btn_enroll">
-            الدخول للكورس
-          </a>
+          <button onclick="openPackageDetails('y1s1')" class="px-4 py-2 rounded-xl bg-brand text-white font-black text-xs hover:bg-rose-900 transition">
+            عرض التفاصيل
+          </button>
         </div>
       </div>
     </article>
 
-    <!-- Course Card 2 -->
-    <article class="fade-up card-hover rounded-3xl overflow-hidden border border-slate-200 dark:border-slate-800 bg-white bg-card-theme p-3 shadow-sm flex flex-col justify-between">
-      <div class="rounded-2xl overflow-hidden relative bg-gradient-to-r from-cyan-900 to-slate-900 h-44 flex items-center justify-center text-white">
-        <span class="absolute top-3 start-3 text-[10px] font-black bg-emerald-500 text-white px-2.5 py-1 rounded-md" data-i18n="badge_new">جديد</span>
+    <!-- باقة سنة أولى كاملة (Year Pass) -->
+    <article class="fade-up card-hover rounded-3xl overflow-hidden border-2 border-brand dark:border-rose-500 bg-white bg-card-theme p-3 shadow-lg flex flex-col justify-between relative">
+      <div class="rounded-2xl overflow-hidden relative bg-gradient-to-r from-amber-600 to-rose-900 h-44 flex items-center justify-center text-white">
+        <span class="absolute top-3 start-3 text-[10px] font-black bg-rose-600 text-white px-2.5 py-1 rounded-md">الأعلى توفيراً 🔥</span>
         <div class="text-center p-4">
-          <span class="text-xs font-bold opacity-80">كورس</span>
-          <h3 class="text-lg font-black mt-1" data-i18n="c2_head">تأهيل العظام والجهاز الحركي</h3>
+          <span class="text-xs font-bold opacity-80">Full Year Pass</span>
+          <h3 class="text-lg font-black mt-1">First Year Complete Pass</h3>
         </div>
       </div>
-
       <div class="p-4 flex-1 flex flex-col justify-between">
         <div>
-          <span class="text-[11px] font-black text-brand dark:text-rose-400 block mb-1" data-i18n="c2_sub">الفرقة الثالثة • عملي ونظري</span>
-          <h4 class="font-extrabold text-sm leading-snug text-theme-main" data-i18n="c2_title">كورس Orthopedic PT & Manual Therapy 🦴</h4>
-          <p class="text-xs text-theme-sub mt-2 leading-5" data-i18n="c2_desc">شرح وافٍ لتقييم المفاصل، الاختبارات الخاصة (Special Tests)، والعلاج اليدوي.</p>
+          <span class="text-[11px] font-black text-amber-500 block mb-1">الترم الأول + الترم الثاني (9 مواد)</span>
+          <h4 class="font-extrabold text-sm leading-snug text-theme-main">تغطية شاملة لكامل مقررات سنة أولى علاج طبيعي</h4>
+          <p class="text-xs text-theme-sub mt-2 leading-5">تشمل ورش العملي ونماذج الـ OSCE طوال العام الدراسي.</p>
         </div>
-        
         <div class="mt-5 pt-3 border-t border-slate-200 dark:border-slate-800 flex items-center justify-between">
           <div class="flex items-baseline gap-1.5">
-            <span class="text-base font-black text-brand dark:text-rose-400 num-font">350 <span class="text-xs font-bold" data-i18n="egp">ج.م</span></span>
-            <span class="text-[11px] font-bold text-slate-400 line-through num-font">480.00</span>
+            <span class="text-base font-black text-brand dark:text-rose-400 num-font">2,799 <span class="text-xs font-bold">ج.م</span></span>
+            <span class="text-[11px] font-bold text-slate-400 line-through num-font">3,398</span>
           </div>
-          <a href="#auth" class="px-4 py-2 rounded-xl bg-brand text-white font-black text-xs hover:bg-rose-900 transition" data-i18n="btn_enroll">
-            الدخول للكورس
-          </a>
+          <button onclick="openPackageDetails('y1full')" class="px-4 py-2 rounded-xl bg-brand text-white font-black text-xs hover:bg-rose-900 transition">
+            عرض التفاصيل
+          </button>
         </div>
       </div>
     </article>
 
-    <!-- Course Card 3 -->
+    <!-- باقة الأساس الشامل (Hero Package) -->
     <article class="fade-up card-hover rounded-3xl overflow-hidden border border-slate-200 dark:border-slate-800 bg-white bg-card-theme p-3 shadow-sm flex flex-col justify-between">
       <div class="rounded-2xl overflow-hidden relative bg-gradient-to-r from-slate-900 to-indigo-950 h-44 flex items-center justify-center text-white">
-        <span class="absolute top-3 start-3 text-[10px] font-black bg-rose-600 text-white px-2.5 py-1 rounded-md" data-i18n="badge_adv">متقدم</span>
+        <span class="absolute top-3 start-3 text-[10px] font-black bg-amber-400 text-slate-900 px-2.5 py-1 rounded-md">👑 Hero Package</span>
         <div class="text-center p-4">
-          <span class="text-xs font-bold opacity-80">كورس</span>
-          <h3 class="text-lg font-black mt-1" data-i18n="c3_head">التأهيل العصبي التطبيقي</h3>
+          <span class="text-xs font-bold opacity-80">سنة أولى + سنة تانية</span>
+          <h3 class="text-lg font-black mt-1">PT Foundation Pass</h3>
         </div>
       </div>
-
       <div class="p-4 flex-1 flex flex-col justify-between">
         <div>
-          <span class="text-[11px] font-black text-brand dark:text-rose-400 block mb-1" data-i18n="c3_sub">الفرقة الرابعة والامتياز</span>
-          <h4 class="font-extrabold text-sm leading-snug text-theme-main" data-i18n="c3_title">كورس Applied Neurological Rehabilitation 🧠</h4>
-          <p class="text-xs text-theme-sub mt-2 leading-5" data-i18n="c3_desc">تقنيات Bobath وPNF وتأهيل حالات السكتة الدماغية وإصابات الأعصاب.</p>
+          <span class="text-[11px] font-black text-brand dark:text-rose-400 block mb-1">الـ 21 مادة الأساسية كاملة</span>
+          <h4 class="font-extrabold text-sm leading-snug text-theme-main">تأهيل كامل من أول يوم بالكلية وحتى السكاشن الإكلينيكية</h4>
+          <p class="text-xs text-theme-sub mt-2 leading-5">كل المواد، البنوك، الـ OSCE، واشتراك مفتوح حتى التخرج.</p>
         </div>
-        
         <div class="mt-5 pt-3 border-t border-slate-200 dark:border-slate-800 flex items-center justify-between">
           <div class="flex items-baseline gap-1.5">
-            <span class="text-base font-black text-brand dark:text-rose-400 num-font">420 <span class="text-xs font-bold" data-i18n="egp">ج.م</span></span>
-            <span class="text-[11px] font-bold text-slate-400 line-through num-font">550.00</span>
+            <span class="text-base font-black text-brand dark:text-rose-400 num-font">5,999 <span class="text-xs font-bold">ج.م</span></span>
+            <span class="text-[11px] font-bold text-slate-400 line-through num-font">8,286</span>
           </div>
-          <a href="#auth" class="px-4 py-2 rounded-xl bg-brand text-white font-black text-xs hover:bg-rose-900 transition" data-i18n="btn_enroll">
-            الدخول للكورس
-          </a>
+          <button onclick="openPackageDetails('ptfoundation')" class="px-4 py-2 rounded-xl bg-brand text-white font-black text-xs hover:bg-rose-900 transition">
+            عرض التفاصيل
+          </button>
         </div>
       </div>
     </article>
 
   </div>
 </section>
+<!-- ============ PACKAGE DETAILS VIEW (صفحة تفاصيل الباكدج) ============ -->
+<div id="packageDetailsView" class="hidden min-h-screen bg-slate-50 dark:bg-[#07111D] text-slate-900 dark:text-slate-100 py-10 px-5 transition-all">
+  <div class="max-w-5xl mx-auto">
+    
+    <!-- زر الرجوع للرئيسية -->
+    <button onclick="closePackageDetails()" class="mb-6 inline-flex items-center gap-2 text-xs font-black px-4 py-2 rounded-xl bg-white dark:bg-[#0F1D2D] border border-slate-200 dark:border-slate-800 shadow-sm hover:border-brand transition">
+      <span>← العودة للرئيسية</span>
+    </button>
 
+    <!-- الهيدر الخاص بالباقة -->
+    <div class="rounded-3xl bg-gradient-to-l from-[#5E0824] via-[#7A0B30] to-[#4A051B] p-8 md:p-12 text-white shadow-xl relative overflow-hidden mb-8">
+      <span id="pkgBadge" class="inline-block text-[11px] font-black px-3 py-1 rounded-full bg-amber-400 text-slate-900 mb-3">باقة مميزة</span>
+      <h1 id="pkgTitle" class="text-2xl md:text-4xl font-black">اسم الباقة</h1>
+      <p id="pkgSub" class="text-xs md:text-sm opacity-85 mt-2 max-w-2xl leading-6">وصف تفصيلي للباقة وما تشمله من مواد ومزايا أكاديمية.</p>
+      
+      <div class="mt-6 flex flex-wrap items-baseline gap-4">
+        <span class="text-3xl md:text-4xl font-black text-amber-300 num-font" id="pkgPrice">0 ج.م</span>
+        <span class="text-sm font-bold opacity-50 line-through num-font" id="pkgOldPrice">0 ج.م</span>
+        <span class="text-xs font-black px-2.5 py-1 rounded-lg bg-emerald-500/20 text-emerald-300 border border-emerald-500/30" id="pkgSave">وفر 0%</span>
+      </div>
+
+      <div class="mt-6">
+        <a href="#auth" onclick="closePackageDetails()" class="inline-block bg-white text-[#7A0B30] font-black text-xs md:text-sm px-8 py-3.5 rounded-2xl shadow-xl hover:bg-rose-50 transition">
+          اشترك في الباقة الآن
+        </a>
+      </div>
+    </div>
+
+    <!-- شبكة تفاصيل القيمة والمواد المشمولة -->
+    <div class="grid md:grid-cols-3 gap-8">
+      
+      <!-- المواد المشمولة في الباقة -->
+      <div class="md:col-span-2 space-y-4">
+        <h3 class="text-base font-black flex items-center gap-2">
+          <span>📚</span> المواد الأكاديمية المشمولة بالباقة
+        </h3>
+        <div id="pkgCoursesList" class="space-y-3">
+          <!-- تتحدث تلقائياً عبر JS -->
+        </div>
+      </div>
+
+      <!-- نظام المذاكرة المشمول -->
+      <div class="rounded-3xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#0F1D2D] p-6 shadow-sm h-fit space-y-4">
+        <h3 class="text-sm font-black text-amber-500 flex items-center gap-2">
+          <span>👑</span> نظام المذاكرة المتكامل
+        </h3>
+        <ul class="text-xs font-bold space-y-3 opacity-80 leading-5">
+          <li class="flex items-center gap-2"><span>🎥</span> محاضرات مسجلة بجودة 4K</li>
+          <li class="flex items-center gap-2"><span>🔴</span> جلسات Live تفاعلية أسبوعية</li>
+          <li class="flex items-center gap-2"><span>📚</span> ملخصات وتفريغات PDF منظمة</li>
+          <li class="flex items-center gap-2"><span>❓</span> بنك أسئلة MCQ مع التفسير العلمي</li>
+          <li class="flex items-center gap-2"><span>🩺</span> محاكاة امتحانات العملي والـ OSCE</li>
+          <li class="flex items-center gap-2"><span>💬</span> مجتمع خاص ومتابعة دورية</li>
+        </ul>
+        <div class="pt-4 border-t border-slate-200 dark:border-slate-800 text-[11px] text-slate-400">
+          * خصم إضافي للجروبات (3+ طلاب: 10% | 5+ طلاب: 15%).
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+</div>
 <!-- ============ PLATFORM FEATURES SECTION ============ -->
 <section id="features" class="max-w-7xl mx-auto px-5 md:px-8 py-16 border-b border-theme border-slate-200 dark:border-slate-800">
   <div class="text-center max-w-2xl mx-auto mb-12 fade-up">
@@ -593,7 +649,69 @@
     <div class="font-mono text-[11px] text-slate-400">&lt;Developed by="KHEDR Team" andPowered=true /&gt;</div>
   </div>
 </footer>
+<!-- ============ PACKAGE DETAILS VIEW (صفحة منفصلة) ============ -->
+<div id="packageDetailsView" class="hidden min-h-screen bg-slate-50 dark:bg-[#07111D] text-slate-900 dark:text-slate-100 py-10 px-5 transition-all">
+  <div class="max-w-5xl mx-auto">
+    
+    <!-- زر الرجوع للرئيسية -->
+    <button onclick="closePackageDetails()" class="mb-6 inline-flex items-center gap-2 text-xs font-black px-4 py-2 rounded-xl bg-white dark:bg-[#0F1D2D] border border-slate-200 dark:border-slate-800 shadow-sm hover:border-brand transition">
+      <span>← العودة للرئيسية</span>
+    </button>
 
+    <!-- الهيدر الخاص بالباقة -->
+    <div class="rounded-3xl bg-gradient-to-l from-[#5E0824] via-[#7A0B30] to-[#4A051B] p-8 md:p-12 text-white shadow-xl relative overflow-hidden mb-8">
+      <span id="pkgBadge" class="inline-block text-[11px] font-black px-3 py-1 rounded-full bg-amber-400 text-slate-900 mb-3">باقة مميزة</span>
+      <h1 id="pkgTitle" class="text-2xl md:text-4xl font-black">اسم الباقة</h1>
+      <p id="pkgSub" class="text-xs md:text-sm opacity-85 mt-2 max-w-2xl leading-6">وصف تفصيلي للباقة وما تشمله من مواد ومزايا أكاديمية.</p>
+      
+      <div class="mt-6 flex flex-wrap items-baseline gap-4">
+        <span class="text-3xl md:text-4xl font-black text-amber-300 num-font" id="pkgPrice">0 ج.م</span>
+        <span class="text-sm font-bold opacity-50 line-through num-font" id="pkgOldPrice">0 ج.م</span>
+        <span class="text-xs font-black px-2.5 py-1 rounded-lg bg-emerald-500/20 text-emerald-300 border border-emerald-500/30" id="pkgSave">وفر 0%</span>
+      </div>
+
+      <div class="mt-6">
+        <a href="#auth" onclick="closePackageDetails()" class="inline-block bg-white text-brand font-black text-xs md:text-sm px-8 py-3.5 rounded-2xl shadow-xl hover:bg-rose-50 transition">
+          اشترك في الباقة الآن
+        </a>
+      </div>
+    </div>
+
+    <!-- شبكة تفاصيل القيمة والمواد المشمولة -->
+    <div class="grid md:grid-cols-3 gap-8">
+      
+      <!-- المواد المشمولة في الباقة (2 Columns) -->
+      <div class="md:col-span-2 space-y-4">
+        <h3 class="text-base font-black flex items-center gap-2">
+          <span>📚</span> المواد الأكاديمية المشمولة بالباقة
+        </h3>
+        <div id="pkgCoursesList" class="space-y-3">
+          <!-- تتحدث تلقائياً عبر JS -->
+        </div>
+      </div>
+
+      <!-- نظام المذاكرة المشمول (Value Stack) -->
+      <div class="rounded-3xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#0F1D2D] p-6 shadow-sm h-fit space-y-4">
+        <h3 class="text-sm font-black text-amber-500 flex items-center gap-2">
+          <span>👑</span> نظام المذاكرة المتكامل
+        </h3>
+        <ul class="text-xs font-bold space-y-3 opacity-80 leading-5">
+          <li class="flex items-center gap-2"><span>🎥</span> محاضرات مسجلة بجودة 4K</li>
+          <li class="flex items-center gap-2"><span>🔴</span> جلسات Live تفاعلية أسبوعية</li>
+          <li class="flex items-center gap-2"><span>📚</span> ملخصات وتفريغات PDF منظمة</li>
+          <li class="flex items-center gap-2"><span>❓</span> بنك أسئلة MCQ مع التفسير العلمي</li>
+          <li class="flex items-center gap-2"><span>🩺</span> محاكاة امتحانات العملي والـ OSCE</li>
+          <li class="flex items-center gap-2"><span>💬</span> مجتمع خاص ومتابعة دورية</li>
+        </ul>
+        <div class="pt-4 border-t border-slate-200 dark:border-slate-800 text-[11px] text-slate-400">
+          * خصم إضافي للجروبات (3+ طلاب: 10% | 5+ طلاب: 15%).
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+</div>
 <!-- Floating WhatsApp Support Button -->
 <a href="https://wa.me/" target="_blank" rel="noopener" class="fixed bottom-5 start-5 z-50 w-12 h-12 rounded-full bg-rose-600 text-white shadow-2xl flex items-center justify-center hover:scale-110 transition" title="الدعم الفني">
   <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5Z"/></svg>
@@ -928,6 +1046,95 @@ window.addEventListener('scroll', () => {
   const scrolled = (winScroll / height) * 100;
   document.getElementById('scrollProgress').style.width = scrolled + '%';
 });
+    // بيانات الباقات التسعيرية والمواد المشمولة
+const packagesData = {
+  y1s1: {
+    title: "باقة الفرقة الأولى — الترم الأول",
+    badge: "وفر 397 جنيه (خصم 21%)",
+    sub: "4 مواد أساسية تؤسسك نظرياً وعملياً للفصل الدراسي الأول مع بنوك أسئلة دورية.",
+    price: "1,499 ج.م",
+    oldPrice: "1,896 ج.م",
+    save: "وفر 21%",
+    courses: [
+      { name: "Anatomy 1 (تشريح عام وأطراف علوية)", size: "Large", desc: "12 محاضرة + تشريح عملي وتطبيقات سريرية" },
+      { name: "Physiology 1 (وظائف أعضاء عامة)", size: "Medium", desc: "10 محاضرات + ملخصات الجداول الفسيولوجية" },
+      { name: "Histology 1 (علم الأنسجة)", size: "Small", desc: "8 محاضرات + صور الشرائح المجهرية للعملي" },
+      { name: "Biophysics 1 (الفيزياء الحيوية)", size: "Small", desc: "8 محاضرات + بنك مسائل وتطبيقات القوى الحركية" }
+    ]
+  },
+  y1full: {
+    title: "باقة الفرقة الأولى الكاملة — Full Year Pass",
+    badge: "وفر حوالي 600 جنيه",
+    sub: "الترم الأول والترم الثاني كاملين (9 مواد) مع ورش الميكانيكا الحيوية والامتحانات الشاملة.",
+    price: "2,799 ج.م",
+    oldPrice: "3,398 ج.م",
+    save: "وفر 18%",
+    courses: [
+      { name: "جميع مواد الترم الأول (4 مواد)", size: "Large", desc: "Anatomy 1, Physiology 1, Histology 1, Biophysics 1" },
+      { name: "Anatomy 2 (تشريح الأطراف السفلية والعمود الفقري)", size: "Large", desc: "12 محاضرة مع مراجعة نماذج الـ OSCE" },
+      { name: "Biomechanics 1 (مقدمة الميكانيكا الحيوية)", size: "Large", desc: "تحليل القوى وعزوم المفاصل والعضلات" },
+      { name: "Physiology 2 & Histology 2 & Biophysics 2", size: "Medium", desc: "المقررات المتبقية للفصل الدراسي الثاني" }
+    ]
+  },
+  ptfoundation: {
+    title: "باقة الأساس الشامل — PT Foundation Pass",
+    badge: "وفر 2,287 جنيه 🔥",
+    sub: "جميع مقررات الفرقة الأولى والثانية (21 مادة) تشمل الـ Biomechanics، العلاج الكهربائي، والـ Manual Therapy.",
+    price: "5,999 ج.م",
+    oldPrice: "8,286 ج.م",
+    save: "وفر 28%",
+    courses: [
+      { name: "مقررات الفرقة الأولى كاملة (9 مواد)", size: "X-Large", desc: "الترم الأول + الترم الثاني" },
+      { name: "مقررات الفرقة الثانية — ترم أول (6 مواد)", size: "X-Large", desc: "Biomechanics 2, Hydrotherapy, Electrotherapy, Anatomy 3, Tests & Measurements..." },
+      { name: "مقررات الفرقة الثانية — ترم ثاني (6 مواد)", size: "X-Large", desc: "Therapeutic Exercises, Manual Therapy, Exercise Physiology, Anatomy 4..." }
+    ]
+  }
+};
+
+// فتح شاشة الباقة وإخفاء الرئيسية
+function openPackageDetails(pkgKey) {
+  const data = packagesData[pkgKey];
+  if (!data) return;
+
+  document.getElementById("pkgTitle").textContent = data.title;
+  document.getElementById("pkgBadge").textContent = data.badge;
+  document.getElementById("pkgSub").textContent = data.sub;
+  document.getElementById("pkgPrice").textContent = data.price;
+  document.getElementById("pkgOldPrice").textContent = data.oldPrice;
+  document.getElementById("pkgSave").textContent = data.save;
+
+  const listEl = document.getElementById("pkgCoursesList");
+  listEl.innerHTML = data.courses.map(c => `
+    <div class="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#0F1D2D] p-4 flex items-center justify-between shadow-sm">
+      <div>
+        <h4 class="text-xs md:text-sm font-black">${c.name}</h4>
+        <p class="text-[11px] opacity-60 mt-1">${c.desc}</p>
+      </div>
+      <span class="text-[10px] font-black px-2.5 py-1 rounded-md bg-slate-100 dark:bg-slate-800 text-brand dark:text-rose-400 shrink-0">${c.size}</span>
+    </div>
+  `).join("");
+
+  // إخفاء أقسام الرئيسية
+  ["hero", "years", "courses", "features", "honors", "reviews", "instructor", "auth"].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.classList.add("hidden");
+  });
+
+  // إظهار شاشة الباقة والتمرير للأعلى
+  const view = document.getElementById("packageDetailsView");
+  view.classList.remove("hidden");
+  window.scrollTo({ top: 0, behavior: "smooth" });
+}
+
+// إغلاق شاشة الباقة والعودة للرئيسية
+function closePackageDetails() {
+  document.getElementById("packageDetailsView").classList.add("hidden");
+  ["hero", "years", "courses", "features", "honors", "reviews", "instructor", "auth"].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.classList.remove("hidden");
+  });
+  window.scrollTo({ top: 0, behavior: "smooth" });
+}
 </script>
 </body>
 </html>
