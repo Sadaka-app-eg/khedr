@@ -164,28 +164,28 @@
   </div>
 </header>
 
-<!-- ============ HERO SECTION (ضخم وممتد بعرض الشاشة مثل الجوهري) ============ -->
-<section id="hero" class="w-full max-w-[1550px] mx-auto px-3 sm:px-6 pt-4 pb-10">
-  <div class="relative overflow-hidden rounded-[2.5rem] bg-gradient-to-l from-[#5E0824] via-[#7A0B30] to-[#4A051B] min-h-[580px] lg:min-h-[640px] flex items-center px-6 md:px-16 py-10 shadow-2xl border border-white/10">
+<!-- ============ HERO SECTION (مطابق لمنصة الجوهري 100%) ============ -->
+<section id="hero" class="w-full max-w-[1600px] mx-auto px-2 md:px-6 pt-2 pb-8">
+  <div class="relative overflow-hidden rounded-[2rem] bg-gradient-to-l from-[#5E0824] via-[#7A0B30] to-[#4A051B] min-h-[580px] lg:min-h-[620px] flex items-center px-6 md:px-16 py-8 shadow-2xl border border-white/5">
     
-    <div class="w-full grid md:grid-cols-12 gap-8 items-center z-10">
+    <div class="w-full grid md:grid-cols-12 gap-6 items-center z-10">
       
       <!-- النص والزراير على اليمين -->
       <div class="md:col-span-7 text-right text-white space-y-5">
-        <span class="inline-block text-sm md:text-base font-black text-rose-300 tracking-wide" data-i18n="hero_eyebrow">
-          محمود خضر — طالب ومحاضر بالفرقة الثالثة علاج طبيعي
+        <span class="inline-block text-base md:text-xl font-black text-rose-300 tracking-wide" data-i18n="hero_eyebrow">
+          د / محمود خِضر
         </span>
 
-        <h1 class="text-3xl md:text-5xl lg:text-6xl font-black leading-[1.18] tracking-tight" data-i18n="hero_title">
+        <h1 class="text-4xl md:text-6xl lg:text-7xl font-black leading-[1.15] tracking-tight" data-i18n="hero_title">
           رحلتك بتبدأ مع <span class="text-amber-300">خِـضـر</span><br/>
           خُد أول خطوة.. وأنت واثق
         </h1>
 
-        <p class="text-xs md:text-base font-semibold opacity-90 leading-7 max-w-xl text-rose-100" data-i18n="hero_sub">
+        <p class="text-sm md:text-base font-semibold opacity-90 leading-7 max-w-xl text-rose-100" data-i18n="hero_sub">
           تجربة تعليمية متكاملة تستحق تبدأ بيها لأن كل تفصيلة مصممة علشانك
         </p>
 
-        <div class="pt-3">
+        <div class="pt-2">
           <a href="#auth" class="inline-block bg-white text-[#7A0B30] font-black text-xs md:text-sm px-9 py-4 rounded-2xl shadow-2xl hover:bg-rose-50 transition transform hover:scale-105" data-i18n="hero_cta1">
             سجل وخد أول خطوة
           </a>
@@ -196,11 +196,9 @@
         </div>
       </div>
 
-      <!-- صورة الدكتور على الشمال بتصميم مميز بملء الارتفاع -->
-      <div class="md:col-span-5 relative flex justify-center md:justify-end items-center h-full">
-        <div class="relative w-full max-w-[380px] lg:max-w-[440px] h-[380px] md:h-[480px] lg:h-[530px] rounded-3xl overflow-hidden shadow-2xl border-2 border-white/15">
-          <img src="khedr.jpg" alt="محمود خضر" class="w-full h-full object-cover object-center scale-105 hover:scale-100 transition duration-500" onerror="this.src='khedr.png'" />
-        </div>
+      <!-- صورة الشارح واقفة مباشرة على البانر بدون برواز مربع -->
+      <div class="md:col-span-5 relative flex justify-center md:justify-end items-end h-full">
+        <img src="khedr.jpg" alt="محمود خضر" class="max-h-[520px] lg:max-h-[580px] object-contain drop-shadow-[0_20px_30px_rgba(0,0,0,0.7)] scale-105" onerror="this.src='khedr.png'" />
       </div>
 
     </div>
@@ -208,60 +206,77 @@
   </div>
 </section>
 
-<!-- ============ ACADEMIC YEARS SECTION ============ -->
-<section id="years" class="w-full max-w-[1550px] mx-auto px-5 md:px-8 py-16 border-b border-slate-800">
-  <div class="text-center max-w-2xl mx-auto mb-12 fade-up">
-    <span class="text-xs font-extrabold uppercase tracking-widest text-rose-400" data-i18n="years_eyebrow">المسارات الجامعية</span>
-    <h2 class="text-2xl md:text-4xl font-black mt-2 text-theme-main" data-i18n="years_title">السنوات والمراحل الدراسية</h2>
-    <p class="text-xs md:text-sm font-semibold text-theme-sub mt-2 leading-6" data-i18n="years_sub">
-      احجز اشتراكك دلوقتي وابدأ مذاكرة مواد العلاج الطبيعي على موبايلك، التابلت أو اللابتوب الخاص بيك.
-    </p>
-  </div>
-
-  <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
-    <div class="fade-up card-hover rounded-3xl p-6 border border-slate-800 bg-card-theme flex flex-col justify-between shadow-sm">
-      <div>
-        <div class="w-12 h-12 rounded-2xl flex items-center justify-center font-black text-xl mb-4 bg-brand text-white shadow-md">1</div>
-        <h3 class="text-base font-black text-theme-main" data-i18n="year1_title">الفرقة الأولى</h3>
-        <p class="text-xs text-theme-sub font-semibold mt-2 leading-5" data-i18n="year1_desc">Anatomy, Physiology, Histology, Intro to Biomechanics, Ethics.</p>
+<!-- ============ ACADEMIC YEARS (مثل تصميم الجوهري: الكلام يمين والكروت شمال) ============ -->
+<section id="years" class="w-full max-w-[1600px] mx-auto px-5 md:px-8 py-16 border-b border-slate-800">
+  <div class="grid lg:grid-cols-12 gap-8 items-center">
+    
+    <!-- العنوان والزرار على اليمين (مثل الجوهري) -->
+    <div class="lg:col-span-4 text-right space-y-4">
+      <span class="text-xs font-extrabold uppercase tracking-widest text-rose-400" data-i18n="years_eyebrow">المسارات الجامعية</span>
+      <h2 class="text-3xl md:text-5xl font-black text-theme-main leading-tight" data-i18n="years_title">السنوات الدراسية</h2>
+      <p class="text-xs md:text-sm font-semibold text-theme-sub leading-6" data-i18n="years_sub">
+        احجز اشتراكك دلوقتي وابدأ مذاكرة مواد العلاج الطبيعي على موبايلك، التابلت أو اللابتوب الخاص بيك. المنصة متاحة على مدار الساعة.
+      </p>
+      <div class="pt-2">
+        <a href="#auth" class="inline-block bg-brand hover:bg-rose-900 text-white font-black text-xs md:text-sm px-8 py-3.5 rounded-2xl shadow-lg transition">
+          انشئ حسابك الآن
+        </a>
       </div>
-      <a href="#courses" class="mt-6 inline-flex items-center justify-center text-xs font-bold h-10 rounded-xl border border-slate-700 text-rose-400 hover:bg-brand hover:text-white transition" data-i18n="btn_enter_year">
-        دخول مقررات الفرقة ←
-      </a>
     </div>
 
-    <div class="fade-up card-hover rounded-3xl p-6 border border-slate-800 bg-card-theme flex flex-col justify-between shadow-sm">
-      <div>
-        <div class="w-12 h-12 rounded-2xl flex items-center justify-center font-black text-xl mb-4 bg-brand text-white shadow-md">2</div>
-        <h3 class="text-base font-black text-theme-main" data-i18n="year2_title">الفرقة الثانية</h3>
-        <p class="text-xs text-theme-sub font-semibold mt-2 leading-5" data-i18n="year2_desc">Biomechanics, Electrotherapy, Hydrotherapy, Kinesiology, Pathology.</p>
+    <!-- الكروت الـ 4 جنب بعض على الشمال ممتدة بعرض الشاشة -->
+    <div class="lg:col-span-8 grid sm:grid-cols-2 xl:grid-cols-4 gap-4">
+      
+      <!-- الفرقة 1 -->
+      <div class="fade-up card-hover rounded-2xl p-5 border border-slate-800 bg-card-theme flex flex-col justify-between shadow-md">
+        <div>
+          <div class="w-10 h-10 rounded-xl flex items-center justify-center font-black text-lg mb-3 bg-brand text-white shadow-md">1</div>
+          <h3 class="text-sm font-black text-theme-main" data-i18n="year1_title">الفرقة الأولى</h3>
+          <p class="text-[11px] text-theme-sub font-semibold mt-1.5 leading-5" data-i18n="year1_desc">Anatomy, Physiology, Histology, Intro to Biomechanics.</p>
+        </div>
+        <a href="#courses" class="mt-5 inline-flex items-center text-[11px] font-bold text-rose-400 hover:underline" data-i18n="btn_enter_year">
+          دخول جميع الكورسات ←
+        </a>
       </div>
-      <a href="#courses" class="mt-6 inline-flex items-center justify-center text-xs font-bold h-10 rounded-xl border border-slate-700 text-rose-400 hover:bg-brand hover:text-white transition" data-i18n="btn_enter_year">
-        دخول مقررات الفرقة ←
-      </a>
+
+      <!-- الفرقة 2 -->
+      <div class="fade-up card-hover rounded-2xl p-5 border border-slate-800 bg-card-theme flex flex-col justify-between shadow-md">
+        <div>
+          <div class="w-10 h-10 rounded-xl flex items-center justify-center font-black text-lg mb-3 bg-brand text-white shadow-md">2</div>
+          <h3 class="text-sm font-black text-theme-main" data-i18n="year2_title">الفرقة الثانية</h3>
+          <p class="text-[11px] text-theme-sub font-semibold mt-1.5 leading-5" data-i18n="year2_desc">Biomechanics, Electrotherapy, Hydrotherapy, Kinesiology.</p>
+        </div>
+        <a href="#courses" class="mt-5 inline-flex items-center text-[11px] font-bold text-rose-400 hover:underline" data-i18n="btn_enter_year">
+          دخول جميع الكورسات ←
+        </a>
+      </div>
+
+      <!-- الفرقة 3 -->
+      <div class="fade-up card-hover rounded-2xl p-5 border border-slate-800 bg-card-theme flex flex-col justify-between shadow-md">
+        <div>
+          <div class="w-10 h-10 rounded-xl flex items-center justify-center font-black text-lg mb-3 bg-brand text-white shadow-md">3</div>
+          <h3 class="text-sm font-black text-theme-main" data-i18n="year3_title">الفرقة الثالثة</h3>
+          <p class="text-[11px] text-theme-sub font-semibold mt-1.5 leading-5" data-i18n="year3_desc">Orthopedic PT, Neurological PT, Cardiopulmonary PT.</p>
+        </div>
+        <a href="#courses" class="mt-5 inline-flex items-center text-[11px] font-bold text-rose-400 hover:underline" data-i18n="btn_enter_year">
+          دخول جميع الكورسات ←
+        </a>
+      </div>
+
+      <!-- الفرقة 4 -->
+      <div class="fade-up card-hover rounded-2xl p-5 border border-slate-800 bg-card-theme flex flex-col justify-between shadow-md">
+        <div>
+          <div class="w-10 h-10 rounded-xl flex items-center justify-center font-black text-lg mb-3 bg-brand text-white shadow-md">4</div>
+          <h3 class="text-sm font-black text-theme-main" data-i18n="year4_title">الفرقة الرابعة</h3>
+          <p class="text-[11px] text-theme-sub font-semibold mt-1.5 leading-5" data-i18n="year4_desc">Pediatric PT, Geriatrics, Sports Injuries, Clinical Internship.</p>
+        </div>
+        <a href="#courses" class="mt-5 inline-flex items-center text-[11px] font-bold text-rose-400 hover:underline" data-i18n="btn_enter_year">
+          دخول جميع الكورسات ←
+        </a>
+      </div>
+
     </div>
 
-    <div class="fade-up card-hover rounded-3xl p-6 border border-slate-800 bg-card-theme flex flex-col justify-between shadow-sm">
-      <div>
-        <div class="w-12 h-12 rounded-2xl flex items-center justify-center font-black text-xl mb-4 bg-brand text-white shadow-md">3</div>
-        <h3 class="text-base font-black text-theme-main" data-i18n="year3_title">الفرقة الثالثة</h3>
-        <p class="text-xs text-theme-sub font-semibold mt-2 leading-5" data-i18n="year3_desc">Orthopedic PT, Neurological PT, Cardiopulmonary PT, Manual Therapy.</p>
-      </div>
-      <a href="#courses" class="mt-6 inline-flex items-center justify-center text-xs font-bold h-10 rounded-xl border border-slate-700 text-rose-400 hover:bg-brand hover:text-white transition" data-i18n="btn_enter_year">
-        دخول مقررات الفرقة ←
-      </a>
-    </div>
-
-    <div class="fade-up card-hover rounded-3xl p-6 border border-slate-800 bg-card-theme flex flex-col justify-between shadow-sm">
-      <div>
-        <div class="w-12 h-12 rounded-2xl flex items-center justify-center font-black text-xl mb-4 bg-brand text-white shadow-md">4</div>
-        <h3 class="text-base font-black text-theme-main" data-i18n="year4_title">الفرقة الرابعة والامتياز</h3>
-        <p class="text-xs text-theme-sub font-semibold mt-2 leading-5" data-i18n="year4_desc">Pediatric PT, Geriatrics, Sports Injuries, Clinical Internship Training.</p>
-      </div>
-      <a href="#courses" class="mt-6 inline-flex items-center justify-center text-xs font-bold h-10 rounded-xl border border-slate-700 text-rose-400 hover:bg-brand hover:text-white transition" data-i18n="btn_enter_year">
-        دخول مقررات الفرقة ←
-      </a>
-    </div>
   </div>
 </section>
 
@@ -296,9 +311,9 @@
             <span class="text-base font-black text-rose-400 num-font">1,499 <span class="text-xs font-bold" data-i18n="egp">ج.م</span></span>
             <span class="text-[11px] font-bold text-slate-400 line-through num-font">1,896</span>
           </div>
-          <button onclick="openPackageDetails('y1s1')" class="px-4 py-2 rounded-xl bg-brand text-white font-black text-xs hover:bg-rose-900 transition" data-i18n="btn_details">
-            عرض التفاصيل
-          </button>
+<button onclick="openCourseView('biomechanics')" class="px-4 py-2 rounded-xl bg-brand text-white font-black text-xs hover:bg-rose-900 transition">
+  عرض التفاصيل والمعاينة المجانية
+</button>
         </div>
       </div>
     </article>
@@ -565,7 +580,82 @@
 
   </div>
 </div>
+<!-- ============ COURSE DETAILS & LESSONS VIEW (شاشة الكورس والمحاضرات) ============ -->
+<div id="courseView" class="hidden min-h-screen bg-[#07111D] text-slate-100 py-10 px-4 md:px-8 transition-all">
+  <div class="max-w-6xl mx-auto">
+    
+    <!-- زر الرجوع للرئيسية -->
+    <button onclick="closeCourseView()" class="mb-6 inline-flex items-center gap-2 text-xs font-black px-4 py-2.5 rounded-xl bg-[#0F1D2D] border border-slate-800 text-slate-200 hover:border-brand transition">
+      <span>← العودة للصفحة الرئيسية</span>
+    </button>
 
+    <!-- بانر الكورس العلوي -->
+    <div class="rounded-3xl bg-gradient-to-l from-[#5E0824] via-[#7A0B30] to-[#4A051B] p-6 md:p-10 text-white shadow-2xl relative overflow-hidden mb-8 border border-white/10">
+      <div class="flex flex-col md:flex-row md:items-center justify-between gap-6">
+        <div class="space-y-3 max-w-2xl">
+          <span id="crsCategory" class="inline-block text-[11px] font-black px-3 py-1 rounded-full bg-amber-400 text-slate-900">مقرر أكاديمي</span>
+          <h1 id="crsTitle" class="text-2xl md:text-4xl font-black">اسم الكورس</h1>
+          <p id="crsDesc" class="text-xs md:text-sm opacity-85 leading-6 text-rose-100">وصف الكورس والمهارات والمفاهيم الأكاديمية التي سيتم تغطيتها.</p>
+          
+          <!-- حالة الاشتراك -->
+          <div id="enrollmentStatusBanner" class="pt-2">
+            <span class="inline-flex items-center gap-2 text-xs font-bold text-amber-300 bg-black/30 px-3 py-1.5 rounded-xl border border-amber-300/30">
+              <span>🔓</span> يتوفر كليب معاينة مجاني (المقدمة) — باقي المحاضرات مغلقة
+            </span>
+          </div>
+        </div>
+
+        <!-- كارت السعر والاشتراك السريع -->
+        <div class="bg-black/30 backdrop-blur-md p-6 rounded-2xl border border-white/15 text-center shrink-0 space-y-4">
+          <div>
+            <span class="text-xs opacity-70 block">سعر الاشتراك</span>
+            <span id="crsPrice" class="text-3xl font-black text-amber-300 num-font">0 ج.م</span>
+          </div>
+          <button id="crsActionBtn" onclick="toggleCourseEnrollment()" class="w-full bg-white text-[#7A0B30] font-black text-xs md:text-sm px-6 py-3 rounded-xl shadow-xl hover:bg-rose-50 transition transform hover:scale-105">
+            الاشتراك في الكورس الآن 🚀
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- شبكة مشغل الفيديو والفهرس -->
+    <div class="grid lg:grid-cols-12 gap-8">
+      
+      <!-- المنطقة الرئيسية: مشغل الفيديو / معاينة المحاضرة (8 أعمدة) -->
+      <div class="lg:col-span-8 space-y-5">
+        <div id="videoPlayerContainer" class="rounded-3xl overflow-hidden bg-[#0F1D2D] border border-slate-800 aspect-video relative flex items-center justify-center shadow-lg">
+          <!-- شاشة مشغل الفيديو الافتراضية -->
+          <div id="videoPlaceholder" class="text-center p-6 space-y-3">
+            <div class="w-16 h-16 rounded-full bg-brand/30 text-rose-400 flex items-center justify-center text-3xl mx-auto border border-brand/50">▶</div>
+            <h3 class="font-black text-sm md:text-base">اضغط على "المقدمة" لمشاهدة المعاينة المجانية</h3>
+            <p class="text-xs text-slate-400">يمكنك مشاهدة شرح مقدمة المقرر مجاناً قبل الاشتراك</p>
+          </div>
+          <iframe id="videoIframe" class="hidden w-full h-full" src="" frameborder="0" allowfullscreen></iframe>
+        </div>
+
+        <!-- تفاصيل المحاضرة الحالية -->
+        <div class="rounded-2xl bg-[#0F1D2D] border border-slate-800 p-5 space-y-2">
+          <h3 id="currentLessonTitle" class="font-black text-sm md:text-base text-amber-300">اختر محاضرة من الفهرس</h3>
+          <p id="currentLessonDesc" class="text-xs text-slate-400 leading-5">اضغط على أي درس في القائمة الجانبية لعرضه أو فتحه.</p>
+        </div>
+      </div>
+
+      <!-- الفهرس والمحتويات (4 أعمدة) -->
+      <div class="lg:col-span-4 space-y-4">
+        <div class="flex items-center justify-between">
+          <h3 class="font-black text-sm text-slate-200">فهرس المحاضرات والسكاشن</h3>
+          <span id="unlockedCountBadge" class="text-[10px] font-bold px-2 py-0.5 rounded bg-slate-800 text-rose-400">1 مفتوح</span>
+        </div>
+
+        <div id="lessonsList" class="space-y-3 max-h-[600px] overflow-y-auto pe-1">
+          <!-- يتم توليده تلقائياً عبر JavaScript -->
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+</div>
 <!-- ============ RICH FOOTER ============ -->
 <footer class="bg-slate-900 text-white border-t border-slate-800 pt-12 pb-8 px-5">
   <div class="w-full max-w-[1550px] mx-auto grid grid-cols-1 md:grid-cols-4 gap-8 mb-10 text-center md:text-start">
@@ -1035,13 +1125,192 @@ function closePackageDetails() {
       }
     });
   }
+  // ============ COURSE & LESSONS FREEMIUM SYSTEM ============
+
+// داتا الكورسات والمحاضرات (مقدمة مجانية + باقي المحاضرات مقفولة)
+const singleCoursesData = {
+  biomechanics: {
+    id: "biomechanics",
+    category: "الفرقة الثانية • ترم أول",
+    title: "كورس Biomechanics & Movement Analysis 🩻",
+    desc: "شرح كامل للميكانيكا الحيوية، تحليل القوى، العزوم، حركات المشي، مع ورش العملي وبنك الأسئلة.",
+    price: "599 ج.م",
+    isEnrolled: false, // حالة الاشتراك الافتراضية
+    lessons: [
+      {
+        id: "l1",
+        title: "01. مقدمة الميكانيكا الحيوية والـ Kinematics",
+        type: "video",
+        duration: "15:20 دقيقة",
+        isFree: true, // المقدمة مجانية
+        videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ", // ضع رابط فيديو المقدمة هنا
+        desc: "شرح مفاهيم الـ Vectors، القوى الحركية، ومقدمة المادة مجاناً للجميع."
+      },
+      {
+        id: "l2",
+        title: "02. تحليل عزوم المفاصل (Kinetics & Joint Torques)",
+        type: "video",
+        duration: "35:40 دقيقة",
+        isFree: false,
+        videoUrl: "",
+        desc: "حساب العزوم والقوى المؤثرة على مفصل الركبة والحوض أثناء الحركة."
+      },
+      {
+        id: "l3",
+        title: "03. Gait Analysis (تحليل حركة المشي الإكلينيكي)",
+        type: "video",
+        duration: "42:10 دقيقة",
+        isFree: false,
+        videoUrl: "",
+        desc: "دراسة مراحل الـ Stance & Swing Phase والأخطاء الحركية الشهيرة."
+      },
+      {
+        id: "l4",
+        title: "📄 ملخص وتفريغ المحاضرات PDF",
+        type: "pdf",
+        duration: "ملف PDF",
+        isFree: false,
+        desc: "تفريغ شامل بالرسومات والمخططات التوضيحية لجميع قوانين المادة."
+      },
+      {
+        id: "l5",
+        title: "🧠 بنك أسئلة الـ MCQ والتفسير العلمي",
+        type: "quiz",
+        duration: "50 سؤال",
+        isFree: false,
+        desc: "نماذج امتحانات السنوات السابقة مجابة بالتفصيل."
+      }
+    ]
+  }
+};
+
+let currentActiveCourse = null;
+
+// فتح شاشة الكورس وفحص حالة القفل والفتح
+function openCourseView(courseId) {
+  const crs = singleCoursesData[courseId] || singleCoursesData["biomechanics"];
+  currentActiveCourse = crs;
+
+  document.getElementById("crsCategory").textContent = crs.category;
+  document.getElementById("crsTitle").textContent = crs.title;
+  document.getElementById("crsDesc").textContent = crs.desc;
+  document.getElementById("crsPrice").textContent = crs.price;
+
+  renderCourseCurriculum();
+
+  // إخفاء الصفحة الرئيسية وإظهار شاشة الكورس
+  ["hero", "years", "courses", "features", "honors", "reviews", "instructor", "auth"].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.classList.add("hidden");
+  });
+
+  document.getElementById("courseView").classList.remove("hidden");
+  window.scrollTo({ top: 0, behavior: "smooth" });
+}
+
+// عرض فهرس المحاضرات حسب حالة القفل / الاشتراك
+function renderCourseCurriculum() {
+  const crs = currentActiveCourse;
+  if (!crs) return;
+
+  const btn = document.getElementById("crsActionBtn");
+  const banner = document.getElementById("enrollmentStatusBanner");
+
+  if (crs.isEnrolled) {
+    btn.textContent = "أنت مشترك بالفعل 🔓 (المحتوى مفتوح)";
+    btn.className = "w-full bg-emerald-500 text-white font-black text-xs md:text-sm px-6 py-3 rounded-xl shadow-xl cursor-default";
+    banner.innerHTML = `<span class="inline-flex items-center gap-2 text-xs font-bold text-emerald-300 bg-emerald-950/60 px-3 py-1.5 rounded-xl border border-emerald-500/30">
+      <span>🎉</span> تم الاشتراك بنجاح! جميع المحاضرات وبنوك الأسئلة والـ PDFs مفتوحة لك.
+    </span>`;
+  } else {
+    btn.textContent = "الاشتراك في الكورس الآن 🚀";
+    btn.className = "w-full bg-white text-[#7A0B30] font-black text-xs md:text-sm px-6 py-3 rounded-xl shadow-xl hover:bg-rose-50 transition transform hover:scale-105";
+    banner.innerHTML = `<span class="inline-flex items-center gap-2 text-xs font-bold text-amber-300 bg-black/40 px-3 py-1.5 rounded-xl border border-amber-300/30">
+      <span>🔒</span> يتوفر كليب معاينة مجاني (المقدمة) — اشترك لفتح باقي المواد
+    </span>`;
+  }
+
+  const listEl = document.getElementById("lessonsList");
+  listEl.innerHTML = crs.lessons.map((lesson, idx) => {
+    const canAccess = lesson.isFree || crs.isEnrolled;
+    
+    return `
+      <div onclick="selectLesson('${lesson.id}')" class="rounded-2xl border p-4 transition cursor-pointer flex items-center justify-between ${
+        canAccess 
+          ? "bg-[#0F1D2D] border-slate-700 hover:border-amber-400" 
+          : "bg-slate-900/60 border-slate-800 opacity-60 hover:opacity-80"
+      }">
+        <div class="flex items-center gap-3">
+          <span class="text-lg">${canAccess ? (lesson.isFree ? "▶️" : "🔓") : "🔒"}</span>
+          <div>
+            <h4 class="text-xs font-black text-slate-100">${lesson.title}</h4>
+            <span class="text-[10px] text-slate-400 block mt-0.5">${lesson.duration} ${lesson.isFree ? "• معاينة مجانية" : ""}</span>
+          </div>
+        </div>
+        <span class="text-[10px] font-black px-2 py-1 rounded ${canAccess ? "bg-emerald-500/20 text-emerald-400" : "bg-slate-800 text-slate-500"}">
+          ${canAccess ? "متاح" : "مغلق"}
+        </span>
+      </div>
+    `;
+  }).join("");
+}
+
+// تشغيل الدرس أو تنبيه الطالب بالاشتراك
+function selectLesson(lessonId) {
+  const crs = currentActiveCourse;
+  const lesson = crs.lessons.find(l => l.id === lessonId);
+  if (!lesson) return;
+
+  const canAccess = lesson.isFree || crs.isEnrolled;
+
+  if (!canAccess) {
+    alert("🔒 هذه المحاضرة مغلقة. يرجى الضغط على زر 'الاشتراك في الكورس' لفتح جميع المحاضرات والـ PDFs وبنوك الأسئلة.");
+    return;
+  }
+
+  // عرض تفاصيل الدرس المفتوح
+  document.getElementById("currentLessonTitle").textContent = lesson.title;
+  document.getElementById("currentLessonDesc").textContent = lesson.desc;
+
+  const iframe = document.getElementById("videoIframe");
+  const placeholder = document.getElementById("videoPlaceholder");
+
+  if (lesson.type === "video" && lesson.videoUrl) {
+    iframe.src = lesson.videoUrl;
+    iframe.classList.remove("hidden");
+    placeholder.classList.add("hidden");
+  } else {
+    iframe.classList.add("hidden");
+    placeholder.classList.remove("hidden");
+    placeholder.querySelector("h3").textContent = `📄 ${lesson.title}`;
+    placeholder.querySelector("p").textContent = "المحتوى جاهز للعرض والتحميل.";
+  }
+}
+
+// محاكاة زر الاشتراك (فتح كل الدروس)
+function toggleCourseEnrollment() {
+  if (!currentActiveCourse) return;
+
+  if (currentActiveCourse.isEnrolled) {
+    alert("أنت مشترك بالفعل في هذا الكورس!");
+    return;
+  }
+
+  // تفعيل الاشتراك
+  currentActiveCourse.isEnrolled = true;
+  renderCourseCurriculum();
+  alert("🎉 مبروك! تم الاشتراك في الكورس بنجاح وفتح جميع المحاضرات وبنوك الأسئلة.");
+}
+
+// إغلاق شاشة الكورس والعودة للرئيسية
+function closeCourseView() {
+  document.getElementById("courseView").classList.add("hidden");
+  ["hero", "years", "courses", "features", "honors", "reviews", "instructor", "auth"].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.classList.remove("hidden");
+  });
+  window.scrollTo({ top: 0, behavior: "smooth" });
+}
 </script>
 </body>
 </html>
-```eof
-
-تم تجهيز ملف `index.html` الكامل بحل المشكلة جذرية! 
-
-### سبب ظهور المساحات البيضاء سابقاً وكيف تم إصلاحها:
-1. **الخلفية الافتراضية للموقع:** كانت خلفية الصفحة بيضاء فاتحة (`#F8FAFC`)، فلما كان بيتحط كارت العنابي بداخلها كان بيظهر كمربع صغير في وسط مساحة بيضاء شاسعة!
-2. **الآن:** أصبحت خلفية الموقع الافتراضية والهيدر لونها كحلي غامق فاخر (`#07111D`) مثل منصة الجوهري بالضبط، مع توسيع الكارت لـ `max-w-[1550px]` وارتفاع `640px` ضخم مع تكبير الخطوط والصورة لتملأ المساحة بهيبة وشكل احترافي.
