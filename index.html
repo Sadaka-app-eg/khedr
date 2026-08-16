@@ -4,7 +4,6 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>KHEDR & PHYSIO | منصة تعليم العلاج الطبيعي</title>
-<meta name="description" content="منصة KHEDR & PHYSIO لتعليم العلاج الطبيعي — كورسات، حالات عملية، اختبارات، وتقييم حركي تفاعلي" />
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -14,594 +13,363 @@
 
 <style>
   :root{
-    --ink:      #0E2A38;   /* عمق سريري - navy طبي */
-    --ink-2:    #123A4C;
-    --teal:     #2D6A6A;   /* حركة/تعافي */
-    --coral:    #FF7A45;   /* طاقة/نبض حيوي */
-    --coral-2:  #FF9466;
-    --mist:     #F5F8F8;   /* خلفية فاتحة باردة */
-    --mist-line:#E3EBEC;
-    --dark-bg:  #081820;
-    --dark-panel:#0F2733;
-    --success:  #3FB68B;
-    --amber:    #E8A33D;
+    --brand-primary: #8E0E38;   /* عنابي / بورجوندي المنصة */
+    --brand-dark:    #630825;
+    --brand-accent:  #FFB800;   /* أصفر التبديل والنجوم */
+    --ink:           #1C1917;
+    --mist:          #F8FAFC;
+    --mist-line:     #E2E8F0;
+    --dark-bg:       #0F172A;
+    --dark-card:     #1E293B;
   }
 
-  html[lang="ar"] body, html[lang="ar"] * { font-family:'Tajawal','IBM Plex Sans Arabic',sans-serif; }
-  html[lang="en"] body, html[lang="en"] * { font-family:'Plus Jakarta Sans',sans-serif; }
-  html[lang="ar"] .num-font { font-family:'Plus Jakarta Sans',sans-serif; }
+  html[lang="ar"] body, html[lang="ar"] * { font-family: 'Tajawal', 'IBM Plex Sans Arabic', sans-serif; }
+  .num-font { font-family: 'Plus Jakarta Sans', sans-serif; }
 
-  body{ background:var(--mist); color:var(--ink); }
-  body.dark{ background:var(--dark-bg); color:#EAF3F3; }
+  body { background: var(--mist); color: var(--ink); }
+  body.dark { background: var(--dark-bg); color: #F1F5F9; }
 
-  .goniometer{ transform-origin:50% 100%; animation: sweep 4.5s cubic-bezier(.65,0,.35,1) infinite; }
-  @keyframes sweep{
-    0%{ transform:rotate(-8deg); }
-    50%{ transform:rotate(46deg); }
-    100%{ transform:rotate(-8deg); }
-  }
-  .pulse-dot{ animation: pulseDot 2.2s ease-in-out infinite; }
-  @keyframes pulseDot{ 0%,100%{ opacity:.35; r:3; } 50%{ opacity:1; r:5; } }
+  .bg-brand { background-color: var(--brand-primary); }
+  .text-brand { color: var(--brand-primary); }
+  .border-brand { border-color: var(--brand-primary); }
 
-  .grad-cta{ background:linear-gradient(135deg, var(--coral), var(--coral-2)); }
-  .grad-hero-panel{ background:linear-gradient(160deg, var(--ink-2), var(--ink)); }
+  .card-hover { transition: transform .25s ease, box-shadow .25s ease; }
+  .card-hover:hover { transform: translateY(-4px); box-shadow: 0 16px 30px -10px rgba(142, 14, 56, 0.15); }
 
-  .card-hover{ transition:transform .25s ease, box-shadow .25s ease; }
-  .card-hover:hover{ transform:translateY(-6px); box-shadow:0 20px 40px -18px rgba(14,42,56,.25); }
+  .fade-up { opacity: 0; transform: translateY(16px); transition: opacity .5s ease, transform .5s ease; }
+  .fade-up.show { opacity: 1; transform: translateY(0); }
 
-  .fade-up{ opacity:0; transform:translateY(18px); transition:opacity .6s ease, transform .6s ease; }
-  .fade-up.show{ opacity:1; transform:translateY(0); }
-
-  .skeleton-shimmer{ background:linear-gradient(90deg,#e7edee 25%,#f2f6f6 37%,#e7edee 63%); background-size:400% 100%; animation:shimmer 1.4s ease infinite; }
-  @keyframes shimmer{ 0%{background-position:100% 0;} 100%{background-position:0 0;} }
-
-  [dir="rtl"] .rtl-flip{ transform:scaleX(-1); }
-  ::selection{ background:var(--coral); color:#fff; }
-  :focus-visible{ outline:2px solid var(--coral); outline-offset:3px; }
-
-  .auth-tab{ color:var(--ink); opacity:.5; }
-  .auth-tab.active{ background:#fff; opacity:1; box-shadow:0 6px 16px -8px rgba(14,42,56,.25); }
-  body.dark .auth-tab.active{ background:var(--dark-panel); }
-  #loginForm input, #registerForm input{ color:inherit; }
-  #loginForm input:focus, #registerForm input:focus{ outline:none; }
+  .auth-tab { color: var(--ink); opacity: .6; }
+  .auth-tab.active { background: #fff; opacity: 1; color: var(--brand-primary); box-shadow: 0 4px 12px rgba(0,0,0,0.08); }
+  body.dark .auth-tab.active { background: var(--dark-card); color: #fff; }
 </style>
 </head>
 
-<body class="antialiased">
+<body class="antialiased selection:bg-[#8E0E38] selection:text-white">
 
-<!-- ============ HEADER ============ -->
-<header class="sticky top-0 z-50 backdrop-blur-md bg-white/80 dark:bg-[#081820]/85 border-b" style="border-color:var(--mist-line)">
-  <div class="max-w-7xl mx-auto px-5 md:px-8 h-20 flex items-center justify-between">
+<!-- ============ NAVBAR ============ -->
+<header class="sticky top-0 z-50 bg-white/95 dark:bg-[#0F172A]/95 backdrop-blur border-b" style="border-color: var(--mist-line)">
+  <div class="max-w-4xl mx-auto px-4 h-16 flex items-center justify-between">
+    <!-- Menu Hamburger -->
+    <button id="drawerBtn" class="w-10 h-10 flex items-center justify-center text-amber-500">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+    </button>
 
-    <a href="#" class="flex items-center gap-3 shrink-0">
-      <span class="relative w-11 h-11 rounded-2xl flex items-center justify-center grad-hero-panel">
-        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" class="rtl-flip">
-          <path d="M4 12h4l2-6 4 12 2-6h4" stroke="#FF7A45" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
-      </span>
-      <span class="font-extrabold text-sm md:text-base tracking-tight whitespace-nowrap" data-i18n="brand">محمود خضر</span>
+    <!-- Brand Logo -->
+    <a href="#" class="flex flex-col items-center">
+      <span class="text-xl font-black text-brand tracking-tight">خِــضـر</span>
+      <span class="text-[9px] font-bold tracking-widest text-slate-400 -mt-1">PHYSIO</span>
     </a>
 
-    <nav class="hidden lg:flex items-center gap-9 text-sm font-semibold" style="color:var(--ink)">
-      <a href="#courses" class="hover:opacity-60 transition" data-i18n="nav_courses">الكورسات</a>
-      <a href="#instructor" class="hover:opacity-60 transition" data-i18n="nav_instructor">المدرس</a>
-      <a href="#exams" class="hover:opacity-60 transition" data-i18n="nav_exams">الاختبارات</a>
-      <a href="#resources" class="hover:opacity-60 transition" data-i18n="nav_resources">المصادر</a>
-      <a href="#about" class="hover:opacity-60 transition" data-i18n="nav_about">عن المنصة</a>
-    </nav>
-
-    <div class="flex items-center gap-2 md:gap-3">
-      <!-- Language switch -->
-      <button id="langBtn" class="text-xs font-bold px-3 h-9 rounded-full border flex items-center gap-1.5" style="border-color:var(--mist-line)">
-        <svg width="15" height="15" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.6"/><path d="M3 12h18M12 3c2.5 2.7 2.5 15.3 0 18M12 3c-2.5 2.7-2.5 15.3 0 18" stroke="currentColor" stroke-width="1.6"/></svg>
-        <span id="langLabel">EN</span>
+    <!-- Search & Theme -->
+    <div class="flex items-center gap-2">
+      <button class="w-8 h-8 flex items-center justify-center text-slate-600 dark:text-slate-300">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
       </button>
-
-      <!-- Dark mode -->
-      <button id="themeBtn" class="w-9 h-9 rounded-full border flex items-center justify-center" style="border-color:var(--mist-line)" aria-label="dark mode">
-        <svg id="themeIcon" width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M21 12.8A9 9 0 1 1 11.2 3 7 7 0 0 0 21 12.8Z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/></svg>
-      </button>
-
-      <a href="#auth" class="hidden md:block text-sm font-bold px-4 h-10 leading-10" data-i18n="nav_login">تسجيل الدخول</a>
-      <a href="#" class="text-sm font-bold text-white px-5 h-10 leading-10 rounded-full grad-cta shadow-lg shadow-orange-900/10" data-i18n="nav_cta">ابدأ التعلم</a>
-
-      <button id="drawerBtn" class="lg:hidden w-9 h-9 flex items-center justify-center">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M4 7h16M4 12h16M4 17h16" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+      <button id="themeBtn" class="w-14 h-7 rounded-full bg-amber-400 flex items-center justify-between px-1.5 shadow-inner">
+        <span class="text-xs">☀️</span>
+        <span class="text-xs">🌙</span>
       </button>
     </div>
   </div>
 
-  <!-- Mobile drawer -->
-  <div id="drawer" class="lg:hidden hidden border-t px-5 py-4 flex flex-col gap-4 text-sm font-semibold" style="border-color:var(--mist-line)">
-    <a href="#courses" data-i18n="nav_courses">الكورسات</a>
-    <a href="#instructor" data-i18n="nav_instructor">المدرس</a>
-    <a href="#exams" data-i18n="nav_exams">الاختبارات</a>
-    <a href="#resources" data-i18n="nav_resources">المصادر</a>
-    <a href="#about" data-i18n="nav_about">عن المنصة</a>
-    <a href="#auth" class="pt-2" data-i18n="nav_login">تسجيل الدخول</a>
+  <!-- Mobile Drawer Menu -->
+  <div id="drawer" class="hidden border-t px-5 py-4 flex flex-col gap-3 text-sm font-bold bg-white dark:bg-[#0F172A]" style="border-color: var(--mist-line)">
+    <a href="#hero" class="py-1">الرئيسية</a>
+    <a href="#courses" class="py-1">الكورسات المقترحة</a>
+    <a href="#years" class="py-1">السنوات الدراسية</a>
+    <a href="#honors" class="py-1">أوائل الدفعات</a>
+    <a href="#features" class="py-1">عن المنصة</a>
+    <a href="#auth" class="py-2 text-center rounded-xl text-white bg-brand mt-2">تسجيل الدخول / حساب جديد</a>
   </div>
 </header>
 
-<!-- ============ HERO ============ -->
-<section class="max-w-7xl mx-auto px-5 md:px-8 pt-14 md:pt-20 pb-16 grid lg:grid-cols-2 gap-14 items-center">
+<!-- ============ HERO SECTION (نفس تصميم الصورة الأولى) ============ -->
+<section id="hero" class="relative overflow-hidden bg-brand min-h-[580px] md:min-h-[640px] flex flex-col justify-between items-center text-center text-white px-5 pt-12 pb-10">
+  
+  <!-- المحاضر في الخلفية -->
+  <div class="absolute inset-0 flex items-end justify-center pointer-events-none opacity-40 md:opacity-50">
+    <img src="khedr.jpg" alt="د. محمود خضر" class="h-[90%] max-h-[520px] object-contain object-bottom scale-105" />
+  </div>
 
-  <div class="fade-up">
-    <span class="inline-flex items-center gap-2 text-xs font-bold px-3.5 py-1.5 rounded-full mb-6" style="background:rgba(45,106,106,.1); color:var(--teal)">
-      <span class="w-1.5 h-1.5 rounded-full" style="background:var(--coral)"></span>
-      <span data-i18n="hero_eyebrow">تخصص العلاج الطبيعي والتأهيل الحركي</span>
-    </span>
-
-    <h1 class="text-4xl md:text-6xl font-black leading-[1.15] tracking-tight" data-i18n="hero_title">
-      افهم الحركة.<br/>وابنِ مستقبلك في العلاج الطبيعي.
+  <!-- النصوص الترحيبية فوق الصورة -->
+  <div class="relative z-10 max-w-md mx-auto flex flex-col items-center">
+    <span class="text-sm md:text-base font-black tracking-widest text-rose-300 mb-2">د / محمود خِضر</span>
+    
+    <h1 class="text-3xl md:text-5xl font-black leading-tight mt-1">
+      رحلتك بتبدأ مع<br/>
+      <span class="text-4xl md:text-6xl block mt-1">خِـــضـــر</span>
+      خُد أول خطوة.. وأنت واثق
     </h1>
 
-    <p class="mt-6 text-lg leading-8 max-w-lg opacity-70" data-i18n="hero_sub">
-      دورات وحالات عملية وتقييمات حركية تفاعلية مع د. محمود خضر — من الأساس التشريحي لحد التطبيق الإكلينيكي الحقيقي.
+    <p class="mt-4 text-xs md:text-sm font-semibold opacity-90 leading-6 max-w-xs">
+      تجربة تعليمية جامعية متكاملة تستحق تبدأ بيها لأن كل تفصيلة مصممة علشانك
     </p>
 
-    <div class="mt-9 flex flex-wrap items-center gap-4">
-      <a href="#courses" class="text-white font-bold px-7 h-13 py-3.5 rounded-full grad-cta shadow-xl shadow-orange-900/15 inline-flex items-center gap-2 hover:scale-[1.03] transition" data-i18n="hero_cta1">ابدأ التعلم</a>
-      <a href="#courses" class="font-bold px-7 py-3.5 rounded-full border-2 inline-flex items-center gap-2 hover:bg-black/[.03] transition" style="border-color:var(--mist-line)" data-i18n="hero_cta2">استكشف الكورسات</a>
+    <a href="#auth" class="mt-8 bg-white text-brand font-black text-sm md:text-base px-10 py-3 rounded-2xl shadow-xl hover:bg-rose-50 transition transform hover:scale-105">
+      سجل وخد أول خطوة
+    </a>
+  </div>
+
+  <!-- تذييل الهيرو -->
+  <div class="relative z-10 text-[11px] font-bold opacity-60 tracking-wider">
+    منصة د. محمود خضر لتعليم العلاج الطبيعي
+  </div>
+</section>
+
+<!-- ============ FEATURED COURSES (نفس ستايل الكروت في الصورة الثانية) ============ -->
+<section id="courses" class="max-w-4xl mx-auto px-4 py-12">
+  <div class="text-center mb-8 fade-up">
+    <h2 class="text-2xl md:text-3xl font-black text-slate-900 dark:text-white">الكورسات المُقترحة</h2>
+    <span class="inline-block mt-2 px-4 py-1 rounded-full text-xs font-bold bg-rose-100 text-brand">الكل</span>
+    <p class="text-xs font-semibold opacity-60 mt-2">تقدر تختار من أفضل الكورسات المقترحة من قبل د. محمود خضر</p>
+  </div>
+
+  <div class="grid md:grid-cols-2 gap-6">
+    <!-- كورس 1 -->
+    <div class="fade-up card-hover rounded-3xl border bg-white dark:bg-[#1E293B] overflow-hidden p-3" style="border-color: var(--mist-line)">
+      <div class="rounded-2xl overflow-hidden relative bg-emerald-700 aspect-[16/9] flex items-center justify-center text-white">
+        <span class="absolute top-2 start-2 bg-emerald-950/80 text-[10px] font-black px-2 py-0.5 rounded-md">الفرقة 2</span>
+        <div class="text-center p-4">
+          <span class="text-xs font-bold opacity-80">كورس</span>
+          <h3 class="text-xl font-black mt-1">الميكانيكا الحيوية + الورشة</h3>
+        </div>
+      </div>
+
+      <div class="p-4">
+        <span class="text-xs font-black text-rose-600 block mb-1">الفرقة الثانية • ترم أول</span>
+        <h4 class="font-extrabold text-base leading-snug">كورس Biomechanics & Movement Analysis 🩻</h4>
+        
+        <div class="flex items-baseline gap-2 mt-3">
+          <span class="text-lg font-black text-brand num-font">280 <span class="text-xs">جنيه</span></span>
+          <span class="text-xs font-bold opacity-40 line-through num-font">380.00 جنيه</span>
+        </div>
+
+        <a href="#auth" class="mt-4 block w-full text-center py-2.5 rounded-xl border border-brand text-brand font-black text-xs hover:bg-brand hover:text-white transition">
+          الدخول للكورس
+        </a>
+      </div>
     </div>
 
-    <div class="mt-11 flex items-center gap-8">
+    <!-- كورس 2 -->
+    <div class="fade-up card-hover rounded-3xl border bg-white dark:bg-[#1E293B] overflow-hidden p-3" style="border-color: var(--mist-line)">
+      <div class="rounded-2xl overflow-hidden relative bg-blue-900 aspect-[16/9] flex items-center justify-center text-white">
+        <span class="absolute top-2 start-2 bg-blue-950/80 text-[10px] font-black px-2 py-0.5 rounded-md">الفرقة 3</span>
+        <div class="text-center p-4">
+          <span class="text-xs font-bold opacity-80">كورس</span>
+          <h3 class="text-xl font-black mt-1">تأهيل العظام والعمود الفقري</h3>
+        </div>
+      </div>
+
+      <div class="p-4">
+        <span class="text-xs font-black text-rose-600 block mb-1">الفرقة الثالثة • عملي ونظري</span>
+        <h4 class="font-extrabold text-base leading-snug">كورس Orthopedic PT & Manual Therapy 🦴</h4>
+        
+        <div class="flex items-baseline gap-2 mt-3">
+          <span class="text-lg font-black text-brand num-font">350 <span class="text-xs">جنيه</span></span>
+          <span class="text-xs font-bold opacity-40 line-through num-font">480.00 جنيه</span>
+        </div>
+
+        <a href="#auth" class="mt-4 block w-full text-center py-2.5 rounded-xl border border-brand text-brand font-black text-xs hover:bg-brand hover:text-white transition">
+          الدخول للكورس
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ ACADEMIC YEARS (السنوات الدراسية مثل الصورة الثالثة والرابعة) ============ -->
+<section id="years" class="max-w-4xl mx-auto px-4 py-12 border-t" style="border-color: var(--mist-line)">
+  <div class="text-center max-w-md mx-auto mb-10 fade-up">
+    <h2 class="text-2xl md:text-3xl font-black text-slate-900 dark:text-white">السنوات الدراسية</h2>
+    <p class="text-xs font-semibold opacity-70 mt-2 leading-6">
+      احجز اشتراكك دلوقتي وابدأ مذاكرة مواد العلاج الطبيعي على موبايلك، التابلت أو اللابتوب الخاص بيك.
+    </p>
+    <a href="#auth" class="mt-5 inline-block bg-brand text-white font-black text-xs px-8 py-3 rounded-xl shadow-md">
+      انشئ حسابك الآن
+    </a>
+  </div>
+
+  <div class="space-y-6">
+    <!-- الفرقة الأولى -->
+    <div class="fade-up card-hover rounded-3xl overflow-hidden border bg-white dark:bg-[#1E293B]" style="border-color: var(--mist-line)">
+      <div class="h-36 bg-gradient-to-r from-teal-950 via-slate-900 to-teal-900 flex items-center justify-center relative">
+        <span class="text-6xl font-black text-teal-400/40 num-font">1</span>
+        <span class="absolute top-3 start-3 text-[10px] font-bold bg-white/20 text-white px-2 py-0.5 rounded">الفرقة الأولى</span>
+      </div>
+      <div class="p-4 flex items-center justify-between">
+        <div>
+          <h3 class="font-black text-sm md:text-base">الفرقة الأولى — التشريح ووظائف الأعضاء</h3>
+          <span class="text-[11px] opacity-50 font-bold">Anatomy, Physiology, Histology</span>
+        </div>
+        <a href="#courses" class="text-xs font-black text-rose-600 hover:underline">الدخول لجميع الكورسات ←</a>
+      </div>
+    </div>
+
+    <!-- الفرقة الثانية -->
+    <div class="fade-up card-hover rounded-3xl overflow-hidden border bg-white dark:bg-[#1E293B]" style="border-color: var(--mist-line)">
+      <div class="h-36 bg-gradient-to-r from-cyan-950 via-slate-900 to-cyan-900 flex items-center justify-center relative">
+        <span class="text-6xl font-black text-cyan-400/40 num-font">2</span>
+        <span class="absolute top-3 start-3 text-[10px] font-bold bg-white/20 text-white px-2 py-0.5 rounded">الفرقة الثانية</span>
+      </div>
+      <div class="p-4 flex items-center justify-between">
+        <div>
+          <h3 class="font-black text-sm md:text-base">الفرقة الثانية — ميكانيكا حيوية وعلاج كهربي</h3>
+          <span class="text-[11px] opacity-50 font-bold">Biomechanics, Electrotherapy</span>
+        </div>
+        <a href="#courses" class="text-xs font-black text-rose-600 hover:underline">الدخول لجميع الكورسات ←</a>
+      </div>
+    </div>
+
+    <!-- الفرقة الثالثة -->
+    <div class="fade-up card-hover rounded-3xl overflow-hidden border bg-white dark:bg-[#1E293B]" style="border-color: var(--mist-line)">
+      <div class="h-36 bg-gradient-to-r from-amber-950 via-slate-900 to-orange-950 flex items-center justify-center relative">
+        <span class="text-6xl font-black text-amber-400/40 num-font">3</span>
+        <span class="absolute top-3 start-3 text-[10px] font-bold bg-white/20 text-white px-2 py-0.5 rounded">الفرقة الثالثة</span>
+      </div>
+      <div class="p-4 flex items-center justify-between">
+        <div>
+          <h3 class="font-black text-sm md:text-base">الفرقة الثالثة — باطنة وجراحة وتأهيل عظمي</h3>
+          <span class="text-[11px] opacity-50 font-bold">Orthopedics, Neurology, Cardiopulmonary</span>
+        </div>
+        <a href="#courses" class="text-xs font-black text-rose-600 hover:underline">الدخول لجميع الكورسات ←</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ HONOR BOARD (أوائل الدفعات مثل الصورة الرابعة) ============ -->
+<section id="honors" class="max-w-4xl mx-auto px-4 py-12 border-t" style="border-color: var(--mist-line)">
+  <div class="text-center max-w-md mx-auto mb-8 fade-up">
+    <h2 class="text-2xl md:text-3xl font-black text-slate-900 dark:text-white">أوائل خِـــضـر</h2>
+    <p class="text-xs font-semibold opacity-70 mt-1">
+      أسماء وصلت لأعلى التقديرات والدرجات في كليات العلاج الطبيعي، ودي حصيلة سنين من الشرح والمتابعة
+    </p>
+    <a href="#auth" class="mt-4 inline-block bg-brand text-white font-black text-xs px-6 py-2.5 rounded-xl">
+      انضم لأوائل خِضر
+    </a>
+  </div>
+
+  <!-- إحصائيات الأوائل -->
+  <div class="grid grid-cols-2 gap-4 max-w-md mx-auto mb-8">
+    <div class="fade-up rounded-2xl border p-4 text-center bg-white dark:bg-[#1E293B]" style="border-color: var(--mist-line)">
+      <div class="text-2xl font-black text-brand num-font" data-count="48">0</div>
+      <div class="text-[11px] font-bold opacity-60 mt-1">طالبًا مكرماً بامتياز</div>
+    </div>
+    <div class="fade-up rounded-2xl border p-4 text-center bg-white dark:bg-[#1E293B]" style="border-color: var(--mist-line)">
+      <div class="text-2xl font-black text-brand num-font" data-count="9">0</div>
+      <div class="text-[11px] font-bold opacity-60 mt-1">دفعات 2021 - 2026</div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ PLATFORM PERKS (إيه اللي هتلاقيه مثل الصورة الخامسة) ============ -->
+<section id="features" class="max-w-4xl mx-auto px-4 py-12 border-t" style="border-color: var(--mist-line)">
+  <div class="text-center mb-8 fade-up">
+    <h2 class="text-2xl md:text-3xl font-black text-slate-900 dark:text-white">إيه اللي هتلاقيه على المنصة؟</h2>
+  </div>
+
+  <div class="space-y-4 max-w-lg mx-auto">
+    <div class="fade-up rounded-2xl border p-5 bg-white dark:bg-[#1E293B] flex items-start gap-4" style="border-color: var(--mist-line)">
+      <span class="text-2xl">💡</span>
       <div>
-        <div class="text-2xl font-black num-font" data-count="4200">0</div>
-        <div class="text-xs font-semibold opacity-55 mt-0.5" data-i18n="hero_stat1">طالب علاج طبيعي</div>
+        <h3 class="font-black text-sm">شرح مبسط ومركز</h3>
+        <p class="text-xs opacity-60 mt-1 leading-5">شرح النظريات والمفاهيم الطبية بطريقة الفهم الإكلينيكي بعيد عن التعقيد الأكاديمي.</p>
       </div>
-      <div class="w-px h-9" style="background:var(--mist-line)"></div>
+    </div>
+
+    <div class="fade-up rounded-2xl border p-5 bg-white dark:bg-[#1E293B] flex items-start gap-4" style="border-color: var(--mist-line)">
+      <span class="text-2xl">📝</span>
       <div>
-        <div class="text-2xl font-black num-font" data-count="97">0</div>
-        <div class="text-xs font-semibold opacity-55 mt-0.5" data-i18n="hero_stat2">نسبة رضا الطلاب %</div>
+        <h3 class="font-black text-sm">نماذج امتحانات بنفس النظام</h3>
+        <p class="text-xs opacity-60 mt-1 leading-5">امتحانات MCQ وOSCE تفاعلية بنفس شكل الامتحانات الجامعية عشان تعيش جو الامتحان.</p>
       </div>
-      <div class="w-px h-9" style="background:var(--mist-line)"></div>
+    </div>
+
+    <div class="fade-up rounded-2xl border p-5 bg-white dark:bg-[#1E293B] flex items-start gap-4" style="border-color: var(--mist-line)">
+      <span class="text-2xl">📊</span>
       <div>
-        <div class="text-2xl font-black num-font" data-count="9">0</div>
-        <div class="text-xs font-semibold opacity-55 mt-0.5" data-i18n="hero_stat3">سنوات خبرة إكلينيكية</div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Signature visual: goniometer / range-of-motion gauge -->
-  <div class="fade-up relative aspect-square max-w-md mx-auto w-full">
-    <div class="absolute inset-0 rounded-[2.5rem] grad-hero-panel shadow-2xl overflow-hidden">
-
-      <svg viewBox="0 0 320 320" class="absolute inset-0 w-full h-full p-10">
-        <circle cx="160" cy="230" r="118" fill="none" stroke="#ffffff14" stroke-width="1.5"/>
-        <path d="M42 230 A118 118 0 0 1 278 230" fill="none" stroke="#ffffff22" stroke-width="1.5"/>
-        <g class="pulse-dot">
-          <circle cx="160" cy="230" r="4" fill="#FF7A45"/>
-        </g>
-        <g class="goniometer">
-          <line x1="160" y1="230" x2="160" y2="112" stroke="#FF7A45" stroke-width="4" stroke-linecap="round"/>
-          <circle cx="160" cy="112" r="6" fill="#FF9466"/>
-        </g>
-        <line x1="42" y1="230" x2="278" y2="230" stroke="#ffffff30" stroke-width="3" stroke-linecap="round"/>
-      </svg>
-
-      <div class="absolute top-7 inset-x-7 flex items-center justify-between text-white/90">
-        <span class="text-[11px] font-bold px-2.5 py-1 rounded-full bg-white/10" data-i18n="hero_badge1">تقييم مدى الحركة</span>
-        <span class="text-[11px] font-bold num-font px-2.5 py-1 rounded-full bg-white/10">ROM 128°</span>
-      </div>
-
-      <div class="absolute bottom-7 inset-x-7 flex flex-col gap-2.5">
-        <div class="bg-white/10 backdrop-blur rounded-xl px-3.5 py-2.5 flex items-center justify-between text-white text-xs font-bold">
-          <span data-i18n="hero_card1">تشريح المفصل الركبي</span>
-          <span class="opacity-70 num-font">12:34</span>
-        </div>
-        <div class="bg-white/10 backdrop-blur rounded-xl px-3.5 py-2.5 flex items-center justify-between text-white text-xs font-bold">
-          <span data-i18n="hero_card2">اختبار حالة عملية — 10 أسئلة</span>
-          <span style="color:var(--coral-2)">●</span>
-        </div>
-        <div class="rounded-xl px-3.5 py-2.5 flex items-center justify-between text-xs font-bold text-white grad-cta">
-          <span data-i18n="hero_card3">🏆 إنجاز جديد</span>
-          <span class="num-font">92%</span>
-        </div>
+        <h3 class="font-black text-sm">متابعة دورية وتقييم مستمر</h3>
+        <p class="text-xs opacity-60 mt-1 leading-5">تقدمك بيتراجع أسبوعياً وبنقدملك توصيات حسب نقاط ضعفك ومتابعة أول بأول.</p>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ============ TRUST / STATS ============ -->
-<section class="border-y" style="border-color:var(--mist-line); background:rgba(45,106,106,.04)">
-  <div class="max-w-7xl mx-auto px-5 md:px-8 py-12 grid grid-cols-2 md:grid-cols-5 gap-8 text-center">
-    <div class="fade-up"><div class="text-3xl font-black num-font" data-count="4200">0</div><div class="text-xs font-semibold opacity-60 mt-1" data-i18n="stat1">طالب</div></div>
-    <div class="fade-up"><div class="text-3xl font-black num-font" data-count="18">0</div><div class="text-xs font-semibold opacity-60 mt-1" data-i18n="stat2">كورس متخصص</div></div>
-    <div class="fade-up"><div class="text-3xl font-black num-font" data-count="340">0</div><div class="text-xs font-semibold opacity-60 mt-1" data-i18n="stat3">درس وحالة عملية</div></div>
-    <div class="fade-up"><div class="text-3xl font-black num-font" data-count="97">0%</div><div class="text-xs font-semibold opacity-60 mt-1" data-i18n="stat4">نسبة النجاح</div></div>
-    <div class="fade-up col-span-2 md:col-span-1"><div class="text-3xl font-black num-font" data-count="9">0</div><div class="text-xs font-semibold opacity-60 mt-1" data-i18n="stat5">سنوات خبرة</div></div>
+<!-- ============ REVIEWS (طلاب قالوا إيه عننا) ============ -->
+<section id="reviews" class="max-w-4xl mx-auto px-4 py-12 border-t" style="border-color: var(--mist-line)">
+  <div class="text-center mb-8 fade-up">
+    <h2 class="text-2xl md:text-3xl font-black text-slate-900 dark:text-white">طلاب قالوا إيه عنا؟</h2>
   </div>
-</section>
 
-<!-- ============ COURSES ============ -->
-<section id="courses" class="max-w-7xl mx-auto px-5 md:px-8 py-20">
-  <div class="flex items-end justify-between mb-10 fade-up">
-    <div>
-      <span class="text-xs font-bold uppercase tracking-wider" style="color:var(--teal)" data-i18n="courses_eyebrow">مكتبة الكورسات</span>
-      <h2 class="text-3xl md:text-4xl font-black mt-2" data-i18n="courses_title">كورسات العلاج الطبيعي</h2>
+  <div class="space-y-4 max-w-lg mx-auto">
+    <div class="fade-up rounded-2xl border p-5 bg-white dark:bg-[#1E293B]" style="border-color: var(--mist-line)">
+      <p class="text-xs md:text-sm font-semibold opacity-80 leading-6">"بعد ما انضميت للمنصة مع دكتور خضر، بقيت أفهم الميكانيكا الحيوية من أول محاضرة بدل الحفظ."</p>
+      <span class="block text-[11px] font-black opacity-40 mt-3">— يوسف من جامعة القاهرة</span>
     </div>
-    <a href="#" class="hidden md:inline text-sm font-bold" style="color:var(--coral)" data-i18n="courses_all">عرض الكل ←</a>
-  </div>
 
-  <div class="grid md:grid-cols-3 gap-7">
-    <!-- Course card 1 -->
-    <article class="fade-up card-hover rounded-3xl overflow-hidden border bg-white dark:bg-[#0F2733]" style="border-color:var(--mist-line)">
-      <div class="h-40 grad-hero-panel relative flex items-center justify-center">
-        <svg width="54" height="54" viewBox="0 0 24 24" fill="none"><path d="M12 2v20M4 8l8-6 8 6M4 8v9a2 2 0 0 0 2 2h3M20 8v9a2 2 0 0 1-2 2h-3M9 19v-5h6v5" stroke="#FF9466" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        <span class="absolute top-3 start-3 text-[11px] font-bold text-white px-2.5 py-1 rounded-full grad-cta" data-i18n="badge_bestseller">الأكثر مبيعًا</span>
-      </div>
-      <div class="p-5">
-        <div class="flex items-center gap-2 text-[11px] font-bold opacity-55 mb-2">
-          <span data-i18n="cat_ortho">تأهيل عظمي</span><span>•</span><span data-i18n="level_beginner">مبتدئ</span>
-        </div>
-        <h3 class="font-extrabold text-lg leading-snug" data-i18n="course1_title">أساسيات العلاج الطبيعي العظمي</h3>
-        <p class="text-sm opacity-60 mt-2 leading-6" data-i18n="course1_desc">من التقييم الحركي الأولي لحد خطة العلاج الكاملة لإصابات الجهاز الحركي.</p>
-        <div class="flex items-center gap-1.5 mt-4 text-xs font-bold">
-          <span style="color:var(--amber)">★★★★★</span><span class="opacity-60 num-font">4.9 (612)</span>
-        </div>
-        <div class="flex items-center justify-between mt-5 pt-4 border-t" style="border-color:var(--mist-line)">
-          <span class="font-black num-font">450 <span class="text-xs font-bold" data-i18n="egp">ج.م</span></span>
-          <button class="text-xs font-bold px-4 h-9 rounded-full text-white grad-cta" data-i18n="btn_continue">اشترك الآن</button>
-        </div>
-      </div>
-    </article>
-
-    <!-- Course card 2 -->
-    <article class="fade-up card-hover rounded-3xl overflow-hidden border bg-white dark:bg-[#0F2733]" style="border-color:var(--mist-line)">
-      <div class="h-40 relative flex items-center justify-center" style="background:linear-gradient(160deg,#2D6A6A,#1C4747)">
-        <svg width="54" height="54" viewBox="0 0 24 24" fill="none"><path d="M6 3v18M18 3v18M6 8h12M6 16h12" stroke="#B7E8DA" stroke-width="1.5" stroke-linecap="round"/></svg>
-        <span class="absolute top-3 start-3 text-[11px] font-bold text-white px-2.5 py-1 rounded-full" style="background:var(--success)" data-i18n="badge_new">جديد</span>
-      </div>
-      <div class="p-5">
-        <div class="flex items-center gap-2 text-[11px] font-bold opacity-55 mb-2">
-          <span data-i18n="cat_sports">إصابات ملاعب</span><span>•</span><span data-i18n="level_inter">متوسط</span>
-        </div>
-        <h3 class="font-extrabold text-lg leading-snug" data-i18n="course2_title">إعادة تأهيل إصابات الرباط الصليبي</h3>
-        <p class="text-sm opacity-60 mt-2 leading-6" data-i18n="course2_desc">بروتوكولات تأهيل ما بعد الجراحة مرحلة بمرحلة مع حالات فيديو حقيقية.</p>
-        <div class="flex items-center gap-1.5 mt-4 text-xs font-bold">
-          <span style="color:var(--amber)">★★★★★</span><span class="opacity-60 num-font">4.8 (389)</span>
-        </div>
-        <div class="flex items-center justify-between mt-5 pt-4 border-t" style="border-color:var(--mist-line)">
-          <span class="font-black num-font">
-            <span class="opacity-40 line-through text-xs">600</span> 420 <span class="text-xs font-bold" data-i18n="egp">ج.م</span>
-          </span>
-          <button class="text-xs font-bold px-4 h-9 rounded-full text-white grad-cta" data-i18n="btn_continue">اشترك الآن</button>
-        </div>
-      </div>
-    </article>
-
-    <!-- Course card 3 -->
-    <article class="fade-up card-hover rounded-3xl overflow-hidden border bg-white dark:bg-[#0F2733]" style="border-color:var(--mist-line)">
-      <div class="h-40 relative flex items-center justify-center" style="background:linear-gradient(160deg,#0E2A38,#173F52)">
-        <svg width="54" height="54" viewBox="0 0 24 24" fill="none"><path d="M9 12a3 3 0 1 0 6 0 3 3 0 0 0-6 0Z" stroke="#7FD1D1" stroke-width="1.5"/><path d="M4 12c1.5-4 4.5-6 8-6s6.5 2 8 6c-1.5 4-4.5 6-8 6s-6.5-2-8-6Z" stroke="#7FD1D1" stroke-width="1.5"/></svg>
-      </div>
-      <div class="p-5">
-        <div class="flex items-center gap-2 text-[11px] font-bold opacity-55 mb-2">
-          <span data-i18n="cat_neuro">تأهيل عصبي</span><span>•</span><span data-i18n="level_advanced">متقدم</span>
-        </div>
-        <h3 class="font-extrabold text-lg leading-snug" data-i18n="course3_title">العلاج الطبيعي العصبي التطبيقي</h3>
-        <p class="text-sm opacity-60 mt-2 leading-6" data-i18n="course3_desc">تقييم وعلاج حالات السكتة الدماغية والإصابات العصبية المركزية.</p>
-        <div class="flex items-center gap-1.5 mt-4 text-xs font-bold">
-          <span style="color:var(--amber)">★★★★☆</span><span class="opacity-60 num-font">4.7 (204)</span>
-        </div>
-        <div class="flex items-center justify-between mt-5 pt-4 border-t" style="border-color:var(--mist-line)">
-          <span class="font-black num-font">520 <span class="text-xs font-bold" data-i18n="egp">ج.م</span></span>
-          <button class="text-xs font-bold px-4 h-9 rounded-full text-white grad-cta" data-i18n="btn_continue">اشترك الآن</button>
-        </div>
-      </div>
-    </article>
-  </div>
-</section>
-
-<!-- ============ INSTRUCTOR ============ -->
-<section id="instructor" class="max-w-7xl mx-auto px-5 md:px-8 py-16">
-  <div class="rounded-[2.5rem] grad-hero-panel p-9 md:p-14 grid md:grid-cols-[auto,1fr] gap-9 items-center fade-up">
-    <div class="w-28 h-28 md:w-32 md:h-32 rounded-3xl bg-white/10 flex items-center justify-center shrink-0">
-      <svg width="46" height="46" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="8" r="4" stroke="#FF9466" stroke-width="1.6"/><path d="M4 20c1.5-4 4.5-6 8-6s6.5 2 8 6" stroke="#FF9466" stroke-width="1.6" stroke-linecap="round"/></svg>
-    </div>
-    <div class="text-white">
-      <span class="text-xs font-bold px-3 py-1 rounded-full bg-white/10" data-i18n="instructor_eyebrow">المدرس</span>
-      <h3 class="text-2xl md:text-3xl font-black mt-3" data-i18n="instructor_name">د. محمود خضر</h3>
-      <p class="opacity-70 mt-3 leading-7 max-w-2xl text-sm md:text-base" data-i18n="instructor_bio">
-        أخصائي علاج طبيعي بخبرة تمتد لأكثر من 9 سنوات في التأهيل العظمي والعصبي والرياضي، وحرص على تبسيط العلوم الحركية للطلاب من خلال حالات عملية حقيقية بدل الحفظ النظري.
-      </p>
+    <div class="fade-up rounded-2xl border p-5 bg-white dark:bg-[#1E293B]" style="border-color: var(--mist-line)">
+      <p class="text-xs md:text-sm font-semibold opacity-80 leading-6">"الشرح بسيط وفعلاً بحس إني فاهم مش بحفظ وخلاص عشان الامتحان."</p>
+      <span class="block text-[11px] font-black opacity-40 mt-3">— سما من جامعة كفر الشيخ</span>
     </div>
   </div>
 </section>
 
-<!-- ============ AUTH (LOGIN / REGISTER) ============ -->
-<section id="auth" class="max-w-7xl mx-auto px-5 md:px-8 py-16">
-  <div class="max-w-md mx-auto rounded-[2rem] border bg-white dark:bg-[#0F2733] p-2 fade-up" style="border-color:var(--mist-line)">
-
-    <!-- Tabs -->
-    <div class="grid grid-cols-2 gap-1 p-1.5 rounded-[1.5rem]" style="background:rgba(45,106,106,.07)">
-      <button id="tabLoginBtn" onclick="setAuthTab('login')" class="auth-tab h-11 rounded-[1.15rem] text-sm font-bold transition" data-i18n="auth_tab_login">تسجيل الدخول</button>
-      <button id="tabRegisterBtn" onclick="setAuthTab('register')" class="auth-tab h-11 rounded-[1.15rem] text-sm font-bold transition" data-i18n="auth_tab_register">حساب جديد</button>
+<!-- ============ AUTH ============ -->
+<section id="auth" class="max-w-md mx-auto px-4 py-14">
+  <div class="rounded-3xl border bg-white dark:bg-[#1E293B] p-3 fade-up" style="border-color: var(--mist-line)">
+    <div class="grid grid-cols-2 gap-1 p-1 bg-slate-100 dark:bg-slate-800 rounded-2xl">
+      <button id="tabLoginBtn" onclick="setAuthTab('login')" class="auth-tab h-10 rounded-xl text-xs font-black transition">تسجيل الدخول</button>
+      <button id="tabRegisterBtn" onclick="setAuthTab('register')" class="auth-tab h-10 rounded-xl text-xs font-black transition">حساب جديد</button>
     </div>
 
-    <div class="px-6 pt-7 pb-8">
-
-      <!-- LOGIN FORM -->
-      <form id="loginForm" class="flex flex-col gap-4" onsubmit="return false;">
-        <h2 class="text-xl font-black text-center" data-i18n="auth_login_title">أهلًا بيك تاني 👋</h2>
-        <p class="text-xs font-semibold opacity-55 text-center -mt-2" data-i18n="auth_login_sub">سجّل دخولك عشان تكمل رحلتك التعليمية</p>
-
-        <label class="flex flex-col gap-1.5">
-          <span class="text-xs font-bold opacity-70" data-i18n="auth_email">البريد الإلكتروني</span>
-          <input id="loginEmail" type="email" required placeholder="student@example.com"
-            class="h-12 rounded-xl px-4 text-sm border bg-transparent focus:ring-2"
-            style="border-color:var(--mist-line)" />
+    <div class="px-4 py-6">
+      <form id="loginForm" class="flex flex-col gap-3" onsubmit="return false;">
+        <label class="flex flex-col gap-1 text-xs font-bold opacity-70">
+          <span>البريد الإلكتروني</span>
+          <input id="loginEmail" type="email" required placeholder="student@example.com" class="h-11 rounded-xl px-3 border bg-transparent text-xs" style="border-color: var(--mist-line)" />
         </label>
-
-        <label class="flex flex-col gap-1.5">
-          <span class="text-xs font-bold opacity-70" data-i18n="auth_password">كلمة المرور</span>
-          <input id="loginPassword" type="password" required placeholder="••••••••"
-            class="h-12 rounded-xl px-4 text-sm border bg-transparent focus:ring-2"
-            style="border-color:var(--mist-line)" />
+        <label class="flex flex-col gap-1 text-xs font-bold opacity-70">
+          <span>كلمة المرور</span>
+          <input id="loginPassword" type="password" required placeholder="••••••••" class="h-11 rounded-xl px-3 border bg-transparent text-xs" style="border-color: var(--mist-line)" />
         </label>
-
-        <a href="#" class="text-xs font-bold self-start" style="color:var(--coral)" data-i18n="auth_forgot">نسيت كلمة المرور؟</a>
-
-        <p id="loginError" class="hidden text-xs font-bold text-red-500 text-center"></p>
-
-        <button id="loginSubmitBtn" type="submit" class="h-12 rounded-full text-white font-bold text-sm grad-cta shadow-lg shadow-orange-900/15 mt-1" data-i18n="auth_login_btn">
-          تسجيل الدخول
-        </button>
-
-        <div class="flex items-center gap-3 my-1">
-          <span class="flex-1 h-px" style="background:var(--mist-line)"></span>
-          <span class="text-[11px] font-bold opacity-45" data-i18n="auth_or">أو</span>
-          <span class="flex-1 h-px" style="background:var(--mist-line)"></span>
-        </div>
-
-        <button id="googleLoginBtn" type="button" class="h-12 rounded-full border-2 font-bold text-sm flex items-center justify-center gap-2.5" style="border-color:var(--mist-line)">
-          <svg width="18" height="18" viewBox="0 0 24 24"><path fill="#EA4335" d="M12 10.2v3.9h5.5c-.24 1.4-1.7 4.1-5.5 4.1-3.3 0-6-2.7-6-6.1s2.7-6.1 6-6.1c1.9 0 3.1.8 3.9 1.5l2.6-2.5C16.9 3.2 14.7 2.2 12 2.2 6.9 2.2 2.7 6.4 2.7 11.6S6.9 21 12 21c6.9 0 8.9-4.8 8.9-7.3 0-.5 0-.9-.1-1.3H12Z"/></svg>
-          <span data-i18n="auth_google">المتابعة بحساب Google</span>
-        </button>
+        <p id="loginError" class="hidden text-xs font-bold text-rose-500 text-center"></p>
+        <button id="loginSubmitBtn" type="submit" class="h-11 rounded-xl bg-brand text-white font-black text-xs mt-2 shadow-lg">تسجيل الدخول</button>
       </form>
 
-      <!-- REGISTER FORM -->
-      <form id="registerForm" class="hidden flex-col gap-4" onsubmit="return false;">
-        <h2 class="text-xl font-black text-center" data-i18n="auth_register_title">ابدأ رحلتك معانا 🚀</h2>
-        <p class="text-xs font-semibold opacity-55 text-center -mt-2" data-i18n="auth_register_sub">اعمل حسابك واكمل التعلم في العلاج الطبيعي</p>
-
-        <label class="flex flex-col gap-1.5">
-          <span class="text-xs font-bold opacity-70" data-i18n="auth_name">الاسم بالكامل</span>
-          <input id="registerName" type="text" required placeholder="أحمد محمد"
-            class="h-12 rounded-xl px-4 text-sm border bg-transparent focus:ring-2"
-            style="border-color:var(--mist-line)" />
+      <form id="registerForm" class="hidden flex-col gap-3" onsubmit="return false;">
+        <label class="flex flex-col gap-1 text-xs font-bold opacity-70">
+          <span>الاسم بالكامل</span>
+          <input id="registerName" type="text" required placeholder="اسم الطالب" class="h-11 rounded-xl px-3 border bg-transparent text-xs" style="border-color: var(--mist-line)" />
         </label>
-
-        <label class="flex flex-col gap-1.5">
-          <span class="text-xs font-bold opacity-70" data-i18n="auth_email">البريد الإلكتروني</span>
-          <input id="registerEmail" type="email" required placeholder="student@example.com"
-            class="h-12 rounded-xl px-4 text-sm border bg-transparent focus:ring-2"
-            style="border-color:var(--mist-line)" />
+        <label class="flex flex-col gap-1 text-xs font-bold opacity-70">
+          <span>البريد الإلكتروني</span>
+          <input id="registerEmail" type="email" required placeholder="student@example.com" class="h-11 rounded-xl px-3 border bg-transparent text-xs" style="border-color: var(--mist-line)" />
         </label>
-
-        <label class="flex flex-col gap-1.5">
-          <span class="text-xs font-bold opacity-70" data-i18n="auth_password">كلمة المرور</span>
-          <input id="registerPassword" type="password" required placeholder="••••••••" minlength="6"
-            class="h-12 rounded-xl px-4 text-sm border bg-transparent focus:ring-2"
-            style="border-color:var(--mist-line)" />
+        <label class="flex flex-col gap-1 text-xs font-bold opacity-70">
+          <span>كلمة المرور</span>
+          <input id="registerPassword" type="password" required placeholder="••••••••" minlength="6" class="h-11 rounded-xl px-3 border bg-transparent text-xs" style="border-color: var(--mist-line)" />
         </label>
-
-        <label class="flex items-start gap-2.5 text-xs font-semibold opacity-70 mt-1">
-          <input id="registerTerms" type="checkbox" required class="mt-0.5" />
-          <span data-i18n="auth_terms">موافق على الشروط وسياسة الخصوصية الخاصة بالمنصة</span>
-        </label>
-
-        <p id="registerError" class="hidden text-xs font-bold text-red-500 text-center"></p>
-
-        <button id="registerSubmitBtn" type="submit" class="h-12 rounded-full text-white font-bold text-sm grad-cta shadow-lg shadow-orange-900/15 mt-1" data-i18n="auth_register_btn">
-          إنشاء الحساب
-        </button>
+        <p id="registerError" class="hidden text-xs font-bold text-rose-500 text-center"></p>
+        <button id="registerSubmitBtn" type="submit" class="h-11 rounded-xl bg-brand text-white font-black text-xs mt-2 shadow-lg">إنشاء الحساب</button>
       </form>
-
     </div>
   </div>
 </section>
 
-<!-- ============ FOOTER CTA ============ -->
-<footer class="border-t" style="border-color:var(--mist-line)">
-  <div class="max-w-7xl mx-auto px-5 md:px-8 py-10 flex flex-col md:flex-row items-center justify-between gap-4 text-xs font-semibold opacity-60">
-    <span data-i18n="footer_rights">© 2026 محمود خضر — منصة تعليم العلاج الطبيعي. جميع الحقوق محفوظة.</span>
-    <span data-i18n="footer_tag">صُنعت بعناية لطلاب العلاج الطبيعي</span>
-  </div>
+<!-- ============ FLOATING CHAT BUTTON (مثل الصورة) ============ -->
+<a href="https://wa.me/" target="_blank" class="fixed bottom-5 start-5 z-50 w-12 h-12 rounded-full bg-rose-500 shadow-xl flex items-center justify-center text-white hover:scale-110 transition" aria-label="Support">
+  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5Z"/></svg>
+</a>
+
+<!-- ============ FOOTER ============ -->
+<footer class="border-t py-8 text-center text-xs font-semibold opacity-50" style="border-color: var(--mist-line)">
+  جميع الحقوق محفوظة © 2026 د. محمود خضر — منصة تعليم العلاج الطبيعي
 </footer>
 
 <script>
-// ============================================
-// ملف الترجمات — أضف أي مفتاح نصي جديد هنا فقط
-// كل مفتاح لازم يكون موجود في ar و en الاتنين
-// ============================================
-
-const translations = {
-  ar: {
-    brand: "𝐊𝐇𝐄𝐃𝐑 & 𝐏𝐇𝐘𝐒𝐈𝐎",
-    nav_courses: "الكورسات",
-    nav_instructor: "المدرس",
-    nav_exams: "الاختبارات",
-    nav_resources: "المصادر",
-    nav_about: "عن المنصة",
-    nav_login: "تسجيل الدخول",
-    nav_cta: "ابدأ التعلم",
-
-    hero_eyebrow: "تخصص العلاج الطبيعي والتأهيل الحركي",
-    hero_title: "افهم الحركة.<br/>وابنِ مستقبلك في العلاج الطبيعي.",
-    hero_sub: "دورات وحالات عملية وتقييمات حركية تفاعلية مع د. محمود خضر — من الأساس التشريحي لحد التطبيق الإكلينيكي الحقيقي.",
-    hero_cta1: "ابدأ التعلم",
-    hero_cta2: "استكشف الكورسات",
-    hero_stat1: "طالب علاج طبيعي",
-    hero_stat2: "نسبة رضا الطلاب %",
-    hero_stat3: "سنوات خبرة إكلينيكية",
-    hero_badge1: "تقييم مدى الحركة",
-    hero_card1: "تشريح المفصل الركبي",
-    hero_card2: "اختبار حالة عملية — 10 أسئلة",
-    hero_card3: "🏆 إنجاز جديد",
-
-    stat1: "طالب",
-    stat2: "كورس متخصص",
-    stat3: "درس وحالة عملية",
-    stat4: "نسبة النجاح",
-    stat5: "سنوات خبرة",
-
-    courses_eyebrow: "مكتبة الكورسات",
-    courses_title: "كورسات العلاج الطبيعي",
-    courses_all: "عرض الكل ←",
-
-    badge_bestseller: "الأكثر مبيعًا",
-    badge_new: "جديد",
-    cat_ortho: "تأهيل عظمي",
-    cat_sports: "إصابات ملاعب",
-    cat_neuro: "تأهيل عصبي",
-    level_beginner: "مبتدئ",
-    level_inter: "متوسط",
-    level_advanced: "متقدم",
-    egp: "ج.م",
-    btn_continue: "اشترك الآن",
-
-    course1_title: "أساسيات العلاج الطبيعي العظمي",
-    course1_desc: "من التقييم الحركي الأولي لحد خطة العلاج الكاملة لإصابات الجهاز الحركي.",
-    course2_title: "إعادة تأهيل إصابات الرباط الصليبي",
-    course2_desc: "بروتوكولات تأهيل ما بعد الجراحة مرحلة بمرحلة مع حالات فيديو حقيقية.",
-    course3_title: "العلاج الطبيعي العصبي التطبيقي",
-    course3_desc: "تقييم وعلاج حالات السكتة الدماغية والإصابات العصبية المركزية.",
-
-    instructor_eyebrow: "المدرس",
-    instructor_name: "د. محمود خضر",
-    instructor_bio: "أخصائي علاج طبيعي بخبرة تمتد لأكثر من 9 سنوات في التأهيل العظمي والعصبي والرياضي، وحرص على تبسيط العلوم الحركية للطلاب من خلال حالات عملية حقيقية بدل الحفظ النظري.",
-
-    footer_rights: "© 2026 KHEDR & PHYSIO — منصة تعليم العلاج الطبيعي. جميع الحقوق محفوظة.",
-    footer_tag: "صُنعت بعناية لطلاب العلاج الطبيعي",
-
-    auth_tab_login: "تسجيل الدخول",
-    auth_tab_register: "حساب جديد",
-    auth_login_title: "أهلًا بيك تاني 👋",
-    auth_login_sub: "سجّل دخولك عشان تكمل رحلتك التعليمية",
-    auth_register_title: "ابدأ رحلتك معانا 🚀",
-    auth_register_sub: "اعمل حسابك واكمل التعلم في العلاج الطبيعي",
-    auth_name: "الاسم بالكامل",
-    auth_email: "البريد الإلكتروني",
-    auth_password: "كلمة المرور",
-    auth_forgot: "نسيت كلمة المرور؟",
-    auth_login_btn: "تسجيل الدخول",
-    auth_register_btn: "إنشاء الحساب",
-    auth_or: "أو",
-    auth_google: "المتابعة بحساب Google",
-    auth_terms: "موافق على الشروط وسياسة الخصوصية الخاصة بالمنصة"
-  },
-
-  en: {
-    brand: "𝐊𝐇𝐄𝐃𝐑 & 𝐏𝐇𝐘𝐒𝐈𝐎",
-    nav_courses: "Courses",
-    nav_instructor: "Instructor",
-    nav_exams: "Exams",
-    nav_resources: "Resources",
-    nav_about: "About",
-    nav_login: "Log in",
-    nav_cta: "Start Learning",
-
-    hero_eyebrow: "Physical Therapy & Movement Rehabilitation",
-    hero_title: "Understand movement.<br/>Build your career in physical therapy.",
-    hero_sub: "Courses, real case studies, and interactive movement assessments with Dr. Mahmoud Khedr — from anatomical foundations to real clinical application.",
-    hero_cta1: "Start Learning",
-    hero_cta2: "Explore Courses",
-    hero_stat1: "PT students",
-    hero_stat2: "Student satisfaction %",
-    hero_stat3: "Years of clinical experience",
-    hero_badge1: "Range of Motion Assessment",
-    hero_card1: "Knee Joint Anatomy",
-    hero_card2: "Case Study Quiz — 10 questions",
-    hero_card3: "🏆 New Achievement",
-
-    stat1: "Students",
-    stat2: "Specialized Courses",
-    stat3: "Lessons & Case Studies",
-    stat4: "Success Rate",
-    stat5: "Years of Experience",
-
-    courses_eyebrow: "Course Library",
-    courses_title: "Physical Therapy Courses",
-    courses_all: "View all →",
-
-    badge_bestseller: "Best Seller",
-    badge_new: "New",
-    cat_ortho: "Orthopedic Rehab",
-    cat_sports: "Sports Injuries",
-    cat_neuro: "Neuro Rehab",
-    level_beginner: "Beginner",
-    level_inter: "Intermediate",
-    level_advanced: "Advanced",
-    egp: "EGP",
-    btn_continue: "Enroll Now",
-
-    course1_title: "Orthopedic Physical Therapy Fundamentals",
-    course1_desc: "From initial movement assessment to a complete treatment plan for musculoskeletal injuries.",
-    course2_title: "ACL Injury Rehabilitation",
-    course2_desc: "Step-by-step post-surgical rehab protocols with real video case studies.",
-    course3_title: "Applied Neurological Physical Therapy",
-    course3_desc: "Assessment and treatment of stroke and central nervous system injuries.",
-
-    instructor_eyebrow: "Instructor",
-    instructor_name: "Dr. Mahmoud Khedr",
-    instructor_bio: "A physical therapist with over 9 years of clinical experience in orthopedic, neurological, and sports rehabilitation, focused on teaching movement science through real case studies rather than rote memorization.",
-
-    footer_rights: "© 2026 KHEDR & PHYSIO — Physical Therapy Learning Platform. All rights reserved.",
-    footer_tag: "Crafted with care for physical therapy students",
-
-    auth_tab_login: "Log In",
-    auth_tab_register: "Sign Up",
-    auth_login_title: "Welcome back 👋",
-    auth_login_sub: "Log in to continue your learning journey",
-    auth_register_title: "Start your journey 🚀",
-    auth_register_sub: "Create your account and keep learning physical therapy",
-    auth_name: "Full name",
-    auth_email: "Email address",
-    auth_password: "Password",
-    auth_forgot: "Forgot password?",
-    auth_login_btn: "Log In",
-    auth_register_btn: "Create Account",
-    auth_or: "or",
-    auth_google: "Continue with Google",
-    auth_terms: "I agree to the platform's Terms and Privacy Policy"
-  }
-};
-
-</script>
-<script>
-// ============================================
-// المنطق العام للصفحة — لا يحتوي على نصوص، النصوص كلها في i18n.js
-// ============================================
-
-let currentLang = "ar";
-
-function applyLanguage(lang) {
-  currentLang = lang;
-  const dict = translations[lang];
-  document.documentElement.lang = lang;
-  document.documentElement.dir = lang === "ar" ? "rtl" : "ltr";
-
-  document.querySelectorAll("[data-i18n]").forEach((el) => {
-    const key = el.getAttribute("data-i18n");
-    if (dict[key] !== undefined) {
-      el.innerHTML = dict[key];
-    }
-  });
-
-  document.getElementById("langLabel").textContent = lang === "ar" ? "EN" : "AR";
-}
-
-function toggleLanguage() {
-  applyLanguage(currentLang === "ar" ? "en" : "ar");
-}
-
 function toggleTheme() {
   document.body.classList.toggle("dark");
-  const isDark = document.body.classList.contains("dark");
-  document.getElementById("themeIcon").innerHTML = isDark
-    ? '<circle cx="12" cy="12" r="5" stroke="currentColor" stroke-width="1.7"/><path d="M12 2v2M12 20v2M4.2 4.2l1.4 1.4M18.4 18.4l1.4 1.4M2 12h2M20 12h2M4.2 19.8l1.4-1.4M18.4 5.6l1.4-1.4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/>'
-    : '<path d="M21 12.8A9 9 0 1 1 11.2 3 7 7 0 0 0 21 12.8Z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/>';
 }
 
 function toggleDrawer() {
@@ -612,168 +380,87 @@ function setAuthTab(tab) {
   const isLogin = tab === "login";
   document.getElementById("loginForm").classList.toggle("hidden", !isLogin);
   document.getElementById("registerForm").classList.toggle("hidden", isLogin);
-  document.getElementById("registerForm").classList.toggle("flex", isLogin === false);
+  document.getElementById("registerForm").classList.toggle("flex", !isLogin);
   document.getElementById("tabLoginBtn").classList.toggle("active", isLogin);
   document.getElementById("tabRegisterBtn").classList.toggle("active", !isLogin);
 }
 
-// عداد الأرقام المتحركة عند الظهور في الشاشة
 function animateCount(el) {
   const target = parseInt(el.getAttribute("data-count"), 10);
-  const duration = 1400;
+  const duration = 1200;
   const start = performance.now();
 
   function step(now) {
     const progress = Math.min((now - start) / duration, 1);
-    const eased = 1 - Math.pow(1 - progress, 3);
-    el.textContent = Math.round(eased * target).toLocaleString();
+    el.textContent = Math.round(progress * target).toLocaleString();
     if (progress < 1) requestAnimationFrame(step);
   }
   requestAnimationFrame(step);
 }
 
 document.addEventListener("DOMContentLoaded", () => {
-  applyLanguage("ar");
   setAuthTab("login");
-
-  document.getElementById("langBtn").addEventListener("click", toggleLanguage);
   document.getElementById("themeBtn").addEventListener("click", toggleTheme);
   document.getElementById("drawerBtn").addEventListener("click", toggleDrawer);
 
-  // Intersection Observer لعناصر fade-up وعدادات الأرقام
-  const observer = new IntersectionObserver(
-    (entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add("show");
-          const counter = entry.target.querySelector("[data-count]");
-          const isCounterItself = entry.target.hasAttribute("data-count");
-
-          if (counter && !counter.dataset.counted) {
-            counter.dataset.counted = "true";
-            animateCount(counter);
-          }
-          if (isCounterItself && !entry.target.dataset.counted) {
-            entry.target.dataset.counted = "true";
-            animateCount(entry.target);
-          }
-          observer.unobserve(entry.target);
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add("show");
+        const countEl = entry.target.querySelector("[data-count]");
+        if (countEl && !countEl.dataset.counted) {
+          countEl.dataset.counted = "true";
+          animateCount(countEl);
         }
-      });
-    },
-    { threshold: 0.2 }
-  );
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.2 });
 
   document.querySelectorAll(".fade-up").forEach((el) => observer.observe(el));
 });
-
 </script>
 
 <script type="module">
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-app.js";
-  import {
-    getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword,
-    signInWithPopup, GoogleAuthProvider, updateProfile
-  } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-auth.js";
-  import {
-    getFirestore, doc, setDoc, serverTimestamp
-  } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-firestore.js";
+  import { auth, db } from "./firebase-config.js";
+  import { signInWithEmailAndPassword, createUserWithEmailAndPassword, updateProfile } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-auth.js";
+  import { doc, setDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-firestore.js";
 
-  // 🔴 غيّر القيم دي ببيانات مشروعك من Firebase Console
-  const firebaseConfig = {
-    apiKey: "REPLACE_ME",
-    authDomain: "REPLACE_ME.firebaseapp.com",
-    projectId: "REPLACE_ME",
-    storageBucket: "REPLACE_ME.appspot.com",
-    messagingSenderId: "REPLACE_ME",
-    appId: "REPLACE_ME"
-  };
-
-  const app = initializeApp(firebaseConfig);
-  const auth = getAuth(app);
-  const db = getFirestore(app);
-  const googleProvider = new GoogleAuthProvider();
-
-  function showError(elId, message) {
+  function showError(elId, msg) {
     const el = document.getElementById(elId);
-    el.textContent = message;
+    el.textContent = msg;
     el.classList.remove("hidden");
   }
-  function hideError(elId) {
-    document.getElementById(elId).classList.add("hidden");
-  }
-  function friendlyError(code) {
-    const map = {
-      "auth/invalid-email": "البريد الإلكتروني غير صحيح",
-      "auth/user-not-found": "الحساب غير موجود",
-      "auth/wrong-password": "كلمة المرور غير صحيحة",
-      "auth/invalid-credential": "بيانات الدخول غير صحيحة",
-      "auth/email-already-in-use": "البريد الإلكتروني مستخدم بالفعل",
-      "auth/weak-password": "كلمة المرور ضعيفة جدًا (6 أحرف على الأقل)"
-    };
-    return map[code] || "حصل خطأ، حاول تاني";
-  }
 
-  // تسجيل الدخول بالإيميل وكلمة المرور
   document.getElementById("loginForm").addEventListener("submit", async (e) => {
     e.preventDefault();
-    hideError("loginError");
-    const email = document.getElementById("loginEmail").value;
-    const password = document.getElementById("loginPassword").value;
     const btn = document.getElementById("loginSubmitBtn");
     btn.disabled = true;
-
     try {
-      await signInWithEmailAndPassword(auth, email, password);
+      await signInWithEmailAndPassword(auth, document.getElementById("loginEmail").value, document.getElementById("loginPassword").value);
       window.location.href = "dashboard.html";
     } catch (err) {
-      showError("loginError", friendlyError(err.code));
+      showError("loginError", "بيانات الدخول غير صحيحة");
     } finally {
       btn.disabled = false;
     }
   });
 
-  // إنشاء حساب جديد
   document.getElementById("registerForm").addEventListener("submit", async (e) => {
     e.preventDefault();
-    hideError("registerError");
-    const name = document.getElementById("registerName").value;
-    const email = document.getElementById("registerEmail").value;
-    const password = document.getElementById("registerPassword").value;
     const btn = document.getElementById("registerSubmitBtn");
     btn.disabled = true;
-
+    const name = document.getElementById("registerName").value;
+    const email = document.getElementById("registerEmail").value;
     try {
-      const cred = await createUserWithEmailAndPassword(auth, email, password);
+      const cred = await createUserWithEmailAndPassword(auth, email, document.getElementById("registerPassword").value);
       await updateProfile(cred.user, { displayName: name });
-
-      await setDoc(doc(db, "students", cred.user.uid), {
-        fullName: name,
-        email: email,
-        createdAt: serverTimestamp()
-      });
-
+      await setDoc(doc(db, "students", cred.user.uid), { fullName: name, email: email, createdAt: serverTimestamp() });
       window.location.href = "dashboard.html";
     } catch (err) {
-      showError("registerError", friendlyError(err.code));
+      showError("registerError", "تعذر إنشاء الحساب");
     } finally {
       btn.disabled = false;
-    }
-  });
-
-  // تسجيل الدخول بحساب Google
-  document.getElementById("googleLoginBtn").addEventListener("click", async () => {
-    hideError("loginError");
-    try {
-      const cred = await signInWithPopup(auth, googleProvider);
-      await setDoc(doc(db, "students", cred.user.uid), {
-        fullName: cred.user.displayName || "",
-        email: cred.user.email || "",
-        createdAt: serverTimestamp()
-      }, { merge: true });
-      window.location.href = "dashboard.html";
-    } catch (err) {
-      showError("loginError", friendlyError(err.code));
     }
   });
 </script>
