@@ -107,47 +107,40 @@
 <!-- Scroll Progress Bar -->
 <div id="scrollProgress"></div>
 
-<!-- ============ NAVBAR ============ -->
+<!-- ============ NAVBAR (مثل منصة الجوهري + زر اللغة) ============ -->
 <header class="sticky top-0 z-50 backdrop-blur-md bg-white/90 dark:bg-[#07111D]/90 border-b border-slate-200 dark:border-slate-800 transition-colors">
   <div class="max-w-7xl mx-auto px-4 md:px-8 h-16 flex items-center justify-between">
 
-    <!-- اللوجو والاسم -->
-    <a href="#" onclick="window.scrollTo({top: 0, behavior: 'smooth'}); return false;" class="flex items-center gap-2 shrink-0">
-      <span class="w-8 h-8 rounded-xl bg-brand text-white font-black flex items-center justify-center text-sm shadow-md">خِـ</span>
-      <span class="font-black text-sm md:text-base text-slate-900 dark:text-white" data-i18n="brand">KHEDR & PHYSIO</span>
-    </a>
+    <!-- اليمين: اللوجو + زر الثيم -->
+    <div class="flex items-center gap-3">
+      <a href="#" onclick="window.scrollTo({top: 0, behavior: 'smooth'}); return false;" class="flex items-center gap-2 shrink-0">
+        <span class="w-8 h-8 rounded-xl bg-brand text-white font-black flex items-center justify-center text-sm shadow-md">خِـ</span>
+        <span class="font-black text-sm md:text-base text-slate-900 dark:text-white" data-i18n="brand">KHEDR & PHYSIO</span>
+      </a>
 
-    <!-- روابط التنقل -->
-    <nav class="hidden xl:flex items-center gap-5 lg:gap-6 text-xs xl:text-sm font-bold text-slate-700 dark:text-slate-200 shrink-0">
-      <a href="#hero" class="hover:text-brand dark:hover:text-rose-400 transition" data-i18n="nav_home">الرئيسية</a>
-      <a href="#years" class="hover:text-brand dark:hover:text-rose-400 transition" data-i18n="nav_years">الفرق الدراسية</a>
-      <a href="#courses" class="hover:text-brand dark:hover:text-rose-400 transition" data-i18n="nav_courses">الكورسات والباقات</a>
-      <a href="#features" class="hover:text-brand dark:hover:text-rose-400 transition" data-i18n="nav_features">مميزات المنصة</a>
-      <a href="#honors" class="hover:text-brand dark:hover:text-rose-400 transition" data-i18n="nav_honors">لوحة الشرف</a>
-      <a href="#instructor" class="hover:text-brand dark:hover:text-rose-400 transition" data-i18n="nav_instructor">عن الشارح</a>
-      <a href="#reviews" class="hover:text-brand dark:hover:text-rose-400 transition" data-i18n="nav_reviews">آراء الطلاب</a>
-    </nav>
-
-    <!-- الأزرار والتحكم -->
-    <div class="flex items-center gap-2 md:gap-3 shrink-0">
-      <!-- زر الثيم -->
+      <!-- زر الوضع الداكن/الفاتح -->
       <div id="themeBtn" class="theme-toggle-pill" title="Toggle Dark/Light Mode">
         <span class="text-[10px] z-10">☀️</span>
         <span class="text-[10px] z-10">🌙</span>
         <div class="theme-toggle-thumb"></div>
       </div>
+    </div>
 
-      <!-- زر اللغة -->
-      <button id="langBtn" class="text-xs font-bold px-2.5 h-7 rounded-full border border-slate-300 dark:border-slate-700 flex items-center gap-1 hover:border-brand transition">
+    <!-- الشمال: زر اللغة + تسجيل الدخول + حساب جديد -->
+    <div class="flex items-center gap-2 md:gap-3">
+      <!-- زر تغيير اللغة -->
+      <button id="langBtn" class="text-xs font-bold px-2.5 h-8 rounded-full border border-slate-300 dark:border-slate-700 flex items-center gap-1 hover:border-brand transition">
         <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.7 2.5 15.3 0 18M12 3c-2.5 2.7-2.5 15.3 0 18"/></svg>
         <span id="langLabel">EN</span>
       </button>
 
-      <!-- الدخول والتسجيل -->
+      <!-- زر تسجيل الدخول -->
       <a href="#auth" onclick="setAuthTab('login')" class="text-xs font-bold px-3.5 h-8 leading-8 rounded-xl border border-slate-300 dark:border-slate-700 text-slate-800 dark:text-slate-200 hover:border-brand transition whitespace-nowrap" data-i18n="nav_login">تسجيل الدخول</a>
+
+      <!-- زر حساب جديد -->
       <a href="#auth" onclick="setAuthTab('register')" class="text-xs font-bold text-white px-4 h-8 leading-8 rounded-xl bg-brand hover:bg-rose-900 transition shadow-md whitespace-nowrap" data-i18n="auth_tab_register">حساب جديد</a>
 
-      <!-- زر القائمة الجانبية للموبايل -->
+      <!-- زر الموبايل -->
       <button id="drawerBtn" class="xl:hidden w-8 h-8 flex items-center justify-center text-slate-800 dark:text-slate-200">
         <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
       </button>
