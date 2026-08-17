@@ -1227,6 +1227,7 @@ let currentFilter = "all";
 let currentItemData = null;
 
 // دالة رسم كروت السلايدر مع فلترة منضبطة 100%
+// دالة رسم كروت السلايدر (تم إزالة fade-up لضمان ظهور الكروت فوراً بدون اختفاء)
 function renderCatalog() {
   const container = document.getElementById("coursesSlider");
   if (!container) return;
@@ -1250,12 +1251,18 @@ function renderCatalog() {
     const badgeText = item.badge ? `<span class="absolute top-2.5 start-2.5 z-10 text-[10px] font-black bg-amber-400 text-slate-900 px-2.5 py-1 rounded-md shadow-md">${item.badge}</span>` : "";
 
     return `
-      <article class="min-w-[300px] sm:min-w-[340px] md:min-w-[370px] max-w-[370px] shrink-0 snap-start fade-up card-hover rounded-3xl overflow-hidden border ${isPkg ? "border-brand shadow-rose-950/20" : "border-slate-800"} bg-[#0F1D2D] p-3.5 shadow-2xl flex flex-col justify-between relative transition-all duration-300">
+      <article class="min-w-[300px] sm:min-w-[340px] md:min-w-[370px] max-w-[370px] shrink-0 snap-start card-hover rounded-3xl overflow-hidden border ${isPkg ? "border-brand shadow-rose-950/20" : "border-slate-800"} bg-[#0F1D2D] p-3.5 shadow-2xl flex flex-col justify-between relative transition-all duration-300">
         
-<!-- بوستر الكورس العلوي ظاهر بالكامل بدون أي قص -->
+        <!-- بوستر الكورس العلوي -->
         <div class="rounded-2xl overflow-hidden relative aspect-[4/3] w-full bg-[#07111D] border border-slate-700/50 flex items-center justify-center">
           ${badgeText}
-          <img src="${item.img}" alt="${item.title}" class="w-full h-full object-contain object-top rounded-xl" onerror="this.onerror=null; this.src='khedr.jpg';" />
+          <img src="${item.img}" alt="${item.title}" class="w-full h-full object-contain object-top rounded-xl" onerror="this.style.display='none'; this.nextElementSibling.classList.remove('hidden');" />
+          
+          <!-- بديل احتياطي أنيق في حال لم تكن الصورة مرفوعة بعد -->
+          <div class="hidden flex flex-col items-center justify-center text-center p-4 text-rose-300">
+            <span class="text-3xl mb-1">${isPkg ? '📦' : '🩺'}</span>
+            <span class="font-bold text-xs">${item.title}</span>
+          </div>
         </div>
 
         <!-- محتوى الكارت -->
@@ -1282,7 +1289,7 @@ function renderCatalog() {
             </div>
           </div>
 
-<!-- أزرار الإجراءات حسب حالة التفعيل -->
+          <!-- أزرار الإجراءات حسب حالة التفعيل -->
           <div class="space-y-2 pt-1">
             <button onclick="${isPkg ? `openPackageDetails('${item.id}')` : `openCourseView('${item.id}')`}" class="w-full py-2.5 rounded-xl border border-cyan-500/40 text-cyan-300 font-black text-xs hover:bg-cyan-500/10 transition duration-200">
               الدخول للمحتوى
