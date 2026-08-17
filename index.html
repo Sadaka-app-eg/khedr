@@ -966,6 +966,28 @@ document.addEventListener("DOMContentLoaded", () => {
 
 // ============ DATABASE: ALL COURSES & PACKAGES ============
 const catalogData = {
+  // --- كورس المصطلحات الطبية (متاح لجميع الطلاب) ---
+  c_medterm: {
+    id: "c_medterm",
+    type: "single",
+    year: "all", // متاح للكل
+    code: "عام",
+    category: "متاح لجميع الفرق • أساسيات طبية",
+    title: "Medical Terminology — كورس المصطلحات الطبية",
+    desc: "The Language of Medicine: تعلم أصول المصطلحات الطبية (Prefix, Root, Suffix) مع محاضرات مسجلة، لايف، ملخصات PDF، وبنك أسئلة وامتحانات تجريبية.",
+    badge: "متاح للجميع 🎓",
+    price: "399 ج.م",
+    oldPrice: "550.00 ج.م",
+    img: "image/med_term.png",
+    lessons: [
+      { id: "mt_1", title: "01. Introduction to Medical Language (Prefix, Root, Suffix)", duration: "30 دقيقة", isFree: true, desc: "مقدمة تركيب وفهم الكلمات والمصطلحات الطبية مجاناً." },
+      { id: "mt_2", title: "02. Body Structure & Directional Terms", duration: "45 دقيقة", isFree: false, desc: "المصطلحات الخاصة باتجاهات الجسم وتراكيب الأعضاء." },
+      { id: "mt_3", title: "03. Cardiovascular & Respiratory Terminology", duration: "50 دقيقة", isFree: false, desc: "مصطلحات القلب، الأوعية الدموية والجهاز التنفسي." },
+      { id: "mt_4", title: "04. Musculoskeletal & Nervous System Terms", duration: "55 دقيقة", isFree: false, desc: "مصطلحات العظام، العضلات والأعصاب المخصصة للعلاج الطبيعي." },
+      { id: "mt_5", title: "05. Digestive & Urinary Systems Terminology", duration: "45 دقيقة", isFree: false, desc: "مصطلحات الجهاز الهضمي والبولي والأمراض الشائعة." },
+      { id: "mt_6", title: "06. Mock Exams & Question Bank Solving", duration: "50 دقيقة", isFree: false, desc: "حل بنك الأسئلة والامتحانات التجريبية ومراجعة شاملة." }
+    ]
+  },
   // --- باقات الترم والسنة ---
   pkg_y1s1: {
     id: "pkg_y1s1",
@@ -1232,11 +1254,11 @@ function renderCatalog() {
   const container = document.getElementById("coursesSlider");
   if (!container) return;
 
-  const items = Object.values(catalogData).filter(item => {
+const items = Object.values(catalogData).filter(item => {
     if (currentFilter === "all") return true;
     if (currentFilter === "pkg") return item.type === "package";
-    if (currentFilter === "y1") return item.year === "y1";
-    if (currentFilter === "y2") return item.year === "y2";
+    if (currentFilter === "y1") return item.year === "y1" || item.year === "all";
+    if (currentFilter === "y2") return item.year === "y2" || item.year === "all";
     return true;
   });
 
