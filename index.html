@@ -260,135 +260,158 @@
   </div>
 </section>
 
-<!-- ============ COURSES SECTION ============ -->
-<!-- ============ COURSES SECTION ============ -->
-<section id="courses" class="w-full max-w-[1650px] mx-auto px-6 md:px-12 py-20 border-b border-slate-800">
-  <div class="flex items-center justify-between mb-12">
+<!-- ============ COURSES & PACKAGES SECTION (تصميم منصة الجوهري بالظبط) ============ -->
+<section id="courses" class="w-full max-w-[1650px] mx-auto px-4 md:px-8 py-16 border-b border-slate-800">
+  
+  <div class="flex items-center justify-between mb-10">
     <div>
       <span class="text-xs md:text-sm font-extrabold uppercase tracking-widest text-rose-400">مكتبة الكورسات والباقات</span>
-      <h2 class="text-3xl md:text-5xl font-black mt-2 text-theme-main">الكورسات والمقررات المُقترحة</h2>
+      <h2 class="text-3xl md:text-5xl font-black mt-1 text-theme-main">الكورسات المقترحة</h2>
     </div>
-    <span class="px-6 py-2 rounded-full text-xs md:text-sm font-black bg-brand text-white shadow-lg">الكل</span>
+    <span class="px-6 py-1.5 rounded-full text-xs md:text-sm font-black bg-brand text-white shadow-md">الكل</span>
   </div>
 
-  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
 
-    <!-- كورس 1: Anatomy 1 -->
-    <article class="fade-up card-hover rounded-3xl overflow-hidden border border-slate-800 bg-card-theme p-5 shadow-2xl flex flex-col justify-between">
-      <div class="rounded-2xl overflow-hidden relative h-52 md:h-60 flex items-center justify-center bg-gradient-to-r from-emerald-900 to-teal-950">
-        <span class="absolute top-3.5 start-3.5 text-xs font-black bg-emerald-500 text-white px-3 py-1.5 rounded-lg">سنة أولى • ترم أول</span>
-        <div class="text-center p-4 text-white">
-          <span class="text-xs font-bold opacity-80">مقرر أكاديمي</span>
-          <h3 class="text-2xl font-black mt-1">ANATOMY 1</h3>
-          <span class="text-xs text-amber-300 font-bold block mt-2">10-12 Lectures • 6-8 Hours</span>
-        </div>
+    <!-- كارت 1: كورس التشريح العام (Anatomy 1) -->
+    <article class="fade-up card-hover rounded-3xl overflow-hidden border border-slate-800 bg-[#0F1D2D] p-3.5 shadow-2xl flex flex-col justify-between">
+      
+      <!-- بوستر الكورس العلوي مثل الجوهري -->
+      <div class="rounded-2xl overflow-hidden relative aspect-[16/9] w-full bg-[#07111D] border border-slate-700/50">
+        <img src="image/anatomy.png" alt="كورس التشريح العام - د. محمود خضر" class="w-full h-full object-cover" onerror="this.onerror=null; this.src='khedr.jpg';" />
       </div>
 
-      <div class="p-4 flex-1 flex flex-col justify-between space-y-6">
+      <!-- تفاصيل الكورس والبيانات السفلية -->
+      <div class="p-3 flex-1 flex flex-col justify-between space-y-4">
+        
         <div>
-          <span class="text-xs md:text-sm font-black text-rose-400 block mb-1">الفرقة الأولى • كورس متكامل</span>
-          <h4 class="font-extrabold text-base md:text-lg text-theme-main">كورس التشريح العام والأطراف العلوية 🩻</h4>
-          
-          <div class="grid grid-cols-2 gap-3 mt-4 pt-4 border-t border-slate-800 text-xs text-slate-300 font-semibold">
-            <span>🎥 محاضرات مسجلة عالية الدقة</span>
-            <span>🔴 لايف أسبوعي للمراجعة</span>
-            <span>📚 ملخصات وشيتات PDF</span>
-            <span>❓ بنك أسئلة على كل درس</span>
+          <!-- شارة الفرقة + عنوان الكورس -->
+          <div class="flex items-start gap-2.5">
+            <span class="w-6 h-6 rounded-lg bg-brand/30 border border-brand text-rose-300 font-black text-xs flex items-center justify-center shrink-0 mt-0.5">1ع</span>
+            <h3 class="font-black text-sm md:text-base text-slate-100 leading-snug">كورس التشريح العام والأطراف العلوية (Anatomy 1) 🩻</h3>
           </div>
 
-          <div class="flex items-baseline gap-3 mt-6">
-            <span class="text-2xl md:text-3xl font-black text-rose-400 num-font">599 <span class="text-sm font-bold">ج.م</span></span>
-            <span class="text-sm font-bold text-slate-400 line-through num-font">799.00</span>
+          <!-- السعر وتاريخ المنهج -->
+          <div class="mt-3 flex items-baseline justify-between">
+            <div class="flex items-baseline gap-2">
+              <span class="text-lg md:text-xl font-black text-rose-400 num-font">599 <span class="text-xs font-bold">جنيه</span></span>
+              <span class="text-xs font-bold text-slate-400 line-through num-font">799.00 جنيه</span>
+            </div>
+            <span class="text-[10px] font-bold text-slate-400">ترم أول • دفعة 2027</span>
+          </div>
+
+          <!-- النقاط التفصيلية والمحتوى المختصر -->
+          <div class="mt-2.5 pt-2.5 border-t border-slate-800/80 text-[11px] text-slate-300 space-y-1">
+            <p class="font-semibold text-slate-400">كورس التشريح العام والأطراف العلوية مع ورش الـ OSCE...</p>
+            <button onclick="openCourseView('biomechanics')" class="text-rose-400 font-bold hover:underline">عرض باقي التفاصيل</button>
           </div>
         </div>
 
-        <div class="space-y-3 pt-2">
-          <button onclick="openCourseView('biomechanics')" class="w-full py-3.5 rounded-2xl border border-brand text-rose-300 font-black text-xs md:text-sm hover:bg-brand/20 transition">
+        <!-- أزرار الدخول والاشتراك المتطابقة مع الجوهري -->
+        <div class="space-y-2 pt-1">
+          <button onclick="openCourseView('biomechanics')" class="w-full py-2.5 rounded-xl border border-brand/80 text-rose-300 font-black text-xs hover:bg-brand/20 transition duration-200">
             الدخول للكورس
           </button>
-          <button onclick="openCourseView('biomechanics')" class="w-full py-3.5 rounded-2xl bg-brand hover:bg-rose-900 text-white font-black text-xs md:text-sm shadow-xl transition">
+          <button onclick="openCourseView('biomechanics')" class="w-full py-2.5 rounded-xl bg-brand hover:bg-rose-900 text-white font-black text-xs shadow-lg transition duration-200">
             الإشتراك في الكورس !
           </button>
         </div>
+
       </div>
     </article>
 
-    <!-- كورس 2: Biomechanics 1 -->
-    <article class="fade-up card-hover rounded-3xl overflow-hidden border border-slate-800 bg-card-theme p-5 shadow-2xl flex flex-col justify-between">
-      <div class="rounded-2xl overflow-hidden relative h-52 md:h-60 flex items-center justify-center bg-gradient-to-r from-amber-900 to-rose-950">
-        <span class="absolute top-3.5 start-3.5 text-xs font-black bg-amber-500 text-slate-900 px-3 py-1.5 rounded-lg">سنة أولى • ترم ثاني</span>
-        <div class="text-center p-4 text-white">
-          <span class="text-xs font-bold opacity-80">مقرر أكاديمي</span>
-          <h3 class="text-2xl font-black mt-1">BIOMECHANICS 1</h3>
-          <span class="text-xs text-amber-300 font-bold block mt-2">10-12 Lectures • 8 Hours</span>
-        </div>
+    <!-- كارت 2: كورس الميكانيكا الحيوية (Biomechanics 1) -->
+    <article class="fade-up card-hover rounded-3xl overflow-hidden border border-slate-800 bg-[#0F1D2D] p-3.5 shadow-2xl flex flex-col justify-between">
+      
+      <!-- بوستر الكورس العلوي مثل الجوهري -->
+      <div class="rounded-2xl overflow-hidden relative aspect-[16/9] w-full bg-[#07111D] border border-slate-700/50">
+        <img src="image/biomechanics.png" alt="كورس الميكانيكا الحيوية - د. محمود خضر" class="w-full h-full object-cover" onerror="this.onerror=null; this.src='khedr.jpg';" />
       </div>
 
-      <div class="p-4 flex-1 flex flex-col justify-between space-y-6">
+      <!-- تفاصيل الكورس والبيانات السفلية -->
+      <div class="p-3 flex-1 flex flex-col justify-between space-y-4">
+        
         <div>
-          <span class="text-xs md:text-sm font-black text-rose-400 block mb-1">الفرقة الأولى • حركية المفاصل</span>
-          <h4 class="font-extrabold text-base md:text-lg text-theme-main">مقدمة الميكانيكا الحيوية وعزوم المفاصل 🦴</h4>
-          
-          <div class="grid grid-cols-2 gap-3 mt-4 pt-4 border-t border-slate-800 text-xs text-slate-300 font-semibold">
-            <span>🎥 تحليل القوى والعزوم</span>
-            <span>🔴 محاكاة مسائل العملي</span>
-            <span>📚 تفريغ القوانين PDF</span>
-            <span>❓ بنك أسئلة MCQ</span>
+          <!-- شارة الفرقة + عنوان الكورس -->
+          <div class="flex items-start gap-2.5">
+            <span class="w-6 h-6 rounded-lg bg-brand/30 border border-brand text-rose-300 font-black text-xs flex items-center justify-center shrink-0 mt-0.5">2ع</span>
+            <h3 class="font-black text-sm md:text-base text-slate-100 leading-snug">كورس الميكانيكا الحيوية وعزوم المفاصل (Biomechanics 1) 🦴</h3>
           </div>
 
-          <div class="flex items-baseline gap-3 mt-6">
-            <span class="text-2xl md:text-3xl font-black text-rose-400 num-font">599 <span class="text-sm font-bold">ج.م</span></span>
-            <span class="text-sm font-bold text-slate-400 line-through num-font">799.00</span>
+          <!-- السعر وتاريخ المنهج -->
+          <div class="mt-3 flex items-baseline justify-between">
+            <div class="flex items-baseline gap-2">
+              <span class="text-lg md:text-xl font-black text-rose-400 num-font">599 <span class="text-xs font-bold">جنيه</span></span>
+              <span class="text-xs font-bold text-slate-400 line-through num-font">799.00 جنيه</span>
+            </div>
+            <span class="text-[10px] font-bold text-slate-400">ترم أول • دفعة 2027</span>
+          </div>
+
+          <!-- النقاط التفصيلية والمحتوى المختصر -->
+          <div class="mt-2.5 pt-2.5 border-t border-slate-800/80 text-[11px] text-slate-300 space-y-1">
+            <p class="font-semibold text-slate-400">تحليل القوى، الحركة والمفاصل وبنوك أسئلة MCQ...</p>
+            <button onclick="openCourseView('biomechanics')" class="text-rose-400 font-bold hover:underline">عرض باقي التفاصيل</button>
           </div>
         </div>
 
-        <div class="space-y-3 pt-2">
-          <button onclick="openCourseView('biomechanics')" class="w-full py-3.5 rounded-2xl border border-brand text-rose-300 font-black text-xs md:text-sm hover:bg-brand/20 transition">
+        <!-- أزرار الدخول والاشتراك المتطابقة مع الجوهري -->
+        <div class="space-y-2 pt-1">
+          <button onclick="openCourseView('biomechanics')" class="w-full py-2.5 rounded-xl border border-brand/80 text-rose-300 font-black text-xs hover:bg-brand/20 transition duration-200">
             الدخول للكورس
           </button>
-          <button onclick="openCourseView('biomechanics')" class="w-full py-3.5 rounded-2xl bg-brand hover:bg-rose-900 text-white font-black text-xs md:text-sm shadow-xl transition">
+          <button onclick="openCourseView('biomechanics')" class="w-full py-2.5 rounded-xl bg-brand hover:bg-rose-900 text-white font-black text-xs shadow-lg transition duration-200">
             الإشتراك في الكورس !
           </button>
         </div>
+
       </div>
     </article>
 
-    <!-- كورس 3: Full Year Pass -->
-    <article class="fade-up card-hover rounded-3xl overflow-hidden border-2 border-brand bg-card-theme p-5 shadow-2xl flex flex-col justify-between relative">
-      <div class="rounded-2xl overflow-hidden relative h-52 md:h-60 flex items-center justify-center bg-gradient-to-r from-rose-900 to-indigo-950">
-        <span class="absolute top-3.5 start-3.5 text-xs font-black bg-amber-400 text-slate-900 px-3 py-1.5 rounded-lg">وفر 600 ج 🔥</span>
-        <div class="text-center p-4 text-white">
-          <span class="text-xs font-bold opacity-80">Full Year Pass</span>
-          <h3 class="text-2xl font-black mt-1">سنة أولى علاج طبيعي كاملة</h3>
-        </div>
+    <!-- كارت 3: باقة السنة الكاملة (Full Year Pass) -->
+    <article class="fade-up card-hover rounded-3xl overflow-hidden border-2 border-brand bg-[#0F1D2D] p-3.5 shadow-2xl flex flex-col justify-between relative">
+      
+      <!-- بوستر الكورس العلوي مثل الجوهري -->
+      <div class="rounded-2xl overflow-hidden relative aspect-[16/9] w-full bg-[#07111D] border border-slate-700/50">
+        <span class="absolute top-2.5 start-2.5 z-10 text-[10px] font-black bg-amber-400 text-slate-900 px-2.5 py-1 rounded-md shadow-md">الأوفر 🔥 وفر 600ج</span>
+        <img src="image/level1.png" alt="باقة سنة أولى كاملة - د. محمود خضر" class="w-full h-full object-cover" onerror="this.onerror=null; this.src='khedr.jpg';" />
       </div>
 
-      <div class="p-4 flex-1 flex flex-col justify-between space-y-6">
+      <!-- تفاصيل الكورس والبيانات السفلية -->
+      <div class="p-3 flex-1 flex flex-col justify-between space-y-4">
+        
         <div>
-          <span class="text-xs md:text-sm font-black text-amber-400 block mb-1">الترم الأول + الترم الثاني (9 مواد)</span>
-          <h4 class="font-extrabold text-base md:text-lg text-theme-main">تغطية شاملة لكل مواد وامتحانات الفرقة الأولى</h4>
-          
-          <div class="grid grid-cols-2 gap-3 mt-4 pt-4 border-t border-slate-800 text-xs text-slate-300 font-semibold">
-            <span>🎥 9 مواد أكاديمية</span>
-            <span>🔴 ورش عملي وتدريب OSCE</span>
-            <span>📚 مذكرات وشيتات كاملة</span>
-            <span>💬 جروب متابعة خاص</span>
+          <!-- شارة الفرقة + عنوان الكورس -->
+          <div class="flex items-start gap-2.5">
+            <span class="w-6 h-6 rounded-lg bg-amber-400 text-slate-900 font-black text-xs flex items-center justify-center shrink-0 mt-0.5">⭐</span>
+            <h3 class="font-black text-sm md:text-base text-slate-100 leading-snug">باقة الفرقة الأولى علاج طبيعي كاملة (Full Pass) 🚀</h3>
           </div>
 
-          <div class="flex items-baseline gap-3 mt-6">
-            <span class="text-2xl md:text-3xl font-black text-rose-400 num-font">2,799 <span class="text-sm font-bold">ج.م</span></span>
-            <span class="text-sm font-bold text-slate-400 line-through num-font">3,398.00</span>
+          <!-- السعر وتاريخ المنهج -->
+          <div class="mt-3 flex items-baseline justify-between">
+            <div class="flex items-baseline gap-2">
+              <span class="text-lg md:text-xl font-black text-amber-400 num-font">2,799 <span class="text-xs font-bold">جنيه</span></span>
+              <span class="text-xs font-bold text-slate-400 line-through num-font">3,398.00 جنيه</span>
+            </div>
+            <span class="text-[10px] font-bold text-rose-300">الترمين معاً (9 مواد)</span>
+          </div>
+
+          <!-- النقاط التفصيلية والمحتوى المختصر -->
+          <div class="mt-2.5 pt-2.5 border-t border-slate-800/80 text-[11px] text-slate-300 space-y-1">
+            <p class="font-semibold text-slate-400">تغطية شاملة لكل المواد النظرية ومحاكاة الـ OSCE...</p>
+            <button onclick="openPackageDetails('y1full')" class="text-amber-400 font-bold hover:underline">عرض باقي التفاصيل</button>
           </div>
         </div>
 
-        <div class="space-y-3 pt-2">
-          <button onclick="openPackageDetails('y1full')" class="w-full py-3.5 rounded-2xl border border-brand text-rose-300 font-black text-xs md:text-sm hover:bg-brand/20 transition">
+        <!-- أزرار الدخول والاشتراك المتطابقة مع الجوهري -->
+        <div class="space-y-2 pt-1">
+          <button onclick="openPackageDetails('y1full')" class="w-full py-2.5 rounded-xl border border-brand/80 text-rose-300 font-black text-xs hover:bg-brand/20 transition duration-200">
             الدخول للكورس
           </button>
-          <button onclick="openPackageDetails('y1full')" class="w-full py-3.5 rounded-2xl bg-brand hover:bg-rose-900 text-white font-black text-xs md:text-sm shadow-xl transition">
+          <button onclick="openPackageDetails('y1full')" class="w-full py-2.5 rounded-xl bg-brand hover:bg-rose-900 text-white font-black text-xs shadow-lg transition duration-200">
             الإشتراك في الكورس !
           </button>
         </div>
+
       </div>
     </article>
 
@@ -517,7 +540,7 @@
         <input id="regName" type="text" required placeholder="مثال: محمود أحمد خضر" class="h-11 rounded-xl px-3 border border-slate-700 bg-transparent text-xs md:text-sm text-theme-main focus:border-brand" />
       </label>
 
-      <!-- رقم الهاتف / واتساب -->
+<!-- رقم الهاتف والفرقة الدراسية جنب بعض -->
       <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
         <label class="flex flex-col gap-1 text-xs md:text-sm font-bold text-theme-main">
           <span>رقم الهاتف (واتساب)</span>
@@ -525,19 +548,13 @@
         </label>
         
         <label class="flex flex-col gap-1 text-xs md:text-sm font-bold text-theme-main">
-          <span>الجامعة / الكلية</span>
-          <input id="regUniversity" type="text" required placeholder="مثال: جامعة القاهرة" class="h-11 rounded-xl px-3 border border-slate-700 bg-transparent text-xs md:text-sm text-theme-main focus:border-brand" />
+          <span>الفرقة الدراسية</span>
+          <select id="regYear" required class="h-11 rounded-xl px-3 border border-slate-700 bg-[#0F1D2D] text-xs md:text-sm text-theme-main focus:border-brand">
+            <option value="y1">الفرقة الأولى (First Year)</option>
+            <option value="y2">الفرقة الثانية (Second Year)</option>
+          </select>
         </label>
       </div>
-
-<!-- الفرقة الدراسية (أولى وتانية فقط) -->
-      <label class="flex flex-col gap-1 text-xs md:text-sm font-bold text-theme-main">
-        <span>الفرقة الدراسية</span>
-        <select id="regYear" required class="h-11 rounded-xl px-3 border border-slate-700 bg-[#0F1D2D] text-xs md:text-sm text-theme-main focus:border-brand">
-          <option value="y1">الفرقة الأولى (First Year)</option>
-          <option value="y2">الفرقة الثانية (Second Year)</option>
-        </select>
-      </label>
 
       <!-- البريد الإلكتروني -->
       <label class="flex flex-col gap-1 text-xs md:text-sm font-bold text-theme-main">
@@ -1185,24 +1202,24 @@ const registerForm = document.getElementById("registerForm");
     registerForm.addEventListener("submit", async (e) => {
       e.preventDefault();
       const btn = document.getElementById("registerSubmitBtn");
+      const errEl = document.getElementById("registerError");
+      if (errEl) errEl.classList.add("hidden");
       if (btn) btn.disabled = true;
 
-      const name = document.getElementById("regName").value;
-      const phone = document.getElementById("regPhone").value;
-      const university = document.getElementById("regUniversity").value;
+      const name = document.getElementById("regName").value.trim();
+      const phone = document.getElementById("regPhone").value.trim();
       const academicYear = document.getElementById("regYear").value;
-      const email = document.getElementById("regEmail").value;
+      const email = document.getElementById("regEmail").value.trim();
       const password = document.getElementById("regPassword").value;
 
       try {
         const cred = await createUserWithEmailAndPassword(auth, email, password);
         await updateProfile(cred.user, { displayName: name });
 
-        // حفظ بيانات الطالب التفصيلية في Firestore
+        // حفظ بيانات الطالب في Firestore بدون حقل الجامعة
         await setDoc(doc(db, "students", cred.user.uid), {
           fullName: name,
           phone: phone,
-          university: university,
           academicYear: academicYear,
           email: email,
           createdAt: serverTimestamp()
@@ -1210,7 +1227,18 @@ const registerForm = document.getElementById("registerForm");
 
         window.location.href = "dashboard.html";
       } catch (err) {
-        showError("registerError", currentLang === "ar" ? "تعذر إنشاء الحساب، تأكد من صحة البريد أو قوة كلمة المرور" : "Could not create account");
+        let msg = "تعذر إنشاء الحساب، يرجى مراجعة البيانات";
+        
+        // فحص نوع الخطأ الخاص بفايربيز
+        if (err.code === "auth/email-already-in-use") {
+          msg = "⚠️ هذا البريد الإلكتروني مسجل بالفعل! يرجى تسجيل الدخول أو استخدام بريد آخر.";
+        } else if (err.code === "auth/invalid-email") {
+          msg = "⚠️ صيغة البريد الإلكتروني غير صحيحة.";
+        } else if (err.code === "auth/weak-password") {
+          msg = "⚠️ كلمة المرور ضعيفة جداً، يرجى كتابة 6 أحرف أو أرقام على الأقل.";
+        }
+
+        showError("registerError", msg);
       } finally {
         if (btn) btn.disabled = false;
       }
