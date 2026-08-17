@@ -282,13 +282,13 @@
   <!-- حاوية السلايدر مع الأسهم الجانبية الكبيرة -->
   <div class="relative group">
     
-    <!-- السهم الأيمن الضخم -->
-    <button onclick="scrollSlider('right')" class="absolute -end-3 md:-end-5 top-1/2 -translate-y-1/2 z-20 w-12 h-16 md:w-14 md:h-24 bg-gradient-to-l from-[#5E0824] to-[#8E0E38]/90 hover:to-rose-800 text-white rounded-2xl shadow-[0_0_25px_rgba(142,14,56,0.6)] flex items-center justify-center text-3xl font-black transition transform hover:scale-105 border border-white/20" title="السابق">
+<!-- السهم الأيمن (زي الجوهري شفاف ويحمر عند التفاعل) -->
+    <button onclick="scrollSlider('right')" class="slider-arrow absolute -end-2 md:-end-6 top-1/2 -translate-y-1/2 z-20 text-rose-500/40 hover:text-rose-500 active:text-rose-600 text-5xl md:text-7xl font-light transition-all duration-200 transform hover:scale-125 select-none" title="السابق">
       ›
     </button>
 
-    <!-- السهم الأيسر الضخم -->
-    <button onclick="scrollSlider('left')" class="absolute -start-3 md:-start-5 top-1/2 -translate-y-1/2 z-20 w-12 h-16 md:w-14 md:h-24 bg-gradient-to-r from-[#5E0824] to-[#8E0E38]/90 hover:to-rose-800 text-white rounded-2xl shadow-[0_0_25px_rgba(142,14,56,0.6)] flex items-center justify-center text-3xl font-black transition transform hover:scale-105 border border-white/20" title="التالي">
+    <!-- السهم الأيسر (زي الجوهري شفاف ويحمر عند التفاعل) -->
+    <button onclick="scrollSlider('left')" class="slider-arrow absolute -start-2 md:-start-6 top-1/2 -translate-y-1/2 z-20 text-rose-500/40 hover:text-rose-500 active:text-rose-600 text-5xl md:text-7xl font-light transition-all duration-200 transform hover:scale-125 select-none" title="التالي">
       ‹
     </button>
 
@@ -1252,10 +1252,10 @@ function renderCatalog() {
     return `
       <article class="min-w-[300px] sm:min-w-[340px] md:min-w-[370px] max-w-[370px] shrink-0 snap-start fade-up card-hover rounded-3xl overflow-hidden border ${isPkg ? "border-brand shadow-rose-950/20" : "border-slate-800"} bg-[#0F1D2D] p-3.5 shadow-2xl flex flex-col justify-between relative transition-all duration-300">
         
-        <!-- بوستر الكورس العلوي بنسبة أبعاد 16:9 -->
-        <div class="rounded-2xl overflow-hidden relative aspect-[16/9] w-full bg-[#07111D] border border-slate-700/50">
+<!-- بوستر الكورس العلوي ظاهر بالكامل بدون أي قص -->
+        <div class="rounded-2xl overflow-hidden relative aspect-[4/3] w-full bg-[#07111D] border border-slate-700/50 flex items-center justify-center">
           ${badgeText}
-          <img src="${item.img}" alt="${item.title}" class="w-full h-full object-cover" onerror="this.onerror=null; this.src='khedr.jpg';" />
+          <img src="${item.img}" alt="${item.title}" class="w-full h-full object-contain object-top rounded-xl" onerror="this.onerror=null; this.src='khedr.jpg';" />
         </div>
 
         <!-- محتوى الكارت -->
@@ -1460,18 +1460,44 @@ function renderCourseCurriculum() {
   }).join("");
 }
 
+// دالة تشغيل الدرس أو إلزام الطالب بتسجيل الدخول
 function selectLesson(lessonId) {
   const crs = currentItemData;
   if (!crs || !crs.lessons) return;
   const lesson = crs.lessons.find(l => l.id === lessonId);
   if (!lesson) return;
 
-  const canAccess = lesson.isFree || crs.isEnrolled;
-  if (!canAccess) {
-    alert("🔒 هذه المحاضرة مغلقة. يرجى الضغط على زر 'الاشتراك في هذا المقرر' لفتح جميع المحاضرات والشيتات وبنوك الأسئلة.");
+  // التحقق من حالة تسجيل الدخول عبر Firebase Auth
+  const user = auth.currentUser;
+
+  if (!user) {
+    alert("🔒 يرجى تسجيل الدخول أو إنشاء حساب جديد أولاً لمشاهدة المحاضرات والملفات.");
+    
+    // إغلاق شاشة الكورس والعودة للصفحة الرئيسية
+    closeCourseView();
+    
+    // التمرير مباشرة لقسم تسجيل الدخول مع التركيز على حقل البريد
+    const authSection = document.getElementById("auth");
+    if (authSection) {
+      authSection.scrollIntoView({ behavior: "smooth", block: "center" });
+      setAuthTab("login");
+      setTimeout(() => {
+        const emailInput = document.getElementById("loginEmail");
+        if (emailInput) emailInput.focus();
+      }, 600);
+    }
     return;
   }
 
+  // إذا كان مسجلاً للدخول بالفعل، نفحص هل المحاضرة مجانية أم يحتاج للاشتراك
+  const canAccess = lesson.isFree || crs.isEnrolled;
+
+  if (!canAccess) {
+    alert("🔒 هذه المحاضرة مغلقة للمشتركين. يرجى الضغط على زر 'الاشتراك في هذا المقرر' لفتح جميع المحاضرات والشيتات.");
+    return;
+  }
+
+  // عرض تفاصيل الدرس وتشغيل المحتوى
   document.getElementById("currentLessonTitle").textContent = lesson.title;
   document.getElementById("currentLessonDesc").textContent = lesson.desc;
 
@@ -1486,7 +1512,7 @@ function selectLesson(lessonId) {
     iframe.classList.add("hidden");
     placeholder.classList.remove("hidden");
     placeholder.querySelector("h3").textContent = `📄 ${lesson.title}`;
-    placeholder.querySelector("p").textContent = "المحتوى التوضيحي والشرح جاهز للعرض.";
+    placeholder.querySelector("p").textContent = "المحتوى التوضيحي والشرح جاهز للعرض والتحميل.";
   }
 }
 
