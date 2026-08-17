@@ -1282,14 +1282,22 @@ function renderCatalog() {
             </div>
           </div>
 
-          <!-- أزرار الإجراءات -->
+<!-- أزرار الإجراءات حسب حالة التفعيل -->
           <div class="space-y-2 pt-1">
-            <button onclick="${isPkg ? `openPackageDetails('${item.id}')` : `openCourseView('${item.id}')`}" class="w-full py-2.5 rounded-xl border border-brand/80 text-rose-300 font-black text-xs hover:bg-brand/20 transition duration-200">
-              الدخول للكورس
+            <button onclick="${isPkg ? `openPackageDetails('${item.id}')` : `openCourseView('${item.id}')`}" class="w-full py-2.5 rounded-xl border border-cyan-500/40 text-cyan-300 font-black text-xs hover:bg-cyan-500/10 transition duration-200">
+              الدخول للمحتوى
             </button>
-            <button onclick="${isPkg ? `openPackageDetails('${item.id}')` : `openCourseView('${item.id}')`}" class="w-full py-2.5 rounded-xl bg-brand hover:bg-rose-900 text-white font-black text-xs shadow-lg transition duration-200">
-              الإشتراك في الكورس !
-            </button>
+            
+            ${item.isEnrolled ? `
+              <div class="w-full py-2.5 rounded-xl bg-emerald-600/90 text-white font-black text-xs text-center shadow-lg border border-emerald-400/40 flex items-center justify-center gap-1.5 cursor-default">
+                <span>✓</span>
+                <span>مشترك في الكورس </span>
+              </div>
+            ` : `
+              <button onclick="${isPkg ? `openPackageDetails('${item.id}')` : `openCourseView('${item.id}')`}" class="w-full py-2.5 rounded-xl bg-brand hover:bg-rose-900 text-white font-black text-xs shadow-lg transition duration-200">
+                الإشتراك في الكورس !
+              </button>
+            `}
           </div>
         </div>
 
