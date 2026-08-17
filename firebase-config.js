@@ -15,19 +15,21 @@ import {
   serverTimestamp 
 } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-firestore.js";
 
-// 🔴 استبدل القيم دي ببيانات مشروعك من Firebase Console
+// إعدادات مشروع منصة خضر الفعلية
 const firebaseConfig = {
-  apiKey: "YOUR_API_KEY",
-  authDomain: "YOUR_PROJECT.firebaseapp.com",
-  projectId: "YOUR_PROJECT_ID",
-  storageBucket: "YOUR_PROJECT.appspot.com",
-  messagingSenderId: "YOUR_SENDER_ID",
-  appId: "YOUR_APP_ID"
+  apiKey: "AIzaSyDw8IM1VLZ9wzirGRJi6tGzh9rYNs59ypk",
+  authDomain: "khedr-physio.firebaseapp.com",
+  projectId: "khedr-physio",
+  storageBucket: "khedr-physio.firebasestorage.app",
+  messagingSenderId: "232758240234",
+  appId: "1:232758240234:web:e66bb53be1fcb4a0290893",
+  measurementId: "G-8NZLYVK1R8"
 };
 
 export const app = initializeApp(firebaseConfig);
 export const auth = getAuth(app);
 export const db = getFirestore(app);
+
 export { 
   onAuthStateChanged, 
   signOut, 
