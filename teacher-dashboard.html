@@ -244,8 +244,8 @@
 
 <!-- ============ FIREBASE LOGIC FOR ADMIN ============ -->
 <script type="module">
-  import { auth, db, onAuthStateChanged, signOut, doc, updateDoc } from "./firebase-config.js";
-import { collection, getDocs, addDoc, deleteDoc, query, where } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-firestore.js";
+import { auth, db, onAuthStateChanged, signOut, doc } from "./firebase-config.js";
+  import { collection, getDocs, addDoc, deleteDoc, updateDoc, query, where } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-firestore.js";
   // 🔴 ضع هنا إيميلك المسجل به في المنصة
   const ADMIN_EMAILS = [
     "admin@khedr.com", // استبدله بإيميلك الفعلي
