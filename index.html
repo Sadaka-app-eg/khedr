@@ -1596,11 +1596,20 @@ function toggleCourseEnrollment() {
 
 </script>
 
-<!-- ============ FIREBASE AUTH LOGIC ============ -->
+<!-- ============ FIREBASE AUTH & SUBSCRIPTION LOGIC ============ -->
 <script type="module">
-  import { auth, db } from "./firebase-config.js";
-  import { signInWithEmailAndPassword, createUserWithEmailAndPassword, updateProfile } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-auth.js";
-  import { doc, setDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-firestore.js";
+  import { 
+    auth, 
+    db, 
+    signInWithEmailAndPassword, 
+    createUserWithEmailAndPassword, 
+    updateProfile, 
+    doc, 
+    setDoc, 
+    getDoc, 
+    serverTimestamp, 
+    onAuthStateChanged 
+  } from "./firebase-config.js";
 
   function showError(elId, msg) {
     const el = document.getElementById(elId);
@@ -1610,6 +1619,33 @@ function toggleCourseEnrollment() {
     }
   }
 
+  // 1. فحص حالة الطالب وتفعيل الكورسات المشترك فيها تلقائياً من قاعدة البيانات
+  onAuthStateChanged(auth, async (user) => {
+    if (user) {
+      try {
+        const studentDoc = await getDoc(doc(db, "students", user.uid));
+        if (studentDoc.exists()) {
+          const data = studentDoc.data();
+          const enrolledCourses = data.enrolledCourses || [];
+          
+          enrolledCourses.forEach(cId => {
+            if (catalogData[cId]) {
+              catalogData[cId].isEnrolled = true;
+            }
+          });
+          renderCatalog();
+          if (currentItemData && enrolledCourses.includes(currentItemData.id)) {
+            currentItemData.isEnrolled = true;
+            renderCourseCurriculum();
+          }
+        }
+      } catch (e) {
+        console.error("خطأ أثناء جلب اشتراكات الطالب:", e);
+      }
+    }
+  });
+
+  // 2. تسجيل الدخول
   const loginForm = document.getElementById("loginForm");
   if (loginForm) {
     loginForm.addEventListener("submit", async (e) => {
@@ -1617,8 +1653,13 @@ function toggleCourseEnrollment() {
       const btn = document.getElementById("loginSubmitBtn");
       if (btn) btn.disabled = true;
       try {
-        await signInWithEmailAndPassword(auth, document.getElementById("loginEmail").value, document.getElementById("loginPassword").value);
-        window.location.href = "dashboard.html";
+        await signInWithEmailAndPassword(
+          auth, 
+          document.getElementById("loginEmail").value.trim(), 
+          document.getElementById("loginPassword").value
+        );
+        alert("🎉 تم تسجيل الدخول بنجاح!");
+        location.reload();
       } catch (err) {
         showError("loginError", currentLang === "ar" ? "بيانات الدخول غير صحيحة" : "Invalid login credentials");
       } finally {
@@ -1627,7 +1668,8 @@ function toggleCourseEnrollment() {
     });
   }
 
-const registerForm = document.getElementById("registerForm");
+  // 3. إنشاء حساب جديد وتخزين بيانات الطالب في Firestore
+  const registerForm = document.getElementById("registerForm");
   if (registerForm) {
     registerForm.addEventListener("submit", async (e) => {
       e.preventDefault();
@@ -1646,20 +1688,20 @@ const registerForm = document.getElementById("registerForm");
         const cred = await createUserWithEmailAndPassword(auth, email, password);
         await updateProfile(cred.user, { displayName: name });
 
-        // حفظ بيانات الطالب في Firestore بدون حقل الجامعة
+        // حفظ بيانات الطالب في Firestore
         await setDoc(doc(db, "students", cred.user.uid), {
           fullName: name,
           phone: phone,
           academicYear: academicYear,
           email: email,
+          enrolledCourses: [], // يبدأ فارغ حتى يقوم المشرف بتفعيله
           createdAt: serverTimestamp()
         });
 
-        window.location.href = "dashboard.html";
+        alert("🎉 تم إنشاء الحساب بنجاح! أهلاً بك في منصة خضر.");
+        location.reload();
       } catch (err) {
         let msg = "تعذر إنشاء الحساب، يرجى مراجعة البيانات";
-        
-        // فحص نوع الخطأ الخاص بفايربيز
         if (err.code === "auth/email-already-in-use") {
           msg = "⚠️ هذا البريد الإلكتروني مسجل بالفعل! يرجى تسجيل الدخول أو استخدام بريد آخر.";
         } else if (err.code === "auth/invalid-email") {
@@ -1667,27 +1709,25 @@ const registerForm = document.getElementById("registerForm");
         } else if (err.code === "auth/weak-password") {
           msg = "⚠️ كلمة المرور ضعيفة جداً، يرجى كتابة 6 أحرف أو أرقام على الأقل.";
         }
-
         showError("registerError", msg);
       } finally {
         if (btn) btn.disabled = false;
       }
     });
   }
-  // ============ COURSE & LESSONS FREEMIUM SYSTEM ============
 
-  function toggleSupportTooltip(show) {
-  const tip = document.getElementById("supportTooltip");
-  if (!tip) return;
-  
-  if (show === undefined) {
-    tip.classList.toggle("hidden");
-  } else if (show) {
-    tip.classList.remove("hidden");
-  } else {
-    tip.classList.add("hidden");
-  }
-}
+  // 4. زر التليجرام العائم
+  window.toggleSupportTooltip = function(show) {
+    const tip = document.getElementById("supportTooltip");
+    if (!tip) return;
+    if (show === undefined) {
+      tip.classList.toggle("hidden");
+    } else if (show) {
+      tip.classList.remove("hidden");
+    } else {
+      tip.classList.add("hidden");
+    }
+  };
 </script>
 </body>
           </html>
