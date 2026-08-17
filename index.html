@@ -1278,8 +1278,7 @@ const items = Object.values(catalogData).filter(item => {
         <!-- بوستر الكورس العلوي -->
         <div class="rounded-2xl overflow-hidden relative aspect-[4/3] w-full bg-[#07111D] border border-slate-700/50 flex items-center justify-center">
           ${badgeText}
-          <img src="${item.img}" alt="${item.title}" class="w-full h-full object-contain object-top rounded-xl" onerror="this.style.display='none'; this.nextElementSibling.classList.remove('hidden');" />
-          
+<img src="${item.img}" alt="${item.title}" class="w-full h-full object-cover object-top rounded-xl transition duration-300 transform group-hover:scale-105" onerror="this.style.display='none'; this.nextElementSibling.classList.remove('hidden');" />          
           <!-- بديل احتياطي أنيق في حال لم تكن الصورة مرفوعة بعد -->
           <div class="hidden flex flex-col items-center justify-center text-center p-4 text-rose-300">
             <span class="text-3xl mb-1">${isPkg ? '📦' : '🩺'}</span>
