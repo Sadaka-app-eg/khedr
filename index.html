@@ -12,10 +12,6 @@
 <script src="https://cdn.tailwindcss.com"></script>
 
 <style>
-  /* رفع المقياس الطبيعي لكل العناصر والخطوط بنسبة 25% */
-html {
-  font-size: 19px; /* يكبر كل خطوط وبادينج Tailwind أوتوماتيكياً */
-}
   :root {
     --brand-primary: #8E0E38;   /* عنابي / بورجوندي المنصة */
     --brand-dark:    #5E0824;
@@ -115,38 +111,42 @@ html {
 <!-- Scroll Progress Bar -->
 <div id="scrollProgress"></div>
 
-<!-- ============ NAVBAR (حجم مضاعف لـ 100% Zoom) ============ -->
+<!-- ============ NAVBAR (مضبوط للشاشات الصغيرة والكبيرة) ============ -->
 <header class="sticky top-0 z-50 backdrop-blur-md bg-[#07111D]/95 border-b border-slate-800 transition-colors">
-  <div class="w-full px-6 md:px-16 h-24 flex items-center justify-between">
+  <div class="w-full max-w-[1600px] mx-auto px-4 md:px-8 h-16 flex items-center justify-between">
 
-    <!-- اليمين: زر القائمة للموبايل + أزرار الدخول للكمبيوتر -->
-    <div class="flex items-center gap-4">
-      <button id="drawerBtn" class="md:hidden w-12 h-12 flex items-center justify-center text-amber-400 hover:text-white transition">
-        <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+    <!-- اليمين: زر القائمة للموبايل + أزرار الدخول للكمبيوتر فقط -->
+    <div class="flex items-center gap-3">
+      <!-- زر المنيو (يظهر فقط في الموبايل) -->
+      <button id="drawerBtn" class="md:hidden w-10 h-10 flex items-center justify-center text-amber-400 hover:text-white transition">
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
       </button>
 
-      <div class="hidden md:flex items-center gap-3">
-        <a href="#auth" onclick="setAuthTab('login')" class="text-base font-black px-6 h-12 leading-[48px] rounded-2xl border border-slate-700 text-slate-200 hover:border-brand transition whitespace-nowrap" data-i18n="nav_login">تسجيل الدخول</a>
-        <a href="#auth" onclick="setAuthTab('register')" class="text-base font-black text-white px-7 h-12 leading-[48px] rounded-2xl bg-brand hover:bg-rose-900 transition shadow-xl whitespace-nowrap" data-i18n="auth_tab_register">حساب جديد</a>
+      <!-- الدخول والتسجيل (مخفي في الموبايل ويظهر في الكمبيوتر فقط) -->
+      <div class="hidden md:flex items-center gap-2">
+        <a href="#auth" onclick="setAuthTab('login')" class="text-xs font-bold px-3.5 h-8 leading-8 rounded-xl border border-slate-700 text-slate-200 hover:border-brand transition whitespace-nowrap" data-i18n="nav_login">تسجيل الدخول</a>
+        <a href="#auth" onclick="setAuthTab('register')" class="text-xs font-bold text-white px-4 h-8 leading-8 rounded-xl bg-brand hover:bg-rose-900 transition shadow-md whitespace-nowrap" data-i18n="auth_tab_register">حساب جديد</a>
       </div>
     </div>
 
-    <!-- المنتصف: اللوجو ضخم ممتد -->
-    <a href="#" onclick="window.scrollTo({top: 0, behavior: 'smooth'}); return false;" class="flex items-center gap-3">
-      <img src="logo.png" alt="KHEDR PHYSIO" class="h-12 md:h-16 w-auto object-contain drop-shadow" onerror="this.src='logo.jpg'" />
-      <span class="hidden lg:inline font-black text-lg md:text-2xl text-white tracking-wide" data-i18n="brand">KHEDR & PHYSIO</span>
+    <!-- المنتصف: اللوجو المفرغ logo.jpg -->
+    <a href="#" onclick="window.scrollTo({top: 0, behavior: 'smooth'}); return false;" class="flex items-center gap-2">
+      <img src="logo.png" alt="KHEDR PHYSIO" class="h-9 md:h-11 w-auto object-contain" onerror="this.src='logo.png'" />
+      <span class="hidden lg:inline font-black text-sm md:text-base text-white" data-i18n="brand">KHEDR & PHYSIO</span>
     </a>
 
-    <!-- الشمال: الثيم واللغة -->
-    <div class="flex items-center gap-3">
+    <!-- الشمال: الثيم وتغيير اللغة -->
+    <div class="flex items-center gap-2">
+      <!-- زر الثيم -->
       <div id="themeBtn" class="theme-toggle-pill" title="Toggle Dark/Light Mode">
-        <span class="text-xs z-10">☀️</span>
-        <span class="text-xs z-10">🌙</span>
+        <span class="text-[10px] z-10">☀️</span>
+        <span class="text-[10px] z-10">🌙</span>
         <div class="theme-toggle-thumb"></div>
       </div>
 
-      <button id="langBtn" class="text-sm font-black px-4 h-10 rounded-full border border-slate-700 text-slate-200 flex items-center gap-2 hover:border-brand transition">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.7 2.5 15.3 0 18M12 3c-2.5 2.7-2.5 15.3 0 18"/></svg>
+      <!-- زر اللغة -->
+      <button id="langBtn" class="text-xs font-bold px-2.5 h-7 rounded-full border border-slate-700 text-slate-200 flex items-center gap-1 hover:border-brand transition">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.7 2.5 15.3 0 18M12 3c-2.5 2.7-2.5 15.3 0 18"/></svg>
         <span id="langLabel">EN</span>
       </button>
     </div>
@@ -154,119 +154,120 @@ html {
   </div>
 
   <!-- Mobile Drawer Menu -->
-  <div id="drawer" class="hidden md:hidden border-t border-slate-800 px-6 py-5 flex flex-col gap-4 text-lg font-bold bg-[#07111D] text-slate-200">
+  <div id="drawer" class="hidden md:hidden border-t border-slate-800 px-5 py-4 flex flex-col gap-3 text-sm font-bold bg-[#07111D] text-slate-200">
     <a href="#hero" onclick="toggleDrawer()" data-i18n="nav_home">الرئيسية</a>
     <a href="#years" onclick="toggleDrawer()" data-i18n="nav_years">الفرق الدراسية</a>
     <a href="#courses" onclick="toggleDrawer()" data-i18n="nav_courses">الكورسات والباقات</a>
     <a href="#features" onclick="toggleDrawer()" data-i18n="nav_features">مميزات المنصة</a>
     <a href="#honors" onclick="toggleDrawer()" data-i18n="nav_honors">لوحة الشرف</a>
     <a href="#instructor" onclick="toggleDrawer()" data-i18n="nav_instructor">عن الشارح</a>
-    <div class="pt-3 border-t border-slate-800 flex gap-3">
-      <a href="#auth" onclick="toggleDrawer(); setAuthTab('login')" class="w-1/2 text-center py-3 rounded-xl border border-slate-700 text-sm">تسجيل الدخول</a>
-      <a href="#auth" onclick="toggleDrawer(); setAuthTab('register')" class="w-1/2 text-center py-3 rounded-xl bg-brand text-white text-sm">حساب جديد</a>
+    <div class="pt-3 border-t border-slate-800 flex gap-2">
+      <a href="#auth" onclick="toggleDrawer(); setAuthTab('login')" class="w-1/2 text-center py-2 rounded-xl border border-slate-700 text-xs">تسجيل الدخول</a>
+      <a href="#auth" onclick="toggleDrawer(); setAuthTab('register')" class="w-1/2 text-center py-2 rounded-xl bg-brand text-white text-xs">حساب جديد</a>
     </div>
   </div>
-</header>  
+</header>
 
-<!-- ============ HERO SECTION (عملاق يملأ شاشة الكمبيوتر بالكامل) ============ -->
-<section id="hero" class="w-full px-4 md:px-12 pt-4 pb-12">
-  <div class="relative overflow-hidden rounded-[3rem] bg-gradient-to-b md:bg-gradient-to-l from-[#5E0824] via-[#7A0B30] to-[#4A051B] min-h-[700px] lg:min-h-[820px] flex flex-col md:flex-row items-center justify-between px-8 md:px-24 py-16 shadow-2xl border border-white/10">
+<!-- ============ HERO SECTION (حجم ضخم لفخامة الـ 100% Zoom) ============ -->
+<section id="hero" class="w-full max-w-[1650px] mx-auto px-4 md:px-8 pt-4 pb-10">
+  <div class="relative overflow-hidden rounded-[2.5rem] bg-gradient-to-b md:bg-gradient-to-l from-[#5E0824] via-[#7A0B30] to-[#4A051B] min-h-[600px] lg:min-h-[680px] flex flex-col md:flex-row items-center justify-between px-6 sm:px-12 md:px-20 py-12 shadow-2xl border border-white/10">
     
-    <!-- النصوص والزرار -->
-    <div class="w-full md:w-7/12 text-center md:text-right text-white space-y-6 md:space-y-10 z-10">
-      <span class="inline-block text-base md:text-2xl font-black text-rose-300 tracking-wide" data-i18n="hero_eyebrow">
+    <!-- النصوص والزراير بحجم كبير صريح -->
+    <div class="w-full md:w-7/12 text-center md:text-right text-white space-y-6 md:space-y-8 z-10">
+      <span class="inline-block text-sm md:text-xl font-black text-rose-300 tracking-wide" data-i18n="hero_eyebrow">
         محمود خضر — محاضر ومدرس للمواد الطبية بكلية العلاج الطبيعي
       </span>
 
-      <h1 class="text-4xl sm:text-6xl lg:text-8xl font-black leading-[1.12] tracking-tight" data-i18n="hero_title">
+      <h1 class="text-4xl sm:text-6xl lg:text-7xl font-black leading-[1.15] tracking-tight" data-i18n="hero_title">
         رحلتك بتبدأ مع <span class="text-amber-300">خِـضـر</span><br/>
         خُد أول خطوة.. وأنت واثق
       </h1>
 
-      <p class="text-base md:text-2xl font-semibold opacity-90 leading-9 max-w-2xl mx-auto md:mx-0 text-rose-100" data-i18n="hero_sub">
+      <p class="text-sm md:text-xl font-semibold opacity-90 leading-8 max-w-2xl mx-auto md:mx-0 text-rose-100" data-i18n="hero_sub">
         تجربة تعليمية متكاملة تستحق تبدأ بيها لأن كل تفصيلة مصممة علشانك
       </p>
 
-      <div class="pt-4">
-        <a href="#auth" class="inline-block bg-white text-[#7A0B30] font-black text-base md:text-xl px-12 py-5 rounded-3xl shadow-2xl hover:bg-rose-50 transition transform hover:scale-105" data-i18n="hero_cta1">
+      <div class="pt-2">
+        <a href="#auth" class="inline-block bg-white text-[#7A0B30] font-black text-sm md:text-lg px-10 py-4 rounded-2xl shadow-2xl hover:bg-rose-50 transition transform hover:scale-105" data-i18n="hero_cta1">
           سجل وخد أول خطوة
         </a>
       </div>
 
-      <div class="pt-8 border-t border-white/15 text-sm md:text-lg font-bold opacity-80 hidden md:block" data-i18n="hero_footer_note">
+      <div class="pt-6 border-t border-white/15 text-xs md:text-base font-bold opacity-80 hidden md:block" data-i18n="hero_footer_note">
         منصة خِضر: أفضل منصة تعليمية مخصصة لطلاب علاج طبيعي
       </div>
     </div>
 
-    <!-- الصورة المفرغة بحجم عملاق يملأ الارتفاع كاملاً -->
-    <div class="w-full md:w-5/12 relative flex justify-center items-end mt-10 md:mt-0 z-0 h-full">
-      <img src="khedr.png" alt="محمود خضر" class="max-h-[500px] sm:max-h-[700px] lg:max-h-[820px] w-auto object-contain drop-shadow-[0_30px_40px_rgba(0,0,0,0.9)] scale-105" onerror="this.src='khedr.jpg'" />
+    <!-- الصورة بارتفاع كبير مفرغة -->
+    <div class="w-full md:w-5/12 relative flex justify-center items-end mt-8 md:mt-0 z-0">
+      <img src="khedr.jpg" alt="محمود خضر" class="max-h-[420px] sm:max-h-[560px] lg:max-h-[640px] w-auto object-contain drop-shadow-[0_25px_35px_rgba(0,0,0,0.85)] scale-105" onerror="this.src='khedr.png'" />
     </div>
 
   </div>
 </section>
 
-<!-- ============ ACADEMIC YEARS (حجم عملاق فخم) ============ -->
-<section id="years" class="w-full px-6 md:px-20 py-24 border-b border-slate-800">
-  <div class="grid lg:grid-cols-12 gap-12 items-center">
+<!-- ============ ACADEMIC YEARS (مثل تصميم الجوهري: الكلام يمين والكروت شمال) ============ -->
+<!-- ============ ACADEMIC YEARS ============ -->
+<section id="years" class="w-full max-w-[1650px] mx-auto px-6 md:px-12 py-20 border-b border-slate-800">
+  <div class="grid lg:grid-cols-12 gap-10 items-center">
     
     <!-- العنوان والوصف على اليمين -->
-    <div class="lg:col-span-5 text-right space-y-6">
-      <span class="text-sm md:text-base font-extrabold uppercase tracking-widest text-rose-400" data-i18n="years_eyebrow">المسارات الجامعية</span>
-      <h2 class="text-4xl md:text-6xl lg:text-7xl font-black text-theme-main leading-tight" data-i18n="years_title">السنوات الدراسية</h2>
-      <p class="text-base md:text-xl font-semibold text-theme-sub leading-8" data-i18n="years_sub">
+    <div class="lg:col-span-4 text-right space-y-5">
+      <span class="text-xs md:text-sm font-extrabold uppercase tracking-widest text-rose-400" data-i18n="years_eyebrow">المسارات الجامعية</span>
+      <h2 class="text-3xl md:text-5xl lg:text-6xl font-black text-theme-main leading-tight" data-i18n="years_title">السنوات الدراسية</h2>
+      <p class="text-sm md:text-lg font-semibold text-theme-sub leading-7" data-i18n="years_sub">
         احجز اشتراكك دلوقتي وابدأ مذاكرة مواد العلاج الطبيعي على موبايلك، التابلت أو اللابتوب الخاص بيك. المنصة متاحة على مدار الساعة.
       </p>
-      <div class="pt-4">
-        <a href="#auth" class="inline-block bg-brand hover:bg-rose-900 text-white font-black text-base md:text-lg px-10 py-4.5 rounded-2xl shadow-xl transition">
+      <div class="pt-3">
+        <a href="#auth" class="inline-block bg-brand hover:bg-rose-900 text-white font-black text-sm md:text-base px-9 py-4 rounded-2xl shadow-xl transition">
           انشئ حسابك الآن
         </a>
       </div>
     </div>
 
-    <!-- الكروت المكبرة -->
-    <div class="lg:col-span-7 grid sm:grid-cols-2 xl:grid-cols-4 gap-6">
+    <!-- الكروت بحجم كبير ومريح -->
+    <div class="lg:col-span-8 grid sm:grid-cols-2 xl:grid-cols-4 gap-6">
       
-      <div class="fade-up card-hover rounded-3xl p-8 md:p-10 border border-slate-800 bg-card-theme flex flex-col justify-between shadow-xl">
+      <div class="fade-up card-hover rounded-3xl p-7 border border-slate-800 bg-card-theme flex flex-col justify-between shadow-xl">
         <div>
-          <div class="w-16 h-16 rounded-2xl flex items-center justify-center font-black text-2xl mb-5 bg-brand text-white shadow-lg">1</div>
-          <h3 class="text-xl font-black text-theme-main" data-i18n="year1_title">الفرقة الأولى</h3>
-          <p class="text-sm text-theme-sub font-semibold mt-3 leading-6" data-i18n="year1_desc">Anatomy, Physiology, Histology, Intro to Biomechanics.</p>
+          <div class="w-14 h-14 rounded-2xl flex items-center justify-center font-black text-2xl mb-4 bg-brand text-white shadow-lg">1</div>
+          <h3 class="text-lg md:text-xl font-black text-theme-main" data-i18n="year1_title">الفرقة الأولى</h3>
+          <p class="text-xs md:text-sm text-theme-sub font-semibold mt-2.5 leading-6" data-i18n="year1_desc">Anatomy, Physiology, Histology, Intro to Biomechanics.</p>
         </div>
-        <a href="#courses" class="mt-8 inline-flex items-center text-sm font-black text-rose-400 hover:underline" data-i18n="btn_enter_year">
+        <a href="#courses" class="mt-6 inline-flex items-center text-xs md:text-sm font-black text-rose-400 hover:underline" data-i18n="btn_enter_year">
           دخول جميع الكورسات ←
         </a>
       </div>
 
-      <div class="fade-up card-hover rounded-3xl p-8 md:p-10 border border-slate-800 bg-card-theme flex flex-col justify-between shadow-xl">
+      <div class="fade-up card-hover rounded-3xl p-7 border border-slate-800 bg-card-theme flex flex-col justify-between shadow-xl">
         <div>
-          <div class="w-16 h-16 rounded-2xl flex items-center justify-center font-black text-2xl mb-5 bg-brand text-white shadow-lg">2</div>
-          <h3 class="text-xl font-black text-theme-main" data-i18n="year2_title">الفرقة الثانية</h3>
-          <p class="text-sm text-theme-sub font-semibold mt-3 leading-6" data-i18n="year2_desc">Biomechanics, Electrotherapy, Hydrotherapy, Kinesiology.</p>
+          <div class="w-14 h-14 rounded-2xl flex items-center justify-center font-black text-2xl mb-4 bg-brand text-white shadow-lg">2</div>
+          <h3 class="text-lg md:text-xl font-black text-theme-main" data-i18n="year2_title">الفرقة الثانية</h3>
+          <p class="text-xs md:text-sm text-theme-sub font-semibold mt-2.5 leading-6" data-i18n="year2_desc">Biomechanics, Electrotherapy, Hydrotherapy, Kinesiology.</p>
         </div>
-        <a href="#courses" class="mt-8 inline-flex items-center text-sm font-black text-rose-400 hover:underline" data-i18n="btn_enter_year">
+        <a href="#courses" class="mt-6 inline-flex items-center text-xs md:text-sm font-black text-rose-400 hover:underline" data-i18n="btn_enter_year">
           دخول جميع الكورسات ←
         </a>
       </div>
 
-      <div class="fade-up card-hover rounded-3xl p-8 md:p-10 border border-slate-800 bg-card-theme flex flex-col justify-between shadow-xl">
+      <div class="fade-up card-hover rounded-3xl p-7 border border-slate-800 bg-card-theme flex flex-col justify-between shadow-xl">
         <div>
-          <div class="w-16 h-16 rounded-2xl flex items-center justify-center font-black text-2xl mb-5 bg-brand text-white shadow-lg">3</div>
-          <h3 class="text-xl font-black text-theme-main" data-i18n="year3_title">الفرقة الثالثة</h3>
-          <p class="text-sm text-theme-sub font-semibold mt-3 leading-6" data-i18n="year3_desc">Orthopedic PT, Neurological PT, Cardiopulmonary PT.</p>
+          <div class="w-14 h-14 rounded-2xl flex items-center justify-center font-black text-2xl mb-4 bg-brand text-white shadow-lg">3</div>
+          <h3 class="text-lg md:text-xl font-black text-theme-main" data-i18n="year3_title">الفرقة الثالثة</h3>
+          <p class="text-xs md:text-sm text-theme-sub font-semibold mt-2.5 leading-6" data-i18n="year3_desc">Orthopedic PT, Neurological PT, Cardiopulmonary PT.</p>
         </div>
-        <a href="#courses" class="mt-8 inline-flex items-center text-sm font-black text-rose-400 hover:underline" data-i18n="btn_enter_year">
+        <a href="#courses" class="mt-6 inline-flex items-center text-xs md:text-sm font-black text-rose-400 hover:underline" data-i18n="btn_enter_year">
           دخول جميع الكورسات ←
         </a>
       </div>
 
-      <div class="fade-up card-hover rounded-3xl p-8 md:p-10 border border-slate-800 bg-card-theme flex flex-col justify-between shadow-xl">
+      <div class="fade-up card-hover rounded-3xl p-7 border border-slate-800 bg-card-theme flex flex-col justify-between shadow-xl">
         <div>
-          <div class="w-16 h-16 rounded-2xl flex items-center justify-center font-black text-2xl mb-5 bg-brand text-white shadow-lg">4</div>
-          <h3 class="text-xl font-black text-theme-main" data-i18n="year4_title">الفرقة الرابعة</h3>
-          <p class="text-sm text-theme-sub font-semibold mt-3 leading-6" data-i18n="year4_desc">Pediatric PT, Geriatrics, Sports Injuries, Clinical Internship.</p>
+          <div class="w-14 h-14 rounded-2xl flex items-center justify-center font-black text-2xl mb-4 bg-brand text-white shadow-lg">4</div>
+          <h3 class="text-lg md:text-xl font-black text-theme-main" data-i18n="year4_title">الفرقة الرابعة</h3>
+          <p class="text-xs md:text-sm text-theme-sub font-semibold mt-2.5 leading-6" data-i18n="year4_desc">Pediatric PT, Geriatrics, Sports Injuries, Clinical Internship.</p>
         </div>
-        <a href="#courses" class="mt-8 inline-flex items-center text-sm font-black text-rose-400 hover:underline" data-i18n="btn_enter_year">
+        <a href="#courses" class="mt-6 inline-flex items-center text-xs md:text-sm font-black text-rose-400 hover:underline" data-i18n="btn_enter_year">
           دخول جميع الكورسات ←
         </a>
       </div>
@@ -276,94 +277,133 @@ html {
   </div>
 </section>
 
-<!-- ============ PACKAGES & COURSES (حجم عملاق فخم) ============ -->
-<section id="courses" class="w-full px-6 md:px-20 py-24 border-b border-slate-800">
+<!-- ============ COURSES SECTION ============ -->
+<!-- ============ COURSES SECTION ============ -->
+<section id="courses" class="w-full max-w-[1650px] mx-auto px-6 md:px-12 py-20 border-b border-slate-800">
   <div class="flex items-center justify-between mb-12">
     <div>
-      <span class="text-sm font-extrabold uppercase tracking-widest text-rose-400" data-i18n="courses_eyebrow">باقات المنصة والمواد</span>
-      <h2 class="text-4xl md:text-6xl lg:text-7xl font-black mt-2 text-theme-main" data-i18n="courses_title">اختر الباقة المناسبة لفرقتك</h2>
+      <span class="text-xs md:text-sm font-extrabold uppercase tracking-widest text-rose-400">مكتبة الكورسات والباقات</span>
+      <h2 class="text-3xl md:text-5xl font-black mt-2 text-theme-main">الكورسات والمقررات المُقترحة</h2>
     </div>
-    <span class="px-6 py-2.5 rounded-full text-sm font-black bg-brand text-white shadow-xl">الكل</span>
+    <span class="px-6 py-2 rounded-full text-xs md:text-sm font-black bg-brand text-white shadow-lg">الكل</span>
   </div>
 
   <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
 
-    <!-- باقة سنة أولى ترم 1 -->
-    <article class="fade-up card-hover rounded-[2rem] overflow-hidden border border-slate-800 bg-card-theme p-6 md:p-8 shadow-2xl flex flex-col justify-between">
-      <div class="rounded-2xl overflow-hidden relative h-52 md:h-64 flex items-center justify-center bg-gradient-to-r from-[#7A0B30] to-[#4A051B]">
-        <span class="absolute top-4 start-4 text-xs font-black bg-amber-400 text-slate-900 px-3 py-1.5 rounded-lg">وفر 397 ج</span>
+    <!-- كورس 1: Anatomy 1 -->
+    <article class="fade-up card-hover rounded-3xl overflow-hidden border border-slate-800 bg-card-theme p-5 shadow-2xl flex flex-col justify-between">
+      <div class="rounded-2xl overflow-hidden relative h-52 md:h-60 flex items-center justify-center bg-gradient-to-r from-emerald-900 to-teal-950">
+        <span class="absolute top-3.5 start-3.5 text-xs font-black bg-emerald-500 text-white px-3 py-1.5 rounded-lg">سنة أولى • ترم أول</span>
         <div class="text-center p-4 text-white">
-          <span class="text-xs font-bold opacity-80">باقة متكاملة</span>
-          <h3 class="text-xl md:text-2xl font-black mt-1">First Year — Semester 1</h3>
+          <span class="text-xs font-bold opacity-80">مقرر أكاديمي</span>
+          <h3 class="text-2xl font-black mt-1">ANATOMY 1</h3>
+          <span class="text-xs text-amber-300 font-bold block mt-2">10-12 Lectures • 6-8 Hours</span>
         </div>
       </div>
+
       <div class="p-4 flex-1 flex flex-col justify-between space-y-6">
         <div>
-          <span class="text-xs md:text-sm font-black text-rose-400 block mb-1">الفرقة الأولى • 4 مواد</span>
-          <h4 class="font-extrabold text-base md:text-lg text-theme-main">Anatomy 1, Physiology 1, Histology 1, Biophysics 1</h4>
-          <p class="text-xs md:text-sm text-theme-sub mt-2 leading-6">شرح مسجل، لايفات أسبوعية، بنوك أسئلة، ومذكرات PDF.</p>
-        </div>
-        <div class="mt-6 pt-4 border-t border-slate-800 flex items-center justify-between">
-          <div class="flex items-baseline gap-2">
-            <span class="text-2xl md:text-3xl font-black text-rose-400 num-font">1,499 <span class="text-xs font-bold" data-i18n="egp">ج.م</span></span>
-            <span class="text-xs font-bold text-slate-400 line-through num-font">1,896</span>
+          <span class="text-xs md:text-sm font-black text-rose-400 block mb-1">الفرقة الأولى • كورس متكامل</span>
+          <h4 class="font-extrabold text-base md:text-lg text-theme-main">كورس التشريح العام والأطراف العلوية 🩻</h4>
+          
+          <div class="grid grid-cols-2 gap-3 mt-4 pt-4 border-t border-slate-800 text-xs text-slate-300 font-semibold">
+            <span>🎥 محاضرات مسجلة عالية الدقة</span>
+            <span>🔴 لايف أسبوعي للمراجعة</span>
+            <span>📚 ملخصات وشيتات PDF</span>
+            <span>❓ بنك أسئلة على كل درس</span>
           </div>
-          <button onclick="openPackageDetails('y1s1')" class="px-5 py-3 rounded-2xl bg-brand text-white font-black text-xs md:text-sm hover:bg-rose-900 transition shadow-lg" data-i18n="btn_details">
-            عرض التفاصيل
+
+          <div class="flex items-baseline gap-3 mt-6">
+            <span class="text-2xl md:text-3xl font-black text-rose-400 num-font">599 <span class="text-sm font-bold">ج.م</span></span>
+            <span class="text-sm font-bold text-slate-400 line-through num-font">799.00</span>
+          </div>
+        </div>
+
+        <div class="space-y-3 pt-2">
+          <button onclick="openCourseView('biomechanics')" class="w-full py-3.5 rounded-2xl border border-brand text-rose-300 font-black text-xs md:text-sm hover:bg-brand/20 transition">
+            الدخول للكورس
+          </button>
+          <button onclick="openCourseView('biomechanics')" class="w-full py-3.5 rounded-2xl bg-brand hover:bg-rose-900 text-white font-black text-xs md:text-sm shadow-xl transition">
+            الإشتراك في الكورس !
           </button>
         </div>
       </div>
     </article>
 
-    <!-- باقة سنة أولى كاملة -->
-    <article class="fade-up card-hover rounded-[2rem] overflow-hidden border-2 border-brand bg-card-theme p-6 md:p-8 shadow-2xl flex flex-col justify-between relative">
-      <div class="rounded-2xl overflow-hidden relative h-52 md:h-64 flex items-center justify-center bg-gradient-to-r from-amber-600 to-rose-900">
-        <span class="absolute top-4 start-4 text-xs font-black bg-rose-600 text-white px-3 py-1.5 rounded-lg">الأعلى توفيراً 🔥</span>
+    <!-- كورس 2: Biomechanics 1 -->
+    <article class="fade-up card-hover rounded-3xl overflow-hidden border border-slate-800 bg-card-theme p-5 shadow-2xl flex flex-col justify-between">
+      <div class="rounded-2xl overflow-hidden relative h-52 md:h-60 flex items-center justify-center bg-gradient-to-r from-amber-900 to-rose-950">
+        <span class="absolute top-3.5 start-3.5 text-xs font-black bg-amber-500 text-slate-900 px-3 py-1.5 rounded-lg">سنة أولى • ترم ثاني</span>
+        <div class="text-center p-4 text-white">
+          <span class="text-xs font-bold opacity-80">مقرر أكاديمي</span>
+          <h3 class="text-2xl font-black mt-1">BIOMECHANICS 1</h3>
+          <span class="text-xs text-amber-300 font-bold block mt-2">10-12 Lectures • 8 Hours</span>
+        </div>
+      </div>
+
+      <div class="p-4 flex-1 flex flex-col justify-between space-y-6">
+        <div>
+          <span class="text-xs md:text-sm font-black text-rose-400 block mb-1">الفرقة الأولى • حركية المفاصل</span>
+          <h4 class="font-extrabold text-base md:text-lg text-theme-main">مقدمة الميكانيكا الحيوية وعزوم المفاصل 🦴</h4>
+          
+          <div class="grid grid-cols-2 gap-3 mt-4 pt-4 border-t border-slate-800 text-xs text-slate-300 font-semibold">
+            <span>🎥 تحليل القوى والعزوم</span>
+            <span>🔴 محاكاة مسائل العملي</span>
+            <span>📚 تفريغ القوانين PDF</span>
+            <span>❓ بنك أسئلة MCQ</span>
+          </div>
+
+          <div class="flex items-baseline gap-3 mt-6">
+            <span class="text-2xl md:text-3xl font-black text-rose-400 num-font">599 <span class="text-sm font-bold">ج.م</span></span>
+            <span class="text-sm font-bold text-slate-400 line-through num-font">799.00</span>
+          </div>
+        </div>
+
+        <div class="space-y-3 pt-2">
+          <button onclick="openCourseView('biomechanics')" class="w-full py-3.5 rounded-2xl border border-brand text-rose-300 font-black text-xs md:text-sm hover:bg-brand/20 transition">
+            الدخول للكورس
+          </button>
+          <button onclick="openCourseView('biomechanics')" class="w-full py-3.5 rounded-2xl bg-brand hover:bg-rose-900 text-white font-black text-xs md:text-sm shadow-xl transition">
+            الإشتراك في الكورس !
+          </button>
+        </div>
+      </div>
+    </article>
+
+    <!-- كورس 3: Full Year Pass -->
+    <article class="fade-up card-hover rounded-3xl overflow-hidden border-2 border-brand bg-card-theme p-5 shadow-2xl flex flex-col justify-between relative">
+      <div class="rounded-2xl overflow-hidden relative h-52 md:h-60 flex items-center justify-center bg-gradient-to-r from-rose-900 to-indigo-950">
+        <span class="absolute top-3.5 start-3.5 text-xs font-black bg-amber-400 text-slate-900 px-3 py-1.5 rounded-lg">وفر 600 ج 🔥</span>
         <div class="text-center p-4 text-white">
           <span class="text-xs font-bold opacity-80">Full Year Pass</span>
-          <h3 class="text-xl md:text-2xl font-black mt-1">First Year Complete Pass</h3>
+          <h3 class="text-2xl font-black mt-1">سنة أولى علاج طبيعي كاملة</h3>
         </div>
       </div>
-      <div class="p-4 flex-1 flex flex-col justify-between space-y-6">
-        <div>
-          <span class="text-xs md:text-sm font-black text-amber-500 block mb-1">الترم الأول + الترم الثاني (9 مواد)</span>
-          <h4 class="font-extrabold text-base md:text-lg text-theme-main">تغطية شاملة لكامل مقررات سنة أولى علاج طبيعي</h4>
-          <p class="text-xs md:text-sm text-theme-sub mt-2 leading-6">تشمل ورش العملي ونماذج الـ OSCE طوال العام الدراسي.</p>
-        </div>
-        <div class="mt-6 pt-4 border-t border-slate-800 flex items-center justify-between">
-          <div class="flex items-baseline gap-2">
-            <span class="text-2xl md:text-3xl font-black text-rose-400 num-font">2,799 <span class="text-xs font-bold" data-i18n="egp">ج.م</span></span>
-            <span class="text-xs font-bold text-slate-400 line-through num-font">3,398</span>
-          </div>
-          <button onclick="openPackageDetails('y1full')" class="px-5 py-3 rounded-2xl bg-brand text-white font-black text-xs md:text-sm hover:bg-rose-900 transition shadow-lg" data-i18n="btn_details">
-            عرض التفاصيل
-          </button>
-        </div>
-      </div>
-    </article>
 
-    <!-- باقة الأساس الشامل -->
-    <article class="fade-up card-hover rounded-[2rem] overflow-hidden border border-slate-800 bg-card-theme p-6 md:p-8 shadow-2xl flex flex-col justify-between">
-      <div class="rounded-2xl overflow-hidden relative h-52 md:h-64 flex items-center justify-center bg-gradient-to-r from-slate-900 to-indigo-950">
-        <span class="absolute top-4 start-4 text-xs font-black bg-amber-400 text-slate-900 px-3 py-1.5 rounded-lg">👑 Hero Package</span>
-        <div class="text-center p-4 text-white">
-          <span class="text-xs font-bold opacity-80">سنة أولى + سنة تانية</span>
-          <h3 class="text-xl md:text-2xl font-black mt-1">PT Foundation Pass</h3>
-        </div>
-      </div>
       <div class="p-4 flex-1 flex flex-col justify-between space-y-6">
         <div>
-          <span class="text-xs md:text-sm font-black text-rose-400 block mb-1">الـ 21 مادة الأساسية كاملة</span>
-          <h4 class="font-extrabold text-base md:text-lg text-theme-main">تأهيل كامل من أول يوم بالكلية وحتى السكاشن الإكلينيكية</h4>
-          <p class="text-xs md:text-sm text-theme-sub mt-2 leading-6">كل المواد، البنوك، الـ OSCE، واشتراك مفتوح حتى التخرج.</p>
-        </div>
-        <div class="mt-6 pt-4 border-t border-slate-800 flex items-center justify-between">
-          <div class="flex items-baseline gap-2">
-            <span class="text-2xl md:text-3xl font-black text-rose-400 num-font">5,999 <span class="text-xs font-bold" data-i18n="egp">ج.م</span></span>
-            <span class="text-xs font-bold text-slate-400 line-through num-font">8,286</span>
+          <span class="text-xs md:text-sm font-black text-amber-400 block mb-1">الترم الأول + الترم الثاني (9 مواد)</span>
+          <h4 class="font-extrabold text-base md:text-lg text-theme-main">تغطية شاملة لكل مواد وامتحانات الفرقة الأولى</h4>
+          
+          <div class="grid grid-cols-2 gap-3 mt-4 pt-4 border-t border-slate-800 text-xs text-slate-300 font-semibold">
+            <span>🎥 9 مواد أكاديمية</span>
+            <span>🔴 ورش عملي وتدريب OSCE</span>
+            <span>📚 مذكرات وشيتات كاملة</span>
+            <span>💬 جروب متابعة خاص</span>
           </div>
-          <button onclick="openPackageDetails('ptfoundation')" class="px-5 py-3 rounded-2xl bg-brand text-white font-black text-xs md:text-sm hover:bg-rose-900 transition shadow-lg" data-i18n="btn_details">
-            عرض التفاصيل
+
+          <div class="flex items-baseline gap-3 mt-6">
+            <span class="text-2xl md:text-3xl font-black text-rose-400 num-font">2,799 <span class="text-sm font-bold">ج.م</span></span>
+            <span class="text-sm font-bold text-slate-400 line-through num-font">3,398.00</span>
+          </div>
+        </div>
+
+        <div class="space-y-3 pt-2">
+          <button onclick="openPackageDetails('y1full')" class="w-full py-3.5 rounded-2xl border border-brand text-rose-300 font-black text-xs md:text-sm hover:bg-brand/20 transition">
+            الدخول للكورس
+          </button>
+          <button onclick="openPackageDetails('y1full')" class="w-full py-3.5 rounded-2xl bg-brand hover:bg-rose-900 text-white font-black text-xs md:text-sm shadow-xl transition">
+            الإشتراك في الكورس !
           </button>
         </div>
       </div>
@@ -715,7 +755,8 @@ html {
 <!-- Column 4: Contact & Tech Support (Telegram) -->
     <div class="flex flex-col items-center md:items-start gap-3">
       <h4 class="font-black text-xs uppercase tracking-wider text-amber-300 mb-2" data-i18n="foot_contact">تواصل معنا</h4>
-<a href="https://t.me/+201024397339" target="_blank" rel="noopener" class="w-full max-w-[220px] py-3.5 rounded-2xl bg-[#229ED9] hover:bg-[#1C88B6] text-white font-black text-xs md:text-sm transition border border-cyan-400/30 flex items-center justify-center gap-2.5 shadow-lg">        <svg width="18" height="18" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12s5.37 12 12 12 12-5.37 12-12S18.63 0 12 0zm5.56 8.16l-1.97 9.28c-.15.67-.54.83-1.1.5l-3.02-2.23-1.46 1.4c-.16.16-.3.3-.61.3l.22-3.08 5.6-5.06c.24-.22-.05-.34-.37-.14l-6.92 4.36-2.99-.93c-.65-.2-.66-.65.14-.97l11.7-4.51c.54-.2 1.02.13.84.88z"/></svg>
+      <a href="https://t.me/KhedrSupport" target="_blank" rel="noopener" class="w-full max-w-[220px] py-3.5 rounded-2xl bg-[#229ED9] hover:bg-[#1C88B6] text-white font-black text-xs md:text-sm transition border border-cyan-400/30 flex items-center justify-center gap-2.5 shadow-lg">
+        <svg width="18" height="18" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12s5.37 12 12 12 12-5.37 12-12S18.63 0 12 0zm5.56 8.16l-1.97 9.28c-.15.67-.54.83-1.1.5l-3.02-2.23-1.46 1.4c-.16.16-.3.3-.61.3l.22-3.08 5.6-5.06c.24-.22-.05-.34-.37-.14l-6.92 4.36-2.99-.93c-.65-.2-.66-.65.14-.97l11.7-4.51c.54-.2 1.02.13.84.88z"/></svg>
         <span data-i18n="btn_support">الدعم الفني عبر تليجرام</span>
       </a>
     </div>
@@ -730,7 +771,8 @@ html {
 </footer>
 
 <!-- Floating Telegram Support Button -->
-<a href="https://t.me/+201024397339" target="_blank" rel="noopener" class="fixed bottom-6 start-6 z-50 w-14 h-14 rounded-full bg-[#229ED9] hover:bg-[#1C88B6] text-white shadow-2xl flex items-center justify-center hover:scale-110 transition duration-300 border-2 border-white/20" title="الدعم الفني على تليجرام">  <svg width="24" height="24" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12s5.37 12 12 12 12-5.37 12-12S18.63 0 12 0zm5.56 8.16l-1.97 9.28c-.15.67-.54.83-1.1.5l-3.02-2.23-1.46 1.4c-.16.16-.3.3-.61.3l.22-3.08 5.6-5.06c.24-.22-.05-.34-.37-.14l-6.92 4.36-2.99-.93c-.65-.2-.66-.65.14-.97l11.7-4.51c.54-.2 1.02.13.84.88z"/></svg>
+<a href="https://t.me/KhedrSupport" target="_blank" rel="noopener" class="fixed bottom-6 start-6 z-50 w-14 h-14 rounded-full bg-[#229ED9] hover:bg-[#1C88B6] text-white shadow-2xl flex items-center justify-center hover:scale-110 transition duration-300 border-2 border-white/20" title="الدعم الفني على تليجرام">
+  <svg width="24" height="24" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12s5.37 12 12 12 12-5.37 12-12S18.63 0 12 0zm5.56 8.16l-1.97 9.28c-.15.67-.54.83-1.1.5l-3.02-2.23-1.46 1.4c-.16.16-.3.3-.61.3l.22-3.08 5.6-5.06c.24-.22-.05-.34-.37-.14l-6.92 4.36-2.99-.93c-.65-.2-.66-.65.14-.97l11.7-4.51c.54-.2 1.02.13.84.88z"/></svg>
 </a>
 
 <!-- ============ TRANSLATIONS DICTIONARY & UI LOGIC ============ -->
@@ -1301,4 +1343,4 @@ function closeCourseView() {
 }
 </script>
 </body>
-</html>
+          </html>
