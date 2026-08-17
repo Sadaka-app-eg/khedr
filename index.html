@@ -1552,15 +1552,44 @@ function selectLesson(lessonId) {
   }
 }
 
+// دالة الاشتراك وتوجيه الطالب للتحويل والدعم الفني
 function toggleCourseEnrollment() {
   if (!currentItemData) return;
-  if (currentItemData.isEnrolled) {
-    alert("أنت مشترك بالفعل في هذا الكورس!");
+
+  // 1. فحص هل الطالب مسجل دخول أصلاً؟
+  const user = auth.currentUser;
+  if (!user) {
+    alert("🔒 يرجى تسجيل الدخول أو إنشاء حساب على المنصة أولاً لتتمكن من الاشتراك.");
+    closeCourseView();
+    closePackageDetails();
+    const authSection = document.getElementById("auth");
+    if (authSection) {
+      authSection.scrollIntoView({ behavior: "smooth", block: "center" });
+      setAuthTab("login");
+      setTimeout(() => {
+        const emailInput = document.getElementById("loginEmail");
+        if (emailInput) emailInput.focus();
+      }, 600);
+    }
     return;
   }
-  currentItemData.isEnrolled = true;
-  renderCourseCurriculum();
-  alert("🎉 مبروك! تم الاشتراك في المقرر بنجاح وفتح جميع المحاضرات.");
+
+  // 2. فحص هل هو مشترك ومفعل بالفعل من المشرف؟
+  if (currentItemData.isEnrolled) {
+    alert("✅ أنت مشترك بالفعل في هذا المحتوى ومفتوح لك بالكامل!");
+    return;
+  }
+
+  // 3. إذا كان مسجل دخول لكن غير مفعل، يتم توجيهه للدعم لتأكيد الدفع
+  const confirmRedirect = confirm(
+    `📌 للاشتراك في "${currentItemData.title}" بسعر (${currentItemData.price}):\n\n` +
+    `يرجى تحويل الرسوم وإرسال صورة إيصال التحويل مع إيميل حسابك (${user.email}) لتيم الدعم الفني ليتم تفعيل حسابك فوراً.\n\n` +
+    `هل تريد فتح محادثة الدعم الفني على تليجرام الآن؟`
+  );
+
+  if (confirmRedirect) {
+    window.open("https://t.me/Khedr_physio", "_blank");
+  }
 }
 
 
