@@ -530,29 +530,22 @@
       </div>
     </div>
 
-    <div class="grid lg:grid-cols-12 gap-8">
-<!-- المنطقة الرئيسية: مشغل الفيديو وملفات الـ PDF الآمنة (8 أعمدة) -->
+   <div class="grid lg:grid-cols-12 gap-8">
+      
+      <!-- المنطقة الرئيسية: مشغل الفيديو وملفات الـ PDF (8 أعمدة) -->
       <div class="lg:col-span-8 space-y-5">
-<div id="videoPlayerContainer" class="rounded-3xl overflow-hidden bg-[#0F1D2D] border border-slate-800 aspect-video relative flex items-center justify-center shadow-lg select-none">
-  <!-- العلامة المائية المتحركة لحماية الشاشة من التسجيل والتصوير -->
-  <div id="videoWatermark" class="hidden absolute z-30 pointer-events-none text-slate-300/40 font-bold text-xs md:text-sm tracking-wide transition-all duration-1000 select-none">
-    <span id="wmStudentData"></span>
-  </div>
+        <div id="videoPlayerContainer" class="rounded-3xl overflow-hidden bg-[#0F1D2D] border border-slate-800 aspect-video relative flex items-center justify-center shadow-lg select-none">
+          <!-- العلامة المائية المتحركة لحماية الشاشة من التسجيل -->
+          <div id="videoWatermark" class="hidden absolute z-30 pointer-events-none text-slate-300/40 font-bold text-xs md:text-sm tracking-wide transition-all duration-1000 select-none">
+            <span id="wmStudentData"></span>
+          </div>
 
-  <div id="videoPlaceholder" class="text-center p-6 space-y-3 z-10">
-    <div class="w-16 h-16 rounded-full bg-brand/30 text-rose-400 flex items-center justify-center text-3xl mx-auto border border-brand/50">▶</div>
-    <h3 class="font-black text-sm md:text-base">اضغط على "المقدمة" لمشاهدة المعاينة المجانية</h3>
-    <p class="text-xs text-slate-400">يمكنك مشاهدة شرح مقدمة المقرر مجاناً قبل الاشتراك</p>
-  </div>
-  <iframe id="videoIframe" class="hidden w-full h-full border-0 relative z-0" src="" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-</div>         
-         
-          <div id="videoPlaceholder" class="text-center p-6 space-y-3">
+          <div id="videoPlaceholder" class="text-center p-6 space-y-3 z-10">
             <div class="w-16 h-16 rounded-full bg-brand/30 text-rose-400 flex items-center justify-center text-3xl mx-auto border border-brand/50">▶</div>
-            <h3 class="font-black text-sm md:text-base">اضغط على "المقدمة" لمشاهدة المعاينة المجانية</h3>
+            <h3 class="font-black text-sm md:text-base text-white">اضغط على "المقدمة" لمشاهدة المعاينة المجانية</h3>
             <p class="text-xs text-slate-400">يمكنك مشاهدة شرح مقدمة المقرر مجاناً قبل الاشتراك</p>
           </div>
-          <iframe id="videoIframe" class="hidden w-full h-full border-0" src="" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+          <iframe id="videoIframe" class="hidden w-full h-full border-0 relative z-0" src="" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
         </div>
 
         <!-- تفاصيل المحاضرة الحالية -->
@@ -565,8 +558,29 @@
         <div id="pdfViewerContainer" class="hidden rounded-3xl overflow-hidden bg-[#0F1D2D] border border-slate-800 p-2">
           <iframe id="pdfIframe" class="w-full h-[550px] rounded-2xl border-0" src=""></iframe>
         </div>
+
+        <!-- نافذة اختبار الـ MCQ التفاعلي للدرس -->
+        <div id="quizSection" class="hidden rounded-3xl bg-[#0F1D2D] border border-slate-800 p-6 space-y-5">
+          <div class="flex items-center justify-between border-b border-slate-800 pb-3">
+            <div>
+              <h3 class="text-sm md:text-base font-black text-amber-300 flex items-center gap-2">
+                <span>📝</span> اختبار تقييمي على المحاضرة
+              </h3>
+              <p class="text-xs text-slate-400">أجب عن الأسئلة التالية لاختبار فهمك واستيعابك للدرس</p>
+            </div>
+            <span id="quizScoreBadge" class="hidden text-xs font-black px-3 py-1 rounded-xl bg-emerald-950 text-emerald-400 border border-emerald-800/40"></span>
+          </div>
+
+          <form id="studentQuizForm" class="space-y-4">
+            <div id="quizQuestionsList" class="space-y-4"></div>
+            <button type="submit" id="submitQuizBtn" class="w-full py-3 rounded-xl bg-brand hover:bg-rose-900 text-white font-black text-xs md:text-sm shadow-xl transition">
+              تسليم الإجابات واعتماد النتيجة ✨
+            </button>
+          </form>
+        </div>
       </div>
 
+      <!-- الفهرس والمحتويات (4 أعمدة) -->
       <div class="lg:col-span-4 space-y-4">
         <div class="flex items-center justify-between">
           <h3 class="font-black text-sm text-slate-200">فهرس المحاضرات والسكاشن</h3>
@@ -575,29 +589,80 @@
 
         <div id="lessonsList" class="space-y-3 max-h-[600px] overflow-y-auto pe-1"></div>
       </div>
+
     </div>
 
   </div>
 </div>
-<!-- نافذة اختبار الـ MCQ التفاعلي للدرس -->
-<div id="quizSection" class="hidden rounded-3xl bg-[#0F1D2D] border border-slate-800 p-6 space-y-5">
-  <div class="flex items-center justify-between border-b border-slate-800 pb-3">
-    <div>
-      <h3 class="text-sm md:text-base font-black text-amber-300 flex items-center gap-2">
-        <span>📝</span> اختبار تقييمي على المحاضرة
-      </h3>
-      <p class="text-xs text-slate-400">أجب عن الأسئلة التالية لاختبار فهمك واستيعابك للدرس</p>
-    </div>
-    <span id="quizScoreBadge" class="hidden text-xs font-black px-3 py-1 rounded-xl bg-emerald-950 text-emerald-400 border border-emerald-800/40"></span>
-  </div>
 
-  <!-- حاوية عرض الأسئلة -->
-  <form id="studentQuizForm" class="space-y-4">
-    <div id="quizQuestionsList" class="space-y-4"></div>
-    <button type="submit" id="submitQuizBtn" class="w-full py-3 rounded-xl bg-brand hover:bg-rose-900 text-white font-black text-xs md:text-sm shadow-xl transition">
-      تسليم الإجابات واعتماد النتيجة ✨
-    </button>
-  </form>
+<!-- ============ MODAL طرق الدفع وإرسال الإيصال للتليجرام ============ -->
+<div id="paymentModal" class="hidden fixed inset-0 z-50 flex items-center justify-center bg-black/85 backdrop-blur-md p-4">
+  <div class="bg-[#0F1D2D] border border-slate-700 rounded-3xl max-w-lg w-full p-6 space-y-6 shadow-2xl relative overflow-hidden">
+    
+    <!-- زر إغلاق -->
+    <button onclick="closePaymentModal()" class="absolute top-5 start-5 text-slate-400 hover:text-white w-8 h-8 rounded-full bg-slate-800 flex items-center justify-center transition">✕</button>
+
+    <div class="text-center space-y-2 pt-2">
+      <span class="inline-block text-[11px] font-black px-3 py-1 rounded-full bg-amber-400 text-slate-900">تأكيد الاشتراك</span>
+      <h3 class="text-xl font-black text-white" id="payModalTitle">طرق الدفع المتاحة</h3>
+      <p class="text-xs text-rose-300 font-bold" id="payModalPrice"></p>
+    </div>
+
+<!-- بطاقات طرق الدفع الحقيقية -->
+    <div class="space-y-3">
+      <!-- فودافون كاش - الرقم الأول -->
+      <div class="p-3.5 rounded-2xl bg-[#07111D] border border-slate-800 flex items-center justify-between">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-xl bg-rose-600/20 text-rose-400 flex items-center justify-center font-black text-base">📱</div>
+          <div>
+            <span class="block text-xs font-black text-white">فودافون كاش (رقم 1)</span>
+            <span class="block text-xs text-amber-300 font-mono font-bold select-all dir-ltr text-right">01024397339</span>
+          </div>
+        </div>
+        <button type="button" onclick="navigator.clipboard.writeText('01024397339'); alert('تم نسخ رقم فودافون كاش: 01024397339')" class="text-[10px] font-bold px-3 py-1.5 rounded-lg bg-slate-800 text-slate-200 hover:bg-brand hover:text-white border border-slate-700 transition">نسخ الرقم</button>
+      </div>
+
+      <!-- فودافون كاش - الرقم الثاني -->
+      <div class="p-3.5 rounded-2xl bg-[#07111D] border border-slate-800 flex items-center justify-between">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-xl bg-rose-600/20 text-rose-400 flex items-center justify-center font-black text-base">📱</div>
+          <div>
+            <span class="block text-xs font-black text-white">فودافون كاش (رقم 2)</span>
+            <span class="block text-xs text-amber-300 font-mono font-bold select-all dir-ltr text-right">01005110351</span>
+          </div>
+        </div>
+        <button type="button" onclick="navigator.clipboard.writeText('01005110351'); alert('تم نسخ رقم فودافون كاش: 01005110351')" class="text-[10px] font-bold px-3 py-1.5 rounded-lg bg-slate-800 text-slate-200 hover:bg-brand hover:text-white border border-slate-700 transition">نسخ الرقم</button>
+      </div>
+
+      <!-- انستاباي InstaPay -->
+      <div class="p-3.5 rounded-2xl bg-[#07111D] border border-slate-800 flex items-center justify-between">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-xl bg-purple-600/20 text-purple-400 flex items-center justify-center font-black text-base">⚡</div>
+          <div>
+            <span class="block text-xs font-black text-white">انستاباي (InstaPay)</span>
+            <span class="block text-xs text-purple-300 font-mono font-bold select-all dir-ltr text-right">01005110351</span>
+          </div>
+        </div>
+        <button type="button" onclick="navigator.clipboard.writeText('01005110351'); alert('تم نسخ رقم انستاباي: 01005110351')" class="text-[10px] font-bold px-3 py-1.5 rounded-lg bg-slate-800 text-slate-200 hover:bg-purple-900 hover:text-white border border-slate-700 transition">نسخ الرقم</button>
+      </div>
+    </div>
+
+    <!-- الزر الدائري لإرسال صورة الإيصال للتليجرام -->
+    <div class="pt-2 flex flex-col items-center justify-center text-center space-y-3">
+      <p class="text-[11px] text-slate-300 font-semibold leading-5">
+        بعد تحويل الرسوم، اضغط على الزر بالأسفل لإرسال صورة إيصال التحويل مع إيميلك لتفعيل حسابك فوراً 👇
+      </p>
+
+      <button id="sendProofBtn" class="group relative w-20 h-20 rounded-full bg-gradient-to-tr from-[#229ED9] to-cyan-400 flex flex-col items-center justify-center text-white shadow-[0_0_25px_rgba(34,158,217,0.5)] transform hover:scale-110 active:scale-95 transition-all duration-300 border-2 border-white/40">
+        <span class="absolute -inset-1 rounded-full bg-cyan-400 opacity-40 group-hover:opacity-80 animate-ping"></span>
+        <svg class="w-7 h-7 relative z-10" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12s5.37 12 12 12 12-5.37 12-12S18.63 0 12 0zm5.56 8.16l-1.97 9.28c-.15.67-.54.83-1.1.5l-3.02-2.23-1.46 1.4c-.16.16-.3.3-.61.3l.22-3.08 5.6-5.06c.24-.22-.05-.34-.37-.14l-6.92 4.36-2.99-.93c-.65-.2-.66-.65.14-.97l11.7-4.51c.54-.2 1.02.13.84.88z"/></svg>
+        <span class="text-[9px] font-black mt-0.5 relative z-10">إرسال الإيصال</span>
+      </button>
+
+      <span class="text-[10px] text-slate-400">سيتم فتح محادثة التليجرام مع رسالة جاهزة باسمك وبياناتك</span>
+    </div>
+
+  </div>
 </div>
 <!-- ============ FOOTER ============ -->
 <footer id="mainFooter" class="bg-slate-900 text-white border-t border-slate-800 pt-12 pb-8 px-5">
@@ -1380,18 +1445,57 @@ function selectLesson(lessonId) {
 }
 }
 
+
+
+let currentSelectedToPay = { id: "", title: "", price: "" };
+
+function openPaymentModal(id, title, price) {
+  if (!window.isUserLoggedIn) {
+    alert("🔒 يرجى تسجيل الدخول أو إنشاء حساب على المنصة أولاً لتتمكن من الاشتراك.");
+    closeCourseView();
+    closePackageDetails();
+    const authSection = document.getElementById("authSection");
+    if (authSection) {
+      authSection.classList.remove("hidden");
+      authSection.scrollIntoView({ behavior: "smooth", block: "center" });
+      setAuthTab("login");
+    }
+    return;
+  }
+
+  currentSelectedToPay = { id, title, price };
+  document.getElementById("payModalTitle").textContent = `الاشتراك في: ${title}`;
+  document.getElementById("payModalPrice").textContent = `المبلغ المطلوب: ${price}`;
+
+  const sendBtn = document.getElementById("sendProofBtn");
+  sendBtn.onclick = function() {
+    closePaymentModal();
+    if (typeof window.handleSubscribe === "function") {
+      window.handleSubscribe(currentSelectedToPay.id, currentSelectedToPay.title);
+    }
+  };
+
+  document.getElementById("paymentModal").classList.remove("hidden");
+}
+
+function closePaymentModal() {
+  document.getElementById("paymentModal").classList.add("hidden");
+}
+
 function handlePkgSubscribe() {
   const data = window.catalogData[currentOpenedPkgId];
-  if (data && typeof window.handleSubscribe === "function") {
-    window.handleSubscribe(data.id, data.title);
+  if (data) {
+    openPaymentModal(data.id, data.title, data.price);
   }
 }
 
 function toggleCourseEnrollment() {
   if (!window.currentItemData) return;
-  if (typeof window.handleSubscribe === "function") {
-    window.handleSubscribe(window.currentItemData.id, window.currentItemData.title);
+  if (window.currentItemData.isEnrolled) {
+    alert("✅ أنت مشترك بالفعل في هذا المقرر ومفتوح لك بالكامل!");
+    return;
   }
+  openPaymentModal(window.currentItemData.id, window.currentItemData.title, window.currentItemData.price);
 }
 
 function toggleSupportTooltip(show) {
