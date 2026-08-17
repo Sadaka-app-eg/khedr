@@ -210,17 +210,16 @@
   </div>
 </section>
 
-<!-- ============ ACADEMIC YEARS (مثل تصميم الجوهري: الكلام يمين والكروت شمال) ============ -->
-<!-- ============ ACADEMIC YEARS ============ -->
+<!-- ============ ACADEMIC YEARS (الفرقة الأولى والثانية فقط) ============ -->
 <section id="years" class="w-full max-w-[1650px] mx-auto px-6 md:px-12 py-20 border-b border-slate-800">
   <div class="grid lg:grid-cols-12 gap-10 items-center">
     
     <!-- العنوان والوصف على اليمين -->
-    <div class="lg:col-span-4 text-right space-y-5">
+    <div class="lg:col-span-5 text-right space-y-5">
       <span class="text-xs md:text-sm font-extrabold uppercase tracking-widest text-rose-400" data-i18n="years_eyebrow">المسارات الجامعية</span>
       <h2 class="text-3xl md:text-5xl lg:text-6xl font-black text-theme-main leading-tight" data-i18n="years_title">السنوات الدراسية</h2>
       <p class="text-sm md:text-lg font-semibold text-theme-sub leading-7" data-i18n="years_sub">
-        احجز اشتراكك دلوقتي وابدأ مذاكرة مواد العلاج الطبيعي على موبايلك، التابلت أو اللابتوب الخاص بيك. المنصة متاحة على مدار الساعة.
+        احجز اشتراكك دلوقتي وابدأ مذاكرة مقررات الفرقة الأولى والثانية على موبايلك، التابلت أو اللابتوب الخاص بيك.
       </p>
       <div class="pt-3">
         <a href="#auth" class="inline-block bg-brand hover:bg-rose-900 text-white font-black text-sm md:text-base px-9 py-4 rounded-2xl shadow-xl transition">
@@ -229,51 +228,31 @@
       </div>
     </div>
 
-    <!-- الكروت بحجم كبير ومريح -->
-    <div class="lg:col-span-8 grid sm:grid-cols-2 xl:grid-cols-4 gap-6">
+    <!-- كارتين ممتدين بالتساوي للفرقتين 1 و 2 -->
+    <div class="lg:col-span-7 grid sm:grid-cols-2 gap-6">
       
-      <div class="fade-up card-hover rounded-3xl p-7 border border-slate-800 bg-card-theme flex flex-col justify-between shadow-xl">
+      <!-- الفرقة الأولى -->
+      <div class="fade-up card-hover rounded-3xl p-8 border border-slate-800 bg-card-theme flex flex-col justify-between shadow-xl">
         <div>
           <div class="w-14 h-14 rounded-2xl flex items-center justify-center font-black text-2xl mb-4 bg-brand text-white shadow-lg">1</div>
-          <h3 class="text-lg md:text-xl font-black text-theme-main" data-i18n="year1_title">الفرقة الأولى</h3>
-          <p class="text-xs md:text-sm text-theme-sub font-semibold mt-2.5 leading-6" data-i18n="year1_desc">Anatomy, Physiology, Histology, Intro to Biomechanics.</p>
+          <h3 class="text-xl font-black text-theme-main" data-i18n="year1_title">الفرقة الأولى</h3>
+          <p class="text-xs md:text-sm text-theme-sub font-semibold mt-2.5 leading-6" data-i18n="year1_desc">Anatomy, Physiology, Histology, Intro to Biomechanics, Biophysics.</p>
         </div>
-        <a href="#courses" class="mt-6 inline-flex items-center text-xs md:text-sm font-black text-rose-400 hover:underline" data-i18n="btn_enter_year">
-          دخول جميع الكورسات ←
-        </a>
+        <button onclick="openPackageDetails('y1full')" class="mt-6 inline-flex items-center text-xs md:text-sm font-black text-rose-400 hover:underline">
+          دخول مقررات الفرقة الأولى ←
+        </button>
       </div>
 
-      <div class="fade-up card-hover rounded-3xl p-7 border border-slate-800 bg-card-theme flex flex-col justify-between shadow-xl">
+      <!-- الفرقة الثانية -->
+      <div class="fade-up card-hover rounded-3xl p-8 border border-slate-800 bg-card-theme flex flex-col justify-between shadow-xl">
         <div>
           <div class="w-14 h-14 rounded-2xl flex items-center justify-center font-black text-2xl mb-4 bg-brand text-white shadow-lg">2</div>
-          <h3 class="text-lg md:text-xl font-black text-theme-main" data-i18n="year2_title">الفرقة الثانية</h3>
-          <p class="text-xs md:text-sm text-theme-sub font-semibold mt-2.5 leading-6" data-i18n="year2_desc">Biomechanics, Electrotherapy, Hydrotherapy, Kinesiology.</p>
+          <h3 class="text-xl font-black text-theme-main" data-i18n="year2_title">الفرقة الثانية</h3>
+          <p class="text-xs md:text-sm text-theme-sub font-semibold mt-2.5 leading-6" data-i18n="year2_desc">Biomechanics, Electrotherapy, Hydrotherapy, Kinesiology, Pathology.</p>
         </div>
-        <a href="#courses" class="mt-6 inline-flex items-center text-xs md:text-sm font-black text-rose-400 hover:underline" data-i18n="btn_enter_year">
-          دخول جميع الكورسات ←
-        </a>
-      </div>
-
-      <div class="fade-up card-hover rounded-3xl p-7 border border-slate-800 bg-card-theme flex flex-col justify-between shadow-xl">
-        <div>
-          <div class="w-14 h-14 rounded-2xl flex items-center justify-center font-black text-2xl mb-4 bg-brand text-white shadow-lg">3</div>
-          <h3 class="text-lg md:text-xl font-black text-theme-main" data-i18n="year3_title">الفرقة الثالثة</h3>
-          <p class="text-xs md:text-sm text-theme-sub font-semibold mt-2.5 leading-6" data-i18n="year3_desc">Orthopedic PT, Neurological PT, Cardiopulmonary PT.</p>
-        </div>
-        <a href="#courses" class="mt-6 inline-flex items-center text-xs md:text-sm font-black text-rose-400 hover:underline" data-i18n="btn_enter_year">
-          دخول جميع الكورسات ←
-        </a>
-      </div>
-
-      <div class="fade-up card-hover rounded-3xl p-7 border border-slate-800 bg-card-theme flex flex-col justify-between shadow-xl">
-        <div>
-          <div class="w-14 h-14 rounded-2xl flex items-center justify-center font-black text-2xl mb-4 bg-brand text-white shadow-lg">4</div>
-          <h3 class="text-lg md:text-xl font-black text-theme-main" data-i18n="year4_title">الفرقة الرابعة</h3>
-          <p class="text-xs md:text-sm text-theme-sub font-semibold mt-2.5 leading-6" data-i18n="year4_desc">Pediatric PT, Geriatrics, Sports Injuries, Clinical Internship.</p>
-        </div>
-        <a href="#courses" class="mt-6 inline-flex items-center text-xs md:text-sm font-black text-rose-400 hover:underline" data-i18n="btn_enter_year">
-          دخول جميع الكورسات ←
-        </a>
+        <button onclick="openCourseView('biomechanics')" class="mt-6 inline-flex items-center text-xs md:text-sm font-black text-rose-400 hover:underline">
+          دخول مقررات الفرقة الثانية ←
+        </button>
       </div>
 
     </div>
@@ -551,15 +530,12 @@
         </label>
       </div>
 
-      <!-- الفرقة الدراسية -->
+<!-- الفرقة الدراسية (أولى وتانية فقط) -->
       <label class="flex flex-col gap-1 text-xs md:text-sm font-bold text-theme-main">
         <span>الفرقة الدراسية</span>
         <select id="regYear" required class="h-11 rounded-xl px-3 border border-slate-700 bg-[#0F1D2D] text-xs md:text-sm text-theme-main focus:border-brand">
           <option value="y1">الفرقة الأولى (First Year)</option>
           <option value="y2">الفرقة الثانية (Second Year)</option>
-          <option value="y3">الفرقة الثالثة (Third Year)</option>
-          <option value="y4">الفرقة الرابعة (Fourth Year)</option>
-          <option value="intern">سنة الامتياز / خريج</option>
         </select>
       </label>
 
@@ -872,11 +848,7 @@ hero_eyebrow: "محمود خضر — محاضر ومدرس للمواد الطب
     year1_desc: "Anatomy, Physiology, Histology, Intro to Biomechanics, Ethics.",
     year2_title: "الفرقة الثانية",
     year2_desc: "Biomechanics, Electrotherapy, Hydrotherapy, Kinesiology, Pathology.",
-    year3_title: "الفرقة الثالثة",
-    year3_desc: "Orthopedic PT, Neurological PT, Cardiopulmonary PT, Manual Therapy.",
-    year4_title: "الفرقة الرابعة والامتياز",
-    year4_desc: "Pediatric PT, Geriatrics, Sports Injuries, Clinical Internship Training.",
-    btn_enter_year: "دخول مقررات الفرقة ←",
+      btn_enter_year: "دخول مقررات الفرقة ←",
 
     courses_eyebrow: "باقات المنصة والمواد",
     courses_title: "اختر الباقة المناسبة لفرقتك",
@@ -945,11 +917,7 @@ hero_eyebrow: "Mahmoud Khedr — Physiotherapy Student & Medical Education Instr
     year1_desc: "Anatomy, Physiology, Histology, Intro to Biomechanics, Ethics.",
     year2_title: "Second Year",
     year2_desc: "Biomechanics, Electrotherapy, Hydrotherapy, Kinesiology, Pathology.",
-    year3_title: "Third Year",
-    year3_desc: "Orthopedic PT, Neurological PT, Cardiopulmonary PT, Manual Therapy.",
-    year4_title: "Fourth Year & Internship",
-    year4_desc: "Pediatric PT, Geriatrics, Sports Injuries, Clinical Internship Training.",
-    btn_enter_year: "View Year Courses →",
+     btn_enter_year: "View Year Courses →",
 
     courses_eyebrow: "Platform Packages",
     courses_title: "Choose The Right Package For Your Batch",
