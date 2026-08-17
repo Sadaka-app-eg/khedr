@@ -128,9 +128,20 @@
 
       <!-- الدخول والتسجيل (مخفي في الموبايل ويظهر في الكمبيوتر فقط) -->
       <div class="hidden md:flex items-center gap-2">
-        <a href="#auth" onclick="setAuthTab('login')" class="text-xs font-bold px-3.5 h-8 leading-8 rounded-xl border border-slate-700 text-slate-200 hover:border-brand transition whitespace-nowrap" data-i18n="nav_login">تسجيل الدخول</a>
-        <a href="#auth" onclick="setAuthTab('register')" class="text-xs font-bold text-white px-4 h-8 leading-8 rounded-xl bg-brand hover:bg-rose-900 transition shadow-md whitespace-nowrap" data-i18n="auth_tab_register">حساب جديد</a>
-      </div>
+<!-- أزرار الزائر (قبل تسجيل الدخول) -->
+<div id="guestNav" class="flex items-center gap-3">
+  <a href="#auth" class="text-xs font-bold text-slate-300 hover:text-white transition">تسجيل الدخول</a>
+  <a href="#auth" class="text-xs font-black px-4 py-2 rounded-xl bg-brand text-white shadow-md">حساب جديد</a>
+</div>
+
+<!-- بيانات المستخدم (بعد تسجيل الدخول) -->
+<div id="userNav" class="hidden flex items-center gap-3">
+  <span class="text-xs font-bold text-emerald-400">مرحباً، <span id="navUserName" class="text-white"></span> 👋</span>
+  <button id="navLogoutBtn" class="text-[11px] font-bold px-3 py-1.5 rounded-lg bg-rose-950/60 text-rose-300 hover:bg-rose-900 border border-rose-800/40 transition">
+    خروج
+  </button>
+</div>
+     </div>
     </div>
 
     <!-- المنتصف: اللوجو المفرغ logo.jpg -->
@@ -1596,7 +1607,6 @@ function toggleCourseEnrollment() {
 
 </script>
 
-<!-- ============ FIREBASE AUTH & SUBSCRIPTION LOGIC ============ -->
 <script type="module">
   import { 
     auth, 
@@ -1604,6 +1614,7 @@ function toggleCourseEnrollment() {
     signInWithEmailAndPassword, 
     createUserWithEmailAndPassword, 
     updateProfile, 
+    signOut,
     doc, 
     setDoc, 
     getDoc, 
@@ -1619,9 +1630,18 @@ function toggleCourseEnrollment() {
     }
   }
 
-  // 1. فحص حالة الطالب وتفعيل الكورسات المشترك فيها تلقائياً من قاعدة البيانات
+  // متابعة حالة تسجيل الدخول وتحديث الواجهة
   onAuthStateChanged(auth, async (user) => {
+    const guestNav = document.getElementById("guestNav");
+    const userNav = document.getElementById("userNav");
+    const navUserName = document.getElementById("navUserName");
+
     if (user) {
+      if (guestNav) guestNav.classList.add("hidden");
+      if (userNav) userNav.classList.remove("hidden");
+      if (navUserName) navUserName.textContent = user.displayName || user.email.split('@')[0];
+
+      // جلب اشتراكات الطالب
       try {
         const studentDoc = await getDoc(doc(db, "students", user.uid));
         if (studentDoc.exists()) {
@@ -1640,12 +1660,24 @@ function toggleCourseEnrollment() {
           }
         }
       } catch (e) {
-        console.error("خطأ أثناء جلب اشتراكات الطالب:", e);
+        console.error("خطأ أثناء جلب الاشتراكات:", e);
       }
+    } else {
+      if (guestNav) guestNav.classList.remove("hidden");
+      if (userNav) userNav.classList.add("hidden");
     }
   });
 
-  // 2. تسجيل الدخول
+  // تسجيل الخروج
+  const navLogoutBtn = document.getElementById("navLogoutBtn");
+  if (navLogoutBtn) {
+    navLogoutBtn.addEventListener("click", async () => {
+      await signOut(auth);
+      location.reload();
+    });
+  }
+
+  // تسجيل الدخول
   const loginForm = document.getElementById("loginForm");
   if (loginForm) {
     loginForm.addEventListener("submit", async (e) => {
@@ -1668,7 +1700,7 @@ function toggleCourseEnrollment() {
     });
   }
 
-  // 3. إنشاء حساب جديد وتخزين بيانات الطالب في Firestore
+  // إنشاء حساب جديد
   const registerForm = document.getElementById("registerForm");
   if (registerForm) {
     registerForm.addEventListener("submit", async (e) => {
@@ -1688,13 +1720,12 @@ function toggleCourseEnrollment() {
         const cred = await createUserWithEmailAndPassword(auth, email, password);
         await updateProfile(cred.user, { displayName: name });
 
-        // حفظ بيانات الطالب في Firestore
         await setDoc(doc(db, "students", cred.user.uid), {
           fullName: name,
           phone: phone,
           academicYear: academicYear,
           email: email,
-          enrolledCourses: [], // يبدأ فارغ حتى يقوم المشرف بتفعيله
+          enrolledCourses: [],
           createdAt: serverTimestamp()
         });
 
@@ -1703,11 +1734,11 @@ function toggleCourseEnrollment() {
       } catch (err) {
         let msg = "تعذر إنشاء الحساب، يرجى مراجعة البيانات";
         if (err.code === "auth/email-already-in-use") {
-          msg = "⚠️ هذا البريد الإلكتروني مسجل بالفعل! يرجى تسجيل الدخول أو استخدام بريد آخر.";
+          msg = "⚠️ هذا البريد الإلكتروني مسجل بالفعل!";
         } else if (err.code === "auth/invalid-email") {
           msg = "⚠️ صيغة البريد الإلكتروني غير صحيحة.";
         } else if (err.code === "auth/weak-password") {
-          msg = "⚠️ كلمة المرور ضعيفة جداً، يرجى كتابة 6 أحرف أو أرقام على الأقل.";
+          msg = "⚠️ كلمة المرور ضعيفة (6 خانات كحد أدنى).";
         }
         showError("registerError", msg);
       } finally {
@@ -1715,19 +1746,6 @@ function toggleCourseEnrollment() {
       }
     });
   }
-
-  // 4. زر التليجرام العائم
-  window.toggleSupportTooltip = function(show) {
-    const tip = document.getElementById("supportTooltip");
-    if (!tip) return;
-    if (show === undefined) {
-      tip.classList.toggle("hidden");
-    } else if (show) {
-      tip.classList.remove("hidden");
-    } else {
-      tip.classList.add("hidden");
-    }
-  };
 </script>
 </body>
           </html>
