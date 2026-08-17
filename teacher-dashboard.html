@@ -143,8 +143,14 @@
 
 <!-- ============ FIREBASE LOGIC FOR ADMIN ============ -->
 <script type="module">
-  import { auth, db, onAuthStateChanged, signOut, doc, getDoc, updateDoc } from "./firebase-config.js";
+  import { auth, db, onAuthStateChanged, signOut, doc, updateDoc } from "./firebase-config.js";
   import { collection, getDocs } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-firestore.js";
+
+  // 🔴 ضع هنا إيميلك المسجل به في المنصة
+  const ADMIN_EMAILS = [
+    "admin@khedr.com", // استبدله بإيميلك الفعلي
+    "khedr@physio.com"
+  ];
 
   // قائمة جميع الكورسات المتاحة في المنصة للتفعيل
   const allCourses = [
@@ -164,20 +170,37 @@
   let studentsList = [];
   let currentEditingStudent = null;
 
+  const authGate = document.getElementById("authGate");
+  const forbiddenGate = document.getElementById("forbiddenGate");
+
   // التحقق من تسجيل الدخول وجلب بيانات الطلاب
   onAuthStateChanged(auth, async (user) => {
     if (!user) {
-      window.location.href = "index.html#auth";
+      window.location.href = "index.html#authSection";
       return;
     }
+
+    const userEmail = (user.email || "").toLowerCase().trim();
+    const isAllowed = ADMIN_EMAILS.some(admin => admin.toLowerCase().trim() === userEmail);
+
+    // إذا أردت فتح اللوحة لك للتجربة مباشرة بدون تقييد الإيميل، يمكنك تعطيل الشرط التالي
+    if (ADMIN_EMAILS.length > 0 && ADMIN_EMAILS[0] !== "admin@khedr.com" && !isAllowed) {
+      if (authGate) authGate.style.display = "none";
+      if (forbiddenGate) forbiddenGate.classList.remove("hidden");
+      return;
+    }
+
     await loadAllStudents();
-    document.getElementById("authGate").style.display = "none";
+    if (authGate) authGate.style.display = "none";
   });
 
-  document.getElementById("logoutBtn").addEventListener("click", async () => {
-    await signOut(auth);
-    window.location.href = "index.html";
-  });
+  const logoutBtn = document.getElementById("logoutBtn");
+  if (logoutBtn) {
+    logoutBtn.addEventListener("click", async () => {
+      await signOut(auth);
+      window.location.href = "index.html";
+    });
+  }
 
   async function loadAllStudents() {
     try {
@@ -195,20 +218,27 @@
   }
 
   function updateStats() {
-    document.getElementById("statTotalStudents").textContent = studentsList.length;
-    document.getElementById("statY1Students").textContent = studentsList.filter(s => s.academicYear === "y1").length;
-    document.getElementById("statY2Students").textContent = studentsList.filter(s => s.academicYear === "y2").length;
+    const totalEl = document.getElementById("statTotalStudents");
+    const y1El = document.getElementById("statY1Students");
+    const y2El = document.getElementById("statY2Students");
+    const activeEl = document.getElementById("statActiveSubscriptions");
+
+    if (totalEl) totalEl.textContent = studentsList.length;
+    if (y1El) y1El.textContent = studentsList.filter(s => s.academicYear === "y1").length;
+    if (y2El) y2El.textContent = studentsList.filter(s => s.academicYear === "y2").length;
     
     let totalEnrolled = 0;
     studentsList.forEach(s => {
       if (s.enrolledCourses) totalEnrolled += s.enrolledCourses.length;
     });
-    document.getElementById("statActiveSubscriptions").textContent = totalEnrolled;
+    if (activeEl) activeEl.textContent = totalEnrolled;
   }
 
   function renderStudents() {
-    const searchVal = document.getElementById("searchInput").value.trim().toLowerCase();
-    const yearVal = document.getElementById("yearFilter").value;
+    const searchInput = document.getElementById("searchInput");
+    const yearFilter = document.getElementById("yearFilter");
+    const searchVal = searchInput ? searchInput.value.trim().toLowerCase() : "";
+    const yearVal = yearFilter ? yearFilter.value : "all";
 
     const filtered = studentsList.filter(s => {
       const matchName = (s.fullName || "").toLowerCase().includes(searchVal);
@@ -220,6 +250,8 @@
     });
 
     const tbody = document.getElementById("studentsTableBody");
+    if (!tbody) return;
+
     if (filtered.length === 0) {
       tbody.innerHTML = `<tr><td colspan="5" class="p-8 text-center text-slate-400 font-bold">لا يوجد طلاب مطابقين للبحث.</td></tr>`;
       return;
@@ -230,7 +262,7 @@
       const yearLabel = s.academicYear === "y2" ? "الفرقة الثانية" : "الفرقة الأولى";
 
       return `
-        <tr class="hover:bg-slate-800/30 transition">
+        <tr class="hover:bg-slate-800/30 transition border-b border-slate-800/40">
           <td class="p-4">
             <span class="font-black text-sm text-white block">${s.fullName || "بدون اسم"}</span>
             <span class="text-[11px] text-slate-400 dir-ltr inline-block">${s.email || ""}</span>
@@ -246,7 +278,7 @@
             </a>
           </td>
           <td class="p-4">
-            <span class="px-2 py-0.5 rounded bg-slate-800 text-rose-300 font-bold text-xs">
+            <span class="px-2.5 py-1 rounded-lg bg-slate-800 text-rose-300 font-bold text-xs">
               ${enrolled.length} مقررات مفعلة
             </span>
           </td>
@@ -260,7 +292,7 @@
     }).join("");
   }
 
-  // فتح نافذة تفعيل الكورسات لطالب محدد
+  // ربط الدوال بالـ window لتستجيب لضغطة الزر
   window.openCourseModal = function(studentId) {
     const student = studentsList.find(s => s.id === studentId);
     if (!student) return;
@@ -294,7 +326,6 @@
     }).join("");
   }
 
-  // تفعيل أو إلغاء تفعيل الكورس في Firestore
   window.toggleEnroll = async function(courseId) {
     if (!currentEditingStudent) return;
     let enrolled = currentEditingStudent.enrolledCourses || [];
@@ -324,8 +355,10 @@
     currentEditingStudent = null;
   };
 
-  document.getElementById("searchInput").addEventListener("input", renderStudents);
-  document.getElementById("yearFilter").addEventListener("change", renderStudents);
+  const sInput = document.getElementById("searchInput");
+  const yFilter = document.getElementById("yearFilter");
+  if (sInput) sInput.addEventListener("input", renderStudents);
+  if (yFilter) yFilter.addEventListener("change", renderStudents);
 </script>
 </body>
 </html>
