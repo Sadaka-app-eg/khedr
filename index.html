@@ -124,7 +124,10 @@
           <a href="#authSection" onclick="setAuthTab('register')" class="text-xs font-black px-4 py-2 rounded-xl bg-brand text-white shadow-md">حساب جديد</a>
         </div>
 
-        <div id="userNav" class="hidden flex items-center gap-3">
+<div id="userNav" class="hidden flex items-center gap-3">
+          <a id="adminDashboardLink" href="teacher-dashboard.html" class="hidden text-[11px] font-black px-3 py-1.5 rounded-lg bg-amber-400 text-slate-900 hover:bg-amber-300 transition shadow">
+            ⚙️ لوحة المشرف
+          </a>
           <span class="text-xs font-bold text-emerald-400">مرحباً، <span id="navUserName" class="text-white"></span> 👋</span>
           <button id="navLogoutBtn" class="text-[11px] font-bold px-3 py-1.5 rounded-lg bg-rose-950/60 text-rose-300 hover:bg-rose-900 border border-rose-800/40 transition">
             خروج
@@ -1584,7 +1587,18 @@ import {
       
       if (userNav) userNav.classList.remove("hidden");
       if (navUserName) navUserName.textContent = user.displayName || user.email.split('@')[0];
-
+// فحص إيميل المشرف لإظهار زر لوحة التحكم له فقط
+      const adminLink = document.getElementById("adminDashboardLink");
+      const ADMIN_EMAILS = ["admin@khedr.com", "khedr@physio.com"]; // اكتب إيميلك هنا
+      const userEmail = (user.email || "").toLowerCase().trim();
+      
+      if (adminLink) {
+        if (ADMIN_EMAILS.includes(userEmail)) {
+          adminLink.classList.remove("hidden");
+        } else {
+          adminLink.classList.add("hidden");
+        }
+      }
       try {
         const studentDoc = await getDoc(doc(db, "students", user.uid));
         if (studentDoc.exists()) {
