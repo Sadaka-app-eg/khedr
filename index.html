@@ -400,8 +400,8 @@
 </section>
 
 <!-- ============ AUTHENTICATION SECTION (مع تفاصيل الطالب الكاملة) ============ -->
-<section id="auth" class="max-w-xl mx-auto px-5 py-16">
-  <div class="rounded-3xl border border-slate-800 bg-card-theme p-4 sm:p-6 shadow-2xl fade-up">
+<section id="authSection" class="max-w-xl mx-auto px-5 py-16">
+    <div class="rounded-3xl border border-slate-800 bg-card-theme p-4 sm:p-6 shadow-2xl fade-up">
 
     <!-- Auth Tabs Switcher -->
     <div class="grid grid-cols-2 gap-1.5 p-1.5 auth-nav-bg rounded-2xl mb-6">
@@ -493,11 +493,11 @@
         <span class="text-xs font-black px-2.5 py-1 rounded-lg bg-emerald-500/20 text-emerald-300 border border-emerald-500/30" id="pkgSave">وفر 0%</span>
       </div>
 
-      <div class="mt-6">
-        <a href="#auth" onclick="closePackageDetails()" class="inline-block bg-white text-brand font-black text-xs md:text-sm px-8 py-3.5 rounded-2xl shadow-xl hover:bg-rose-50 transition">
-          اشترك في الباقة الآن
-        </a>
-      </div>
+<div class="mt-6">
+  <button type="button" onclick="handleSubscribe('bundle_y1_t1', 'باقة الفرقة الأولى (الترم الأول كامل - 4 مواد)')" class="cursor-pointer inline-block bg-white text-brand font-black text-xs md:text-sm px-8 py-3.5 rounded-2xl shadow-xl hover:bg-rose-50 transition active:scale-95">
+    اشترك في الباقة الآن
+  </button>
+</div>
     </div>
 
     <!-- شبكة تفاصيل القيمة والمواد المشمولة -->
@@ -1622,6 +1622,8 @@ function toggleCourseEnrollment() {
     onAuthStateChanged 
   } from "./firebase-config.js";
 
+  let currentUserData = null;
+
   function showError(elId, msg) {
     const el = document.getElementById(elId);
     if (el) {
@@ -1630,45 +1632,77 @@ function toggleCourseEnrollment() {
     }
   }
 
-  // متابعة حالة تسجيل الدخول وتحديث الواجهة
+  // --- 1. متابعة حالة المستخدم وتحديث واجهة المنصة ---
   onAuthStateChanged(auth, async (user) => {
     const guestNav = document.getElementById("guestNav");
     const userNav = document.getElementById("userNav");
     const navUserName = document.getElementById("navUserName");
+    const authSection = document.getElementById("authSection");
 
     if (user) {
+      // إخفاء أزرار الزائر وصندوق تسجيل الدخول
       if (guestNav) guestNav.classList.add("hidden");
+      if (authSection) authSection.classList.add("hidden");
+      
+      // إظهار بيانات المستخدم
       if (userNav) userNav.classList.remove("hidden");
       if (navUserName) navUserName.textContent = user.displayName || user.email.split('@')[0];
 
-      // جلب اشتراكات الطالب
+      // جلب بيانات واشتراكات الطالب من Firestore
       try {
         const studentDoc = await getDoc(doc(db, "students", user.uid));
         if (studentDoc.exists()) {
-          const data = studentDoc.data();
-          const enrolledCourses = data.enrolledCourses || [];
+          currentUserData = studentDoc.data();
+          const enrolledCourses = currentUserData.enrolledCourses || [];
           
           enrolledCourses.forEach(cId => {
-            if (catalogData[cId]) {
-              catalogData[cId].isEnrolled = true;
+            if (window.catalogData && window.catalogData[cId]) {
+              window.catalogData[cId].isEnrolled = true;
             }
           });
-          renderCatalog();
-          if (currentItemData && enrolledCourses.includes(currentItemData.id)) {
-            currentItemData.isEnrolled = true;
-            renderCourseCurriculum();
+
+          if (typeof renderCatalog === "function") renderCatalog();
+          if (window.currentItemData && enrolledCourses.includes(window.currentItemData.id)) {
+            window.currentItemData.isEnrolled = true;
+            if (typeof renderCourseCurriculum === "function") renderCourseCurriculum();
           }
         }
       } catch (e) {
-        console.error("خطأ أثناء جلب الاشتراكات:", e);
+        console.error("خطأ أثناء جلب بيانات الطالب:", e);
       }
     } else {
+      currentUserData = null;
       if (guestNav) guestNav.classList.remove("hidden");
       if (userNav) userNav.classList.add("hidden");
+      if (authSection) authSection.classList.remove("hidden");
     }
   });
 
-  // تسجيل الخروج
+  // --- 2. منطق زر الاشتراك الذكي ---
+  window.handleSubscribe = function(itemId, itemTitle) {
+    const user = auth.currentUser;
+    if (!user) {
+      // إذا لم يكن مسجل دخول، انقله لصندوق التسجيل
+      const authSec = document.getElementById("authSection");
+      if (authSec) authSec.classList.remove("hidden");
+      location.href = "#authSection";
+      alert("⚠️ يرجى تسجيل الدخول أو إنشاء حساب أولاً للاشتراك.");
+      return;
+    }
+
+    // إذا كان مسجل دخول بالفعل، تحويل مباشر إلى تليجرام بالبيانات لتأكيد الدفع
+    const studentName = user.displayName || "طالب";
+    const studentPhone = currentUserData?.phone || "غير مسجل";
+    const telegramUser = "khedr_physio"; // يوزر تليجرام الخاص بالدعم/المحاضر
+    
+    const message = encodeURIComponent(
+      `مرحباً دكتور محمود 👋\nأنا الطالب: ${studentName}\nرقم الهاتف: ${studentPhone}\nالإيميل: ${user.email}\n\nأرغب في تفعيل الاشتراك في:\n📚 ${itemTitle || itemId}`
+    );
+    
+    window.open(`https://t.me/${telegramUser}?text=${message}`, "_blank");
+  };
+
+  // --- 3. تسجيل الخروج ---
   const navLogoutBtn = document.getElementById("navLogoutBtn");
   if (navLogoutBtn) {
     navLogoutBtn.addEventListener("click", async () => {
@@ -1677,7 +1711,7 @@ function toggleCourseEnrollment() {
     });
   }
 
-  // تسجيل الدخول
+  // --- 4. تسجيل الدخول ---
   const loginForm = document.getElementById("loginForm");
   if (loginForm) {
     loginForm.addEventListener("submit", async (e) => {
@@ -1690,17 +1724,16 @@ function toggleCourseEnrollment() {
           document.getElementById("loginEmail").value.trim(), 
           document.getElementById("loginPassword").value
         );
-        alert("🎉 تم تسجيل الدخول بنجاح!");
         location.reload();
       } catch (err) {
-        showError("loginError", currentLang === "ar" ? "بيانات الدخول غير صحيحة" : "Invalid login credentials");
+        showError("loginError", "بيانات الدخول غير صحيحة");
       } finally {
         if (btn) btn.disabled = false;
       }
     });
   }
 
-  // إنشاء حساب جديد
+  // --- 5. إنشاء حساب جديد ---
   const registerForm = document.getElementById("registerForm");
   if (registerForm) {
     registerForm.addEventListener("submit", async (e) => {
@@ -1729,17 +1762,12 @@ function toggleCourseEnrollment() {
           createdAt: serverTimestamp()
         });
 
-        alert("🎉 تم إنشاء الحساب بنجاح! أهلاً بك في منصة خضر.");
+        alert("🎉 تم إنشاء الحساب بنجاح!");
         location.reload();
       } catch (err) {
-        let msg = "تعذر إنشاء الحساب، يرجى مراجعة البيانات";
-        if (err.code === "auth/email-already-in-use") {
-          msg = "⚠️ هذا البريد الإلكتروني مسجل بالفعل!";
-        } else if (err.code === "auth/invalid-email") {
-          msg = "⚠️ صيغة البريد الإلكتروني غير صحيحة.";
-        } else if (err.code === "auth/weak-password") {
-          msg = "⚠️ كلمة المرور ضعيفة (6 خانات كحد أدنى).";
-        }
+        let msg = "تعذر إنشاء الحساب";
+        if (err.code === "auth/email-already-in-use") msg = "⚠️ البريد مسجل بالفعل";
+        else if (err.code === "auth/weak-password") msg = "⚠️ كلمة المرور يجب ألا تقل عن 6 خانات";
         showError("registerError", msg);
       } finally {
         if (btn) btn.disabled = false;
