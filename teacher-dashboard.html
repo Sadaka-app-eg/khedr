@@ -3,190 +3,175 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>لوحة المحاضر | KHEDR & PHYSIO</title>
+<title>لوحة المشرف والتحكم | KHEDR & PHYSIO</title>
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800;900&family=IBM+Plex+Sans+Arabic:wght@400;500;600&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
 <script src="https://cdn.tailwindcss.com"></script>
 
 <style>
-  :root{
+  :root {
     --brand-primary: #8E0E38;
-    --brand-dark:    #630825;
-    --ink:           #1C1917;
-    --mist:          #F8FAFC;
-    --mist-line:     #E2E8F0;
-    --dark-bg:       #0F172A;
-    --dark-card:     #1E293B;
-    --success:       #10B981;
+    --dark-bg:       #07111D;
+    --dark-card:     #0F1D2D;
+    --dark-line:     #1E2E42;
   }
-  html[lang="ar"] body, html[lang="ar"] * { font-family:'Tajawal','IBM Plex Sans Arabic',sans-serif; }
-  .num-font { font-family:'Plus Jakarta Sans',sans-serif; }
+  html[lang="ar"] body, html[lang="ar"] * { font-family: 'Tajawal', sans-serif; }
+  .num-font { font-family: 'Plus Jakarta Sans', sans-serif; }
 
-  body{ background:var(--mist); color:var(--ink); }
-  body.dark{ background:var(--dark-bg); color:#F1F5F9; }
-
-  .bg-brand{ background-color:var(--brand-primary); }
-  .text-brand{ color:var(--brand-primary); }
-
-  .side-link{ color:var(--ink); opacity:.65; transition:.2s; }
-  .side-link:hover{ opacity:1; background:rgba(142,14,56,.06); }
-  .side-link.active{ opacity:1; background:rgba(142,14,56,.1); color:var(--brand-primary); font-weight:800; }
-  body.dark .side-link{ color:#F1F5F9; }
-
-  .skel{ background:linear-gradient(90deg,#e2e8f0 25%,#f1f5f9 37%,#e2e8f0 63%); background-size:400% 100%; animation:shimmer 1.4s ease infinite; }
-  body.dark .skel{ background:linear-gradient(90deg,#1E293B 25%,#334155 37%,#1E293B 63%); background-size:400% 100%; }
-  @keyframes shimmer{ 0%{background-position:100% 0;} 100%{background-position:0 0;} }
-
-  table th, table td{ text-align:start; }
+  body { background-color: var(--dark-bg); color: #EAF3F3; }
+  .bg-card-theme { background-color: var(--dark-card); border-color: var(--dark-line); }
+  .bg-brand { background-color: var(--brand-primary); }
 </style>
 </head>
 
-<body class="antialiased">
+<body class="antialiased min-h-screen">
 
-<!-- Loading Gate -->
-<div id="authGate" class="fixed inset-0 z-[100] flex items-center justify-center bg-white dark:bg-[#0F172A]">
+<!-- شاشة التحميل والتأكد من تسجيل الدخول -->
+<div id="authGate" class="fixed inset-0 z-[100] flex items-center justify-center bg-[#07111D]">
   <div class="flex flex-col items-center gap-3">
-    <div class="w-10 h-10 rounded-full border-4 border-t-transparent animate-spin border-rose-800"></div>
-    <span class="text-xs font-bold opacity-50">جاري التحقق من صلاحية المحاضر...</span>
+    <div class="w-10 h-10 rounded-full border-4 border-t-transparent animate-spin border-rose-600"></div>
+    <span class="text-xs font-bold text-slate-300">جاري تحميل بيانات الطلاب والاشتراكات...</span>
   </div>
 </div>
 
-<!-- Forbidden Gate -->
-<div id="forbiddenGate" class="hidden fixed inset-0 z-[100] flex items-center justify-center bg-white dark:bg-[#0F172A]">
-  <div class="text-center px-6">
-    <div class="text-4xl mb-3">🚫</div>
-    <h2 class="font-black text-base">لا تملك صلاحية الوصول للوحة المحاضر</h2>
-    <p class="text-xs opacity-60 mt-1">هذا الحساب غير مسجل كمحاضر في قاعدة البيانات</p>
-    <a href="index.html" class="inline-block mt-4 text-xs font-black px-6 py-2.5 rounded-xl bg-brand text-white">الرجوع للرئيسية</a>
-  </div>
-</div>
+<div class="max-w-[1550px] mx-auto px-4 md:px-8 py-8">
 
-<div class="lg:grid lg:grid-cols-[260px,1fr]">
-
-  <!-- ============ SIDEBAR ============ -->
-  <aside class="hidden lg:flex flex-col gap-1 h-screen sticky top-0 border-e p-5 bg-white dark:bg-[#1E293B]" style="border-color:var(--mist-line)">
-    <a href="index.html" class="flex items-center gap-2.5 px-2 py-3 mb-2">
-      <span class="w-9 h-9 rounded-xl flex items-center justify-center bg-brand text-white font-black text-xs">د</span>
-      <div>
-        <span class="font-extrabold text-sm block">د / محمود خِضر</span>
-        <span class="text-[9px] font-bold text-slate-400 -mt-1 block">TEACHER PANEL</span>
+  <!-- Header -->
+  <header class="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-6 border-b border-slate-800">
+    <div class="flex items-center gap-3">
+      <div class="w-12 h-12 rounded-2xl bg-brand flex items-center justify-center text-white font-black text-xl shadow-lg">
+        خِـ
       </div>
-    </a>
-
-    <nav class="flex flex-col gap-1 text-sm mt-3">
-      <a href="#" class="side-link active flex items-center gap-3 px-3.5 h-11 rounded-xl">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="8" height="8" rx="2" stroke="currentColor" stroke-width="1.7"/><rect x="13" y="3" width="8" height="5" rx="2" stroke="currentColor" stroke-width="1.7"/><rect x="13" y="12" width="8" height="9" rx="2" stroke="currentColor" stroke-width="1.7"/><rect x="3" y="14" width="8" height="7" rx="2" stroke="currentColor" stroke-width="1.7"/></svg>
-        <span>نظرة عامة</span>
-      </a>
-      <a href="#" class="side-link flex items-center gap-3 px-3.5 h-11 rounded-xl">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M4 5.5A1.5 1.5 0 0 1 5.5 4H12v16H5.5A1.5 1.5 0 0 1 4 18.5v-13ZM12 4h6.5A1.5 1.5 0 0 1 20 5.5v13a1.5 1.5 0 0 1-1.5 1.5H12" stroke="currentColor" stroke-width="1.7"/></svg>
-        <span>إدارة الكورسات</span>
-      </a>
-      <a href="#" class="side-link flex items-center gap-3 px-3.5 h-11 rounded-xl">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><circle cx="9" cy="8" r="3.2" stroke="currentColor" stroke-width="1.7"/><path d="M3.5 19c1-3.3 3-5 5.5-5s4.5 1.7 5.5 5" stroke="currentColor" stroke-width="1.7"/></svg>
-        <span>الطلاب المسجلين</span>
-      </a>
-      <a href="#" class="side-link flex items-center gap-3 px-3.5 h-11 rounded-xl">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M9 9a3 3 0 1 1 4 2.8c-.8.4-1 .9-1 1.7" stroke="currentColor" stroke-width="1.6"/><rect x="3" y="3" width="18" height="18" rx="4" stroke="currentColor" stroke-width="1.6"/></svg>
-        <span>بنك الأسئلة والـ OSCE</span>
-      </a>
-    </nav>
-
-    <button id="logoutBtn" class="mt-auto flex items-center gap-3 px-3.5 h-11 rounded-xl text-sm font-bold text-rose-600 hover:bg-rose-50 dark:hover:bg-rose-950/30">
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M9 21H5a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h4M16 17l5-5-5-5M21 12H9" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>
-      <span>تسجيل الخروج</span>
-    </button>
-  </aside>
-
-  <!-- ============ MAIN CONTENT ============ -->
-  <main class="px-5 md:px-8 py-8 max-w-6xl w-full mx-auto pb-24 lg:pb-8">
-
-    <div class="flex items-center justify-between mb-8">
       <div>
-        <h1 id="teacherGreeting" class="text-2xl font-black skel h-8 w-52 rounded">أهلاً يا دكتور 👋</h1>
-        <p class="text-xs opacity-60 font-semibold mt-1">إحصائيات ومتابعة دفعات العلاج الطبيعي</p>
+        <h1 class="text-xl md:text-2xl font-black text-white">لوحة تحكم وتفعيل الطلاب 🩺</h1>
+        <p class="text-xs text-slate-400">إدارة حسابات طلاب العلاج الطبيعي وتفعيل المقررات الأكاديمية</p>
       </div>
-      <button class="text-xs font-black text-white px-5 py-2.5 rounded-xl bg-brand shadow-md flex items-center gap-2">
-        <span>+ إضافة كورس / سكشن</span>
-      </button>
     </div>
 
-    <!-- Stats -->
-    <section class="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
-      <div class="rounded-2xl border p-4 bg-white dark:bg-[#1E293B]" style="border-color:var(--mist-line)">
-        <span class="text-[11px] font-bold opacity-50">إجمالي طلاب الكلية</span>
-        <div id="statStudents" class="text-2xl font-black text-brand num-font mt-1 skel h-7 w-16 rounded"></div>
-      </div>
-      <div class="rounded-2xl border p-4 bg-white dark:bg-[#1E293B]" style="border-color:var(--mist-line)">
-        <span class="text-[11px] font-bold opacity-50">الطلاب النشطون</span>
-        <div id="statActive" class="text-2xl font-black text-brand num-font mt-1 skel h-7 w-16 rounded"></div>
-      </div>
-      <div class="rounded-2xl border p-4 bg-white dark:bg-[#1E293B]" style="border-color:var(--mist-line)">
-        <span class="text-[11px] font-bold opacity-50">الاشتراكات الشهرية</span>
-        <div id="statRevenue" class="text-2xl font-black text-brand num-font mt-1 skel h-7 w-24 rounded"></div>
-      </div>
-      <div class="rounded-2xl border p-4 bg-white dark:bg-[#1E293B]" style="border-color:var(--mist-line)">
-        <span class="text-[11px] font-bold opacity-50">نسبة اجتياز الاختبارات</span>
-        <div id="statCompletion" class="text-2xl font-black text-brand num-font mt-1 skel h-7 w-16 rounded"></div>
-      </div>
-    </section>
+    <div class="flex items-center gap-3">
+      <a href="index.html" class="px-4 py-2 rounded-xl border border-slate-700 hover:border-slate-500 text-xs font-bold text-slate-200 transition">
+        ← العودة للمنصة
+      </a>
+      <button id="logoutBtn" class="px-4 py-2 rounded-xl bg-rose-950/60 text-rose-300 hover:bg-rose-900 text-xs font-bold transition">
+        تسجيل الخروج
+      </button>
+    </div>
+  </header>
 
-    <!-- Students Table -->
-    <section class="rounded-3xl border bg-white dark:bg-[#1E293B] overflow-hidden" style="border-color:var(--mist-line)">
-      <div class="p-4 border-b flex justify-between items-center" style="border-color:var(--mist-line)">
-        <h3 class="text-xs font-black opacity-70 uppercase">أحدث الطلاب المسجلين</h3>
-      </div>
-      <div class="overflow-x-auto">
-        <table class="w-full text-xs">
-          <thead>
-            <tr class="opacity-50 border-b" style="border-color:var(--mist-line)">
-              <th class="p-4">الطالب</th>
-              <th class="p-4">المقرر</th>
-              <th class="p-4">التقدم</th>
-              <th class="p-4">الحالة</th>
-            </tr>
-          </thead>
-          <tbody id="studentsTableBody">
-            <tr><td colspan="4" class="p-4"><div class="skel h-4 w-full rounded"></div></td></tr>
-          </tbody>
-        </table>
-      </div>
-    </section>
+  <!-- إحصائيات سريعة -->
+  <section class="grid grid-cols-2 md:grid-cols-4 gap-4 my-6">
+    <div class="p-5 rounded-2xl bg-card-theme border border-slate-800 shadow-md">
+      <span class="text-xs font-bold text-slate-400 block">إجمالي الطلاب المسجلين</span>
+      <span id="statTotalStudents" class="text-2xl md:text-3xl font-black text-rose-400 num-font mt-1 block">0</span>
+    </div>
+    <div class="p-5 rounded-2xl bg-card-theme border border-slate-800 shadow-md">
+      <span class="text-xs font-bold text-slate-400 block">الفرقة الأولى</span>
+      <span id="statY1Students" class="text-2xl md:text-3xl font-black text-amber-400 num-font mt-1 block">0</span>
+    </div>
+    <div class="p-5 rounded-2xl bg-card-theme border border-slate-800 shadow-md">
+      <span class="text-xs font-bold text-slate-400 block">الفرقة الثانية</span>
+      <span id="statY2Students" class="text-2xl md:text-3xl font-black text-cyan-400 num-font mt-1 block">0</span>
+    </div>
+    <div class="p-5 rounded-2xl bg-card-theme border border-slate-800 shadow-md">
+      <span class="text-xs font-bold text-slate-400 block">إجمالي الاشتراكات المفعلة</span>
+      <span id="statActiveSubscriptions" class="text-2xl md:text-3xl font-black text-emerald-400 num-font mt-1 block">0</span>
+    </div>
+  </section>
 
-  </main>
+  <!-- شريط البحث والفلترة -->
+  <section class="bg-card-theme border border-slate-800 rounded-2xl p-4 mb-6 flex flex-col sm:flex-row gap-3 items-center justify-between">
+    <div class="w-full sm:w-80">
+      <input type="text" id="searchInput" placeholder="🔍 بحث بالاسم، الإيميل، أو رقم الواتساب..." class="w-full h-11 rounded-xl px-4 bg-[#07111D] border border-slate-700 text-xs text-white placeholder:text-slate-500 focus:border-rose-600 outline-none" />
+    </div>
+    <div class="flex items-center gap-2 w-full sm:w-auto">
+      <select id="yearFilter" class="h-11 px-3 rounded-xl bg-[#07111D] border border-slate-700 text-xs text-white focus:border-rose-600 outline-none">
+        <option value="all">كل الفرق الدراسية</option>
+        <option value="y1">الفرقة الأولى فقط</option>
+        <option value="y2">الفرقة الثانية فقط</option>
+      </select>
+    </div>
+  </section>
+
+  <!-- جدول الطلاب -->
+  <section class="bg-card-theme border border-slate-800 rounded-3xl overflow-hidden shadow-xl">
+    <div class="overflow-x-auto">
+      <table class="w-full text-right text-xs">
+        <thead class="bg-[#07111D] text-slate-400 border-b border-slate-800">
+          <tr>
+            <th class="p-4">بيانات الطالب</th>
+            <th class="p-4">الفرقة</th>
+            <th class="p-4">رقم الواتساب</th>
+            <th class="p-4">الكورسات المفعلة</th>
+            <th class="p-4 text-center">إجراء وتفعيل الكورسات</th>
+          </tr>
+        </thead>
+        <tbody id="studentsTableBody" class="divide-y divide-slate-800/60">
+          <!-- سيتم تحميل الطلاب ديناميكياً -->
+        </tbody>
+      </table>
+    </div>
+  </section>
+
 </div>
 
+<!-- نافذة المودال لإدارة كورسات الطالب (Course Activation Modal) -->
+<div id="courseModal" class="hidden fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm p-4">
+  <div class="bg-[#0F1D2D] border border-slate-700 rounded-3xl max-w-lg w-full p-6 space-y-5 shadow-2xl">
+    <div class="flex items-center justify-between border-b border-slate-800 pb-3">
+      <div>
+        <h3 id="modalStudentName" class="font-black text-base text-white">تفعيل كورسات الطالب</h3>
+        <p id="modalStudentEmail" class="text-xs text-slate-400"></p>
+      </div>
+      <button onclick="closeModal()" class="text-slate-400 hover:text-white text-lg">✕</button>
+    </div>
+
+    <!-- قائمة كل الكورسات المتاحة -->
+    <div id="modalCoursesList" class="space-y-2.5 max-h-80 overflow-y-auto pe-1">
+      <!-- ستتولد الكورسات مع أزرار التفعيل -->
+    </div>
+
+    <div class="pt-2 border-t border-slate-800 flex justify-end">
+      <button onclick="closeModal()" class="px-6 py-2.5 rounded-xl bg-brand text-white font-black text-xs hover:bg-rose-900 transition">
+        إتمام وإغلاق
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- ============ FIREBASE LOGIC FOR ADMIN ============ -->
 <script type="module">
-  import { auth, db, onAuthStateChanged, signOut, doc, getDoc } from "./firebase-config.js";
+  import { auth, db, onAuthStateChanged, signOut, doc, getDoc, updateDoc } from "./firebase-config.js";
+  import { collection, getDocs } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-firestore.js";
 
-  const authGate = document.getElementById("authGate");
-  const forbiddenGate = document.getElementById("forbiddenGate");
+  // قائمة جميع الكورسات المتاحة في المنصة للتفعيل
+  const allCourses = [
+    { id: "c_medterm", title: "Medical Terminology (المصطلحات الطبية)" },
+    { id: "c_anat1", title: "Anatomy 1 (تشريح عام - فرقة 1)" },
+    { id: "c_phys1", title: "Physiology 1 (وظائف الأعضاء - فرقة 1)" },
+    { id: "c_hist1", title: "Histology 1 (علم الأنسجة - فرقة 1)" },
+    { id: "c_bioph1", title: "Biophysics 1 (الفيزياء الحيوية - فرقة 1)" },
+    { id: "c_anat3", title: "Anatomy 3 (تشريح تخصصي - فرقة 2)" },
+    { id: "c_biomech2", title: "Biomechanics 2 (ميكانيكا حيوية 2 - فرقة 2)" },
+    { id: "c_hydro", title: "Hydrotherapy (علاج مائي - فرقة 2)" },
+    { id: "c_electro", title: "Electrotherapy (علاج كهربائي - فرقة 2)" },
+    { id: "c_tests", title: "Tests & Measurements (تقييم وقياسات - فرقة 2)" },
+    { id: "c_neuro", title: "Neurophysiology (فسيولوجيا عصبية - فرقة 2)" }
+  ];
 
+  let studentsList = [];
+  let currentEditingStudent = null;
+
+  // التحقق من تسجيل الدخول وجلب بيانات الطلاب
   onAuthStateChanged(auth, async (user) => {
     if (!user) {
       window.location.href = "index.html#auth";
       return;
     }
-
-    let teacherData = null;
-    try {
-      const snap = await getDoc(doc(db, "teachers", user.uid));
-      if (snap.exists()) teacherData = snap.data();
-    } catch (e) {
-      console.error(e);
-    }
-
-    if (!teacherData) {
-      authGate.style.display = "none";
-      forbiddenGate.classList.remove("hidden");
-      return;
-    }
-
-    renderTeacherDashboard(user, teacherData);
-    authGate.style.display = "none";
+    await loadAllStudents();
+    document.getElementById("authGate").style.display = "none";
   });
 
   document.getElementById("logoutBtn").addEventListener("click", async () => {
@@ -194,46 +179,153 @@
     window.location.href = "index.html";
   });
 
-  function renderTeacherDashboard(user, data) {
-    const name = data?.fullName || user.displayName || "محمود خضر";
-    document.getElementById("teacherGreeting").textContent = `أهلاً د / ${name} 👋`;
-    document.getElementById("teacherGreeting").classList.remove("skel");
-
-    const stats = data?.stats || {
-      totalStudents: 4200,
-      activeStudents: 2860,
-      monthlyRevenue: 48500,
-      avgCompletion: 92
-    };
-
-    fillStat("statStudents", stats.totalStudents.toLocaleString());
-    fillStat("statActive", stats.activeStudents.toLocaleString());
-    fillStat("statRevenue", stats.monthlyRevenue.toLocaleString() + " ج.م");
-    fillStat("statCompletion", stats.avgCompletion + "%");
-
-    renderStudentsTable(data?.recentStudents || [
-      { name: "أحمد سامي", course: "الفرقة 2 — Biomechanics", progress: 85, status: "نشط" },
-      { name: "منة الله كمال", course: "الفرقة 3 — Orthopedic PT", progress: 60, status: "نشط" },
-      { name: "يوسف عبد الرحمن", course: "الفرقة 1 — General Anatomy", progress: 40, status: "نشط" }
-    ]);
+  async function loadAllStudents() {
+    try {
+      const snap = await getDocs(collection(db, "students"));
+      studentsList = [];
+      snap.forEach(docSnap => {
+        studentsList.push({ id: docSnap.id, ...docSnap.data() });
+      });
+      updateStats();
+      renderStudents();
+    } catch (e) {
+      console.error("Error loading students:", e);
+      alert("حدث خطأ أثناء جلب قائمة الطلاب.");
+    }
   }
 
-  function fillStat(id, val) {
-    const el = document.getElementById(id);
-    el.textContent = val;
-    el.classList.remove("skel");
+  function updateStats() {
+    document.getElementById("statTotalStudents").textContent = studentsList.length;
+    document.getElementById("statY1Students").textContent = studentsList.filter(s => s.academicYear === "y1").length;
+    document.getElementById("statY2Students").textContent = studentsList.filter(s => s.academicYear === "y2").length;
+    
+    let totalEnrolled = 0;
+    studentsList.forEach(s => {
+      if (s.enrolledCourses) totalEnrolled += s.enrolledCourses.length;
+    });
+    document.getElementById("statActiveSubscriptions").textContent = totalEnrolled;
   }
 
-  function renderStudentsTable(list) {
-    document.getElementById("studentsTableBody").innerHTML = list.map(s => `
-      <tr class="border-b last:border-0" style="border-color:var(--mist-line)">
-        <td class="p-4 font-bold">${s.name}</td>
-        <td class="p-4 opacity-70">${s.course}</td>
-        <td class="p-4 font-bold text-brand num-font">${s.progress}%</td>
-        <td class="p-4"><span class="px-2 py-0.5 rounded-md bg-emerald-100 text-emerald-800 text-[10px] font-black">${s.status}</span></td>
-      </tr>
-    `).join("");
+  function renderStudents() {
+    const searchVal = document.getElementById("searchInput").value.trim().toLowerCase();
+    const yearVal = document.getElementById("yearFilter").value;
+
+    const filtered = studentsList.filter(s => {
+      const matchName = (s.fullName || "").toLowerCase().includes(searchVal);
+      const matchEmail = (s.email || "").toLowerCase().includes(searchVal);
+      const matchPhone = (s.phone || "").includes(searchVal);
+      const matchYear = yearVal === "all" || s.academicYear === yearVal;
+
+      return (matchName || matchEmail || matchPhone) && matchYear;
+    });
+
+    const tbody = document.getElementById("studentsTableBody");
+    if (filtered.length === 0) {
+      tbody.innerHTML = `<tr><td colspan="5" class="p-8 text-center text-slate-400 font-bold">لا يوجد طلاب مطابقين للبحث.</td></tr>`;
+      return;
+    }
+
+    tbody.innerHTML = filtered.map(s => {
+      const enrolled = s.enrolledCourses || [];
+      const yearLabel = s.academicYear === "y2" ? "الفرقة الثانية" : "الفرقة الأولى";
+
+      return `
+        <tr class="hover:bg-slate-800/30 transition">
+          <td class="p-4">
+            <span class="font-black text-sm text-white block">${s.fullName || "بدون اسم"}</span>
+            <span class="text-[11px] text-slate-400 dir-ltr inline-block">${s.email || ""}</span>
+          </td>
+          <td class="p-4">
+            <span class="px-2.5 py-1 rounded-lg text-[10px] font-black ${s.academicYear === 'y2' ? 'bg-cyan-950/60 text-cyan-400 border border-cyan-800/40' : 'bg-amber-950/60 text-amber-400 border border-amber-800/40'}">
+              ${yearLabel}
+            </span>
+          </td>
+          <td class="p-4">
+            <a href="https://wa.me/2${s.phone}" target="_blank" class="text-emerald-400 font-bold hover:underline dir-ltr inline-block">
+              ${s.phone || "—"}
+            </a>
+          </td>
+          <td class="p-4">
+            <span class="px-2 py-0.5 rounded bg-slate-800 text-rose-300 font-bold text-xs">
+              ${enrolled.length} مقررات مفعلة
+            </span>
+          </td>
+          <td class="p-4 text-center">
+            <button onclick="openCourseModal('${s.id}')" class="px-4 py-2 rounded-xl bg-brand hover:bg-rose-900 text-white font-bold text-xs shadow-md transition">
+              ⚙️ إدارة وتفعيل الكورسات
+            </button>
+          </td>
+        </tr>
+      `;
+    }).join("");
   }
+
+  // فتح نافذة تفعيل الكورسات لطالب محدد
+  window.openCourseModal = function(studentId) {
+    const student = studentsList.find(s => s.id === studentId);
+    if (!student) return;
+    currentEditingStudent = student;
+
+    document.getElementById("modalStudentName").textContent = `تفعيل كورسات: ${student.fullName}`;
+    document.getElementById("modalStudentEmail").textContent = `${student.email} • ${student.phone}`;
+
+    renderModalCourses();
+    document.getElementById("courseModal").classList.remove("hidden");
+  };
+
+  function renderModalCourses() {
+    if (!currentEditingStudent) return;
+    const enrolled = currentEditingStudent.enrolledCourses || [];
+
+    document.getElementById("modalCoursesList").innerHTML = allCourses.map(crs => {
+      const isEnrolled = enrolled.includes(crs.id);
+      return `
+        <div class="p-3 rounded-2xl border border-slate-800 bg-[#07111D] flex items-center justify-between">
+          <span class="text-xs font-bold text-slate-200">${crs.title}</span>
+          <button onclick="toggleEnroll('${crs.id}')" class="px-3.5 py-1.5 rounded-lg text-xs font-black transition ${
+            isEnrolled 
+              ? 'bg-emerald-600 text-white hover:bg-rose-700' 
+              : 'bg-slate-800 text-slate-400 hover:bg-brand hover:text-white'
+          }">
+            ${isEnrolled ? '✓ مفعل (إلغاء)' : '+ تفعيل'}
+          </button>
+        </div>
+      `;
+    }).join("");
+  }
+
+  // تفعيل أو إلغاء تفعيل الكورس في Firestore
+  window.toggleEnroll = async function(courseId) {
+    if (!currentEditingStudent) return;
+    let enrolled = currentEditingStudent.enrolledCourses || [];
+
+    if (enrolled.includes(courseId)) {
+      enrolled = enrolled.filter(id => id !== courseId);
+    } else {
+      enrolled.push(courseId);
+    }
+
+    try {
+      await updateDoc(doc(db, "students", currentEditingStudent.id), {
+        enrolledCourses: enrolled
+      });
+      currentEditingStudent.enrolledCourses = enrolled;
+      renderModalCourses();
+      renderStudents();
+      updateStats();
+    } catch (e) {
+      console.error(e);
+      alert("حدث خطأ أثناء حفظ التعديل في السيرفر.");
+    }
+  };
+
+  window.closeModal = function() {
+    document.getElementById("courseModal").classList.add("hidden");
+    currentEditingStudent = null;
+  };
+
+  document.getElementById("searchInput").addEventListener("input", renderStudents);
+  document.getElementById("yearFilter").addEventListener("change", renderStudents);
 </script>
 </body>
 </html>
