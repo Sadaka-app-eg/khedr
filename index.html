@@ -98,11 +98,15 @@
   [dir="rtl"] .rtl-flip { transform: scaleX(-1); }
   ::selection { background: var(--brand-primary); color: #fff; }
 
-  /* Auth Tabs */
-  .auth-tab { color: #EAF3F3; opacity: .5; }
-  .auth-tab.active { background: var(--dark-card); opacity: 1; color: #FF7A45; box-shadow: 0 4px 12px rgba(0,0,0,0.3); }
-  body.light .auth-tab { color: #0E2A38; }
-  body.light .auth-tab.active { background: #FFFFFF; color: var(--brand-primary); }
+/* Auth Tabs Fix */
+  .auth-nav-bg { background-color: #1E293B; }
+  body.light .auth-nav-bg { background-color: #E2E8F0 !important; }
+
+  .auth-tab { color: #94A3B8; font-weight: 800; transition: all 0.2s ease; }
+  .auth-tab.active { background-color: var(--dark-card); color: #FFB800; box-shadow: 0 4px 12px rgba(0,0,0,0.3); }
+  
+  body.light .auth-tab { color: #475569 !important; }
+  body.light .auth-tab.active { background-color: #FFFFFF !important; color: var(--brand-primary) !important; box-shadow: 0 4px 12px rgba(0,0,0,0.08); }
 </style>
 </head>
 
@@ -499,53 +503,85 @@
   </div>
 </section>
 
-<!-- ============ AUTHENTICATION SECTION ============ -->
-<section id="auth" class="max-w-md mx-auto px-5 py-16">
-  <div class="rounded-3xl border border-slate-800 bg-card-theme p-3 shadow-xl fade-up">
+<!-- ============ AUTHENTICATION SECTION (مع تفاصيل الطالب الكاملة) ============ -->
+<section id="auth" class="max-w-xl mx-auto px-5 py-16">
+  <div class="rounded-3xl border border-slate-800 bg-card-theme p-4 sm:p-6 shadow-2xl fade-up">
 
     <!-- Auth Tabs Switcher -->
-    <div class="grid grid-cols-2 gap-1 p-1 bg-slate-800 rounded-2xl">
-      <button id="tabLoginBtn" onclick="setAuthTab('login')" class="auth-tab h-10 rounded-xl text-xs font-black transition" data-i18n="auth_tab_login">تسجيل الدخول</button>
-      <button id="tabRegisterBtn" onclick="setAuthTab('register')" class="auth-tab h-10 rounded-xl text-xs font-black transition" data-i18n="auth_tab_register">حساب جديد</button>
+    <div class="grid grid-cols-2 gap-1.5 p-1.5 auth-nav-bg rounded-2xl mb-6">
+      <button id="tabLoginBtn" onclick="setAuthTab('login')" class="auth-tab h-11 rounded-xl text-xs md:text-sm font-black transition" data-i18n="auth_tab_login">تسجيل الدخول</button>
+      <button id="tabRegisterBtn" onclick="setAuthTab('register')" class="auth-tab h-11 rounded-xl text-xs md:text-sm font-black transition" data-i18n="auth_tab_register">حساب جديد</button>
     </div>
 
-    <div class="px-4 py-6">
-      <!-- LOGIN FORM -->
-      <form id="loginForm" class="flex flex-col gap-3.5" onsubmit="return false;">
-        <label class="flex flex-col gap-1 text-xs font-bold text-theme-main">
-          <span data-i18n="auth_email">البريد الإلكتروني</span>
-          <input id="loginEmail" type="email" required placeholder="student@example.com" class="h-11 rounded-xl px-3 border border-slate-700 bg-transparent text-xs text-theme-main focus:border-brand" />
-        </label>
-        <label class="flex flex-col gap-1 text-xs font-bold text-theme-main">
-          <span data-i18n="auth_password">كلمة المرور</span>
-          <input id="loginPassword" type="password" required placeholder="••••••••" class="h-11 rounded-xl px-3 border border-slate-700 bg-transparent text-xs text-theme-main focus:border-brand" />
-        </label>
-        <p id="loginError" class="hidden text-xs font-bold text-rose-500 text-center"></p>
-        <button id="loginSubmitBtn" type="submit" class="h-11 rounded-xl bg-brand text-white font-black text-xs mt-2 shadow-md hover:bg-rose-900 transition" data-i18n="auth_login_btn">
-          تسجيل الدخول
-        </button>
-      </form>
+    <!-- LOGIN FORM -->
+    <form id="loginForm" class="flex flex-col gap-4" onsubmit="return false;">
+      <label class="flex flex-col gap-1 text-xs md:text-sm font-bold text-theme-main">
+        <span data-i18n="auth_email">البريد الإلكتروني</span>
+        <input id="loginEmail" type="email" required placeholder="student@example.com" class="h-11 rounded-xl px-3 border border-slate-700 bg-transparent text-xs md:text-sm text-theme-main focus:border-brand" />
+      </label>
+      <label class="flex flex-col gap-1 text-xs md:text-sm font-bold text-theme-main">
+        <span data-i18n="auth_password">كلمة المرور</span>
+        <input id="loginPassword" type="password" required placeholder="••••••••" class="h-11 rounded-xl px-3 border border-slate-700 bg-transparent text-xs md:text-sm text-theme-main focus:border-brand" />
+      </label>
+      <p id="loginError" class="hidden text-xs font-bold text-rose-500 text-center"></p>
+      <button id="loginSubmitBtn" type="submit" class="h-12 rounded-xl bg-brand text-white font-black text-xs md:text-sm mt-2 shadow-lg hover:bg-rose-900 transition" data-i18n="auth_login_btn">
+        تسجيل الدخول
+      </button>
+    </form>
 
-      <!-- REGISTER FORM -->
-      <form id="registerForm" class="hidden flex-col gap-3.5" onsubmit="return false;">
-        <label class="flex flex-col gap-1 text-xs font-bold text-theme-main">
-          <span data-i18n="auth_name">الاسم بالكامل</span>
-          <input id="registerName" type="text" required placeholder="اسم الطالب ثلاثي" class="h-11 rounded-xl px-3 border border-slate-700 bg-transparent text-xs text-theme-main focus:border-brand" />
+    <!-- REGISTER FORM (مع تفاصيل الطالب الكاملة) -->
+    <form id="registerForm" class="hidden flex-col gap-3.5" onsubmit="return false;">
+      
+      <!-- الاسم ثلاثي -->
+      <label class="flex flex-col gap-1 text-xs md:text-sm font-bold text-theme-main">
+        <span>الاسم بالكامل (ثلاثي كما بالبطاقة)</span>
+        <input id="regName" type="text" required placeholder="مثال: محمود أحمد خضر" class="h-11 rounded-xl px-3 border border-slate-700 bg-transparent text-xs md:text-sm text-theme-main focus:border-brand" />
+      </label>
+
+      <!-- رقم الهاتف / واتساب -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+        <label class="flex flex-col gap-1 text-xs md:text-sm font-bold text-theme-main">
+          <span>رقم الهاتف (واتساب)</span>
+          <input id="regPhone" type="tel" required placeholder="010XXXXXXXX" dir="ltr" class="h-11 rounded-xl px-3 border border-slate-700 bg-transparent text-xs md:text-sm text-theme-main focus:border-brand" />
         </label>
-        <label class="flex flex-col gap-1 text-xs font-bold text-theme-main">
-          <span data-i18n="auth_email">البريد الإلكتروني</span>
-          <input id="registerEmail" type="email" required placeholder="student@example.com" class="h-11 rounded-xl px-3 border border-slate-700 bg-transparent text-xs text-theme-main focus:border-brand" />
+        
+        <label class="flex flex-col gap-1 text-xs md:text-sm font-bold text-theme-main">
+          <span>الجامعة / الكلية</span>
+          <input id="regUniversity" type="text" required placeholder="مثال: جامعة القاهرة" class="h-11 rounded-xl px-3 border border-slate-700 bg-transparent text-xs md:text-sm text-theme-main focus:border-brand" />
         </label>
-        <label class="flex flex-col gap-1 text-xs font-bold text-theme-main">
-          <span data-i18n="auth_password">كلمة المرور</span>
-          <input id="registerPassword" type="password" required placeholder="••••••••" minlength="6" class="h-11 rounded-xl px-3 border border-slate-700 bg-transparent text-xs text-theme-main focus:border-brand" />
-        </label>
-        <p id="registerError" class="hidden text-xs font-bold text-rose-500 text-center"></p>
-        <button id="registerSubmitBtn" type="submit" class="h-11 rounded-xl bg-brand text-white font-black text-xs mt-2 shadow-md hover:bg-rose-900 transition" data-i18n="auth_register_btn">
-          إنشاء الحساب
-        </button>
-      </form>
-    </div>
+      </div>
+
+      <!-- الفرقة الدراسية -->
+      <label class="flex flex-col gap-1 text-xs md:text-sm font-bold text-theme-main">
+        <span>الفرقة الدراسية</span>
+        <select id="regYear" required class="h-11 rounded-xl px-3 border border-slate-700 bg-[#0F1D2D] text-xs md:text-sm text-theme-main focus:border-brand">
+          <option value="y1">الفرقة الأولى (First Year)</option>
+          <option value="y2">الفرقة الثانية (Second Year)</option>
+          <option value="y3">الفرقة الثالثة (Third Year)</option>
+          <option value="y4">الفرقة الرابعة (Fourth Year)</option>
+          <option value="intern">سنة الامتياز / خريج</option>
+        </select>
+      </label>
+
+      <!-- البريد الإلكتروني -->
+      <label class="flex flex-col gap-1 text-xs md:text-sm font-bold text-theme-main">
+        <span data-i18n="auth_email">البريد الإلكتروني</span>
+        <input id="regEmail" type="email" required placeholder="student@example.com" class="h-11 rounded-xl px-3 border border-slate-700 bg-transparent text-xs md:text-sm text-theme-main focus:border-brand" />
+      </label>
+
+      <!-- كلمة المرور -->
+      <label class="flex flex-col gap-1 text-xs md:text-sm font-bold text-theme-main">
+        <span data-i18n="auth_password">كلمة المرور (6 حروف أو أرقام على الأقل)</span>
+        <input id="regPassword" type="password" required placeholder="••••••••" minlength="6" class="h-11 rounded-xl px-3 border border-slate-700 bg-transparent text-xs md:text-sm text-theme-main focus:border-brand" />
+      </label>
+
+      <p id="registerError" class="hidden text-xs font-bold text-rose-500 text-center"></p>
+      
+      <button id="registerSubmitBtn" type="submit" class="h-12 rounded-xl bg-brand text-white font-black text-xs md:text-sm mt-2 shadow-lg hover:bg-rose-900 transition" data-i18n="auth_register_btn">
+        إنشاء الحساب وبدء التعلم 🚀
+      </button>
+    </form>
+
   </div>
 </section>
 
@@ -1176,21 +1212,37 @@ function closePackageDetails() {
     });
   }
 
-  const registerForm = document.getElementById("registerForm");
+const registerForm = document.getElementById("registerForm");
   if (registerForm) {
     registerForm.addEventListener("submit", async (e) => {
       e.preventDefault();
       const btn = document.getElementById("registerSubmitBtn");
       if (btn) btn.disabled = true;
-      const name = document.getElementById("registerName").value;
-      const email = document.getElementById("registerEmail").value;
+
+      const name = document.getElementById("regName").value;
+      const phone = document.getElementById("regPhone").value;
+      const university = document.getElementById("regUniversity").value;
+      const academicYear = document.getElementById("regYear").value;
+      const email = document.getElementById("regEmail").value;
+      const password = document.getElementById("regPassword").value;
+
       try {
-        const cred = await createUserWithEmailAndPassword(auth, email, document.getElementById("registerPassword").value);
+        const cred = await createUserWithEmailAndPassword(auth, email, password);
         await updateProfile(cred.user, { displayName: name });
-        await setDoc(doc(db, "students", cred.user.uid), { fullName: name, email: email, createdAt: serverTimestamp() });
+
+        // حفظ بيانات الطالب التفصيلية في Firestore
+        await setDoc(doc(db, "students", cred.user.uid), {
+          fullName: name,
+          phone: phone,
+          university: university,
+          academicYear: academicYear,
+          email: email,
+          createdAt: serverTimestamp()
+        });
+
         window.location.href = "dashboard.html";
       } catch (err) {
-        showError("registerError", currentLang === "ar" ? "تعذر إنشاء الحساب، يرجى التأكد من البيانات" : "Could not create account");
+        showError("registerError", currentLang === "ar" ? "تعذر إنشاء الحساب، تأكد من صحة البريد أو قوة كلمة المرور" : "Could not create account");
       } finally {
         if (btn) btn.disabled = false;
       }
