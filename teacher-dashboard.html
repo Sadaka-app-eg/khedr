@@ -21,9 +21,44 @@
   html[lang="ar"] body, html[lang="ar"] * { font-family: 'Tajawal', sans-serif; }
   .num-font { font-family: 'Plus Jakarta Sans', sans-serif; }
 
-  body { background-color: var(--dark-bg); color: #EAF3F3; }
+  body { background-color: var(--dark-bg); color: #EAF3F3; transition: background-color 0.3s ease, color 0.3s ease; }
+  body.light { background-color: #F8FAFC; color: #0E2A38; }
+
   .bg-card-theme { background-color: var(--dark-card); border-color: var(--dark-line); }
+  body.light .bg-card-theme { background-color: #FFFFFF !important; border-color: #E2E8F0 !important; color: #0E2A38 !important; }
+  body.light .text-white { color: #0F172A !important; }
+  body.light .text-slate-400, body.light .text-slate-300 { color: #64748B !important; }
+  body.light input, body.light select { background-color: #F1F5F9 !important; border-color: #CBD5E1 !important; color: #0F172A !important; }
+  body.light table thead { background-color: #F1F5F9 !important; color: #475569 !important; }
+
   .bg-brand { background-color: var(--brand-primary); }
+
+  .theme-toggle-pill {
+    width: 52px;
+    height: 26px;
+    border-radius: 9999px;
+    background-color: var(--brand-primary);
+    position: relative;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 5px;
+  }
+  body.light .theme-toggle-pill { background-color: #2D3748; }
+  .theme-toggle-thumb {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background-color: #FFFFFF;
+    position: absolute;
+    top: 3px;
+    right: 3px;
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+  }
+  [dir="rtl"] body.light .theme-toggle-thumb { transform: translateX(-26px); }
 </style>
 </head>
 
@@ -51,7 +86,14 @@
       </div>
     </div>
 
-    <div class="flex items-center gap-3">
+<div class="flex items-center gap-3">
+      <!-- زر التبديل بين الوضع الليلي والنهاري -->
+      <div id="themeBtn" class="theme-toggle-pill" title="تبديل الوضع النهاري/الليلي">
+        <span class="text-[10px] z-10">☀️</span>
+        <span class="text-[10px] z-10">🌙</span>
+        <div class="theme-toggle-thumb"></div>
+      </div>
+
       <a href="index.html" class="px-4 py-2 rounded-xl border border-slate-700 hover:border-slate-500 text-xs font-bold text-slate-200 transition">
         ← العودة للمنصة
       </a>
@@ -619,8 +661,8 @@ import { auth, db, onAuthStateChanged, signOut, doc } from "./firebase-config.js
 
       container.innerHTML = snap.docs.map(docSnap => {
         const lec = docSnap.data();
-        return `
-          <div class="p-3.5 rounded-xl border border-slate-800 bg-[#07111D] flex items-center justify-between">
+return `
+          <div class="p-4 rounded-2xl border border-slate-800 bg-[#07111D] flex flex-col sm:flex-row sm:items-center justify-between gap-3 shadow-md">
             <div class="space-y-1">
               <div class="flex items-center gap-2">
                 <span class="text-xs font-black text-white">${lec.title}</span>
@@ -630,9 +672,14 @@ import { auth, db, onAuthStateChanged, signOut, doc } from "./firebase-config.js
               </div>
               <span class="text-[10px] text-slate-400 block">${lec.duration} • ${lec.quiz ? lec.quiz.length : 0} أسئلة MCQ</span>
             </div>
-            <button onclick="deleteLecture('${docSnap.id}')" class="px-3 py-1.5 rounded-lg bg-rose-950/60 hover:bg-rose-900 border border-rose-800/40 text-rose-300 text-xs font-bold transition">
-              حذف ✕
-            </button>
+            
+            <div class="flex items-center gap-2">
+              ${lec.videoUrl ? `<a href="${lec.videoUrl}" target="_blank" class="px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-cyan-300 text-xs font-bold transition">🎬 مشاهدة الفيديو</a>` : ''}
+              ${lec.pdfUrl ? `<a href="${lec.pdfUrl}" target="_blank" class="px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-amber-300 text-xs font-bold transition">📄 فتح الـ PDF</a>` : ''}
+              <button onclick="deleteLecture('${docSnap.id}')" class="px-3 py-1.5 rounded-lg bg-rose-950/60 hover:bg-rose-900 border border-rose-800/40 text-rose-300 text-xs font-bold transition">
+                حذف ✕
+              </button>
+            </div>
           </div>
         `;
       }).join("");
@@ -651,6 +698,20 @@ import { auth, db, onAuthStateChanged, signOut, doc } from "./firebase-config.js
       alert("حدث خطأ أثناء الحذف.");
     }
   };
+  // ============ THEME TOGGLE LOGIC ============
+  const themeBtn = document.getElementById("themeBtn");
+  if (themeBtn) {
+    // استعادة الثيم المفضل
+    if (localStorage.getItem("adminTheme") === "light") {
+      document.body.classList.add("light");
+    }
+
+    themeBtn.addEventListener("click", () => {
+      document.body.classList.toggle("light");
+      const isLight = document.body.classList.contains("light");
+      localStorage.setItem("adminTheme", isLight ? "light" : "dark");
+    });
+  }
 </script>
 </body>
 </html>
