@@ -1250,15 +1250,13 @@ function renderCatalog() {
     const badgeText = item.badge ? `<span class="absolute top-2.5 start-2.5 z-10 text-[10px] font-black bg-amber-400 text-slate-900 px-2.5 py-1 rounded-md shadow-md">${item.badge}</span>` : "";
 
     return `
-      <article class="min-w-[300px] sm:min-w-[340px] md:min-w-[370px] max-w-[370px] shrink-0 snap-start fade-up card-hover rounded-3xl overflow-hidden border ${isPkg ? "border-brand shadow-rose-950/20" : "border-slate-800"} bg-[#0F1D2D] p-3.5 shadow-2xl flex flex-col justify-between relative transition-all duration-300">
+      <article class="min-w-[300px] sm:min-w-[340px] md:min-w-[370px] max-w-[370px] shrink-0 snap-start fade-up show card-hover rounded-3xl overflow-hidden border ${isPkg ? "border-brand shadow-rose-950/20" : "border-slate-800"} bg-[#0F1D2D] p-3.5 shadow-2xl flex flex-col justify-between relative transition-all duration-300">
         
-        <!-- بوستر الكورس العلوي بنسبة أبعاد 16:9 -->
         <div class="rounded-2xl overflow-hidden relative aspect-[16/9] w-full bg-[#07111D] border border-slate-700/50">
           ${badgeText}
           <img src="${item.img}" alt="${item.title}" class="w-full h-full object-cover" onerror="this.onerror=null; this.src='khedr.jpg';" />
         </div>
 
-        <!-- محتوى الكارت -->
         <div class="p-3 flex-1 flex flex-col justify-between space-y-4">
           <div>
             <div class="flex items-start gap-2.5">
@@ -1282,7 +1280,6 @@ function renderCatalog() {
             </div>
           </div>
 
-          <!-- أزرار الإجراءات -->
           <div class="space-y-2 pt-1">
             <button onclick="${isPkg ? `openPackageDetails('${item.id}')` : `openCourseView('${item.id}')`}" class="w-full py-2.5 rounded-xl border border-brand/80 text-rose-300 font-black text-xs hover:bg-brand/20 transition duration-200">
               الدخول للكورس
@@ -1303,10 +1300,11 @@ function scrollSlider(direction) {
   const slider = document.getElementById("coursesSlider");
   if (!slider) return;
   const scrollAmount = 390;
+  // في وضع الـ RTL يتم عكس إشارة التمرير
   if (direction === "left") {
-    slider.scrollBy({ left: -scrollAmount, behavior: "smooth" });
-  } else {
     slider.scrollBy({ left: scrollAmount, behavior: "smooth" });
+  } else {
+    slider.scrollBy({ left: -scrollAmount, behavior: "smooth" });
   }
 }
 
@@ -1581,192 +1579,7 @@ const registerForm = document.getElementById("registerForm");
       }
     });
   }
-  // ============ COURSE & LESSONS FREEMIUM SYSTEM ============
 
-// داتا الكورسات والمحاضرات (مقدمة مجانية + باقي المحاضرات مقفولة)
-const singleCoursesData = {
-  biomechanics: {
-    id: "biomechanics",
-    category: "الفرقة الثانية • ترم أول",
-    title: "كورس Biomechanics & Movement Analysis 🩻",
-    desc: "شرح كامل للميكانيكا الحيوية، تحليل القوى، العزوم، حركات المشي، مع ورش العملي وبنك الأسئلة.",
-    price: "599 ج.م",
-    isEnrolled: false, // حالة الاشتراك الافتراضية
-    lessons: [
-      {
-        id: "l1",
-        title: "01. مقدمة الميكانيكا الحيوية والـ Kinematics",
-        type: "video",
-        duration: "15:20 دقيقة",
-        isFree: true, // المقدمة مجانية
-        videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ", // ضع رابط فيديو المقدمة هنا
-        desc: "شرح مفاهيم الـ Vectors، القوى الحركية، ومقدمة المادة مجاناً للجميع."
-      },
-      {
-        id: "l2",
-        title: "02. تحليل عزوم المفاصل (Kinetics & Joint Torques)",
-        type: "video",
-        duration: "35:40 دقيقة",
-        isFree: false,
-        videoUrl: "",
-        desc: "حساب العزوم والقوى المؤثرة على مفصل الركبة والحوض أثناء الحركة."
-      },
-      {
-        id: "l3",
-        title: "03. Gait Analysis (تحليل حركة المشي الإكلينيكي)",
-        type: "video",
-        duration: "42:10 دقيقة",
-        isFree: false,
-        videoUrl: "",
-        desc: "دراسة مراحل الـ Stance & Swing Phase والأخطاء الحركية الشهيرة."
-      },
-      {
-        id: "l4",
-        title: "📄 ملخص وتفريغ المحاضرات PDF",
-        type: "pdf",
-        duration: "ملف PDF",
-        isFree: false,
-        desc: "تفريغ شامل بالرسومات والمخططات التوضيحية لجميع قوانين المادة."
-      },
-      {
-        id: "l5",
-        title: "🧠 بنك أسئلة الـ MCQ والتفسير العلمي",
-        type: "quiz",
-        duration: "50 سؤال",
-        isFree: false,
-        desc: "نماذج امتحانات السنوات السابقة مجابة بالتفصيل."
-      }
-    ]
-  }
-};
-
-let currentActiveCourse = null;
-
-// فتح شاشة الكورس وفحص حالة القفل والفتح
-function openCourseView(courseId) {
-  const crs = singleCoursesData[courseId] || singleCoursesData["biomechanics"];
-  currentActiveCourse = crs;
-
-  document.getElementById("crsCategory").textContent = crs.category;
-  document.getElementById("crsTitle").textContent = crs.title;
-  document.getElementById("crsDesc").textContent = crs.desc;
-  document.getElementById("crsPrice").textContent = crs.price;
-
-  renderCourseCurriculum();
-
-  // إخفاء الصفحة الرئيسية وإظهار شاشة الكورس
-  ["hero", "years", "courses", "features", "honors", "reviews", "instructor", "auth"].forEach(id => {
-    const el = document.getElementById(id);
-    if (el) el.classList.add("hidden");
-  });
-
-  document.getElementById("courseView").classList.remove("hidden");
-  window.scrollTo({ top: 0, behavior: "smooth" });
-}
-
-// عرض فهرس المحاضرات حسب حالة القفل / الاشتراك
-function renderCourseCurriculum() {
-  const crs = currentActiveCourse;
-  if (!crs) return;
-
-  const btn = document.getElementById("crsActionBtn");
-  const banner = document.getElementById("enrollmentStatusBanner");
-
-  if (crs.isEnrolled) {
-    btn.textContent = "أنت مشترك بالفعل 🔓 (المحتوى مفتوح)";
-    btn.className = "w-full bg-emerald-500 text-white font-black text-xs md:text-sm px-6 py-3 rounded-xl shadow-xl cursor-default";
-    banner.innerHTML = `<span class="inline-flex items-center gap-2 text-xs font-bold text-emerald-300 bg-emerald-950/60 px-3 py-1.5 rounded-xl border border-emerald-500/30">
-      <span>🎉</span> تم الاشتراك بنجاح! جميع المحاضرات وبنوك الأسئلة والـ PDFs مفتوحة لك.
-    </span>`;
-  } else {
-    btn.textContent = "الاشتراك في الكورس الآن 🚀";
-    btn.className = "w-full bg-white text-[#7A0B30] font-black text-xs md:text-sm px-6 py-3 rounded-xl shadow-xl hover:bg-rose-50 transition transform hover:scale-105";
-    banner.innerHTML = `<span class="inline-flex items-center gap-2 text-xs font-bold text-amber-300 bg-black/40 px-3 py-1.5 rounded-xl border border-amber-300/30">
-      <span>🔒</span> يتوفر كليب معاينة مجاني (المقدمة) — اشترك لفتح باقي المواد
-    </span>`;
-  }
-
-  const listEl = document.getElementById("lessonsList");
-  listEl.innerHTML = crs.lessons.map((lesson, idx) => {
-    const canAccess = lesson.isFree || crs.isEnrolled;
-    
-    return `
-      <div onclick="selectLesson('${lesson.id}')" class="rounded-2xl border p-4 transition cursor-pointer flex items-center justify-between ${
-        canAccess 
-          ? "bg-[#0F1D2D] border-slate-700 hover:border-amber-400" 
-          : "bg-slate-900/60 border-slate-800 opacity-60 hover:opacity-80"
-      }">
-        <div class="flex items-center gap-3">
-          <span class="text-lg">${canAccess ? (lesson.isFree ? "▶️" : "🔓") : "🔒"}</span>
-          <div>
-            <h4 class="text-xs font-black text-slate-100">${lesson.title}</h4>
-            <span class="text-[10px] text-slate-400 block mt-0.5">${lesson.duration} ${lesson.isFree ? "• معاينة مجانية" : ""}</span>
-          </div>
-        </div>
-        <span class="text-[10px] font-black px-2 py-1 rounded ${canAccess ? "bg-emerald-500/20 text-emerald-400" : "bg-slate-800 text-slate-500"}">
-          ${canAccess ? "متاح" : "مغلق"}
-        </span>
-      </div>
-    `;
-  }).join("");
-}
-
-// تشغيل الدرس أو تنبيه الطالب بالاشتراك
-function selectLesson(lessonId) {
-  const crs = currentActiveCourse;
-  const lesson = crs.lessons.find(l => l.id === lessonId);
-  if (!lesson) return;
-
-  const canAccess = lesson.isFree || crs.isEnrolled;
-
-  if (!canAccess) {
-    alert("🔒 هذه المحاضرة مغلقة. يرجى الضغط على زر 'الاشتراك في الكورس' لفتح جميع المحاضرات والـ PDFs وبنوك الأسئلة.");
-    return;
-  }
-
-  // عرض تفاصيل الدرس المفتوح
-  document.getElementById("currentLessonTitle").textContent = lesson.title;
-  document.getElementById("currentLessonDesc").textContent = lesson.desc;
-
-  const iframe = document.getElementById("videoIframe");
-  const placeholder = document.getElementById("videoPlaceholder");
-
-  if (lesson.type === "video" && lesson.videoUrl) {
-    iframe.src = lesson.videoUrl;
-    iframe.classList.remove("hidden");
-    placeholder.classList.add("hidden");
-  } else {
-    iframe.classList.add("hidden");
-    placeholder.classList.remove("hidden");
-    placeholder.querySelector("h3").textContent = `📄 ${lesson.title}`;
-    placeholder.querySelector("p").textContent = "المحتوى جاهز للعرض والتحميل.";
-  }
-}
-
-// محاكاة زر الاشتراك (فتح كل الدروس)
-function toggleCourseEnrollment() {
-  if (!currentActiveCourse) return;
-
-  if (currentActiveCourse.isEnrolled) {
-    alert("أنت مشترك بالفعل في هذا الكورس!");
-    return;
-  }
-
-  // تفعيل الاشتراك
-  currentActiveCourse.isEnrolled = true;
-  renderCourseCurriculum();
-  alert("🎉 مبروك! تم الاشتراك في الكورس بنجاح وفتح جميع المحاضرات وبنوك الأسئلة.");
-}
-
-// إغلاق شاشة الكورس والعودة للرئيسية
-function closeCourseView() {
-  document.getElementById("courseView").classList.add("hidden");
-  ["hero", "years", "courses", "features", "honors", "reviews", "instructor", "auth"].forEach(id => {
-    const el = document.getElementById(id);
-    if (el) el.classList.remove("hidden");
-  });
-  window.scrollTo({ top: 0, behavior: "smooth" });
-}
   function toggleSupportTooltip(show) {
   const tip = document.getElementById("supportTooltip");
   if (!tip) return;
