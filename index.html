@@ -238,9 +238,9 @@
           <h3 class="text-xl font-black text-theme-main" data-i18n="year1_title">الفرقة الأولى</h3>
           <p class="text-xs md:text-sm text-theme-sub font-semibold mt-2.5 leading-6" data-i18n="year1_desc">Anatomy, Physiology, Histology, Intro to Biomechanics, Biophysics.</p>
         </div>
-        <button onclick="openPackageDetails('y1full')" class="mt-6 inline-flex items-center text-xs md:text-sm font-black text-rose-400 hover:underline">
-          دخول مقررات الفرقة الأولى ←
-        </button>
+<button onclick="goToYearCourses('y1')" class="mt-6 inline-flex items-center text-xs md:text-sm font-black text-rose-400 hover:underline">
+  دخول مقررات الفرقة الأولى ←
+</button>
       </div>
 
       <!-- الفرقة الثانية -->
@@ -250,9 +250,9 @@
           <h3 class="text-xl font-black text-theme-main" data-i18n="year2_title">الفرقة الثانية</h3>
           <p class="text-xs md:text-sm text-theme-sub font-semibold mt-2.5 leading-6" data-i18n="year2_desc">Biomechanics, Electrotherapy, Hydrotherapy, Kinesiology, Pathology.</p>
         </div>
-        <button onclick="openCourseView('biomechanics')" class="mt-6 inline-flex items-center text-xs md:text-sm font-black text-rose-400 hover:underline">
-          دخول مقررات الفرقة الثانية ←
-        </button>
+<button onclick="goToYearCourses('y2')" class="mt-6 inline-flex items-center text-xs md:text-sm font-black text-rose-400 hover:underline">
+  دخول مقررات الفرقة الثانية ←
+</button>
       </div>
 
     </div>
@@ -260,40 +260,43 @@
   </div>
 </section>
 
-<!-- ============ COURSES & SLIDER SECTION (نظام سلايدر الجوهري بالأسهم) ============ -->
-<section id="courses" class="w-full max-w-[1650px] mx-auto px-4 md:px-8 py-16 border-b border-slate-800">
+<!-- ============ COURSES & SLIDER SECTION (تصميم الجوهري بأسهم جانبية ضخمة) ============ -->
+<section id="courses" class="w-full max-w-[1650px] mx-auto px-4 md:px-8 py-16 border-b border-slate-800 relative">
   
-  <!-- الهيدر مع فلاتر الفرق وأسهم السلايدر -->
+  <!-- الهيدر مع فلاتر الفرق -->
   <div class="flex flex-col md:flex-row md:items-center justify-between gap-6 mb-8">
     <div>
       <span class="text-xs md:text-sm font-extrabold uppercase tracking-widest text-rose-400">مكتبة المقررات والترم الأول</span>
       <h2 class="text-3xl md:text-5xl font-black mt-1 text-theme-main">الكورسات والباقات المتاحة</h2>
     </div>
 
-    <!-- أزرار الفلترة + أسهم السلايدر -->
-    <div class="flex items-center gap-3">
-      <div class="flex items-center gap-1.5 bg-[#0F1D2D] p-1.5 rounded-2xl border border-slate-800">
-        <button onclick="filterCourses('all')" class="filter-tab active px-4 py-2 rounded-xl text-xs font-black transition" id="flt-all">الكل</button>
-        <button onclick="filterCourses('y1')" class="filter-tab px-4 py-2 rounded-xl text-xs font-black text-slate-400 transition" id="flt-y1">سنة أولى</button>
-        <button onclick="filterCourses('y2')" class="filter-tab px-4 py-2 rounded-xl text-xs font-black text-slate-400 transition" id="flt-y2">سنة ثانية</button>
-        <button onclick="filterCourses('pkg')" class="filter-tab px-4 py-2 rounded-xl text-xs font-black text-slate-400 transition" id="flt-pkg">الباقات الموفرة</button>
-      </div>
-
-      <!-- أسهم التقليب زي الجوهري -->
-      <div class="flex items-center gap-2">
-        <button onclick="scrollSlider('right')" class="w-10 h-10 rounded-xl bg-[#0F1D2D] border border-slate-700 hover:border-brand text-rose-400 hover:text-white flex items-center justify-center font-black text-lg transition shadow-lg" title="السابق">
-          ›
-        </button>
-        <button onclick="scrollSlider('left')" class="w-10 h-10 rounded-xl bg-[#0F1D2D] border border-slate-700 hover:border-brand text-rose-400 hover:text-white flex items-center justify-center font-black text-lg transition shadow-lg" title="التالي">
-          ‹
-        </button>
-      </div>
+    <!-- أزرار الفلترة الأنيقة -->
+    <div class="flex items-center gap-1.5 bg-[#0F1D2D] p-1.5 rounded-2xl border border-slate-800">
+      <button onclick="filterCourses('all')" class="filter-tab active px-4 py-2 rounded-xl text-xs font-black transition bg-brand text-white" id="flt-all">الكل</button>
+      <button onclick="filterCourses('y1')" class="filter-tab px-4 py-2 rounded-xl text-xs font-black text-slate-400 transition" id="flt-y1">سنة أولى</button>
+      <button onclick="filterCourses('y2')" class="filter-tab px-4 py-2 rounded-xl text-xs font-black text-slate-400 transition" id="flt-y2">سنة ثانية</button>
+      <button onclick="filterCourses('pkg')" class="filter-tab px-4 py-2 rounded-xl text-xs font-black text-slate-400 transition" id="flt-pkg">الباقات الموفرة</button>
     </div>
   </div>
 
-  <!-- حاوية السلايدر الأفقي -->
-  <div id="coursesSlider" class="flex gap-6 overflow-x-auto pb-6 scroll-smooth snap-x snap-mandatory no-scrollbar" style="scrollbar-width: none;">
-    <!-- سيتم تعبئة الكروت الـ 10 + الباقات ديناميكياً بأعلى أداء عبر JS -->
+  <!-- حاوية السلايدر مع الأسهم الجانبية الكبيرة -->
+  <div class="relative group">
+    
+    <!-- السهم الأيمن الضخم -->
+    <button onclick="scrollSlider('right')" class="absolute -end-3 md:-end-5 top-1/2 -translate-y-1/2 z-20 w-12 h-16 md:w-14 md:h-24 bg-gradient-to-l from-[#5E0824] to-[#8E0E38]/90 hover:to-rose-800 text-white rounded-2xl shadow-[0_0_25px_rgba(142,14,56,0.6)] flex items-center justify-center text-3xl font-black transition transform hover:scale-105 border border-white/20" title="السابق">
+      ›
+    </button>
+
+    <!-- السهم الأيسر الضخم -->
+    <button onclick="scrollSlider('left')" class="absolute -start-3 md:-start-5 top-1/2 -translate-y-1/2 z-20 w-12 h-16 md:w-14 md:h-24 bg-gradient-to-r from-[#5E0824] to-[#8E0E38]/90 hover:to-rose-800 text-white rounded-2xl shadow-[0_0_25px_rgba(142,14,56,0.6)] flex items-center justify-center text-3xl font-black transition transform hover:scale-105 border border-white/20" title="التالي">
+      ‹
+    </button>
+
+    <!-- مسار السلايدر الأفقي -->
+    <div id="coursesSlider" class="flex gap-6 overflow-x-auto px-4 py-6 scroll-smooth snap-x snap-mandatory" style="scrollbar-width: none; -ms-overflow-style: none;">
+      <!-- سيتم تعبئة الكروت ديناميكياً -->
+    </div>
+
   </div>
 
 </section>
@@ -1223,7 +1226,7 @@ const catalogData = {
 let currentFilter = "all";
 let currentItemData = null;
 
-// دالة رسم كروت السلايدر بتصميم الجوهري
+// دالة رسم كروت السلايدر مع فلترة منضبطة 100%
 function renderCatalog() {
   const container = document.getElementById("coursesSlider");
   if (!container) return;
@@ -1231,8 +1234,15 @@ function renderCatalog() {
   const items = Object.values(catalogData).filter(item => {
     if (currentFilter === "all") return true;
     if (currentFilter === "pkg") return item.type === "package";
-    return item.year === currentFilter;
+    if (currentFilter === "y1") return item.year === "y1";
+    if (currentFilter === "y2") return item.year === "y2";
+    return true;
   });
+
+  if (items.length === 0) {
+    container.innerHTML = `<div class="w-full text-center py-12 text-slate-400 font-bold">لا توجد كورسات متاحة في هذا القسم حالياً.</div>`;
+    return;
+  }
 
   container.innerHTML = items.map(item => {
     const isPkg = item.type === "package";
@@ -1288,11 +1298,11 @@ function renderCatalog() {
   }).join("");
 }
 
-// دالة تحريك السلايدر بالأسهم مثل الجوهري
+// دالة تحريك السلايدر بالأسهم الجانبية الكبيرة
 function scrollSlider(direction) {
   const slider = document.getElementById("coursesSlider");
   if (!slider) return;
-  const scrollAmount = 380;
+  const scrollAmount = 390;
   if (direction === "left") {
     slider.scrollBy({ left: -scrollAmount, behavior: "smooth" });
   } else {
@@ -1300,7 +1310,7 @@ function scrollSlider(direction) {
   }
 }
 
-// دالة التصفية
+// دالة التصفية الصحيحة
 function filterCourses(type) {
   currentFilter = type;
   document.querySelectorAll(".filter-tab").forEach(btn => {
@@ -1314,7 +1324,17 @@ function filterCourses(type) {
   }
   renderCatalog();
 }
+// دالة الانتقال المباشر وتصفية المقررات عند الضغط من سكشن السنوات
+function goToYearCourses(yearKey) {
+  // تفعيل فلتر السنة المطلوبة (y1 أو y2)
+  filterCourses(yearKey);
 
+  // التمرير السلس إلى سكشن الكورسات
+  const coursesSection = document.getElementById("courses");
+  if (coursesSection) {
+    coursesSection.scrollIntoView({ behavior: "smooth", block: "start" });
+  }
+}
 // فتح تفاصيل الباقة المجمعة
 function openPackageDetails(pkgKey) {
   const data = catalogData[pkgKey];
@@ -1359,7 +1379,7 @@ function closePackageDetails() {
   window.scrollTo({ top: 0, behavior: "smooth" });
 }
 
-// فتح شاشة المادة المنفصلة والمحاضرات
+// فتح شاشة المادة المنفصلة والمحاضرات من catalogData
 function openCourseView(courseId) {
   const crs = catalogData[courseId] || catalogData["c_anat1"];
   currentItemData = crs;
