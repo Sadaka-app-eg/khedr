@@ -579,7 +579,26 @@
 
   </div>
 </div>
+<!-- نافذة اختبار الـ MCQ التفاعلي للدرس -->
+<div id="quizSection" class="hidden rounded-3xl bg-[#0F1D2D] border border-slate-800 p-6 space-y-5">
+  <div class="flex items-center justify-between border-b border-slate-800 pb-3">
+    <div>
+      <h3 class="text-sm md:text-base font-black text-amber-300 flex items-center gap-2">
+        <span>📝</span> اختبار تقييمي على المحاضرة
+      </h3>
+      <p class="text-xs text-slate-400">أجب عن الأسئلة التالية لاختبار فهمك واستيعابك للدرس</p>
+    </div>
+    <span id="quizScoreBadge" class="hidden text-xs font-black px-3 py-1 rounded-xl bg-emerald-950 text-emerald-400 border border-emerald-800/40"></span>
+  </div>
 
+  <!-- حاوية عرض الأسئلة -->
+  <form id="studentQuizForm" class="space-y-4">
+    <div id="quizQuestionsList" class="space-y-4"></div>
+    <button type="submit" id="submitQuizBtn" class="w-full py-3 rounded-xl bg-brand hover:bg-rose-900 text-white font-black text-xs md:text-sm shadow-xl transition">
+      تسليم الإجابات واعتماد النتيجة ✨
+    </button>
+  </form>
+</div>
 <!-- ============ FOOTER ============ -->
 <footer id="mainFooter" class="bg-slate-900 text-white border-t border-slate-800 pt-12 pb-8 px-5">
   <div class="w-full max-w-[1550px] mx-auto grid grid-cols-1 md:grid-cols-4 gap-8 mb-10 text-center md:text-start">
@@ -1228,6 +1247,9 @@ function openCourseView(courseId) {
 
   document.getElementById("courseView").classList.remove("hidden");
   window.scrollTo({ top: 0, behavior: "smooth" });
+  if (typeof window.loadFirestoreLectures === "function") {
+  window.loadFirestoreLectures(courseId);
+}
 }
 
 function closeCourseView() {
@@ -1352,6 +1374,10 @@ function selectLesson(lessonId) {
     if (pdfIframe) pdfIframe.src = "";
     if (pdfContainer) pdfContainer.classList.add("hidden");
   }
+
+  if (typeof window.renderLessonQuiz === "function") {
+  window.renderLessonQuiz(lesson.quiz);
+}
 }
 
 function handlePkgSubscribe() {
@@ -1637,6 +1663,89 @@ document.addEventListener("keydown", (e) => {
     return false;
   }
 });
+import { collection, getDocs, query, where } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-firestore.js";
+
+// دالة تحميل المحاضرات المرفوعة من المشرف للكورس المفتوح
+window.loadFirestoreLectures = async function(courseId) {
+  const listEl = document.getElementById("lessonsList");
+  if (!listEl) return;
+  listEl.innerHTML = `<div class="p-4 text-center text-xs text-slate-400">جارٍ جلب المحاضرات المنشورة...</div>`;
+
+  try {
+    const q = query(collection(db, "lectures"), where("courseId", "==", courseId));
+    const snap = await getDocs(q);
+
+    // إذا لم ينشر المشرف محاضرات بعد، نعتمد على الدروس الافتراضية
+    if (snap.empty) {
+      renderCourseCurriculum();
+      return;
+    }
+
+    const liveLessons = [];
+    snap.forEach(docSnap => {
+      liveLessons.push({ id: docSnap.id, ...docSnap.data() });
+    });
+
+    if (window.catalogData[courseId]) {
+      window.catalogData[courseId].lessons = liveLessons;
+      window.currentItemData = window.catalogData[courseId];
+    }
+
+    renderCourseCurriculum();
+  } catch (err) {
+    console.error("Error fetching live lectures:", err);
+    renderCourseCurriculum();
+  }
+};
+
+// تشغيل اختبار الـ MCQ وعرض الأسئلة
+window.renderLessonQuiz = function(quizArray) {
+  const quizSection = document.getElementById("quizSection");
+  const quizList = document.getElementById("quizQuestionsList");
+  const scoreBadge = document.getElementById("quizScoreBadge");
+  const submitBtn = document.getElementById("submitQuizBtn");
+
+  if (!quizArray || quizArray.length === 0) {
+    if (quizSection) quizSection.classList.add("hidden");
+    return;
+  }
+
+  if (scoreBadge) scoreBadge.classList.add("hidden");
+  if (submitBtn) submitBtn.disabled = false;
+
+  quizList.innerHTML = quizArray.map((q, idx) => `
+    <div class="p-4 rounded-2xl bg-[#07111D] border border-slate-800 space-y-3">
+      <h4 class="text-xs font-black text-white leading-5">${idx + 1}. ${q.question}</h4>
+      <div class="space-y-2">
+        ${q.options.map((opt, optIdx) => `
+          <label class="flex items-center gap-2 p-2 rounded-xl bg-[#0F1D2D] hover:bg-slate-800 text-xs text-slate-300 cursor-pointer border border-transparent has-[:checked]:border-amber-400 has-[:checked]:text-amber-300">
+            <input type="radio" name="question_${idx}" value="${optIdx}" required class="accent-rose-600" />
+            <span>${opt}</span>
+          </label>
+        `).join("")}
+      </div>
+    </div>
+  `).join("");
+
+  quizSection.classList.remove("hidden");
+
+  // تصحيح الاختبار عند الإرسال
+  document.getElementById("studentQuizForm").onsubmit = function(e) {
+    e.preventDefault();
+    let score = 0;
+    quizArray.forEach((q, idx) => {
+      const selected = document.querySelector(`input[name="question_${idx}"]:checked`);
+      if (selected && parseInt(selected.value, 10) === q.correctIndex) {
+        score++;
+      }
+    });
+
+    scoreBadge.textContent = `نتيجتك: ${score} من ${quizArray.length}`;
+    scoreBadge.classList.remove("hidden");
+    submitBtn.disabled = true;
+    alert(`🎉 أحسنت! نتيجتك في الاختبار هي: ${score} / ${quizArray.length}`);
+  };
+};
 </script>
 </body>
 </html>
