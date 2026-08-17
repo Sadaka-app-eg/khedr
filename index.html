@@ -4,6 +4,7 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>KHEDR & PHYSIO | منصة تعليم العلاج الطبيعي</title>
+<meta name="description" content="منصة KHEDR & PHYSIO لتعليم العلاج الطبيعي — كورسات أكاديمية، محاكاة OSCE، بنك أسئلة وتقييم حركي تفاعلي" />
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -16,7 +17,7 @@
     --brand-primary: #8E0E38;   /* عنابي / بورجوندي المنصة */
     --brand-dark:    #5E0824;
     --ink:           #0E2A38;
-    --mist:          #07111D;   /* جعل الخلفية الافتراضية كحلي داكن فاخر مثل منصة الجوهري */
+    --mist:          #07111D;   /* خلفية كحلي داكنة فاخرة */
     --mist-line:     #1E2E42;
     --dark-bg:       #07111D;
     --dark-card:     #0F1D2D;
@@ -28,8 +29,8 @@
   html[lang="en"] body, html[lang="en"] * { font-family: 'Plus Jakarta Sans', sans-serif; }
   .num-font { font-family: 'Plus Jakarta Sans', sans-serif; }
 
-  /* Base Styles - Dark Viewport by default to match El-Gohary */
-  body { background-color: var(--dark-bg); color: #EAF3F3; transition: background-color 0.3s ease, color 0.3s ease; }
+  /* Base Styles - Default 100% Zoom Natural Big Typography */
+  body { background-color: var(--dark-bg); color: #EAF3F3; transition: background-color 0.3s ease, color 0.3s ease; font-size: 16px; }
   body.light { background-color: #F8FAFC; color: #0E2A38; }
 
   /* Card & Text overrides */
@@ -50,9 +51,9 @@
   /* Scroll Progress Bar */
   #scrollProgress {
     position: fixed;
-    top: 64px;
+    top: 80px;
     right: 0;
-    height: 3px;
+    height: 4px;
     background-color: #FFB800;
     width: 0%;
     z-index: 100;
@@ -61,8 +62,8 @@
 
   /* Dark mode toggle switch */
   .theme-toggle-pill {
-    width: 54px;
-    height: 28px;
+    width: 60px;
+    height: 32px;
     border-radius: 9999px;
     background-color: var(--brand-primary);
     position: relative;
@@ -71,35 +72,35 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 0 5px;
+    padding: 0 6px;
   }
   body.light .theme-toggle-pill { background-color: #2D3748; }
   .theme-toggle-thumb {
-    width: 22px;
-    height: 22px;
+    width: 24px;
+    height: 24px;
     border-radius: 50%;
     background-color: #FFFFFF;
     position: absolute;
-    top: 3px;
-    right: 3px;
+    top: 4px;
+    right: 4px;
     transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     box-shadow: 0 2px 5px rgba(0,0,0,0.2);
   }
-  body.light .theme-toggle-thumb { transform: translateX(26px); }
-  [dir="rtl"] body.light .theme-toggle-thumb { transform: translateX(-26px); }
+  body.light .theme-toggle-thumb { transform: translateX(28px); }
+  [dir="rtl"] body.light .theme-toggle-thumb { transform: translateX(-28px); }
 
   /* Card Hover */
   .card-hover { transition: transform .25s ease, box-shadow .25s ease; }
-  .card-hover:hover { transform: translateY(-5px); box-shadow: 0 16px 35px -10px rgba(142, 14, 56, 0.3); }
+  .card-hover:hover { transform: translateY(-6px); box-shadow: 0 20px 40px -10px rgba(142, 14, 56, 0.35); }
 
-  .fade-up { opacity: 0; transform: translateY(18px); transition: opacity .6s ease, transform .6s ease; }
+  .fade-up { opacity: 0; transform: translateY(22px); transition: opacity .6s ease, transform .6s ease; }
   .fade-up.show { opacity: 1; transform: translateY(0); }
 
   [dir="rtl"] .rtl-flip { transform: scaleX(-1); }
   ::selection { background: var(--brand-primary); color: #fff; }
 
   /* Auth Tabs */
-  .auth-tab { color: #EAF3F3; opacity: .5; }
+  .auth-tab { color: #EAF3F3; opacity: .6; }
   .auth-tab.active { background: var(--dark-card); opacity: 1; color: #FF7A45; box-shadow: 0 4px 12px rgba(0,0,0,0.3); }
   body.light .auth-tab { color: #0E2A38; }
   body.light .auth-tab.active { background: #FFFFFF; color: var(--brand-primary); }
@@ -111,42 +112,38 @@
 <!-- Scroll Progress Bar -->
 <div id="scrollProgress"></div>
 
-<!-- ============ NAVBAR (مضبوط للشاشات الصغيرة والكبيرة) ============ -->
+<!-- ============ NAVBAR ============ -->
 <header class="sticky top-0 z-50 backdrop-blur-md bg-[#07111D]/95 border-b border-slate-800 transition-colors">
-  <div class="w-full max-w-[1600px] mx-auto px-4 md:px-8 h-16 flex items-center justify-between">
+  <div class="w-full max-w-[1700px] mx-auto px-6 md:px-12 h-20 flex items-center justify-between">
 
-    <!-- اليمين: زر القائمة للموبايل + أزرار الدخول للكمبيوتر فقط -->
-    <div class="flex items-center gap-3">
-      <!-- زر المنيو (يظهر فقط في الموبايل) -->
-      <button id="drawerBtn" class="md:hidden w-10 h-10 flex items-center justify-center text-amber-400 hover:text-white transition">
-        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+    <!-- اليمين: زر القائمة للموبايل + أزرار الدخول للكمبيوتر -->
+    <div class="flex items-center gap-4">
+      <button id="drawerBtn" class="md:hidden w-11 h-11 flex items-center justify-center text-amber-400 hover:text-white transition">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
       </button>
 
-      <!-- الدخول والتسجيل (مخفي في الموبايل ويظهر في الكمبيوتر فقط) -->
-      <div class="hidden md:flex items-center gap-2">
-        <a href="#auth" onclick="setAuthTab('login')" class="text-xs font-bold px-3.5 h-8 leading-8 rounded-xl border border-slate-700 text-slate-200 hover:border-brand transition whitespace-nowrap" data-i18n="nav_login">تسجيل الدخول</a>
-        <a href="#auth" onclick="setAuthTab('register')" class="text-xs font-bold text-white px-4 h-8 leading-8 rounded-xl bg-brand hover:bg-rose-900 transition shadow-md whitespace-nowrap" data-i18n="auth_tab_register">حساب جديد</a>
+      <div class="hidden md:flex items-center gap-3">
+        <a href="#auth" onclick="setAuthTab('login')" class="text-sm font-extrabold px-5 h-11 leading-[44px] rounded-2xl border border-slate-700 text-slate-200 hover:border-brand transition whitespace-nowrap" data-i18n="nav_login">تسجيل الدخول</a>
+        <a href="#auth" onclick="setAuthTab('register')" class="text-sm font-extrabold text-white px-6 h-11 leading-[44px] rounded-2xl bg-brand hover:bg-rose-900 transition shadow-lg whitespace-nowrap" data-i18n="auth_tab_register">حساب جديد</a>
       </div>
     </div>
 
-    <!-- المنتصف: اللوجو المفرغ logo.jpg -->
-    <a href="#" onclick="window.scrollTo({top: 0, behavior: 'smooth'}); return false;" class="flex items-center gap-2">
-      <img src="logo.png" alt="KHEDR PHYSIO" class="h-9 md:h-11 w-auto object-contain" onerror="this.src='logo.png'" />
-      <span class="hidden lg:inline font-black text-sm md:text-base text-white" data-i18n="brand">KHEDR & PHYSIO</span>
+    <!-- المنتصف: اللوجو المفرغ logo.jpg بحجم مكبر -->
+    <a href="#" onclick="window.scrollTo({top: 0, behavior: 'smooth'}); return false;" class="flex items-center gap-3">
+      <img src="logo.jpg" alt="KHEDR PHYSIO" class="h-11 md:h-14 w-auto object-contain drop-shadow" onerror="this.src='logo.png'" />
+      <span class="hidden lg:inline font-black text-base md:text-xl text-white tracking-wide" data-i18n="brand">KHEDR & PHYSIO</span>
     </a>
 
     <!-- الشمال: الثيم وتغيير اللغة -->
-    <div class="flex items-center gap-2">
-      <!-- زر الثيم -->
+    <div class="flex items-center gap-3">
       <div id="themeBtn" class="theme-toggle-pill" title="Toggle Dark/Light Mode">
-        <span class="text-[10px] z-10">☀️</span>
-        <span class="text-[10px] z-10">🌙</span>
+        <span class="text-xs z-10">☀️</span>
+        <span class="text-xs z-10">🌙</span>
         <div class="theme-toggle-thumb"></div>
       </div>
 
-      <!-- زر اللغة -->
-      <button id="langBtn" class="text-xs font-bold px-2.5 h-7 rounded-full border border-slate-700 text-slate-200 flex items-center gap-1 hover:border-brand transition">
-        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.7 2.5 15.3 0 18M12 3c-2.5 2.7-2.5 15.3 0 18"/></svg>
+      <button id="langBtn" class="text-xs md:text-sm font-extrabold px-3.5 h-9 rounded-full border border-slate-700 text-slate-200 flex items-center gap-1.5 hover:border-brand transition">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.7 2.5 15.3 0 18M12 3c-2.5 2.7-2.5 15.3 0 18"/></svg>
         <span id="langLabel">EN</span>
       </button>
     </div>
@@ -154,123 +151,123 @@
   </div>
 
   <!-- Mobile Drawer Menu -->
-  <div id="drawer" class="hidden md:hidden border-t border-slate-800 px-5 py-4 flex flex-col gap-3 text-sm font-bold bg-[#07111D] text-slate-200">
+  <div id="drawer" class="hidden md:hidden border-t border-slate-800 px-6 py-5 flex flex-col gap-4 text-base font-bold bg-[#07111D] text-slate-200">
     <a href="#hero" onclick="toggleDrawer()" data-i18n="nav_home">الرئيسية</a>
     <a href="#years" onclick="toggleDrawer()" data-i18n="nav_years">الفرق الدراسية</a>
     <a href="#courses" onclick="toggleDrawer()" data-i18n="nav_courses">الكورسات والباقات</a>
     <a href="#features" onclick="toggleDrawer()" data-i18n="nav_features">مميزات المنصة</a>
     <a href="#honors" onclick="toggleDrawer()" data-i18n="nav_honors">لوحة الشرف</a>
     <a href="#instructor" onclick="toggleDrawer()" data-i18n="nav_instructor">عن الشارح</a>
-    <div class="pt-3 border-t border-slate-800 flex gap-2">
-      <a href="#auth" onclick="toggleDrawer(); setAuthTab('login')" class="w-1/2 text-center py-2 rounded-xl border border-slate-700 text-xs">تسجيل الدخول</a>
-      <a href="#auth" onclick="toggleDrawer(); setAuthTab('register')" class="w-1/2 text-center py-2 rounded-xl bg-brand text-white text-xs">حساب جديد</a>
+    <div class="pt-3 border-t border-slate-800 flex gap-3">
+      <a href="#auth" onclick="toggleDrawer(); setAuthTab('login')" class="w-1/2 text-center py-2.5 rounded-xl border border-slate-700 text-sm">تسجيل الدخول</a>
+      <a href="#auth" onclick="toggleDrawer(); setAuthTab('register')" class="w-1/2 text-center py-2.5 rounded-xl bg-brand text-white text-sm">حساب جديد</a>
     </div>
   </div>
 </header>
 
-<!-- ============ HERO SECTION ============ -->
-<section id="hero" class="w-full max-w-[1600px] mx-auto px-3 md:px-6 pt-2 pb-6">
-  <div class="relative overflow-hidden rounded-3xl md:rounded-[2.5rem] bg-gradient-to-b md:bg-gradient-to-l from-[#5E0824] via-[#7A0B30] to-[#4A051B] min-h-[560px] md:min-h-[620px] flex flex-col md:flex-row items-center justify-between px-4 sm:px-8 md:px-16 pt-8 pb-0 shadow-2xl border border-white/5">
+<!-- ============ HERO SECTION (مكّبر بحجم ضخم فخم 100% Zoom) ============ -->
+<section id="hero" class="w-full max-w-[1700px] mx-auto px-4 sm:px-8 pt-4 pb-10">
+  <div class="relative overflow-hidden rounded-[2.5rem] bg-gradient-to-b md:bg-gradient-to-l from-[#5E0824] via-[#7A0B30] to-[#4A051B] min-h-[640px] lg:min-h-[720px] flex flex-col md:flex-row items-center justify-between px-8 md:px-20 py-12 shadow-2xl border border-white/10">
     
-    <!-- النصوص والزرار (أعلى في الموبايل، يمين في الكمبيوتر) -->
-    <div class="w-full md:w-7/12 text-center md:text-right text-white space-y-4 md:space-y-6 z-10">
-      <span class="inline-block text-xs md:text-base font-black text-rose-300 tracking-wide" data-i18n="hero_eyebrow">
-        محمود خضر — طالب ومحاضر بالفرقة الثالثة علاج طبيعي
+    <!-- النصوص والزرار -->
+    <div class="w-full md:w-7/12 text-center md:text-right text-white space-y-6 md:space-y-8 z-10">
+      <span class="inline-block text-sm md:text-lg font-black text-rose-300 tracking-wide" data-i18n="hero_eyebrow">
+        محمود خضر — محاضر ومدرس للمواد الطبية بكلية العلاج الطبيعي
       </span>
 
-      <h1 class="text-3xl sm:text-5xl lg:text-6xl font-black leading-tight tracking-tight" data-i18n="hero_title">
+      <h1 class="text-4xl sm:text-6xl lg:text-7xl font-black leading-[1.16] tracking-tight" data-i18n="hero_title">
         رحلتك بتبدأ مع <span class="text-amber-300">خِـضـر</span><br/>
         خُد أول خطوة.. وأنت واثق
       </h1>
 
-      <p class="text-xs md:text-base font-semibold opacity-90 leading-6 max-w-xl mx-auto md:mx-0 text-rose-100" data-i18n="hero_sub">
+      <p class="text-sm md:text-xl font-semibold opacity-90 leading-8 max-w-2xl mx-auto md:mx-0 text-rose-100" data-i18n="hero_sub">
         تجربة تعليمية متكاملة تستحق تبدأ بيها لأن كل تفصيلة مصممة علشانك
       </p>
 
-      <div class="pt-2">
-        <a href="#auth" class="inline-block bg-white text-[#7A0B30] font-black text-xs md:text-sm px-8 py-3.5 rounded-2xl shadow-xl hover:bg-rose-50 transition transform hover:scale-105" data-i18n="hero_cta1">
+      <div class="pt-4">
+        <a href="#auth" class="inline-block bg-white text-[#7A0B30] font-black text-sm md:text-lg px-10 py-4.5 rounded-2xl shadow-2xl hover:bg-rose-50 transition transform hover:scale-105" data-i18n="hero_cta1">
           سجل وخد أول خطوة
         </a>
       </div>
 
-      <div class="pt-4 border-t border-white/10 text-xs font-bold opacity-75 hidden md:block" data-i18n="hero_footer_note">
+      <div class="pt-6 border-t border-white/15 text-xs md:text-sm font-bold opacity-80 hidden md:block" data-i18n="hero_footer_note">
         منصة خِضر: أفضل منصة تعليمية مخصصة لطلاب علاج طبيعي
       </div>
     </div>
 
-    <!-- صورة الشارح بدون إطار ممتدة لأسفل الكارت -->
-    <div class="w-full md:w-5/12 relative flex justify-center items-end mt-6 md:mt-0 z-0">
-      <img src="khedr.png" alt="محمود خضر" class="max-h-[360px] sm:max-h-[440px] md:max-h-[560px] w-auto object-contain drop-shadow-[0_20px_30px_rgba(0,0,0,0.8)]" onerror="this.src='khedr.png'" />
+    <!-- صورة محمود خضر المفرغة بحجم ضخم -->
+    <div class="w-full md:w-5/12 relative flex justify-center items-end mt-8 md:mt-0 z-0">
+      <img src="khedr.jpg" alt="محمود خضر" class="max-h-[440px] sm:max-h-[580px] lg:max-h-[660px] w-auto object-contain drop-shadow-[0_25px_35px_rgba(0,0,0,0.85)] scale-105" onerror="this.src='khedr.png'" />
     </div>
 
   </div>
 </section>
 
-<!-- ============ ACADEMIC YEARS (مثل تصميم الجوهري: الكلام يمين والكروت شمال) ============ -->
-<section id="years" class="w-full max-w-[1600px] mx-auto px-5 md:px-8 py-16 border-b border-slate-800">
-  <div class="grid lg:grid-cols-12 gap-8 items-center">
+<!-- ============ ACADEMIC YEARS SECTION ============ -->
+<section id="years" class="w-full max-w-[1700px] mx-auto px-6 md:px-12 py-20 border-b border-slate-800">
+  <div class="grid lg:grid-cols-12 gap-10 items-center">
     
-    <!-- العنوان والزرار على اليمين (مثل الجوهري) -->
-    <div class="lg:col-span-4 text-right space-y-4">
-      <span class="text-xs font-extrabold uppercase tracking-widest text-rose-400" data-i18n="years_eyebrow">المسارات الجامعية</span>
-      <h2 class="text-3xl md:text-5xl font-black text-theme-main leading-tight" data-i18n="years_title">السنوات الدراسية</h2>
-      <p class="text-xs md:text-sm font-semibold text-theme-sub leading-6" data-i18n="years_sub">
+    <!-- العنوان والزرار -->
+    <div class="lg:col-span-4 text-right space-y-5">
+      <span class="text-xs md:text-sm font-extrabold uppercase tracking-widest text-rose-400" data-i18n="years_eyebrow">المسارات الجامعية</span>
+      <h2 class="text-3xl md:text-5xl lg:text-6xl font-black text-theme-main leading-tight" data-i18n="years_title">السنوات الدراسية</h2>
+      <p class="text-sm md:text-lg font-semibold text-theme-sub leading-7" data-i18n="years_sub">
         احجز اشتراكك دلوقتي وابدأ مذاكرة مواد العلاج الطبيعي على موبايلك، التابلت أو اللابتوب الخاص بيك. المنصة متاحة على مدار الساعة.
       </p>
-      <div class="pt-2">
-        <a href="#auth" class="inline-block bg-brand hover:bg-rose-900 text-white font-black text-xs md:text-sm px-8 py-3.5 rounded-2xl shadow-lg transition">
+      <div class="pt-3">
+        <a href="#auth" class="inline-block bg-brand hover:bg-rose-900 text-white font-black text-sm md:text-base px-9 py-4 rounded-2xl shadow-xl transition">
           انشئ حسابك الآن
         </a>
       </div>
     </div>
 
-    <!-- الكروت الـ 4 جنب بعض على الشمال ممتدة بعرض الشاشة -->
-    <div class="lg:col-span-8 grid sm:grid-cols-2 xl:grid-cols-4 gap-4">
+    <!-- كروت الفرق الدراسية الممتدة الأنيقة -->
+    <div class="lg:col-span-8 grid sm:grid-cols-2 xl:grid-cols-4 gap-6">
       
       <!-- الفرقة 1 -->
-      <div class="fade-up card-hover rounded-2xl p-5 border border-slate-800 bg-card-theme flex flex-col justify-between shadow-md">
+      <div class="fade-up card-hover rounded-3xl p-7 border border-slate-800 bg-card-theme flex flex-col justify-between shadow-xl">
         <div>
-          <div class="w-10 h-10 rounded-xl flex items-center justify-center font-black text-lg mb-3 bg-brand text-white shadow-md">1</div>
-          <h3 class="text-sm font-black text-theme-main" data-i18n="year1_title">الفرقة الأولى</h3>
-          <p class="text-[11px] text-theme-sub font-semibold mt-1.5 leading-5" data-i18n="year1_desc">Anatomy, Physiology, Histology, Intro to Biomechanics.</p>
+          <div class="w-14 h-14 rounded-2xl flex items-center justify-center font-black text-2xl mb-4 bg-brand text-white shadow-lg">1</div>
+          <h3 class="text-lg md:text-xl font-black text-theme-main" data-i18n="year1_title">الفرقة الأولى</h3>
+          <p class="text-xs md:text-sm text-theme-sub font-semibold mt-2.5 leading-6" data-i18n="year1_desc">Anatomy, Physiology, Histology, Intro to Biomechanics.</p>
         </div>
-        <a href="#courses" class="mt-5 inline-flex items-center text-[11px] font-bold text-rose-400 hover:underline" data-i18n="btn_enter_year">
+        <a href="#courses" class="mt-6 inline-flex items-center text-xs md:text-sm font-black text-rose-400 hover:underline" data-i18n="btn_enter_year">
           دخول جميع الكورسات ←
         </a>
       </div>
 
       <!-- الفرقة 2 -->
-      <div class="fade-up card-hover rounded-2xl p-5 border border-slate-800 bg-card-theme flex flex-col justify-between shadow-md">
+      <div class="fade-up card-hover rounded-3xl p-7 border border-slate-800 bg-card-theme flex flex-col justify-between shadow-xl">
         <div>
-          <div class="w-10 h-10 rounded-xl flex items-center justify-center font-black text-lg mb-3 bg-brand text-white shadow-md">2</div>
-          <h3 class="text-sm font-black text-theme-main" data-i18n="year2_title">الفرقة الثانية</h3>
-          <p class="text-[11px] text-theme-sub font-semibold mt-1.5 leading-5" data-i18n="year2_desc">Biomechanics, Electrotherapy, Hydrotherapy, Kinesiology.</p>
+          <div class="w-14 h-14 rounded-2xl flex items-center justify-center font-black text-2xl mb-4 bg-brand text-white shadow-lg">2</div>
+          <h3 class="text-lg md:text-xl font-black text-theme-main" data-i18n="year2_title">الفرقة الثانية</h3>
+          <p class="text-xs md:text-sm text-theme-sub font-semibold mt-2.5 leading-6" data-i18n="year2_desc">Biomechanics, Electrotherapy, Hydrotherapy, Kinesiology.</p>
         </div>
-        <a href="#courses" class="mt-5 inline-flex items-center text-[11px] font-bold text-rose-400 hover:underline" data-i18n="btn_enter_year">
+        <a href="#courses" class="mt-6 inline-flex items-center text-xs md:text-sm font-black text-rose-400 hover:underline" data-i18n="btn_enter_year">
           دخول جميع الكورسات ←
         </a>
       </div>
 
       <!-- الفرقة 3 -->
-      <div class="fade-up card-hover rounded-2xl p-5 border border-slate-800 bg-card-theme flex flex-col justify-between shadow-md">
+      <div class="fade-up card-hover rounded-3xl p-7 border border-slate-800 bg-card-theme flex flex-col justify-between shadow-xl">
         <div>
-          <div class="w-10 h-10 rounded-xl flex items-center justify-center font-black text-lg mb-3 bg-brand text-white shadow-md">3</div>
-          <h3 class="text-sm font-black text-theme-main" data-i18n="year3_title">الفرقة الثالثة</h3>
-          <p class="text-[11px] text-theme-sub font-semibold mt-1.5 leading-5" data-i18n="year3_desc">Orthopedic PT, Neurological PT, Cardiopulmonary PT.</p>
+          <div class="w-14 h-14 rounded-2xl flex items-center justify-center font-black text-2xl mb-4 bg-brand text-white shadow-lg">3</div>
+          <h3 class="text-lg md:text-xl font-black text-theme-main" data-i18n="year3_title">الفرقة الثالثة</h3>
+          <p class="text-xs md:text-sm text-theme-sub font-semibold mt-2.5 leading-6" data-i18n="year3_desc">Orthopedic PT, Neurological PT, Cardiopulmonary PT.</p>
         </div>
-        <a href="#courses" class="mt-5 inline-flex items-center text-[11px] font-bold text-rose-400 hover:underline" data-i18n="btn_enter_year">
+        <a href="#courses" class="mt-6 inline-flex items-center text-xs md:text-sm font-black text-rose-400 hover:underline" data-i18n="btn_enter_year">
           دخول جميع الكورسات ←
         </a>
       </div>
 
       <!-- الفرقة 4 -->
-      <div class="fade-up card-hover rounded-2xl p-5 border border-slate-800 bg-card-theme flex flex-col justify-between shadow-md">
+      <div class="fade-up card-hover rounded-3xl p-7 border border-slate-800 bg-card-theme flex flex-col justify-between shadow-xl">
         <div>
-          <div class="w-10 h-10 rounded-xl flex items-center justify-center font-black text-lg mb-3 bg-brand text-white shadow-md">4</div>
-          <h3 class="text-sm font-black text-theme-main" data-i18n="year4_title">الفرقة الرابعة</h3>
-          <p class="text-[11px] text-theme-sub font-semibold mt-1.5 leading-5" data-i18n="year4_desc">Pediatric PT, Geriatrics, Sports Injuries, Clinical Internship.</p>
+          <div class="w-14 h-14 rounded-2xl flex items-center justify-center font-black text-2xl mb-4 bg-brand text-white shadow-lg">4</div>
+          <h3 class="text-lg md:text-xl font-black text-theme-main" data-i18n="year4_title">الفرقة الرابعة</h3>
+          <p class="text-xs md:text-sm text-theme-sub font-semibold mt-2.5 leading-6" data-i18n="year4_desc">Pediatric PT, Geriatrics, Sports Injuries, Clinical Internship.</p>
         </div>
-        <a href="#courses" class="mt-5 inline-flex items-center text-[11px] font-bold text-rose-400 hover:underline" data-i18n="btn_enter_year">
+        <a href="#courses" class="mt-6 inline-flex items-center text-xs md:text-sm font-black text-rose-400 hover:underline" data-i18n="btn_enter_year">
           دخول جميع الكورسات ←
         </a>
       </div>
@@ -281,51 +278,51 @@
 </section>
 
 <!-- ============ COURSES SECTION ============ -->
-<section id="courses" class="w-full max-w-[1600px] mx-auto px-4 md:px-8 py-12 border-b border-slate-800">
-  <div class="flex items-center justify-between mb-8">
+<section id="courses" class="w-full max-w-[1700px] mx-auto px-6 md:px-12 py-20 border-b border-slate-800">
+  <div class="flex items-center justify-between mb-12">
     <div>
-      <span class="text-xs font-extrabold uppercase tracking-widest text-rose-400">مكتبة الكورسات</span>
-      <h2 class="text-2xl md:text-3xl font-black mt-1 text-theme-main">الكورسات المُقترحة</h2>
+      <span class="text-xs md:text-sm font-extrabold uppercase tracking-widest text-rose-400" data-i18n="courses_eyebrow">مكتبة الكورسات والباقات</span>
+      <h2 class="text-3xl md:text-5xl font-black mt-2 text-theme-main" data-i18n="courses_title">الكورسات والمقررات المُقترحة</h2>
     </div>
-    <span class="px-4 py-1 rounded-full text-xs font-black bg-brand text-white shadow-md">الكل</span>
+    <span class="px-5 py-2 rounded-full text-xs md:text-sm font-black bg-brand text-white shadow-lg">الكل</span>
   </div>
 
-  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
 
     <!-- كورس 1: Anatomy 1 -->
-    <article class="fade-up card-hover rounded-3xl overflow-hidden border border-slate-800 bg-card-theme p-3.5 shadow-xl flex flex-col justify-between">
-      <div class="rounded-2xl overflow-hidden relative aspect-video flex items-center justify-center bg-gradient-to-r from-emerald-900 to-teal-950">
-        <span class="absolute top-2.5 start-2.5 text-[10px] font-black bg-emerald-500 text-white px-2.5 py-1 rounded-md">سنة أولى • ترم أول</span>
-        <div class="text-center p-3 text-white">
-          <span class="text-[10px] font-bold opacity-75">مقرر أكاديمي</span>
-          <h3 class="text-lg font-black mt-0.5">ANATOMY 1</h3>
-          <span class="text-[10px] text-amber-300 font-bold block mt-1">10-12 Lectures • 6-8 Hours</span>
+    <article class="fade-up card-hover rounded-3xl overflow-hidden border border-slate-800 bg-card-theme p-5 shadow-2xl flex flex-col justify-between">
+      <div class="rounded-2xl overflow-hidden relative h-52 md:h-60 flex items-center justify-center bg-gradient-to-r from-emerald-900 to-teal-950">
+        <span class="absolute top-3.5 start-3.5 text-xs font-black bg-emerald-500 text-white px-3 py-1.5 rounded-lg">سنة أولى • ترم أول</span>
+        <div class="text-center p-4 text-white">
+          <span class="text-xs font-bold opacity-80">مقرر أكاديمي</span>
+          <h3 class="text-2xl font-black mt-1">ANATOMY 1</h3>
+          <span class="text-xs text-amber-300 font-bold block mt-2">10-12 Lectures • 6-8 Hours</span>
         </div>
       </div>
 
-      <div class="p-4 flex-1 flex flex-col justify-between space-y-4">
+      <div class="p-4 flex-1 flex flex-col justify-between space-y-6">
         <div>
-          <span class="text-[11px] font-black text-rose-400 block mb-1">الفرقة الأولى • كورس متكامل</span>
-          <h4 class="font-extrabold text-sm text-theme-main">كورس التشريح العام والأطراف العلوية 🩻</h4>
+          <span class="text-xs md:text-sm font-black text-rose-400 block mb-1">الفرقة الأولى • كورس متكامل</span>
+          <h4 class="font-extrabold text-base md:text-lg text-theme-main">كورس التشريح العام والأطراف العلوية 🩻</h4>
           
-          <div class="grid grid-cols-2 gap-2 mt-3 pt-3 border-t border-slate-800 text-[10px] text-slate-300 font-semibold">
+          <div class="grid grid-cols-2 gap-3 mt-4 pt-4 border-t border-slate-800 text-xs text-slate-300 font-semibold">
             <span>🎥 محاضرات مسجلة عالية الدقة</span>
             <span>🔴 لايف أسبوعي للمراجعة</span>
             <span>📚 ملخصات وشيتات PDF</span>
             <span>❓ بنك أسئلة على كل درس</span>
           </div>
 
-          <div class="flex items-baseline gap-2 mt-4">
-            <span class="text-lg font-black text-rose-400 num-font">599 <span class="text-xs font-bold">ج.م</span></span>
-            <span class="text-xs font-bold text-slate-400 line-through num-font">799.00</span>
+          <div class="flex items-baseline gap-3 mt-6">
+            <span class="text-2xl md:text-3xl font-black text-rose-400 num-font">599 <span class="text-sm font-bold">ج.م</span></span>
+            <span class="text-sm font-bold text-slate-400 line-through num-font">799.00</span>
           </div>
         </div>
 
-        <div class="space-y-2 pt-2">
-          <button onclick="openCourseView('biomechanics')" class="w-full py-2.5 rounded-xl border border-brand text-rose-300 font-black text-xs hover:bg-brand/20 transition">
+        <div class="space-y-3 pt-2">
+          <button onclick="openCourseView('biomechanics')" class="w-full py-3.5 rounded-2xl border border-brand text-rose-300 font-black text-xs md:text-sm hover:bg-brand/20 transition">
             الدخول للكورس
           </button>
-          <button onclick="openCourseView('biomechanics')" class="w-full py-2.5 rounded-xl bg-brand hover:bg-rose-900 text-white font-black text-xs shadow-lg transition">
+          <button onclick="openCourseView('biomechanics')" class="w-full py-3.5 rounded-2xl bg-brand hover:bg-rose-900 text-white font-black text-xs md:text-sm shadow-xl transition">
             الإشتراك في الكورس !
           </button>
         </div>
@@ -333,39 +330,39 @@
     </article>
 
     <!-- كورس 2: Biomechanics 1 -->
-    <article class="fade-up card-hover rounded-3xl overflow-hidden border border-slate-800 bg-card-theme p-3.5 shadow-xl flex flex-col justify-between">
-      <div class="rounded-2xl overflow-hidden relative aspect-video flex items-center justify-center bg-gradient-to-r from-amber-900 to-rose-950">
-        <span class="absolute top-2.5 start-2.5 text-[10px] font-black bg-amber-500 text-slate-900 px-2.5 py-1 rounded-md">سنة أولى • ترم ثاني</span>
-        <div class="text-center p-3 text-white">
-          <span class="text-[10px] font-bold opacity-75">مقرر أكاديمي</span>
-          <h3 class="text-lg font-black mt-0.5">BIOMECHANICS 1</h3>
-          <span class="text-[10px] text-amber-300 font-bold block mt-1">10-12 Lectures • 8 Hours</span>
+    <article class="fade-up card-hover rounded-3xl overflow-hidden border border-slate-800 bg-card-theme p-5 shadow-2xl flex flex-col justify-between">
+      <div class="rounded-2xl overflow-hidden relative h-52 md:h-60 flex items-center justify-center bg-gradient-to-r from-amber-900 to-rose-950">
+        <span class="absolute top-3.5 start-3.5 text-xs font-black bg-amber-500 text-slate-900 px-3 py-1.5 rounded-lg">سنة أولى • ترم ثاني</span>
+        <div class="text-center p-4 text-white">
+          <span class="text-xs font-bold opacity-80">مقرر أكاديمي</span>
+          <h3 class="text-2xl font-black mt-1">BIOMECHANICS 1</h3>
+          <span class="text-xs text-amber-300 font-bold block mt-2">10-12 Lectures • 8 Hours</span>
         </div>
       </div>
 
-      <div class="p-4 flex-1 flex flex-col justify-between space-y-4">
+      <div class="p-4 flex-1 flex flex-col justify-between space-y-6">
         <div>
-          <span class="text-[11px] font-black text-rose-400 block mb-1">الفرقة الأولى • حركية المفاصل</span>
-          <h4 class="font-extrabold text-sm text-theme-main">مقدمة الميكانيكا الحيوية وعزوم المفاصل 🦴</h4>
+          <span class="text-xs md:text-sm font-black text-rose-400 block mb-1">الفرقة الأولى • حركية المفاصل</span>
+          <h4 class="font-extrabold text-base md:text-lg text-theme-main">مقدمة الميكانيكا الحيوية وعزوم المفاصل 🦴</h4>
           
-          <div class="grid grid-cols-2 gap-2 mt-3 pt-3 border-t border-slate-800 text-[10px] text-slate-300 font-semibold">
+          <div class="grid grid-cols-2 gap-3 mt-4 pt-4 border-t border-slate-800 text-xs text-slate-300 font-semibold">
             <span>🎥 تحليل القوى والعزوم</span>
             <span>🔴 محاكاة مسائل العملي</span>
             <span>📚 تفريغ القوانين PDF</span>
             <span>❓ بنك أسئلة MCQ</span>
           </div>
 
-          <div class="flex items-baseline gap-2 mt-4">
-            <span class="text-lg font-black text-rose-400 num-font">599 <span class="text-xs font-bold">ج.م</span></span>
-            <span class="text-xs font-bold text-slate-400 line-through num-font">799.00</span>
+          <div class="flex items-baseline gap-3 mt-6">
+            <span class="text-2xl md:text-3xl font-black text-rose-400 num-font">599 <span class="text-sm font-bold">ج.م</span></span>
+            <span class="text-sm font-bold text-slate-400 line-through num-font">799.00</span>
           </div>
         </div>
 
-        <div class="space-y-2 pt-2">
-          <button onclick="openCourseView('biomechanics')" class="w-full py-2.5 rounded-xl border border-brand text-rose-300 font-black text-xs hover:bg-brand/20 transition">
+        <div class="space-y-3 pt-2">
+          <button onclick="openCourseView('biomechanics')" class="w-full py-3.5 rounded-2xl border border-brand text-rose-300 font-black text-xs md:text-sm hover:bg-brand/20 transition">
             الدخول للكورس
           </button>
-          <button onclick="openCourseView('biomechanics')" class="w-full py-2.5 rounded-xl bg-brand hover:bg-rose-900 text-white font-black text-xs shadow-lg transition">
+          <button onclick="openCourseView('biomechanics')" class="w-full py-3.5 rounded-2xl bg-brand hover:bg-rose-900 text-white font-black text-xs md:text-sm shadow-xl transition">
             الإشتراك في الكورس !
           </button>
         </div>
@@ -373,38 +370,38 @@
     </article>
 
     <!-- كورس 3: Full Year Pass -->
-    <article class="fade-up card-hover rounded-3xl overflow-hidden border-2 border-brand bg-card-theme p-3.5 shadow-xl flex flex-col justify-between relative">
-      <div class="rounded-2xl overflow-hidden relative aspect-video flex items-center justify-center bg-gradient-to-r from-rose-900 to-indigo-950">
-        <span class="absolute top-2.5 start-2.5 text-[10px] font-black bg-amber-400 text-slate-900 px-2.5 py-1 rounded-md">وفر 600 ج 🔥</span>
-        <div class="text-center p-3 text-white">
-          <span class="text-[10px] font-bold opacity-75">Full Year Pass</span>
-          <h3 class="text-lg font-black mt-0.5">سنة أولى علاج طبيعي كاملة</h3>
+    <article class="fade-up card-hover rounded-3xl overflow-hidden border-2 border-brand bg-card-theme p-5 shadow-2xl flex flex-col justify-between relative">
+      <div class="rounded-2xl overflow-hidden relative h-52 md:h-60 flex items-center justify-center bg-gradient-to-r from-rose-900 to-indigo-950">
+        <span class="absolute top-3.5 start-3.5 text-xs font-black bg-amber-400 text-slate-900 px-3 py-1.5 rounded-lg">وفر 600 ج 🔥</span>
+        <div class="text-center p-4 text-white">
+          <span class="text-xs font-bold opacity-80">Full Year Pass</span>
+          <h3 class="text-2xl font-black mt-1">سنة أولى علاج طبيعي كاملة</h3>
         </div>
       </div>
 
-      <div class="p-4 flex-1 flex flex-col justify-between space-y-4">
+      <div class="p-4 flex-1 flex flex-col justify-between space-y-6">
         <div>
-          <span class="text-[11px] font-black text-amber-400 block mb-1">الترم الأول + الترم الثاني (9 مواد)</span>
-          <h4 class="font-extrabold text-sm text-theme-main">تغطية شاملة لكل مواد وامتحانات الفرقة الأولى</h4>
+          <span class="text-xs md:text-sm font-black text-amber-400 block mb-1">الترم الأول + الترم الثاني (9 مواد)</span>
+          <h4 class="font-extrabold text-base md:text-lg text-theme-main">تغطية شاملة لكل مواد وامتحانات الفرقة الأولى</h4>
           
-          <div class="grid grid-cols-2 gap-2 mt-3 pt-3 border-t border-slate-800 text-[10px] text-slate-300 font-semibold">
+          <div class="grid grid-cols-2 gap-3 mt-4 pt-4 border-t border-slate-800 text-xs text-slate-300 font-semibold">
             <span>🎥 9 مواد أكاديمية</span>
             <span>🔴 ورش عملي وتدريب OSCE</span>
             <span>📚 مذكرات وشيتات كاملة</span>
             <span>💬 جروب متابعة خاص</span>
           </div>
 
-          <div class="flex items-baseline gap-2 mt-4">
-            <span class="text-lg font-black text-rose-400 num-font">2,799 <span class="text-xs font-bold">ج.م</span></span>
-            <span class="text-xs font-bold text-slate-400 line-through num-font">3,398.00</span>
+          <div class="flex items-baseline gap-3 mt-6">
+            <span class="text-2xl md:text-3xl font-black text-rose-400 num-font">2,799 <span class="text-sm font-bold">ج.م</span></span>
+            <span class="text-sm font-bold text-slate-400 line-through num-font">3,398.00</span>
           </div>
         </div>
 
-        <div class="space-y-2 pt-2">
-          <button onclick="openPackageDetails('y1full')" class="w-full py-2.5 rounded-xl border border-brand text-rose-300 font-black text-xs hover:bg-brand/20 transition">
+        <div class="space-y-3 pt-2">
+          <button onclick="openPackageDetails('y1full')" class="w-full py-3.5 rounded-2xl border border-brand text-rose-300 font-black text-xs md:text-sm hover:bg-brand/20 transition">
             الدخول للكورس
           </button>
-          <button onclick="openPackageDetails('y1full')" class="w-full py-2.5 rounded-xl bg-brand hover:bg-rose-900 text-white font-black text-xs shadow-lg transition">
+          <button onclick="openPackageDetails('y1full')" class="w-full py-3.5 rounded-2xl bg-brand hover:bg-rose-900 text-white font-black text-xs md:text-sm shadow-xl transition">
             الإشتراك في الكورس !
           </button>
         </div>
@@ -415,87 +412,91 @@
 </section>
 
 <!-- ============ PLATFORM FEATURES SECTION ============ -->
-<section id="features" class="w-full max-w-[1550px] mx-auto px-5 md:px-8 py-16 border-b border-slate-800">
-  <div class="text-center max-w-2xl mx-auto mb-12 fade-up">
-    <span class="text-xs font-extrabold uppercase tracking-widest text-rose-400" data-i18n="feat_eyebrow">لماذا منصتنا؟</span>
-    <h2 class="text-2xl md:text-3xl font-black mt-2 text-theme-main" data-i18n="feat_title">إيه اللي هتلاقيه على المنصة؟</h2>
+<section id="features" class="w-full max-w-[1700px] mx-auto px-6 md:px-12 py-20 border-b border-slate-800">
+  <div class="text-center max-w-2xl mx-auto mb-14 fade-up">
+    <span class="text-xs md:text-sm font-extrabold uppercase tracking-widest text-rose-400" data-i18n="feat_eyebrow">لماذا منصتنا؟</span>
+    <h2 class="text-3xl md:text-5xl font-black mt-2 text-theme-main" data-i18n="feat_title">إيه اللي هتلاقيه على المنصة؟</h2>
   </div>
 
-  <div class="grid sm:grid-cols-3 gap-6 max-w-5xl mx-auto">
-    <div class="fade-up card-hover rounded-3xl border border-slate-800 bg-card-theme p-6 text-center shadow-sm">
-      <div class="w-14 h-14 rounded-2xl bg-rose-950/50 text-rose-400 text-2xl flex items-center justify-center mx-auto mb-4">💡</div>
-      <h3 class="font-black text-sm text-theme-main" data-i18n="f1_title">شرح مبسط ومركز</h3>
-      <p class="text-xs text-theme-sub font-semibold mt-2 leading-6" data-i18n="f1_desc">شرح النظريات والمفاهيم الطبية بطريقة الفهم الإكلينيكي بعيد عن التعقيد الأكاديمي.</p>
+  <div class="grid sm:grid-cols-3 gap-8 max-w-6xl mx-auto">
+    <div class="fade-up card-hover rounded-3xl border border-slate-800 bg-card-theme p-8 text-center shadow-xl">
+      <div class="w-16 h-16 rounded-2xl bg-rose-950/50 text-rose-400 text-3xl flex items-center justify-center mx-auto mb-5">💡</div>
+      <h3 class="font-black text-base md:text-lg text-theme-main" data-i18n="f1_title">شرح مبسط ومركز</h3>
+      <p class="text-xs md:text-sm text-theme-sub font-semibold mt-3 leading-7" data-i18n="f1_desc">شرح النظريات والمفاهيم الطبية بطريقة الفهم الإكلينيكي بعيد عن التعقيد الأكاديمي.</p>
     </div>
 
-    <div class="fade-up card-hover rounded-3xl border border-slate-800 bg-card-theme p-6 text-center shadow-sm">
-      <div class="w-14 h-14 rounded-2xl bg-rose-950/50 text-rose-400 text-2xl flex items-center justify-center mx-auto mb-4">📝</div>
-      <h3 class="font-black text-sm text-theme-main" data-i18n="f2_title">نماذج امتحانات بنفس النظام</h3>
-      <p class="text-xs text-theme-sub font-semibold mt-2 leading-6" data-i18n="f2_desc">امتحانات MCQ وOSCE تفاعلية بنفس شكل الامتحانات الجامعية علشان تعيش جو الامتحان.</p>
+    <div class="fade-up card-hover rounded-3xl border border-slate-800 bg-card-theme p-8 text-center shadow-xl">
+      <div class="w-16 h-16 rounded-2xl bg-rose-950/50 text-rose-400 text-3xl flex items-center justify-center mx-auto mb-5">📝</div>
+      <h3 class="font-black text-base md:text-lg text-theme-main" data-i18n="f2_title">نماذج امتحانات بنفس النظام</h3>
+      <p class="text-xs md:text-sm text-theme-sub font-semibold mt-3 leading-7" data-i18n="f2_desc">امتحانات MCQ وOSCE تفاعلية بنفس شكل الامتحانات الجامعية علشان تعيش جو الامتحان.</p>
     </div>
 
-    <div class="fade-up card-hover rounded-3xl border border-slate-800 bg-card-theme p-6 text-center shadow-sm">
-      <div class="w-14 h-14 rounded-2xl bg-rose-950/50 text-rose-400 text-2xl flex items-center justify-center mx-auto mb-4">📊</div>
-      <h3 class="font-black text-sm text-theme-main" data-i18n="f3_title">متابعة دورية وتقييم مستمر</h3>
-      <p class="text-xs text-theme-sub font-semibold mt-2 leading-6" data-i18n="f3_desc">تقدمك بيتراجع أسبوعياً وبنقدملك توصيات حسب نقاط ضعفك ومتابعة أول بأول.</p>
+    <div class="fade-up card-hover rounded-3xl border border-slate-800 bg-card-theme p-8 text-center shadow-xl">
+      <div class="w-16 h-16 rounded-2xl bg-rose-950/50 text-rose-400 text-3xl flex items-center justify-center mx-auto mb-5">📊</div>
+      <h3 class="font-black text-base md:text-lg text-theme-main" data-i18n="f3_title">متابعة دورية وتقييم مستمر</h3>
+      <p class="text-xs md:text-sm text-theme-sub font-semibold mt-3 leading-7" data-i18n="f3_desc">تقدمك بيتراجع أسبوعياً وبنقدملك توصيات حسب نقاط ضعفك ومتابعة أول بأول.</p>
     </div>
   </div>
 </section>
 
 <!-- ============ HONOR BOARD SECTION ============ -->
-<section id="honors" class="w-full max-w-[1550px] mx-auto px-5 md:px-8 py-16 border-b border-slate-800">
-  <div class="text-center max-w-xl mx-auto mb-10 fade-up">
-    <h2 class="text-2xl md:text-3xl font-black text-theme-main" data-i18n="honor_title">أوائل خِـــضـر</h2>
-    <p class="text-xs font-semibold text-theme-sub mt-2 leading-6" data-i18n="honor_sub">
+<section id="honors" class="w-full max-w-[1700px] mx-auto px-6 md:px-12 py-20 border-b border-slate-800">
+  <div class="text-center max-w-2xl mx-auto mb-12 fade-up">
+    <h2 class="text-3xl md:text-5xl font-black text-theme-main" data-i18n="honor_title">أوائل خِـــضـر</h2>
+    <p class="text-xs md:text-base font-semibold text-theme-sub mt-3 leading-7" data-i18n="honor_sub">
       أسماء وصلت لأعلى التقديرات والدرجات في كليات العلاج الطبيعي، ودي حصيلة سنين من الشرح والمتابعة
     </p>
   </div>
 
-  <div class="grid grid-cols-2 md:grid-cols-4 gap-5 max-w-4xl mx-auto">
-    <div class="fade-up rounded-2xl border border-slate-800 bg-card-theme p-5 text-center shadow-sm">
-      <div class="text-3xl font-black text-rose-400 num-font" data-count="320">0</div>
-      <div class="text-xs font-bold text-theme-sub mt-1" data-i18n="h1">طالب بتقدير امتياز</div>
+  <div class="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-5xl mx-auto">
+    <div class="fade-up rounded-3xl border border-slate-800 bg-card-theme p-7 text-center shadow-xl">
+      <div class="text-4xl md:text-6xl font-black text-rose-400 num-font" data-count="320">0</div>
+      <div class="text-xs md:text-sm font-bold text-theme-sub mt-2" data-i18n="h1">طالب بتقدير امتياز</div>
     </div>
-    <div class="fade-up rounded-2xl border border-slate-800 bg-card-theme p-5 text-center shadow-sm">
-      <div class="text-3xl font-black text-rose-400 num-font" data-count="14">0</div>
-      <div class="text-xs font-bold text-theme-sub mt-1" data-i18n="h2">الأول على دفعته</div>
+    <div class="fade-up rounded-3xl border border-slate-800 bg-card-theme p-7 text-center shadow-xl">
+      <div class="text-4xl md:text-6xl font-black text-rose-400 num-font" data-count="14">0</div>
+      <div class="text-xs md:text-sm font-bold text-theme-sub mt-2" data-i18n="h2">الأول على دفعته</div>
     </div>
-    <div class="fade-up rounded-2xl border border-slate-800 bg-card-theme p-5 text-center shadow-sm">
-      <div class="text-3xl font-black text-rose-400 num-font" data-count="9">0</div>
-      <div class="text-xs font-bold text-theme-sub mt-1" data-i18n="h3">دفعات 2021 - 2026</div>
+    <div class="fade-up rounded-3xl border border-slate-800 bg-card-theme p-7 text-center shadow-xl">
+      <div class="text-4xl md:text-6xl font-black text-rose-400 num-font" data-count="9">0</div>
+      <div class="text-xs md:text-sm font-bold text-theme-sub mt-2" data-i18n="h3">دفعات 2021 - 2026</div>
     </div>
-    <div class="fade-up rounded-2xl border border-slate-800 bg-card-theme p-5 text-center shadow-sm">
-      <div class="text-3xl font-black text-rose-400 num-font" data-count="100">0%</div>
-      <div class="text-xs font-bold text-theme-sub mt-1" data-i18n="h4">نسبة اجتياز الـ OSCE</div>
+    <div class="fade-up rounded-3xl border border-slate-800 bg-card-theme p-7 text-center shadow-xl">
+      <div class="text-4xl md:text-6xl font-black text-rose-400 num-font" data-count="100">0%</div>
+      <div class="text-xs md:text-sm font-bold text-theme-sub mt-2" data-i18n="h4">نسبة اجتياز الـ OSCE</div>
     </div>
   </div>
 </section>
 
 <!-- ============ REVIEWS SECTION ============ -->
-<section id="reviews" class="w-full max-w-[1550px] mx-auto px-5 md:px-8 py-16 border-b border-slate-800">
-  <div class="text-center max-w-2xl mx-auto mb-10 fade-up">
-    <h2 class="text-2xl md:text-3xl font-black text-theme-main" data-i18n="rev_title">طلاب قالوا إيه عنا؟</h2>
+<section id="reviews" class="w-full max-w-[1700px] mx-auto px-6 md:px-12 py-20 border-b border-slate-800">
+  <div class="text-center max-w-2xl mx-auto mb-12 fade-up">
+    <h2 class="text-3xl md:text-5xl font-black text-theme-main" data-i18n="rev_title">طلاب قالوا إيه عنا؟</h2>
   </div>
 
-  <div class="grid md:grid-cols-2 gap-6 max-w-4xl mx-auto">
-    <div class="fade-up card-hover rounded-3xl border border-slate-800 bg-card-theme p-6 shadow-sm">
-      <p class="text-xs md:text-sm font-semibold text-theme-main leading-7" data-i18n="r1_text">"بعد ما انضميت للمنصة مع دكتور خضر، بقيت أفهم الميكانيكا الحيوية من أول محاضرة بدل الحفظ."</p>
-      <span class="block text-[11px] font-black text-theme-sub mt-4">— إيمان من الجامعة المصرية الصينية</span>
+  <div class="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto">
+    <div class="fade-up card-hover rounded-3xl border border-slate-800 bg-card-theme p-8 shadow-xl">
+      <p class="text-sm md:text-base font-semibold text-theme-main leading-8" data-i18n="r1_text">"بعد ما انضميت للمنصة مع دكتور خضر، بقيت أفهم الميكانيكا الحيوية من أول محاضرة بدل الحفظ."</p>
+      <span class="block text-xs md:text-sm font-black text-theme-sub mt-5">— إيمان من الجامعة المصرية الصينية</span>
     </div>
 
+    <div class="fade-up card-hover rounded-3xl border border-slate-800 bg-card-theme p-8 shadow-xl">
+      <p class="text-sm md:text-base font-semibold text-theme-main leading-8" data-i18n="r2_text">"الشرح بسيط وفعلاً بحس إني فاهم مش بحفظ وخلاص عشان الامتحان."</p>
+      <span class="block text-xs md:text-sm font-black text-theme-sub mt-5">— سما من جامعة كفر الشيخ</span>
+    </div>
   </div>
 </section>
 
 <!-- ============ INSTRUCTOR SECTION ============ -->
-<section id="instructor" class="w-full max-w-[1550px] mx-auto px-5 md:px-8 py-16 border-b border-slate-800">
-  <div class="rounded-3xl bg-gradient-to-r from-[#7A0B30] to-[#4A051B] p-8 md:p-12 text-white grid md:grid-cols-[auto,1fr] gap-8 items-center shadow-xl">
-<div class="w-32 h-40 md:w-40 md:h-48 rounded-2xl bg-white/10 backdrop-blur-md flex items-center justify-center shrink-0 border border-white/20 mx-auto md:mx-0 overflow-hidden shadow-lg">
-  <img src="khedr.jpg" alt="محمود خضر" class="w-full h-full object-cover object-top" onerror="this.src='khedr.png'" />
-</div>
-    <div class="text-center md:text-start">
-      <span class="text-xs font-bold px-3 py-1 rounded-full bg-white/10 text-rose-200" data-i18n="inst_eyebrow">عن الشارح ومؤسس المنصة</span>
-      <h3 class="text-2xl md:text-3xl font-black mt-2 text-amber-300" data-i18n="inst_name">محمود خضر</h3>
-<p class="opacity-90 mt-3 leading-7 text-xs md:text-sm font-medium max-w-2xl text-rose-100" data-i18n="inst_bio">
+<section id="instructor" class="w-full max-w-[1700px] mx-auto px-6 md:px-12 py-20 border-b border-slate-800">
+  <div class="rounded-[2.5rem] bg-gradient-to-r from-[#7A0B30] to-[#4A051B] p-10 md:p-16 text-white grid md:grid-cols-[auto,1fr] gap-10 items-center shadow-2xl">
+    <div class="w-40 h-52 md:w-48 md:h-60 rounded-3xl bg-white/10 backdrop-blur-md flex items-center justify-center shrink-0 border border-white/20 mx-auto md:mx-0 overflow-hidden shadow-2xl">
+      <img src="khedr.jpg" alt="محمود خضر" class="w-full h-full object-cover object-top" onerror="this.src='khedr.png'" />
+    </div>
+    <div class="text-center md:text-start space-y-3">
+      <span class="text-xs md:text-sm font-bold px-4 py-1.5 rounded-full bg-white/10 text-rose-200" data-i18n="inst_eyebrow">عن الشارح ومؤسس المنصة</span>
+      <h3 class="text-3xl md:text-4xl font-black text-amber-300" data-i18n="inst_name">محمود خضر</h3>
+      <p class="opacity-90 leading-8 text-sm md:text-base font-medium max-w-3xl text-rose-100" data-i18n="inst_bio">
         شارح ومدرس للمواد الطبية والأكاديمية بكلية العلاج الطبيعي بخبرة سنتين في التدريس الشامل، يركز على تقديم شرح مبسط، منظم، وعملي يساعد الطلاب على فهم الأساسيات والتطبيق والتجهيز بثقة للامتحانات.
       </p>
     </div>
@@ -503,48 +504,48 @@
 </section>
 
 <!-- ============ AUTHENTICATION SECTION ============ -->
-<section id="auth" class="max-w-md mx-auto px-5 py-16">
-  <div class="rounded-3xl border border-slate-800 bg-card-theme p-3 shadow-xl fade-up">
+<section id="auth" class="max-w-xl mx-auto px-6 py-20">
+  <div class="rounded-[2.5rem] border border-slate-800 bg-card-theme p-4 shadow-2xl fade-up">
 
     <!-- Auth Tabs Switcher -->
-    <div class="grid grid-cols-2 gap-1 p-1 bg-slate-800 rounded-2xl">
-      <button id="tabLoginBtn" onclick="setAuthTab('login')" class="auth-tab h-10 rounded-xl text-xs font-black transition" data-i18n="auth_tab_login">تسجيل الدخول</button>
-      <button id="tabRegisterBtn" onclick="setAuthTab('register')" class="auth-tab h-10 rounded-xl text-xs font-black transition" data-i18n="auth_tab_register">حساب جديد</button>
+    <div class="grid grid-cols-2 gap-1 p-1.5 bg-slate-800 rounded-2xl">
+      <button id="tabLoginBtn" onclick="setAuthTab('login')" class="auth-tab h-12 rounded-xl text-sm font-black transition" data-i18n="auth_tab_login">تسجيل الدخول</button>
+      <button id="tabRegisterBtn" onclick="setAuthTab('register')" class="auth-tab h-12 rounded-xl text-sm font-black transition" data-i18n="auth_tab_register">حساب جديد</button>
     </div>
 
-    <div class="px-4 py-6">
+    <div class="px-6 py-8">
       <!-- LOGIN FORM -->
-      <form id="loginForm" class="flex flex-col gap-3.5" onsubmit="return false;">
-        <label class="flex flex-col gap-1 text-xs font-bold text-theme-main">
+      <form id="loginForm" class="flex flex-col gap-4" onsubmit="return false;">
+        <label class="flex flex-col gap-1.5 text-xs md:text-sm font-bold text-theme-main">
           <span data-i18n="auth_email">البريد الإلكتروني</span>
-          <input id="loginEmail" type="email" required placeholder="student@example.com" class="h-11 rounded-xl px-3 border border-slate-700 bg-transparent text-xs text-theme-main focus:border-brand" />
+          <input id="loginEmail" type="email" required placeholder="student@example.com" class="h-12 rounded-2xl px-4 border border-slate-700 bg-transparent text-sm text-theme-main focus:border-brand" />
         </label>
-        <label class="flex flex-col gap-1 text-xs font-bold text-theme-main">
+        <label class="flex flex-col gap-1.5 text-xs md:text-sm font-bold text-theme-main">
           <span data-i18n="auth_password">كلمة المرور</span>
-          <input id="loginPassword" type="password" required placeholder="••••••••" class="h-11 rounded-xl px-3 border border-slate-700 bg-transparent text-xs text-theme-main focus:border-brand" />
+          <input id="loginPassword" type="password" required placeholder="••••••••" class="h-12 rounded-2xl px-4 border border-slate-700 bg-transparent text-sm text-theme-main focus:border-brand" />
         </label>
         <p id="loginError" class="hidden text-xs font-bold text-rose-500 text-center"></p>
-        <button id="loginSubmitBtn" type="submit" class="h-11 rounded-xl bg-brand text-white font-black text-xs mt-2 shadow-md hover:bg-rose-900 transition" data-i18n="auth_login_btn">
+        <button id="loginSubmitBtn" type="submit" class="h-12 rounded-2xl bg-brand text-white font-black text-sm md:text-base mt-3 shadow-lg hover:bg-rose-900 transition" data-i18n="auth_login_btn">
           تسجيل الدخول
         </button>
       </form>
 
       <!-- REGISTER FORM -->
-      <form id="registerForm" class="hidden flex-col gap-3.5" onsubmit="return false;">
-        <label class="flex flex-col gap-1 text-xs font-bold text-theme-main">
+      <form id="registerForm" class="hidden flex-col gap-4" onsubmit="return false;">
+        <label class="flex flex-col gap-1.5 text-xs md:text-sm font-bold text-theme-main">
           <span data-i18n="auth_name">الاسم بالكامل</span>
-          <input id="registerName" type="text" required placeholder="اسم الطالب ثلاثي" class="h-11 rounded-xl px-3 border border-slate-700 bg-transparent text-xs text-theme-main focus:border-brand" />
+          <input id="registerName" type="text" required placeholder="اسم الطالب ثلاثي" class="h-12 rounded-2xl px-4 border border-slate-700 bg-transparent text-sm text-theme-main focus:border-brand" />
         </label>
-        <label class="flex flex-col gap-1 text-xs font-bold text-theme-main">
+        <label class="flex flex-col gap-1.5 text-xs md:text-sm font-bold text-theme-main">
           <span data-i18n="auth_email">البريد الإلكتروني</span>
-          <input id="registerEmail" type="email" required placeholder="student@example.com" class="h-11 rounded-xl px-3 border border-slate-700 bg-transparent text-xs text-theme-main focus:border-brand" />
+          <input id="registerEmail" type="email" required placeholder="student@example.com" class="h-12 rounded-2xl px-4 border border-slate-700 bg-transparent text-sm text-theme-main focus:border-brand" />
         </label>
-        <label class="flex flex-col gap-1 text-xs font-bold text-theme-main">
+        <label class="flex flex-col gap-1.5 text-xs md:text-sm font-bold text-theme-main">
           <span data-i18n="auth_password">كلمة المرور</span>
-          <input id="registerPassword" type="password" required placeholder="••••••••" minlength="6" class="h-11 rounded-xl px-3 border border-slate-700 bg-transparent text-xs text-theme-main focus:border-brand" />
+          <input id="registerPassword" type="password" required placeholder="••••••••" minlength="6" class="h-12 rounded-2xl px-4 border border-slate-700 bg-transparent text-sm text-theme-main focus:border-brand" />
         </label>
         <p id="registerError" class="hidden text-xs font-bold text-rose-500 text-center"></p>
-        <button id="registerSubmitBtn" type="submit" class="h-11 rounded-xl bg-brand text-white font-black text-xs mt-2 shadow-md hover:bg-rose-900 transition" data-i18n="auth_register_btn">
+        <button id="registerSubmitBtn" type="submit" class="h-12 rounded-2xl bg-brand text-white font-black text-sm md:text-base mt-3 shadow-lg hover:bg-rose-900 transition" data-i18n="auth_register_btn">
           إنشاء الحساب
         </button>
       </form>
@@ -552,164 +553,139 @@
   </div>
 </section>
 
-<!-- ============ PACKAGE DETAILS VIEW (صفحة منفصلة) ============ -->
-<div id="packageDetailsView" class="hidden min-h-screen bg-[#07111D] text-slate-100 py-10 px-5 transition-all">
-  <div class="max-w-5xl mx-auto">
+<!-- ============ PACKAGE DETAILS VIEW ============ -->
+<div id="packageDetailsView" class="hidden min-h-screen bg-[#07111D] text-slate-100 py-12 px-6 transition-all">
+  <div class="max-w-6xl mx-auto">
     
-    <!-- زر الرجوع للرئيسية -->
-    <button onclick="closePackageDetails()" class="mb-6 inline-flex items-center gap-2 text-xs font-black px-4 py-2 rounded-xl bg-[#0F1D2D] border border-slate-800 shadow-sm hover:border-brand transition">
+    <button onclick="closePackageDetails()" class="mb-8 inline-flex items-center gap-2 text-xs md:text-sm font-black px-5 py-3 rounded-2xl bg-[#0F1D2D] border border-slate-800 shadow-md hover:border-brand transition">
       <span>← العودة للرئيسية</span>
     </button>
 
-    <!-- الهيدر الخاص بالباقة -->
-    <div class="rounded-3xl bg-gradient-to-l from-[#5E0824] via-[#7A0B30] to-[#4A051B] p-8 md:p-12 text-white shadow-xl relative overflow-hidden mb-8">
-      <span id="pkgBadge" class="inline-block text-[11px] font-black px-3 py-1 rounded-full bg-amber-400 text-slate-900 mb-3">باقة مميزة</span>
-      <h1 id="pkgTitle" class="text-2xl md:text-4xl font-black">اسم الباقة</h1>
-      <p id="pkgSub" class="text-xs md:text-sm opacity-85 mt-2 max-w-2xl leading-6">وصف تفصيلي للباقة وما تشمله من مواد ومزايا أكاديمية.</p>
+    <div class="rounded-3xl bg-gradient-to-l from-[#5E0824] via-[#7A0B30] to-[#4A051B] p-10 md:p-14 text-white shadow-2xl relative overflow-hidden mb-10 border border-white/10">
+      <span id="pkgBadge" class="inline-block text-xs font-black px-4 py-1.5 rounded-full bg-amber-400 text-slate-900 mb-4">باقة مميزة</span>
+      <h1 id="pkgTitle" class="text-3xl md:text-5xl font-black">اسم الباقة</h1>
+      <p id="pkgSub" class="text-sm md:text-lg opacity-90 mt-3 max-w-3xl leading-7">وصف تفصيلي للباقة وما تشمله من مواد ومزايا أكاديمية.</p>
       
-      <div class="mt-6 flex flex-wrap items-baseline gap-4">
-        <span class="text-3xl md:text-4xl font-black text-amber-300 num-font" id="pkgPrice">0 ج.م</span>
-        <span class="text-sm font-bold opacity-50 line-through num-font" id="pkgOldPrice">0 ج.م</span>
-        <span class="text-xs font-black px-2.5 py-1 rounded-lg bg-emerald-500/20 text-emerald-300 border border-emerald-500/30" id="pkgSave">وفر 0%</span>
+      <div class="mt-8 flex flex-wrap items-baseline gap-5">
+        <span class="text-4xl md:text-5xl font-black text-amber-300 num-font" id="pkgPrice">0 ج.م</span>
+        <span class="text-base font-bold opacity-50 line-through num-font" id="pkgOldPrice">0 ج.م</span>
+        <span class="text-xs md:text-sm font-black px-3 py-1.5 rounded-xl bg-emerald-500/20 text-emerald-300 border border-emerald-500/30" id="pkgSave">وفر 0%</span>
       </div>
 
-      <div class="mt-6">
-        <a href="#auth" onclick="closePackageDetails()" class="inline-block bg-white text-brand font-black text-xs md:text-sm px-8 py-3.5 rounded-2xl shadow-xl hover:bg-rose-50 transition">
+      <div class="mt-8">
+        <a href="#auth" onclick="closePackageDetails()" class="inline-block bg-white text-brand font-black text-sm md:text-base px-10 py-4 rounded-2xl shadow-2xl hover:bg-rose-50 transition">
           اشترك في الباقة الآن
         </a>
       </div>
     </div>
 
-    <!-- شبكة تفاصيل القيمة والمواد المشمولة -->
-    <div class="grid md:grid-cols-3 gap-8">
-      
-      <!-- المواد المشمولة في الباقة -->
-      <div class="md:col-span-2 space-y-4">
-        <h3 class="text-base font-black flex items-center gap-2">
+    <div class="grid md:grid-cols-3 gap-10">
+      <div class="md:col-span-2 space-y-5">
+        <h3 class="text-lg md:text-xl font-black flex items-center gap-2">
           <span>📚</span> المواد الأكاديمية المشمولة بالباقة
         </h3>
-        <div id="pkgCoursesList" class="space-y-3">
-          <!-- تتحدث تلقائياً عبر JS -->
-        </div>
+        <div id="pkgCoursesList" class="space-y-4"></div>
       </div>
 
-      <!-- نظام المذاكرة المشمول -->
-      <div class="rounded-3xl border border-slate-800 bg-[#0F1D2D] p-6 shadow-sm h-fit space-y-4">
-        <h3 class="text-sm font-black text-amber-500 flex items-center gap-2">
+      <div class="rounded-3xl border border-slate-800 bg-[#0F1D2D] p-8 shadow-xl h-fit space-y-5">
+        <h3 class="text-base font-black text-amber-500 flex items-center gap-2">
           <span>👑</span> نظام المذاكرة المتكامل
         </h3>
-        <ul class="text-xs font-bold space-y-3 opacity-80 leading-5">
-          <li class="flex items-center gap-2"><span>🎥</span> محاضرات مسجلة بجودة 4K</li>
-          <li class="flex items-center gap-2"><span>🔴</span> جلسات Live تفاعلية أسبوعية</li>
-          <li class="flex items-center gap-2"><span>📚</span> ملخصات وتفريغات PDF منظمة</li>
-          <li class="flex items-center gap-2"><span>❓</span> بنك أسئلة MCQ مع التفسير العلمي</li>
-          <li class="flex items-center gap-2"><span>🩺</span> محاكاة امتحانات العملي والـ OSCE</li>
-          <li class="flex items-center gap-2"><span>💬</span> مجتمع خاص ومتابعة دورية</li>
+        <ul class="text-xs md:text-sm font-bold space-y-4 opacity-85 leading-6">
+          <li class="flex items-center gap-3"><span>🎥</span> محاضرات مسجلة بجودة 4K</li>
+          <li class="flex items-center gap-3"><span>🔴</span> جلسات Live تفاعلية أسبوعية</li>
+          <li class="flex items-center gap-3"><span>📚</span> ملخصات وتفريغات PDF منظمة</li>
+          <li class="flex items-center gap-3"><span>❓</span> بنك أسئلة MCQ مع التفسير العلمي</li>
+          <li class="flex items-center gap-3"><span>🩺</span> محاكاة امتحانات العملي والـ OSCE</li>
+          <li class="flex items-center gap-3"><span>💬</span> مجتمع خاص ومتابعة دورية</li>
         </ul>
-        <div class="pt-4 border-t border-slate-800 text-[11px] text-slate-400">
-          * خصم إضافي للجروبات (3+ طلاب: 10% | 5+ طلاب: 15%).
-        </div>
       </div>
-
     </div>
 
   </div>
 </div>
-<!-- ============ COURSE DETAILS & LESSONS VIEW (شاشة الكورس والمحاضرات) ============ -->
-<div id="courseView" class="hidden min-h-screen bg-[#07111D] text-slate-100 py-10 px-4 md:px-8 transition-all">
-  <div class="max-w-6xl mx-auto">
+
+<!-- ============ COURSE DETAILS & LESSONS VIEW ============ -->
+<div id="courseView" class="hidden min-h-screen bg-[#07111D] text-slate-100 py-12 px-6 md:px-10 transition-all">
+  <div class="max-w-7xl mx-auto">
     
-    <!-- زر الرجوع للرئيسية -->
-    <button onclick="closeCourseView()" class="mb-6 inline-flex items-center gap-2 text-xs font-black px-4 py-2.5 rounded-xl bg-[#0F1D2D] border border-slate-800 text-slate-200 hover:border-brand transition">
+    <button onclick="closeCourseView()" class="mb-8 inline-flex items-center gap-2 text-xs md:text-sm font-black px-5 py-3 rounded-2xl bg-[#0F1D2D] border border-slate-800 text-slate-200 hover:border-brand transition">
       <span>← العودة للصفحة الرئيسية</span>
     </button>
 
-    <!-- بانر الكورس العلوي -->
-    <div class="rounded-3xl bg-gradient-to-l from-[#5E0824] via-[#7A0B30] to-[#4A051B] p-6 md:p-10 text-white shadow-2xl relative overflow-hidden mb-8 border border-white/10">
-      <div class="flex flex-col md:flex-row md:items-center justify-between gap-6">
-        <div class="space-y-3 max-w-2xl">
-          <span id="crsCategory" class="inline-block text-[11px] font-black px-3 py-1 rounded-full bg-amber-400 text-slate-900">مقرر أكاديمي</span>
-          <h1 id="crsTitle" class="text-2xl md:text-4xl font-black">اسم الكورس</h1>
-          <p id="crsDesc" class="text-xs md:text-sm opacity-85 leading-6 text-rose-100">وصف الكورس والمهارات والمفاهيم الأكاديمية التي سيتم تغطيتها.</p>
+    <div class="rounded-3xl bg-gradient-to-l from-[#5E0824] via-[#7A0B30] to-[#4A051B] p-8 md:p-12 text-white shadow-2xl relative overflow-hidden mb-10 border border-white/10">
+      <div class="flex flex-col md:flex-row md:items-center justify-between gap-8">
+        <div class="space-y-4 max-w-3xl">
+          <span id="crsCategory" class="inline-block text-xs font-black px-3.5 py-1.5 rounded-full bg-amber-400 text-slate-900">مقرر أكاديمي</span>
+          <h1 id="crsTitle" class="text-3xl md:text-5xl font-black">اسم الكورس</h1>
+          <p id="crsDesc" class="text-sm md:text-base opacity-90 leading-7 text-rose-100">وصف الكورس والمهارات والمفاهيم الأكاديمية التي سيتم تغطيتها.</p>
           
-          <!-- حالة الاشتراك -->
           <div id="enrollmentStatusBanner" class="pt-2">
-            <span class="inline-flex items-center gap-2 text-xs font-bold text-amber-300 bg-black/30 px-3 py-1.5 rounded-xl border border-amber-300/30">
+            <span class="inline-flex items-center gap-2 text-xs md:text-sm font-bold text-amber-300 bg-black/40 px-4 py-2 rounded-2xl border border-amber-300/30">
               <span>🔓</span> يتوفر كليب معاينة مجاني (المقدمة) — باقي المحاضرات مغلقة
             </span>
           </div>
         </div>
 
-        <!-- كارت السعر والاشتراك السريع -->
-        <div class="bg-black/30 backdrop-blur-md p-6 rounded-2xl border border-white/15 text-center shrink-0 space-y-4">
+        <div class="bg-black/40 backdrop-blur-md p-8 rounded-3xl border border-white/15 text-center shrink-0 space-y-5">
           <div>
-            <span class="text-xs opacity-70 block">سعر الاشتراك</span>
-            <span id="crsPrice" class="text-3xl font-black text-amber-300 num-font">0 ج.م</span>
+            <span class="text-xs opacity-80 block">سعر الاشتراك</span>
+            <span id="crsPrice" class="text-3xl md:text-4xl font-black text-amber-300 num-font">0 ج.م</span>
           </div>
-          <button id="crsActionBtn" onclick="toggleCourseEnrollment()" class="w-full bg-white text-[#7A0B30] font-black text-xs md:text-sm px-6 py-3 rounded-xl shadow-xl hover:bg-rose-50 transition transform hover:scale-105">
+          <button id="crsActionBtn" onclick="toggleCourseEnrollment()" class="w-full bg-white text-[#7A0B30] font-black text-xs md:text-sm px-8 py-3.5 rounded-2xl shadow-2xl hover:bg-rose-50 transition transform hover:scale-105">
             الاشتراك في الكورس الآن 🚀
           </button>
         </div>
       </div>
     </div>
 
-    <!-- شبكة مشغل الفيديو والفهرس -->
-    <div class="grid lg:grid-cols-12 gap-8">
-      
-      <!-- المنطقة الرئيسية: مشغل الفيديو / معاينة المحاضرة (8 أعمدة) -->
-      <div class="lg:col-span-8 space-y-5">
-        <div id="videoPlayerContainer" class="rounded-3xl overflow-hidden bg-[#0F1D2D] border border-slate-800 aspect-video relative flex items-center justify-center shadow-lg">
-          <!-- شاشة مشغل الفيديو الافتراضية -->
-          <div id="videoPlaceholder" class="text-center p-6 space-y-3">
-            <div class="w-16 h-16 rounded-full bg-brand/30 text-rose-400 flex items-center justify-center text-3xl mx-auto border border-brand/50">▶</div>
-            <h3 class="font-black text-sm md:text-base">اضغط على "المقدمة" لمشاهدة المعاينة المجانية</h3>
-            <p class="text-xs text-slate-400">يمكنك مشاهدة شرح مقدمة المقرر مجاناً قبل الاشتراك</p>
+    <div class="grid lg:grid-cols-12 gap-10">
+      <div class="lg:col-span-8 space-y-6">
+        <div id="videoPlayerContainer" class="rounded-3xl overflow-hidden bg-[#0F1D2D] border border-slate-800 aspect-video relative flex items-center justify-center shadow-2xl">
+          <div id="videoPlaceholder" class="text-center p-8 space-y-4">
+            <div class="w-20 h-20 rounded-full bg-brand/30 text-rose-400 flex items-center justify-center text-4xl mx-auto border border-brand/50">▶</div>
+            <h3 class="font-black text-base md:text-lg">اضغط على "المقدمة" لمشاهدة المعاينة المجانية</h3>
+            <p class="text-xs md:text-sm text-slate-400">يمكنك مشاهدة شرح مقدمة المقرر مجاناً قبل الاشتراك</p>
           </div>
           <iframe id="videoIframe" class="hidden w-full h-full" src="" frameborder="0" allowfullscreen></iframe>
         </div>
 
-        <!-- تفاصيل المحاضرة الحالية -->
-        <div class="rounded-2xl bg-[#0F1D2D] border border-slate-800 p-5 space-y-2">
-          <h3 id="currentLessonTitle" class="font-black text-sm md:text-base text-amber-300">اختر محاضرة من الفهرس</h3>
-          <p id="currentLessonDesc" class="text-xs text-slate-400 leading-5">اضغط على أي درس في القائمة الجانبية لعرضه أو فتحه.</p>
+        <div class="rounded-3xl bg-[#0F1D2D] border border-slate-800 p-6 space-y-3">
+          <h3 id="currentLessonTitle" class="font-black text-base md:text-lg text-amber-300">اختر محاضرة من الفهرس</h3>
+          <p id="currentLessonDesc" class="text-xs md:text-sm text-slate-400 leading-6">اضغط على أي درس في القائمة الجانبية لعرضه أو فتحه.</p>
         </div>
       </div>
 
-      <!-- الفهرس والمحتويات (4 أعمدة) -->
-      <div class="lg:col-span-4 space-y-4">
+      <div class="lg:col-span-4 space-y-5">
         <div class="flex items-center justify-between">
-          <h3 class="font-black text-sm text-slate-200">فهرس المحاضرات والسكاشن</h3>
-          <span id="unlockedCountBadge" class="text-[10px] font-bold px-2 py-0.5 rounded bg-slate-800 text-rose-400">1 مفتوح</span>
+          <h3 class="font-black text-base text-slate-200">فهرس المحاضرات والسكاشن</h3>
+          <span id="unlockedCountBadge" class="text-xs font-bold px-2.5 py-1 rounded-lg bg-slate-800 text-rose-400">1 مفتوح</span>
         </div>
 
-        <div id="lessonsList" class="space-y-3 max-h-[600px] overflow-y-auto pe-1">
-          <!-- يتم توليده تلقائياً عبر JavaScript -->
-        </div>
+        <div id="lessonsList" class="space-y-4 max-h-[650px] overflow-y-auto pe-1"></div>
       </div>
-
     </div>
 
   </div>
 </div>
-<!-- ============ RICH FOOTER ============ -->
-<footer class="bg-slate-900 text-white border-t border-slate-800 pt-12 pb-8 px-5">
-  <div class="w-full max-w-[1550px] mx-auto grid grid-cols-1 md:grid-cols-4 gap-8 mb-10 text-center md:text-start">
 
-    <!-- Column 1: Logo & Info -->
-    <div class="flex flex-col items-center md:items-start gap-2">
-      <div class="flex items-center gap-2">
-        <span class="w-8 h-8 rounded-xl bg-brand text-white font-black flex items-center justify-center text-sm">خِـ</span>
-        <span class="font-black text-lg text-amber-300">KHEDR & PHYSIO</span>
+<!-- ============ RICH FOOTER ============ -->
+<footer class="bg-slate-900 text-white border-t border-slate-800 pt-16 pb-10 px-6">
+  <div class="w-full max-w-[1700px] mx-auto grid grid-cols-1 md:grid-cols-4 gap-10 mb-12 text-center md:text-start">
+
+    <div class="flex flex-col items-center md:items-start gap-3">
+      <div class="flex items-center gap-3">
+        <span class="w-10 h-10 rounded-2xl bg-brand text-white font-black flex items-center justify-center text-base">خِـ</span>
+        <span class="font-black text-xl text-amber-300">KHEDR & PHYSIO</span>
       </div>
-      <p class="text-xs text-slate-400 font-semibold leading-6 mt-2 max-w-xs" data-i18n="foot_about">
+      <p class="text-xs md:text-sm text-slate-400 font-semibold leading-7 mt-2 max-w-xs" data-i18n="foot_about">
         المنصة التعليمية الأولى المتخصصة لطلاب وخريجي العلاج الطبيعي لتبسيط العلوم الحركية والإكلينيكية.
       </p>
     </div>
 
-    <!-- Column 2: Pages Links -->
     <div>
-      <h4 class="font-black text-xs uppercase tracking-wider text-amber-300 mb-4" data-i18n="foot_pages">الصفحات</h4>
-      <ul class="flex flex-col gap-2.5 text-xs text-slate-300 font-bold">
+      <h4 class="font-black text-xs md:text-sm uppercase tracking-wider text-amber-300 mb-5" data-i18n="foot_pages">الصفحات</h4>
+      <ul class="flex flex-col gap-3 text-xs md:text-sm text-slate-300 font-bold">
         <li><a href="#hero" class="hover:text-amber-300 transition" data-i18n="nav_home">الرئيسية</a></li>
         <li><a href="#years" class="hover:text-amber-300 transition" data-i18n="nav_years">الفرق الدراسية</a></li>
         <li><a href="#courses" class="hover:text-amber-300 transition" data-i18n="nav_courses">الكورسات والمقررات</a></li>
@@ -718,64 +694,61 @@
       </ul>
     </div>
 
-    <!-- Column 3: Social Media Links -->
     <div>
-      <h4 class="font-black text-xs uppercase tracking-wider text-amber-300 mb-4" data-i18n="foot_social">السوشيال ميديا</h4>
-      <ul class="flex flex-col items-center md:items-start gap-3 text-xs text-slate-300 font-bold">
+      <h4 class="font-black text-xs md:text-sm uppercase tracking-wider text-amber-300 mb-5" data-i18n="foot_social">السوشيال ميديا</h4>
+      <ul class="flex flex-col items-center md:items-start gap-3.5 text-xs md:text-sm text-slate-300 font-bold">
         <li>
-          <a href="https://www.facebook.com/share/1HTasZLPkw/" target="_blank" rel="noopener" class="flex items-center gap-2 hover:text-amber-300 transition">
-            <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+          <a href="https://www.facebook.com/share/1HTasZLPkw/" target="_blank" rel="noopener" class="flex items-center gap-2.5 hover:text-amber-300 transition">
+            <svg width="18" height="18" fill="currentColor" viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
             <span data-i18n="sm_fb">فيسبوك</span>
           </a>
         </li>
         <li>
-          <a href="https://www.instagram.com/khedr_official?igsh=MXVtMzllbXh5dTZobg==" target="_blank" rel="noopener" class="flex items-center gap-2 hover:text-amber-300 transition">
-            <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+          <a href="https://www.instagram.com/khedr_official?igsh=MXVtMzllbXh5dTZobg==" target="_blank" rel="noopener" class="flex items-center gap-2.5 hover:text-amber-300 transition">
+            <svg width="18" height="18" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
             <span data-i18n="sm_ig">انستجرام</span>
           </a>
         </li>
         <li>
-          <a href="https://www.tiktok.com/@mahmoud_khedr342?_r=1&_t=ZS-9878aAkTuUu" target="_blank" rel="noopener" class="flex items-center gap-2 hover:text-amber-300 transition">
-            <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24"><path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.24 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07z"/></svg>
+          <a href="https://www.tiktok.com/@mahmoud_khedr342?_r=1&_t=ZS-9878aAkTuUu" target="_blank" rel="noopener" class="flex items-center gap-2.5 hover:text-amber-300 transition">
+            <svg width="18" height="18" fill="currentColor" viewBox="0 0 24 24"><path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.24 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07z"/></svg>
             <span data-i18n="sm_tt">تيك توك</span>
           </a>
         </li>
         <li>
-          <a href="https://youtube.com/@mahmoud_khedr342?si=Pj4roTaFXme6INsV" target="_blank" rel="noopener" class="flex items-center gap-2 hover:text-amber-300 transition">
-            <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+          <a href="https://youtube.com/@mahmoud_khedr342?si=Pj4roTaFXme6INsV" target="_blank" rel="noopener" class="flex items-center gap-2.5 hover:text-amber-300 transition">
+            <svg width="18" height="18" fill="currentColor" viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
             <span data-i18n="sm_yt">يوتيوب</span>
           </a>
         </li>
         <li>
-          <a href="https://www.linkedin.com/in/mahmoud-khedr-9614963a7?utm_source=share_via&utm_content=profile&utm_medium=member_android" target="_blank" rel="noopener" class="flex items-center gap-2 hover:text-amber-300 transition">
-            <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
+          <a href="https://www.linkedin.com/in/mahmoud-khedr-9614963a7?utm_source=share_via&utm_content=profile&utm_medium=member_android" target="_blank" rel="noopener" class="flex items-center gap-2.5 hover:text-amber-300 transition">
+            <svg width="18" height="18" fill="currentColor" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
             <span data-i18n="sm_li">لينكد إن</span>
           </a>
         </li>
       </ul>
     </div>
 
-    <!-- Column 4: Contact & Tech Support -->
-    <div class="flex flex-col items-center md:items-start gap-3">
-      <h4 class="font-black text-xs uppercase tracking-wider text-amber-300 mb-2" data-i18n="foot_contact">تواصل معنا</h4>
-      <a href="https://wa.me/" target="_blank" rel="noopener" class="w-full max-w-[200px] py-3 rounded-xl bg-slate-800 hover:bg-brand text-white font-black text-xs transition border border-slate-700 flex items-center justify-center gap-2">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5Z"/></svg>
+    <div class="flex flex-col items-center md:items-start gap-4">
+      <h4 class="font-black text-xs md:text-sm uppercase tracking-wider text-amber-300 mb-2" data-i18n="foot_contact">تواصل معنا</h4>
+      <a href="https://wa.me/" target="_blank" rel="noopener" class="w-full max-w-[220px] py-3.5 rounded-2xl bg-slate-800 hover:bg-brand text-white font-black text-xs md:text-sm transition border border-slate-700 flex items-center justify-center gap-2.5 shadow-lg">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5Z"/></svg>
         <span data-i18n="btn_support">الدعم الفني</span>
       </a>
     </div>
 
   </div>
 
-  <!-- Bottom Copyright & Credits -->
-  <div class="w-full max-w-[1550px] mx-auto border-t border-slate-800 pt-6 flex flex-col md:flex-row items-center justify-between gap-3 text-xs text-slate-500 font-semibold text-center">
+  <div class="w-full max-w-[1700px] mx-auto border-t border-slate-800 pt-8 flex flex-col md:flex-row items-center justify-between gap-4 text-xs md:text-sm text-slate-400 font-semibold text-center">
     <div data-i18n="foot_rights">جميع الحقوق محفوظة © 2026 KHEDR & PHYSIO</div>
-    <div class="font-mono text-[11px] text-amber-400 font-bold">&lt;Developed & Designed by="Ahmed Mohamed" andPowered=true /&gt;</div>
+    <div class="font-mono text-xs md:text-sm text-amber-400 font-bold">&lt;Developed & Designed by="Ahmed Mohamed" andPowered=true /&gt;</div>
   </div>
 </footer>
 
 <!-- Floating Support Button -->
-<a href="https://wa.me/" target="_blank" rel="noopener" class="fixed bottom-5 start-5 z-50 w-12 h-12 rounded-full bg-rose-600 text-white shadow-2xl flex items-center justify-center hover:scale-110 transition" title="الدعم الفني">
-  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5Z"/></svg>
+<a href="https://wa.me/" target="_blank" rel="noopener" class="fixed bottom-6 start-6 z-50 w-14 h-14 rounded-full bg-rose-600 text-white shadow-2xl flex items-center justify-center hover:scale-110 transition" title="الدعم الفني">
+  <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5Z"/></svg>
 </a>
 
 <!-- ============ TRANSLATIONS DICTIONARY & UI LOGIC ============ -->
@@ -785,7 +758,7 @@ const translations = {
     brand: "KHEDR & PHYSIO",
     nav_login: "تسجيل الدخول",
 
-hero_eyebrow: "محمود خضر — محاضر ومدرس للمواد الطبية بكلية العلاج الطبيعي",    
+    hero_eyebrow: "محمود خضر — محاضر ومدرس للمواد الطبية بكلية العلاج الطبيعي",
     hero_title: "رحلتك بتبدأ مع <span class='text-amber-300'>خِـضـر</span><br/>خُد أول خطوة.. وأنت واثق",
     hero_sub: "تجربة تعليمية متكاملة تستحق تبدأ بيها لأن كل تفصيلة مصممة علشانك",
     hero_cta1: "سجل وخد أول خطوة",
@@ -831,7 +804,8 @@ hero_eyebrow: "محمود خضر — محاضر ومدرس للمواد الطب
 
     inst_eyebrow: "عن الشارح ومؤسس المنصة",
     inst_name: "محمود خضر",
-inst_bio: "شارح ومدرس للمواد الطبية والأكاديمية بكلية العلاج الطبيعي بخبرة سنتين في التدريس الشامل، يركز على تقديم شرح مبسط، منظم، وعملي يساعد الطلاب على فهم الأساسيات والتطبيق والتجهيز بثقة للامتحانات.",
+    inst_bio: "شارح ومدرس للمواد الطبية والأكاديمية بكلية العلاج الطبيعي بخبرة سنتين في التدريس الشامل، يركز على تقديم شرح مبسط، منظم، وعملي يساعد الطلاب على فهم الأساسيات والتطبيق والتجهيز بثقة للامتحانات.",
+
     auth_tab_login: "تسجيل الدخول",
     auth_tab_register: "حساب جديد",
     auth_name: "الاسم بالكامل",
@@ -858,7 +832,7 @@ inst_bio: "شارح ومدرس للمواد الطبية والأكاديمية 
     brand: "KHEDR & PHYSIO",
     nav_login: "Log In",
 
-hero_eyebrow: "Mahmoud Khedr — Physiotherapy Student & Medical Education Instructor",
+    hero_eyebrow: "Mahmoud Khedr — Physiotherapy Student & Medical Education Instructor",
     hero_title: "Your Journey Starts with <span class='text-amber-300'>KHEDR</span><br/>Take the First Step with Confidence",
     hero_sub: "A complete educational experience designed specifically for physical therapy students.",
     hero_cta1: "Sign Up & Start",
@@ -904,7 +878,8 @@ hero_eyebrow: "Mahmoud Khedr — Physiotherapy Student & Medical Education Instr
 
     inst_eyebrow: "About The Tutor & Founder",
     inst_name: "Mahmoud Khedr",
-inst_bio: "Physiotherapy student and medical education instructor with 2 years of experience teaching medical college subjects. I focus on delivering clear, structured, and practical explanations that help students understand the basics, apply their knowledge, and prepare confidently for exams.",
+    inst_bio: "Physiotherapy student and medical education instructor with 2 years of experience teaching medical college subjects. I focus on delivering clear, structured, and practical explanations that help students understand the basics, apply their knowledge, and prepare confidently for exams.",
+
     auth_tab_login: "Log In",
     auth_tab_register: "New Account",
     auth_name: "Full Name",
@@ -1078,12 +1053,12 @@ function openPackageDetails(pkgKey) {
 
   const listEl = document.getElementById("pkgCoursesList");
   listEl.innerHTML = data.courses.map(c => `
-    <div class="rounded-2xl border border-slate-800 bg-[#0F1D2D] p-4 flex items-center justify-between shadow-sm">
+    <div class="rounded-2xl border border-slate-800 bg-[#0F1D2D] p-5 flex items-center justify-between shadow-md">
       <div>
-        <h4 class="text-xs md:text-sm font-black text-slate-100">${c.name}</h4>
-        <p class="text-[11px] opacity-60 mt-1 text-slate-400">${c.desc}</p>
+        <h4 class="text-sm md:text-base font-black text-slate-100">${c.name}</h4>
+        <p class="text-xs opacity-70 mt-1 text-slate-400">${c.desc}</p>
       </div>
-      <span class="text-[10px] font-black px-2.5 py-1 rounded-md bg-slate-800 text-rose-400 shrink-0">${c.size}</span>
+      <span class="text-xs font-black px-3 py-1.5 rounded-lg bg-slate-800 text-rose-400 shrink-0">${c.size}</span>
     </div>
   `).join("");
 
@@ -1158,192 +1133,183 @@ function closePackageDetails() {
       }
     });
   }
+
   // ============ COURSE & LESSONS FREEMIUM SYSTEM ============
+  const singleCoursesData = {
+    biomechanics: {
+      id: "biomechanics",
+      category: "الفرقة الثانية • ترم أول",
+      title: "كورس Biomechanics & Movement Analysis 🩻",
+      desc: "شرح كامل للميكانيكا الحيوية، تحليل القوى، العزوم، حركات المشي، مع ورش العملي وبنك الأسئلة.",
+      price: "599 ج.م",
+      isEnrolled: false,
+      lessons: [
+        {
+          id: "l1",
+          title: "01. مقدمة الميكانيكا الحيوية والـ Kinematics",
+          type: "video",
+          duration: "15:20 دقيقة",
+          isFree: true,
+          videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ",
+          desc: "شرح مفاهيم الـ Vectors، القوى الحركية، ومقدمة المادة مجاناً للجميع."
+        },
+        {
+          id: "l2",
+          title: "02. تحليل عزوم المفاصل (Kinetics & Joint Torques)",
+          type: "video",
+          duration: "35:40 دقيقة",
+          isFree: false,
+          videoUrl: "",
+          desc: "حساب العزوم والقوى المؤثرة على مفصل الركبة والحوض أثناء الحركة."
+        },
+        {
+          id: "l3",
+          title: "03. Gait Analysis (تحليل حركة المشي الإكلينيكي)",
+          type: "video",
+          duration: "42:10 دقيقة",
+          isFree: false,
+          videoUrl: "",
+          desc: "دراسة مراحل الـ Stance & Swing Phase والأخطاء الحركية الشهيرة."
+        },
+        {
+          id: "l4",
+          title: "📄 ملخص وتفريغ المحاضرات PDF",
+          type: "pdf",
+          duration: "ملف PDF",
+          isFree: false,
+          desc: "تفريغ شامل بالرسومات والمخططات التوضيحية لجميع قوانين المادة."
+        },
+        {
+          id: "l5",
+          title: "🧠 بنك أسئلة الـ MCQ والتفسير العلمي",
+          type: "quiz",
+          duration: "50 سؤال",
+          isFree: false,
+          desc: "نماذج امتحانات السنوات السابقة مجابة بالتفصيل."
+        }
+      ]
+    }
+  };
 
-// داتا الكورسات والمحاضرات (مقدمة مجانية + باقي المحاضرات مقفولة)
-const singleCoursesData = {
-  biomechanics: {
-    id: "biomechanics",
-    category: "الفرقة الثانية • ترم أول",
-    title: "كورس Biomechanics & Movement Analysis 🩻",
-    desc: "شرح كامل للميكانيكا الحيوية، تحليل القوى، العزوم، حركات المشي، مع ورش العملي وبنك الأسئلة.",
-    price: "599 ج.م",
-    isEnrolled: false, // حالة الاشتراك الافتراضية
-    lessons: [
-      {
-        id: "l1",
-        title: "01. مقدمة الميكانيكا الحيوية والـ Kinematics",
-        type: "video",
-        duration: "15:20 دقيقة",
-        isFree: true, // المقدمة مجانية
-        videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ", // ضع رابط فيديو المقدمة هنا
-        desc: "شرح مفاهيم الـ Vectors، القوى الحركية، ومقدمة المادة مجاناً للجميع."
-      },
-      {
-        id: "l2",
-        title: "02. تحليل عزوم المفاصل (Kinetics & Joint Torques)",
-        type: "video",
-        duration: "35:40 دقيقة",
-        isFree: false,
-        videoUrl: "",
-        desc: "حساب العزوم والقوى المؤثرة على مفصل الركبة والحوض أثناء الحركة."
-      },
-      {
-        id: "l3",
-        title: "03. Gait Analysis (تحليل حركة المشي الإكلينيكي)",
-        type: "video",
-        duration: "42:10 دقيقة",
-        isFree: false,
-        videoUrl: "",
-        desc: "دراسة مراحل الـ Stance & Swing Phase والأخطاء الحركية الشهيرة."
-      },
-      {
-        id: "l4",
-        title: "📄 ملخص وتفريغ المحاضرات PDF",
-        type: "pdf",
-        duration: "ملف PDF",
-        isFree: false,
-        desc: "تفريغ شامل بالرسومات والمخططات التوضيحية لجميع قوانين المادة."
-      },
-      {
-        id: "l5",
-        title: "🧠 بنك أسئلة الـ MCQ والتفسير العلمي",
-        type: "quiz",
-        duration: "50 سؤال",
-        isFree: false,
-        desc: "نماذج امتحانات السنوات السابقة مجابة بالتفصيل."
-      }
-    ]
-  }
-};
+  let currentActiveCourse = null;
 
-let currentActiveCourse = null;
+  window.openCourseView = function(courseId) {
+    const crs = singleCoursesData[courseId] || singleCoursesData["biomechanics"];
+    currentActiveCourse = crs;
 
-// فتح شاشة الكورس وفحص حالة القفل والفتح
-function openCourseView(courseId) {
-  const crs = singleCoursesData[courseId] || singleCoursesData["biomechanics"];
-  currentActiveCourse = crs;
+    document.getElementById("crsCategory").textContent = crs.category;
+    document.getElementById("crsTitle").textContent = crs.title;
+    document.getElementById("crsDesc").textContent = crs.desc;
+    document.getElementById("crsPrice").textContent = crs.price;
 
-  document.getElementById("crsCategory").textContent = crs.category;
-  document.getElementById("crsTitle").textContent = crs.title;
-  document.getElementById("crsDesc").textContent = crs.desc;
-  document.getElementById("crsPrice").textContent = crs.price;
+    renderCourseCurriculum();
 
-  renderCourseCurriculum();
+    ["hero", "years", "courses", "features", "honors", "reviews", "instructor", "auth"].forEach(id => {
+      const el = document.getElementById(id);
+      if (el) el.classList.add("hidden");
+    });
 
-  // إخفاء الصفحة الرئيسية وإظهار شاشة الكورس
-  ["hero", "years", "courses", "features", "honors", "reviews", "instructor", "auth"].forEach(id => {
-    const el = document.getElementById(id);
-    if (el) el.classList.add("hidden");
-  });
+    document.getElementById("courseView").classList.remove("hidden");
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
 
-  document.getElementById("courseView").classList.remove("hidden");
-  window.scrollTo({ top: 0, behavior: "smooth" });
-}
+  function renderCourseCurriculum() {
+    const crs = currentActiveCourse;
+    if (!crs) return;
 
-// عرض فهرس المحاضرات حسب حالة القفل / الاشتراك
-function renderCourseCurriculum() {
-  const crs = currentActiveCourse;
-  if (!crs) return;
+    const btn = document.getElementById("crsActionBtn");
+    const banner = document.getElementById("enrollmentStatusBanner");
 
-  const btn = document.getElementById("crsActionBtn");
-  const banner = document.getElementById("enrollmentStatusBanner");
+    if (crs.isEnrolled) {
+      btn.textContent = "أنت مشترك بالفعل 🔓 (المحتوى مفتوح)";
+      btn.className = "w-full bg-emerald-500 text-white font-black text-xs md:text-sm px-8 py-3.5 rounded-2xl shadow-xl cursor-default";
+      banner.innerHTML = `<span class="inline-flex items-center gap-2 text-xs md:text-sm font-bold text-emerald-300 bg-emerald-950/60 px-4 py-2 rounded-2xl border border-emerald-500/30">
+        <span>🎉</span> تم الاشتراك بنجاح! جميع المحاضرات وبنوك الأسئلة والـ PDFs مفتوحة لك.
+      </span>`;
+    } else {
+      btn.textContent = "الاشتراك في الكورس الآن 🚀";
+      btn.className = "w-full bg-white text-[#7A0B30] font-black text-xs md:text-sm px-8 py-3.5 rounded-2xl shadow-xl hover:bg-rose-50 transition transform hover:scale-105";
+      banner.innerHTML = `<span class="inline-flex items-center gap-2 text-xs md:text-sm font-bold text-amber-300 bg-black/40 px-4 py-2 rounded-2xl border border-amber-300/30">
+        <span>🔒</span> يتوفر كليب معاينة مجاني (المقدمة) — اشترك لفتح باقي المواد
+      </span>`;
+    }
 
-  if (crs.isEnrolled) {
-    btn.textContent = "أنت مشترك بالفعل 🔓 (المحتوى مفتوح)";
-    btn.className = "w-full bg-emerald-500 text-white font-black text-xs md:text-sm px-6 py-3 rounded-xl shadow-xl cursor-default";
-    banner.innerHTML = `<span class="inline-flex items-center gap-2 text-xs font-bold text-emerald-300 bg-emerald-950/60 px-3 py-1.5 rounded-xl border border-emerald-500/30">
-      <span>🎉</span> تم الاشتراك بنجاح! جميع المحاضرات وبنوك الأسئلة والـ PDFs مفتوحة لك.
-    </span>`;
-  } else {
-    btn.textContent = "الاشتراك في الكورس الآن 🚀";
-    btn.className = "w-full bg-white text-[#7A0B30] font-black text-xs md:text-sm px-6 py-3 rounded-xl shadow-xl hover:bg-rose-50 transition transform hover:scale-105";
-    banner.innerHTML = `<span class="inline-flex items-center gap-2 text-xs font-bold text-amber-300 bg-black/40 px-3 py-1.5 rounded-xl border border-amber-300/30">
-      <span>🔒</span> يتوفر كليب معاينة مجاني (المقدمة) — اشترك لفتح باقي المواد
-    </span>`;
-  }
-
-  const listEl = document.getElementById("lessonsList");
-  listEl.innerHTML = crs.lessons.map((lesson, idx) => {
-    const canAccess = lesson.isFree || crs.isEnrolled;
-    
-    return `
-      <div onclick="selectLesson('${lesson.id}')" class="rounded-2xl border p-4 transition cursor-pointer flex items-center justify-between ${
-        canAccess 
-          ? "bg-[#0F1D2D] border-slate-700 hover:border-amber-400" 
-          : "bg-slate-900/60 border-slate-800 opacity-60 hover:opacity-80"
-      }">
-        <div class="flex items-center gap-3">
-          <span class="text-lg">${canAccess ? (lesson.isFree ? "▶️" : "🔓") : "🔒"}</span>
-          <div>
-            <h4 class="text-xs font-black text-slate-100">${lesson.title}</h4>
-            <span class="text-[10px] text-slate-400 block mt-0.5">${lesson.duration} ${lesson.isFree ? "• معاينة مجانية" : ""}</span>
+    const listEl = document.getElementById("lessonsList");
+    listEl.innerHTML = crs.lessons.map((lesson) => {
+      const canAccess = lesson.isFree || crs.isEnrolled;
+      
+      return `
+        <div onclick="selectLesson('${lesson.id}')" class="rounded-2xl border p-5 transition cursor-pointer flex items-center justify-between ${
+          canAccess 
+            ? "bg-[#0F1D2D] border-slate-700 hover:border-amber-400" 
+            : "bg-slate-900/60 border-slate-800 opacity-60 hover:opacity-80"
+        }">
+          <div class="flex items-center gap-4">
+            <span class="text-xl">${canAccess ? (lesson.isFree ? "▶️" : "🔓") : "🔒"}</span>
+            <div>
+              <h4 class="text-xs md:text-sm font-black text-slate-100">${lesson.title}</h4>
+              <span class="text-xs text-slate-400 block mt-1">${lesson.duration} ${lesson.isFree ? "• معاينة مجانية" : ""}</span>
+            </div>
           </div>
+          <span class="text-xs font-black px-3 py-1 rounded-lg ${canAccess ? "bg-emerald-500/20 text-emerald-400" : "bg-slate-800 text-slate-500"}">
+            ${canAccess ? "متاح" : "مغلق"}
+          </span>
         </div>
-        <span class="text-[10px] font-black px-2 py-1 rounded ${canAccess ? "bg-emerald-500/20 text-emerald-400" : "bg-slate-800 text-slate-500"}">
-          ${canAccess ? "متاح" : "مغلق"}
-        </span>
-      </div>
-    `;
-  }).join("");
-}
-
-// تشغيل الدرس أو تنبيه الطالب بالاشتراك
-function selectLesson(lessonId) {
-  const crs = currentActiveCourse;
-  const lesson = crs.lessons.find(l => l.id === lessonId);
-  if (!lesson) return;
-
-  const canAccess = lesson.isFree || crs.isEnrolled;
-
-  if (!canAccess) {
-    alert("🔒 هذه المحاضرة مغلقة. يرجى الضغط على زر 'الاشتراك في الكورس' لفتح جميع المحاضرات والـ PDFs وبنوك الأسئلة.");
-    return;
+      `;
+    }).join("");
   }
 
-  // عرض تفاصيل الدرس المفتوح
-  document.getElementById("currentLessonTitle").textContent = lesson.title;
-  document.getElementById("currentLessonDesc").textContent = lesson.desc;
+  window.selectLesson = function(lessonId) {
+    const crs = currentActiveCourse;
+    const lesson = crs.lessons.find(l => l.id === lessonId);
+    if (!lesson) return;
 
-  const iframe = document.getElementById("videoIframe");
-  const placeholder = document.getElementById("videoPlaceholder");
+    const canAccess = lesson.isFree || crs.isEnrolled;
 
-  if (lesson.type === "video" && lesson.videoUrl) {
-    iframe.src = lesson.videoUrl;
-    iframe.classList.remove("hidden");
-    placeholder.classList.add("hidden");
-  } else {
-    iframe.classList.add("hidden");
-    placeholder.classList.remove("hidden");
-    placeholder.querySelector("h3").textContent = `📄 ${lesson.title}`;
-    placeholder.querySelector("p").textContent = "المحتوى جاهز للعرض والتحميل.";
-  }
-}
+    if (!canAccess) {
+      alert("🔒 هذه المحاضرة مغلقة. يرجى الضغط على زر 'الاشتراك في الكورس' لفتح جميع المحاضرات والـ PDFs وبنوك الأسئلة.");
+      return;
+    }
 
-// محاكاة زر الاشتراك (فتح كل الدروس)
-function toggleCourseEnrollment() {
-  if (!currentActiveCourse) return;
+    document.getElementById("currentLessonTitle").textContent = lesson.title;
+    document.getElementById("currentLessonDesc").textContent = lesson.desc;
 
-  if (currentActiveCourse.isEnrolled) {
-    alert("أنت مشترك بالفعل في هذا الكورس!");
-    return;
-  }
+    const iframe = document.getElementById("videoIframe");
+    const placeholder = document.getElementById("videoPlaceholder");
 
-  // تفعيل الاشتراك
-  currentActiveCourse.isEnrolled = true;
-  renderCourseCurriculum();
-  alert("🎉 مبروك! تم الاشتراك في الكورس بنجاح وفتح جميع المحاضرات وبنوك الأسئلة.");
-}
+    if (lesson.type === "video" && lesson.videoUrl) {
+      iframe.src = lesson.videoUrl;
+      iframe.classList.remove("hidden");
+      placeholder.classList.add("hidden");
+    } else {
+      iframe.classList.add("hidden");
+      placeholder.classList.remove("hidden");
+      placeholder.querySelector("h3").textContent = `📄 ${lesson.title}`;
+      placeholder.querySelector("p").textContent = "المحتوى جاهز للعرض والتحميل.";
+    }
+  };
 
-// إغلاق شاشة الكورس والعودة للرئيسية
-function closeCourseView() {
-  document.getElementById("courseView").classList.add("hidden");
-  ["hero", "years", "courses", "features", "honors", "reviews", "instructor", "auth"].forEach(id => {
-    const el = document.getElementById(id);
-    if (el) el.classList.remove("hidden");
-  });
-  window.scrollTo({ top: 0, behavior: "smooth" });
-}
+  window.toggleCourseEnrollment = function() {
+    if (!currentActiveCourse) return;
+
+    if (currentActiveCourse.isEnrolled) {
+      alert("أنت مشترك بالفعل في هذا الكورس!");
+      return;
+    }
+
+    currentActiveCourse.isEnrolled = true;
+    renderCourseCurriculum();
+    alert("🎉 مبروك! تم الاشتراك في الكورس بنجاح وفتح جميع المحاضرات وبنوك الأسئلة.");
+  };
+
+  window.closeCourseView = function() {
+    document.getElementById("courseView").classList.add("hidden");
+    ["hero", "years", "courses", "features", "honors", "reviews", "instructor", "auth"].forEach(id => {
+      const el = document.getElementById(id);
+      if (el) el.classList.remove("hidden");
+    });
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
 </script>
 </body>
 </html>
