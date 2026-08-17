@@ -16,23 +16,20 @@
     --brand-primary: #8E0E38;   /* عنابي / بورجوندي المنصة */
     --brand-dark:    #5E0824;
     --ink:           #0E2A38;
-    --mist:          #07111D;   /* جعل الخلفية الافتراضية كحلي داكن فاخر مثل منصة الجوهري */
+    --mist:          #07111D;
     --mist-line:     #1E2E42;
     --dark-bg:       #07111D;
     --dark-card:     #0F1D2D;
     --dark-line:     #1E2E42;
   }
 
-  /* Font assignments */
   html[lang="ar"] body, html[lang="ar"] * { font-family: 'Tajawal', 'IBM Plex Sans Arabic', sans-serif; }
   html[lang="en"] body, html[lang="en"] * { font-family: 'Plus Jakarta Sans', sans-serif; }
   .num-font { font-family: 'Plus Jakarta Sans', sans-serif; }
 
-  /* Base Styles - Dark Viewport by default to match El-Gohary */
   body { background-color: var(--dark-bg); color: #EAF3F3; transition: background-color 0.3s ease, color 0.3s ease; }
   body.light { background-color: #F8FAFC; color: #0E2A38; }
 
-  /* Card & Text overrides */
   .bg-card-theme { background-color: var(--dark-card); border-color: var(--dark-line); color: #EAF3F3; }
   body.light .bg-card-theme { background-color: #FFFFFF !important; border-color: #E2E8F0 !important; color: #0E2A38 !important; }
   
@@ -42,12 +39,10 @@
   .text-theme-sub { color: #94A3B8; }
   body.light .text-theme-sub { color: #64748B !important; }
 
-  /* Brand Utilities */
   .bg-brand { background-color: var(--brand-primary); }
   .text-brand { color: var(--brand-primary); }
   .border-brand { border-color: var(--brand-primary); }
 
-  /* Scroll Progress Bar */
   #scrollProgress {
     position: fixed;
     top: 64px;
@@ -59,7 +54,6 @@
     transition: width 0.1s ease-out;
   }
 
-  /* Dark mode toggle switch */
   .theme-toggle-pill {
     width: 54px;
     height: 28px;
@@ -88,7 +82,6 @@
   body.light .theme-toggle-thumb { transform: translateX(26px); }
   [dir="rtl"] body.light .theme-toggle-thumb { transform: translateX(-26px); }
 
-  /* Card Hover */
   .card-hover { transition: transform .25s ease, box-shadow .25s ease; }
   .card-hover:hover { transform: translateY(-5px); box-shadow: 0 16px 35px -10px rgba(142, 14, 56, 0.3); }
 
@@ -98,7 +91,6 @@
   [dir="rtl"] .rtl-flip { transform: scaleX(-1); }
   ::selection { background: var(--brand-primary); color: #fff; }
 
-/* Auth Tabs Fix */
   .auth-nav-bg { background-color: #1E293B; }
   body.light .auth-nav-bg { background-color: #E2E8F0 !important; }
 
@@ -115,36 +107,33 @@
 <!-- Scroll Progress Bar -->
 <div id="scrollProgress"></div>
 
-<!-- ============ NAVBAR (مضبوط للشاشات الصغيرة والكبيرة) ============ -->
+<!-- ============ NAVBAR ============ -->
 <header class="sticky top-0 z-50 backdrop-blur-md bg-[#07111D]/95 border-b border-slate-800 transition-colors">
   <div class="w-full max-w-[1600px] mx-auto px-4 md:px-8 h-16 flex items-center justify-between">
 
-    <!-- اليمين: زر القائمة للموبايل + أزرار الدخول للكمبيوتر فقط -->
+    <!-- اليمين: زر القائمة للموبايل + أزرار الدخول -->
     <div class="flex items-center gap-3">
-      <!-- زر المنيو (يظهر فقط في الموبايل) -->
       <button id="drawerBtn" class="md:hidden w-10 h-10 flex items-center justify-center text-amber-400 hover:text-white transition">
         <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
       </button>
 
       <!-- الدخول والتسجيل (مخفي في الموبايل ويظهر في الكمبيوتر فقط) -->
       <div class="hidden md:flex items-center gap-2">
-<!-- أزرار الزائر (قبل تسجيل الدخول) -->
-<div id="guestNav" class="flex items-center gap-3">
-  <a href="#auth" class="text-xs font-bold text-slate-300 hover:text-white transition">تسجيل الدخول</a>
-  <a href="#auth" class="text-xs font-black px-4 py-2 rounded-xl bg-brand text-white shadow-md">حساب جديد</a>
-</div>
+        <div id="guestNav" class="flex items-center gap-3">
+          <a href="#authSection" class="text-xs font-bold text-slate-300 hover:text-white transition">تسجيل الدخول</a>
+          <a href="#authSection" onclick="setAuthTab('register')" class="text-xs font-black px-4 py-2 rounded-xl bg-brand text-white shadow-md">حساب جديد</a>
+        </div>
 
-<!-- بيانات المستخدم (بعد تسجيل الدخول) -->
-<div id="userNav" class="hidden flex items-center gap-3">
-  <span class="text-xs font-bold text-emerald-400">مرحباً، <span id="navUserName" class="text-white"></span> 👋</span>
-  <button id="navLogoutBtn" class="text-[11px] font-bold px-3 py-1.5 rounded-lg bg-rose-950/60 text-rose-300 hover:bg-rose-900 border border-rose-800/40 transition">
-    خروج
-  </button>
-</div>
-     </div>
+        <div id="userNav" class="hidden flex items-center gap-3">
+          <span class="text-xs font-bold text-emerald-400">مرحباً، <span id="navUserName" class="text-white"></span> 👋</span>
+          <button id="navLogoutBtn" class="text-[11px] font-bold px-3 py-1.5 rounded-lg bg-rose-950/60 text-rose-300 hover:bg-rose-900 border border-rose-800/40 transition">
+            خروج
+          </button>
+        </div>
+      </div>
     </div>
 
-    <!-- المنتصف: اللوجو المفرغ logo.jpg -->
+    <!-- المنتصف: اللوجو -->
     <a href="#" onclick="window.scrollTo({top: 0, behavior: 'smooth'}); return false;" class="flex items-center gap-2">
       <img src="logo.png" alt="KHEDR PHYSIO" class="h-9 md:h-11 w-auto object-contain" onerror="this.src='logo.png'" />
       <span class="hidden lg:inline font-black text-sm md:text-base text-white" data-i18n="brand">KHEDR & PHYSIO</span>
@@ -152,14 +141,12 @@
 
     <!-- الشمال: الثيم وتغيير اللغة -->
     <div class="flex items-center gap-2">
-      <!-- زر الثيم -->
       <div id="themeBtn" class="theme-toggle-pill" title="Toggle Dark/Light Mode">
         <span class="text-[10px] z-10">☀️</span>
         <span class="text-[10px] z-10">🌙</span>
         <div class="theme-toggle-thumb"></div>
       </div>
 
-      <!-- زر اللغة -->
       <button id="langBtn" class="text-xs font-bold px-2.5 h-7 rounded-full border border-slate-700 text-slate-200 flex items-center gap-1 hover:border-brand transition">
         <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.7 2.5 15.3 0 18M12 3c-2.5 2.7-2.5 15.3 0 18"/></svg>
         <span id="langLabel">EN</span>
@@ -177,17 +164,16 @@
     <a href="#honors" onclick="toggleDrawer()" data-i18n="nav_honors">لوحة الشرف</a>
     <a href="#instructor" onclick="toggleDrawer()" data-i18n="nav_instructor">عن الشارح</a>
     <div class="pt-3 border-t border-slate-800 flex gap-2">
-      <a href="#auth" onclick="toggleDrawer(); setAuthTab('login')" class="w-1/2 text-center py-2 rounded-xl border border-slate-700 text-xs">تسجيل الدخول</a>
-      <a href="#auth" onclick="toggleDrawer(); setAuthTab('register')" class="w-1/2 text-center py-2 rounded-xl bg-brand text-white text-xs">حساب جديد</a>
+      <a href="#authSection" onclick="toggleDrawer(); setAuthTab('login')" class="w-1/2 text-center py-2 rounded-xl border border-slate-700 text-xs">تسجيل الدخول</a>
+      <a href="#authSection" onclick="toggleDrawer(); setAuthTab('register')" class="w-1/2 text-center py-2 rounded-xl bg-brand text-white text-xs">حساب جديد</a>
     </div>
   </div>
 </header>
 
-<!-- ============ HERO SECTION (حجم ضخم لفخامة الـ 100% Zoom) ============ -->
+<!-- ============ HERO SECTION ============ -->
 <section id="hero" class="w-full max-w-[1650px] mx-auto px-4 md:px-8 pt-4 pb-10">
   <div class="relative overflow-hidden rounded-[2.5rem] bg-gradient-to-b md:bg-gradient-to-l from-[#5E0824] via-[#7A0B30] to-[#4A051B] min-h-[600px] lg:min-h-[680px] flex flex-col md:flex-row items-center justify-between px-6 sm:px-12 md:px-20 py-12 shadow-2xl border border-white/10">
     
-    <!-- النصوص والزراير بحجم كبير صريح -->
     <div class="w-full md:w-7/12 text-center md:text-right text-white space-y-6 md:space-y-8 z-10">
       <span class="inline-block text-sm md:text-xl font-black text-rose-300 tracking-wide" data-i18n="hero_eyebrow">
         محمود خضر — محاضر ومدرس للمواد الطبية بكلية العلاج الطبيعي
@@ -203,7 +189,7 @@
       </p>
 
       <div class="pt-2">
-        <a href="#auth" class="inline-block bg-white text-[#7A0B30] font-black text-sm md:text-lg px-10 py-4 rounded-2xl shadow-2xl hover:bg-rose-50 transition transform hover:scale-105" data-i18n="hero_cta1">
+        <a href="#authSection" class="inline-block bg-white text-[#7A0B30] font-black text-sm md:text-lg px-10 py-4 rounded-2xl shadow-2xl hover:bg-rose-50 transition transform hover:scale-105" data-i18n="hero_cta1">
           سجل وخد أول خطوة
         </a>
       </div>
@@ -213,7 +199,6 @@
       </div>
     </div>
 
-    <!-- الصورة بارتفاع كبير مفرغة -->
     <div class="w-full md:w-5/12 relative flex justify-center items-end mt-8 md:mt-0 z-0">
       <img src="khedr.jpg" alt="محمود خضر" class="max-h-[420px] sm:max-h-[560px] lg:max-h-[640px] w-auto object-contain drop-shadow-[0_25px_35px_rgba(0,0,0,0.85)] scale-105" onerror="this.src='khedr.png'" />
     </div>
@@ -221,11 +206,10 @@
   </div>
 </section>
 
-<!-- ============ ACADEMIC YEARS (الفرقة الأولى والثانية فقط) ============ -->
+<!-- ============ ACADEMIC YEARS ============ -->
 <section id="years" class="w-full max-w-[1650px] mx-auto px-6 md:px-12 py-20 border-b border-slate-800">
   <div class="grid lg:grid-cols-12 gap-10 items-center">
     
-    <!-- العنوان والوصف على اليمين -->
     <div class="lg:col-span-5 text-right space-y-5">
       <span class="text-xs md:text-sm font-extrabold uppercase tracking-widest text-rose-400" data-i18n="years_eyebrow">المسارات الجامعية</span>
       <h2 class="text-3xl md:text-5xl lg:text-6xl font-black text-theme-main leading-tight" data-i18n="years_title">السنوات الدراسية</h2>
@@ -233,13 +217,12 @@
         احجز اشتراكك دلوقتي وابدأ مذاكرة مقررات الفرقة الأولى والثانية على موبايلك، التابلت أو اللابتوب الخاص بيك.
       </p>
       <div class="pt-3">
-        <a href="#auth" class="inline-block bg-brand hover:bg-rose-900 text-white font-black text-sm md:text-base px-9 py-4 rounded-2xl shadow-xl transition">
+        <a href="#authSection" class="inline-block bg-brand hover:bg-rose-900 text-white font-black text-sm md:text-base px-9 py-4 rounded-2xl shadow-xl transition">
           انشئ حسابك الآن
         </a>
       </div>
     </div>
 
-    <!-- كارتين ممتدين بالتساوي للفرقتين 1 و 2 -->
     <div class="lg:col-span-7 grid sm:grid-cols-2 gap-6">
       
       <!-- الفرقة الأولى -->
@@ -249,9 +232,9 @@
           <h3 class="text-xl font-black text-theme-main" data-i18n="year1_title">الفرقة الأولى</h3>
           <p class="text-xs md:text-sm text-theme-sub font-semibold mt-2.5 leading-6" data-i18n="year1_desc">Anatomy, Physiology, Histology, Intro to Biomechanics, Biophysics.</p>
         </div>
-<button onclick="goToYearCourses('y1')" class="mt-6 inline-flex items-center text-xs md:text-sm font-black text-rose-400 hover:underline">
-  دخول مقررات الفرقة الأولى ←
-</button>
+        <button onclick="goToYearCourses('y1')" class="mt-6 inline-flex items-center text-xs md:text-sm font-black text-rose-400 hover:underline">
+          دخول مقررات الفرقة الأولى ←
+        </button>
       </div>
 
       <!-- الفرقة الثانية -->
@@ -261,9 +244,9 @@
           <h3 class="text-xl font-black text-theme-main" data-i18n="year2_title">الفرقة الثانية</h3>
           <p class="text-xs md:text-sm text-theme-sub font-semibold mt-2.5 leading-6" data-i18n="year2_desc">Biomechanics, Electrotherapy, Hydrotherapy, Kinesiology, Pathology.</p>
         </div>
-<button onclick="goToYearCourses('y2')" class="mt-6 inline-flex items-center text-xs md:text-sm font-black text-rose-400 hover:underline">
-  دخول مقررات الفرقة الثانية ←
-</button>
+        <button onclick="goToYearCourses('y2')" class="mt-6 inline-flex items-center text-xs md:text-sm font-black text-rose-400 hover:underline">
+          دخول مقررات الفرقة الثانية ←
+        </button>
       </div>
 
     </div>
@@ -271,17 +254,15 @@
   </div>
 </section>
 
-<!-- ============ COURSES & SLIDER SECTION (تصميم الجوهري بأسهم جانبية ضخمة) ============ -->
+<!-- ============ COURSES & SLIDER SECTION ============ -->
 <section id="courses" class="w-full max-w-[1650px] mx-auto px-4 md:px-8 py-16 border-b border-slate-800 relative">
   
-  <!-- الهيدر مع فلاتر الفرق -->
   <div class="flex flex-col md:flex-row md:items-center justify-between gap-6 mb-8">
     <div>
       <span class="text-xs md:text-sm font-extrabold uppercase tracking-widest text-rose-400">مكتبة المقررات والترم الأول</span>
       <h2 class="text-3xl md:text-5xl font-black mt-1 text-theme-main">الكورسات والباقات المتاحة</h2>
     </div>
 
-    <!-- أزرار الفلترة الأنيقة -->
     <div class="flex items-center gap-1.5 bg-[#0F1D2D] p-1.5 rounded-2xl border border-slate-800">
       <button onclick="filterCourses('all')" class="filter-tab active px-4 py-2 rounded-xl text-xs font-black transition bg-brand text-white" id="flt-all">الكل</button>
       <button onclick="filterCourses('y1')" class="filter-tab px-4 py-2 rounded-xl text-xs font-black text-slate-400 transition" id="flt-y1">سنة أولى</button>
@@ -290,28 +271,22 @@
     </div>
   </div>
 
-  <!-- حاوية السلايدر مع الأسهم الجانبية الكبيرة -->
   <div class="relative group">
-    
-<!-- السهم الأيمن (زي الجوهري شفاف ويحمر عند التفاعل) -->
     <button onclick="scrollSlider('right')" class="slider-arrow absolute -end-2 md:-end-6 top-1/2 -translate-y-1/2 z-20 text-rose-500/40 hover:text-rose-500 active:text-rose-600 text-5xl md:text-7xl font-light transition-all duration-200 transform hover:scale-125 select-none" title="السابق">
       ›
     </button>
-
-    <!-- السهم الأيسر (زي الجوهري شفاف ويحمر عند التفاعل) -->
     <button onclick="scrollSlider('left')" class="slider-arrow absolute -start-2 md:-start-6 top-1/2 -translate-y-1/2 z-20 text-rose-500/40 hover:text-rose-500 active:text-rose-600 text-5xl md:text-7xl font-light transition-all duration-200 transform hover:scale-125 select-none" title="التالي">
       ‹
     </button>
 
-    <!-- مسار السلايدر الأفقي -->
     <div id="coursesSlider" class="flex gap-6 overflow-x-auto px-4 py-6 scroll-smooth snap-x snap-mandatory" style="scrollbar-width: none; -ms-overflow-style: none;">
-      <!-- سيتم تعبئة الكروت ديناميكياً -->
+      <!-- يتم التعبئة عبر JS -->
     </div>
-
   </div>
 
 </section>
-<!-- ============ PLATFORM FEATURES SECTION ============ -->
+
+<!-- ============ FEATURES SECTION ============ -->
 <section id="features" class="w-full max-w-[1550px] mx-auto px-5 md:px-8 py-16 border-b border-slate-800">
   <div class="text-center max-w-2xl mx-auto mb-12 fade-up">
     <span class="text-xs font-extrabold uppercase tracking-widest text-rose-400" data-i18n="feat_eyebrow">لماذا منصتنا؟</span>
@@ -339,7 +314,7 @@
   </div>
 </section>
 
-<!-- ============ HONOR BOARD SECTION ============ -->
+<!-- ============ HONOR BOARD ============ -->
 <section id="honors" class="w-full max-w-[1550px] mx-auto px-5 md:px-8 py-16 border-b border-slate-800">
   <div class="text-center max-w-xl mx-auto mb-10 fade-up">
     <h2 class="text-2xl md:text-3xl font-black text-theme-main" data-i18n="honor_title">أوائل خِـــضـر</h2>
@@ -368,7 +343,7 @@
   </div>
 </section>
 
-<!-- ============ REVIEWS SECTION ============ -->
+<!-- ============ REVIEWS ============ -->
 <section id="reviews" class="w-full max-w-[1550px] mx-auto px-5 md:px-8 py-16 border-b border-slate-800">
   <div class="text-center max-w-2xl mx-auto mb-10 fade-up">
     <h2 class="text-2xl md:text-3xl font-black text-theme-main" data-i18n="rev_title">طلاب قالوا إيه عنا؟</h2>
@@ -379,29 +354,28 @@
       <p class="text-xs md:text-sm font-semibold text-theme-main leading-7" data-i18n="r1_text">"بعد ما انضميت للمنصة مع دكتور خضر، بقيت أفهم الميكانيكا الحيوية من أول محاضرة بدل الحفظ."</p>
       <span class="block text-[11px] font-black text-theme-sub mt-4">— إيمان من الجامعة المصرية الصينية</span>
     </div>
-
   </div>
 </section>
 
 <!-- ============ INSTRUCTOR SECTION ============ -->
 <section id="instructor" class="w-full max-w-[1550px] mx-auto px-5 md:px-8 py-16 border-b border-slate-800">
   <div class="rounded-3xl bg-gradient-to-r from-[#7A0B30] to-[#4A051B] p-8 md:p-12 text-white grid md:grid-cols-[auto,1fr] gap-8 items-center shadow-xl">
-<div class="w-32 h-40 md:w-40 md:h-48 rounded-2xl bg-white/10 backdrop-blur-md flex items-center justify-center shrink-0 border border-white/20 mx-auto md:mx-0 overflow-hidden shadow-lg">
-  <img src="khedr.jpg" alt="محمود خضر" class="w-full h-full object-cover object-top" onerror="this.src='khedr.png'" />
-</div>
+    <div class="w-32 h-40 md:w-40 md:h-48 rounded-2xl bg-white/10 backdrop-blur-md flex items-center justify-center shrink-0 border border-white/20 mx-auto md:mx-0 overflow-hidden shadow-lg">
+      <img src="khedr.jpg" alt="محمود خضر" class="w-full h-full object-cover object-top" onerror="this.src='khedr.png'" />
+    </div>
     <div class="text-center md:text-start">
       <span class="text-xs font-bold px-3 py-1 rounded-full bg-white/10 text-rose-200" data-i18n="inst_eyebrow">عن الشارح ومؤسس المنصة</span>
       <h3 class="text-2xl md:text-3xl font-black mt-2 text-amber-300" data-i18n="inst_name">محمود خضر</h3>
-<p class="opacity-90 mt-3 leading-7 text-xs md:text-sm font-medium max-w-2xl text-rose-100" data-i18n="inst_bio">
+      <p class="opacity-90 mt-3 leading-7 text-xs md:text-sm font-medium max-w-2xl text-rose-100" data-i18n="inst_bio">
         شارح ومدرس للمواد الطبية والأكاديمية بكلية العلاج الطبيعي بخبرة سنتين في التدريس الشامل، يركز على تقديم شرح مبسط، منظم، وعملي يساعد الطلاب على فهم الأساسيات والتطبيق والتجهيز بثقة للامتحانات.
       </p>
     </div>
   </div>
 </section>
 
-<!-- ============ AUTHENTICATION SECTION (مع تفاصيل الطالب الكاملة) ============ -->
+<!-- ============ AUTHENTICATION SECTION ============ -->
 <section id="authSection" class="max-w-xl mx-auto px-5 py-16">
-    <div class="rounded-3xl border border-slate-800 bg-card-theme p-4 sm:p-6 shadow-2xl fade-up">
+  <div class="rounded-3xl border border-slate-800 bg-card-theme p-4 sm:p-6 shadow-2xl fade-up">
 
     <!-- Auth Tabs Switcher -->
     <div class="grid grid-cols-2 gap-1.5 p-1.5 auth-nav-bg rounded-2xl mb-6">
@@ -425,16 +399,13 @@
       </button>
     </form>
 
-    <!-- REGISTER FORM (مع تفاصيل الطالب الكاملة) -->
+    <!-- REGISTER FORM -->
     <form id="registerForm" class="hidden flex-col gap-3.5" onsubmit="return false;">
-      
-      <!-- الاسم ثلاثي -->
       <label class="flex flex-col gap-1 text-xs md:text-sm font-bold text-theme-main">
         <span>الاسم بالكامل (ثلاثي كما بالبطاقة)</span>
         <input id="regName" type="text" required placeholder="مثال: محمود أحمد خضر" class="h-11 rounded-xl px-3 border border-slate-700 bg-transparent text-xs md:text-sm text-theme-main focus:border-brand" />
       </label>
 
-<!-- رقم الهاتف والفرقة الدراسية جنب بعض -->
       <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
         <label class="flex flex-col gap-1 text-xs md:text-sm font-bold text-theme-main">
           <span>رقم الهاتف (واتساب)</span>
@@ -450,13 +421,11 @@
         </label>
       </div>
 
-      <!-- البريد الإلكتروني -->
       <label class="flex flex-col gap-1 text-xs md:text-sm font-bold text-theme-main">
         <span data-i18n="auth_email">البريد الإلكتروني</span>
         <input id="regEmail" type="email" required placeholder="student@example.com" class="h-11 rounded-xl px-3 border border-slate-700 bg-transparent text-xs md:text-sm text-theme-main focus:border-brand" />
       </label>
 
-      <!-- كلمة المرور -->
       <label class="flex flex-col gap-1 text-xs md:text-sm font-bold text-theme-main">
         <span data-i18n="auth_password">كلمة المرور (6 حروف أو أرقام على الأقل)</span>
         <input id="regPassword" type="password" required placeholder="••••••••" minlength="6" class="h-11 rounded-xl px-3 border border-slate-700 bg-transparent text-xs md:text-sm text-theme-main focus:border-brand" />
@@ -472,16 +441,14 @@
   </div>
 </section>
 
-<!-- ============ PACKAGE DETAILS VIEW (صفحة منفصلة) ============ -->
+<!-- ============ PACKAGE DETAILS VIEW ============ -->
 <div id="packageDetailsView" class="hidden min-h-screen bg-[#07111D] text-slate-100 py-10 px-5 transition-all">
   <div class="max-w-5xl mx-auto">
     
-    <!-- زر الرجوع للرئيسية -->
     <button onclick="closePackageDetails()" class="mb-6 inline-flex items-center gap-2 text-xs font-black px-4 py-2 rounded-xl bg-[#0F1D2D] border border-slate-800 shadow-sm hover:border-brand transition">
       <span>← العودة للرئيسية</span>
     </button>
 
-    <!-- الهيدر الخاص بالباقة -->
     <div class="rounded-3xl bg-gradient-to-l from-[#5E0824] via-[#7A0B30] to-[#4A051B] p-8 md:p-12 text-white shadow-xl relative overflow-hidden mb-8">
       <span id="pkgBadge" class="inline-block text-[11px] font-black px-3 py-1 rounded-full bg-amber-400 text-slate-900 mb-3">باقة مميزة</span>
       <h1 id="pkgTitle" class="text-2xl md:text-4xl font-black">اسم الباقة</h1>
@@ -493,27 +460,21 @@
         <span class="text-xs font-black px-2.5 py-1 rounded-lg bg-emerald-500/20 text-emerald-300 border border-emerald-500/30" id="pkgSave">وفر 0%</span>
       </div>
 
-<div class="mt-6">
-  <button type="button" onclick="handleSubscribe('bundle_y1_t1', 'باقة الفرقة الأولى (الترم الأول كامل - 4 مواد)')" class="cursor-pointer inline-block bg-white text-brand font-black text-xs md:text-sm px-8 py-3.5 rounded-2xl shadow-xl hover:bg-rose-50 transition active:scale-95">
-    اشترك في الباقة الآن
-  </button>
-</div>
+      <div class="mt-6">
+        <button id="pkgActionBtn" type="button" onclick="handlePkgSubscribe()" class="cursor-pointer inline-block bg-white text-brand font-black text-xs md:text-sm px-8 py-3.5 rounded-2xl shadow-xl hover:bg-rose-50 transition active:scale-95">
+          اشترك في الباقة الآن
+        </button>
+      </div>
     </div>
 
-    <!-- شبكة تفاصيل القيمة والمواد المشمولة -->
     <div class="grid md:grid-cols-3 gap-8">
-      
-      <!-- المواد المشمولة في الباقة -->
       <div class="md:col-span-2 space-y-4">
         <h3 class="text-base font-black flex items-center gap-2">
           <span>📚</span> المواد الأكاديمية المشمولة بالباقة
         </h3>
-        <div id="pkgCoursesList" class="space-y-3">
-          <!-- تتحدث تلقائياً عبر JS -->
-        </div>
+        <div id="pkgCoursesList" class="space-y-3"></div>
       </div>
 
-      <!-- نظام المذاكرة المشمول -->
       <div class="rounded-3xl border border-slate-800 bg-[#0F1D2D] p-6 shadow-sm h-fit space-y-4">
         <h3 class="text-sm font-black text-amber-500 flex items-center gap-2">
           <span>👑</span> نظام المذاكرة المتكامل
@@ -530,21 +491,19 @@
           * خصم إضافي للجروبات (3+ طلاب: 10% | 5+ طلاب: 15%).
         </div>
       </div>
-
     </div>
 
   </div>
 </div>
-<!-- ============ COURSE DETAILS & LESSONS VIEW (شاشة الكورس والمحاضرات) ============ -->
+
+<!-- ============ COURSE DETAILS & LESSONS VIEW ============ -->
 <div id="courseView" class="hidden min-h-screen bg-[#07111D] text-slate-100 py-10 px-4 md:px-8 transition-all">
   <div class="max-w-6xl mx-auto">
     
-    <!-- زر الرجوع للرئيسية -->
     <button onclick="closeCourseView()" class="mb-6 inline-flex items-center gap-2 text-xs font-black px-4 py-2.5 rounded-xl bg-[#0F1D2D] border border-slate-800 text-slate-200 hover:border-brand transition">
       <span>← العودة للصفحة الرئيسية</span>
     </button>
 
-    <!-- بانر الكورس العلوي -->
     <div class="rounded-3xl bg-gradient-to-l from-[#5E0824] via-[#7A0B30] to-[#4A051B] p-6 md:p-10 text-white shadow-2xl relative overflow-hidden mb-8 border border-white/10">
       <div class="flex flex-col md:flex-row md:items-center justify-between gap-6">
         <div class="space-y-3 max-w-2xl">
@@ -552,7 +511,6 @@
           <h1 id="crsTitle" class="text-2xl md:text-4xl font-black">اسم الكورس</h1>
           <p id="crsDesc" class="text-xs md:text-sm opacity-85 leading-6 text-rose-100">وصف الكورس والمهارات والمفاهيم الأكاديمية التي سيتم تغطيتها.</p>
           
-          <!-- حالة الاشتراك -->
           <div id="enrollmentStatusBanner" class="pt-2">
             <span class="inline-flex items-center gap-2 text-xs font-bold text-amber-300 bg-black/30 px-3 py-1.5 rounded-xl border border-amber-300/30">
               <span>🔓</span> يتوفر كليب معاينة مجاني (المقدمة) — باقي المحاضرات مغلقة
@@ -560,7 +518,6 @@
           </div>
         </div>
 
-        <!-- كارت السعر والاشتراك السريع -->
         <div class="bg-black/30 backdrop-blur-md p-6 rounded-2xl border border-white/15 text-center shrink-0 space-y-4">
           <div>
             <span class="text-xs opacity-70 block">سعر الاشتراك</span>
@@ -573,13 +530,9 @@
       </div>
     </div>
 
-    <!-- شبكة مشغل الفيديو والفهرس -->
     <div class="grid lg:grid-cols-12 gap-8">
-      
-      <!-- المنطقة الرئيسية: مشغل الفيديو / معاينة المحاضرة (8 أعمدة) -->
       <div class="lg:col-span-8 space-y-5">
         <div id="videoPlayerContainer" class="rounded-3xl overflow-hidden bg-[#0F1D2D] border border-slate-800 aspect-video relative flex items-center justify-center shadow-lg">
-          <!-- شاشة مشغل الفيديو الافتراضية -->
           <div id="videoPlaceholder" class="text-center p-6 space-y-3">
             <div class="w-16 h-16 rounded-full bg-brand/30 text-rose-400 flex items-center justify-center text-3xl mx-auto border border-brand/50">▶</div>
             <h3 class="font-black text-sm md:text-base">اضغط على "المقدمة" لمشاهدة المعاينة المجانية</h3>
@@ -588,34 +541,28 @@
           <iframe id="videoIframe" class="hidden w-full h-full" src="" frameborder="0" allowfullscreen></iframe>
         </div>
 
-        <!-- تفاصيل المحاضرة الحالية -->
         <div class="rounded-2xl bg-[#0F1D2D] border border-slate-800 p-5 space-y-2">
           <h3 id="currentLessonTitle" class="font-black text-sm md:text-base text-amber-300">اختر محاضرة من الفهرس</h3>
           <p id="currentLessonDesc" class="text-xs text-slate-400 leading-5">اضغط على أي درس في القائمة الجانبية لعرضه أو فتحه.</p>
         </div>
       </div>
 
-      <!-- الفهرس والمحتويات (4 أعمدة) -->
       <div class="lg:col-span-4 space-y-4">
         <div class="flex items-center justify-between">
           <h3 class="font-black text-sm text-slate-200">فهرس المحاضرات والسكاشن</h3>
           <span id="unlockedCountBadge" class="text-[10px] font-bold px-2 py-0.5 rounded bg-slate-800 text-rose-400">1 مفتوح</span>
         </div>
 
-        <div id="lessonsList" class="space-y-3 max-h-[600px] overflow-y-auto pe-1">
-          <!-- يتم توليده تلقائياً عبر JavaScript -->
-        </div>
+        <div id="lessonsList" class="space-y-3 max-h-[600px] overflow-y-auto pe-1"></div>
       </div>
-
     </div>
 
   </div>
 </div>
-<!-- ============ RICH FOOTER ============ -->
+
+<!-- ============ FOOTER ============ -->
 <footer id="mainFooter" class="bg-slate-900 text-white border-t border-slate-800 pt-12 pb-8 px-5">
   <div class="w-full max-w-[1550px] mx-auto grid grid-cols-1 md:grid-cols-4 gap-8 mb-10 text-center md:text-start">
-
-    <!-- Column 1: Logo & Info -->
     <div class="flex flex-col items-center md:items-start gap-2">
       <div class="flex items-center gap-2">
         <span class="w-8 h-8 rounded-xl bg-brand text-white font-black flex items-center justify-center text-sm">خِـ</span>
@@ -626,59 +573,31 @@
       </p>
     </div>
 
-    <!-- Column 2: Pages Links -->
     <div>
       <h4 class="font-black text-xs uppercase tracking-wider text-amber-300 mb-4" data-i18n="foot_pages">الصفحات</h4>
       <ul class="flex flex-col gap-2.5 text-xs text-slate-300 font-bold">
         <li><a href="#hero" class="hover:text-amber-300 transition" data-i18n="nav_home">الرئيسية</a></li>
         <li><a href="#years" class="hover:text-amber-300 transition" data-i18n="nav_years">الفرق الدراسية</a></li>
         <li><a href="#courses" class="hover:text-amber-300 transition" data-i18n="nav_courses">الكورسات والمقررات</a></li>
-        <li><a href="#auth" onclick="setAuthTab('register')" class="hover:text-amber-300 transition" data-i18n="auth_tab_register">إنشاء حساب جديد</a></li>
-        <li><a href="#auth" onclick="setAuthTab('login')" class="hover:text-amber-300 transition" data-i18n="auth_tab_login">تسجيل الدخول</a></li>
+        <li><a href="#authSection" onclick="setAuthTab('register')" class="hover:text-amber-300 transition" data-i18n="auth_tab_register">إنشاء حساب جديد</a></li>
+        <li><a href="#authSection" onclick="setAuthTab('login')" class="hover:text-amber-300 transition" data-i18n="auth_tab_login">تسجيل الدخول</a></li>
       </ul>
     </div>
 
-    <!-- Column 3: Social Media Links -->
     <div>
       <h4 class="font-black text-xs uppercase tracking-wider text-amber-300 mb-4" data-i18n="foot_social">السوشيال ميديا</h4>
       <ul class="flex flex-col items-center md:items-start gap-3 text-xs text-slate-300 font-bold">
-        <li>
-          <a href="https://www.facebook.com/share/1HTasZLPkw/" target="_blank" rel="noopener" class="flex items-center gap-2 hover:text-amber-300 transition">
-            <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
-            <span data-i18n="sm_fb">فيسبوك</span>
-          </a>
-        </li>
-        <li>
-          <a href="https://www.instagram.com/khedr_official?igsh=MXVtMzllbXh5dTZobg==" target="_blank" rel="noopener" class="flex items-center gap-2 hover:text-amber-300 transition">
-            <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
-            <span data-i18n="sm_ig">انستجرام</span>
-          </a>
-        </li>
-        <li>
-          <a href="https://www.tiktok.com/@mahmoud_khedr342?_r=1&_t=ZS-9878aAkTuUu" target="_blank" rel="noopener" class="flex items-center gap-2 hover:text-amber-300 transition">
-            <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24"><path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.24 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07z"/></svg>
-            <span data-i18n="sm_tt">تيك توك</span>
-          </a>
-        </li>
-        <li>
-          <a href="https://youtube.com/@mahmoud_khedr342?si=Pj4roTaFXme6INsV" target="_blank" rel="noopener" class="flex items-center gap-2 hover:text-amber-300 transition">
-            <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
-            <span data-i18n="sm_yt">يوتيوب</span>
-          </a>
-        </li>
-        <li>
-          <a href="https://www.linkedin.com/in/mahmoud-khedr-9614963a7?utm_source=share_via&utm_content=profile&utm_medium=member_android" target="_blank" rel="noopener" class="flex items-center gap-2 hover:text-amber-300 transition">
-            <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
-            <span data-i18n="sm_li">لينكد إن</span>
-          </a>
-        </li>
+        <li><a href="https://www.facebook.com/share/1HTasZLPkw/" target="_blank" rel="noopener" class="flex items-center gap-2 hover:text-amber-300 transition"><span>فيسبوك</span></a></li>
+        <li><a href="https://www.instagram.com/khedr_official?igsh=MXVtMzllbXh5dTZobg==" target="_blank" rel="noopener" class="flex items-center gap-2 hover:text-amber-300 transition"><span>انستجرام</span></a></li>
+        <li><a href="https://www.tiktok.com/@mahmoud_khedr342?_r=1&_t=ZS-9878aAkTuUu" target="_blank" rel="noopener" class="flex items-center gap-2 hover:text-amber-300 transition"><span>تيك توك</span></a></li>
+        <li><a href="https://youtube.com/@mahmoud_khedr342?si=Pj4roTaFXme6INsV" target="_blank" rel="noopener" class="flex items-center gap-2 hover:text-amber-300 transition"><span>يوتيوب</span></a></li>
+        <li><a href="https://www.linkedin.com/in/mahmoud-khedr-9614963a7" target="_blank" rel="noopener" class="flex items-center gap-2 hover:text-amber-300 transition"><span>لينكد إن</span></a></li>
       </ul>
     </div>
 
-<!-- Column 4: Contact & Tech Support (Telegram Card) -->
     <div class="flex flex-col items-center md:items-start gap-3">
       <h4 class="font-black text-xs md:text-sm uppercase tracking-wider text-amber-300 mb-2" data-i18n="foot_contact">تواصل معنا</h4>
-<a href="https://t.me/Khedr_physio" target="_blank" rel="noopener" class="group relative overflow-hidden w-full max-w-[260px] p-3 rounded-2xl bg-slate-800/80 hover:bg-[#1777A3]/40 text-white transition-all duration-300 border border-slate-700 hover:border-cyan-400/50 flex items-center justify-between shadow-lg">
+      <a href="https://t.me/Khedr_physio" target="_blank" rel="noopener" class="group relative overflow-hidden w-full max-w-[260px] p-3 rounded-2xl bg-slate-800/80 hover:bg-[#1777A3]/40 text-white transition-all duration-300 border border-slate-700 hover:border-cyan-400/50 flex items-center justify-between shadow-lg">
         <div class="flex items-center gap-3">
           <div class="w-11 h-11 rounded-xl overflow-hidden border border-cyan-400/40 shrink-0 bg-[#07111D] p-0.5">
             <img src="image/support.png.jpeg" alt="تيم الدعم الفني" class="w-full h-full object-cover rounded-lg" onerror="this.src='support.png.jpeg'" />
@@ -696,62 +615,43 @@
 
   </div>
 
-  <!-- Bottom Copyright & Credits -->
   <div class="w-full max-w-[1550px] mx-auto border-t border-slate-800 pt-6 flex flex-col md:flex-row items-center justify-between gap-3 text-xs text-slate-500 font-semibold text-center">
     <div data-i18n="foot_rights">جميع الحقوق محفوظة © 2026 KHEDR & PHYSIO</div>
     <div class="font-mono text-[11px] text-amber-400 font-bold">&lt;Developed & Designed by="Ahmed Mohamed" andPowered=true /&gt;</div>
   </div>
 </footer>
 
-<!-- ============ FLOATING TELEGRAM SUPPORT BUTTON (WITH TOGGLE / CLOSE) ============ -->
+<!-- ============ FLOATING TELEGRAM BUTTON ============ -->
 <div id="supportFloatingWidget" class="fixed bottom-6 start-6 z-50 flex items-center gap-3 select-none">
-  
-  <!-- نافذة التلميح النصية مع زر الإغلاق -->
   <div id="supportTooltip" class="relative hidden sm:flex items-center gap-2 bg-[#0F1D2D] border border-cyan-500/30 text-white text-xs font-bold py-2 ps-3.5 pe-8 rounded-2xl shadow-2xl transition-all duration-300">
     <span class="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
     <span>تيم الدعم الفني متاح للمساعدة</span>
-    
-    <!-- زر إغلاق التلميح (X) -->
     <button onclick="toggleSupportTooltip(false)" class="absolute end-2 top-1/2 -translate-y-1/2 w-5 h-5 rounded-full bg-slate-800 hover:bg-rose-900 text-slate-300 hover:text-white flex items-center justify-center text-[10px] transition" title="إغلاق">
       ✕
     </button>
   </div>
 
-  <!-- الزر العائم الرئيسي للتليجرام -->
   <a href="https://t.me/Khedr_physio" target="_blank" rel="noopener" class="relative group w-16 h-16 rounded-full shadow-[0_10px_25px_rgba(34,158,217,0.5)] flex items-center justify-center transform hover:scale-110 active:scale-95 transition-all duration-300 border-2 border-cyan-400/50 bg-[#07111D]" title="تواصل مع تيم الدعم الفني">
-    
-    <!-- حلقة النبض الضوئية -->
     <span class="absolute -inset-1 rounded-full bg-cyan-400 opacity-40 group-hover:opacity-75 animate-ping duration-1000"></span>
-
-    <!-- صورة تيم الدعم -->
     <img src="image/support.png.jpeg" alt="الدعم الفني" class="w-full h-full object-cover rounded-full relative z-10 p-0.5" onerror="this.src='support.png.jpeg'" />
-
-    <!-- شارة أيقونة تليجرام -->
     <div class="absolute -bottom-1 -end-1 w-6 h-6 rounded-full bg-[#229ED9] border-2 border-[#07111D] flex items-center justify-center text-white z-20 shadow-md">
-      <svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 24 24">
-        <path d="M12 0C5.37 0 0 5.37 0 12s5.37 12 12 12 12-5.37 12-12S18.63 0 12 0zm5.56 8.16l-1.97 9.28c-.15.67-.54.83-1.1.5l-3.02-2.23-1.46 1.4c-.16.16-.3.3-.61.3l.22-3.08 5.6-5.06c.24-.22-.05-.34-.37-.14l-6.92 4.36-2.99-.93c-.65-.2-.66-.65.14-.97l11.7-4.51c.54-.2 1.02.13.84.88z"/>
-      </svg>
+      <svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12s5.37 12 12 12 12-5.37 12-12S18.63 0 12 0zm5.56 8.16l-1.97 9.28c-.15.67-.54.83-1.1.5l-3.02-2.23-1.46 1.4c-.16.16-.3.3-.61.3l.22-3.08 5.6-5.06c.24-.22-.05-.34-.37-.14l-6.92 4.36-2.99-.93c-.65-.2-.66-.65.14-.97l11.7-4.51c.54-.2 1.02.13.84.88z"/></svg>
     </div>
-
-    <!-- نقطة الحالة الخضراء -->
     <span class="absolute top-0 end-0 w-3.5 h-3.5 rounded-full bg-emerald-500 border-2 border-[#07111D] z-20"></span>
   </a>
-
 </div>
 
-<!-- ============ TRANSLATIONS DICTIONARY & UI LOGIC ============ -->
+<!-- ============ TRANSLATIONS & UI LOGIC ============ -->
 <script>
 const translations = {
   ar: {
     brand: "KHEDR & PHYSIO",
     nav_login: "تسجيل الدخول",
-
-hero_eyebrow: "محمود خضر — محاضر ومدرس للمواد الطبية بكلية العلاج الطبيعي",    
+    hero_eyebrow: "محمود خضر — محاضر ومدرس للمواد الطبية بكلية العلاج الطبيعي",   
     hero_title: "رحلتك بتبدأ مع <span class='text-amber-300'>خِـضـر</span><br/>خُد أول خطوة.. وأنت واثق",
     hero_sub: "تجربة تعليمية متكاملة تستحق تبدأ بيها لأن كل تفصيلة مصممة علشانك",
     hero_cta1: "سجل وخد أول خطوة",
     hero_footer_note: "منصة خِضر: أفضل منصة تعليمية مخصصة لطلاب علاج طبيعي",
-
     years_eyebrow: "المسارات الجامعية",
     years_title: "السنوات والمراحل الدراسية",
     years_sub: "احجز اشتراكك دلوقتي وابدأ مذاكرة مواد العلاج الطبيعي على موبايلك، التابلت أو اللابتوب الخاص بيك.",
@@ -759,13 +659,11 @@ hero_eyebrow: "محمود خضر — محاضر ومدرس للمواد الطب
     year1_desc: "Anatomy, Physiology, Histology, Intro to Biomechanics, Ethics.",
     year2_title: "الفرقة الثانية",
     year2_desc: "Biomechanics, Electrotherapy, Hydrotherapy, Kinesiology, Pathology.",
-      btn_enter_year: "دخول مقررات الفرقة ←",
-
+    btn_enter_year: "دخول مقررات الفرقة ←",
     courses_eyebrow: "باقات المنصة والمواد",
     courses_title: "اختر الباقة المناسبة لفرقتك",
     egp: "ج.م",
     btn_details: "عرض التفاصيل",
-
     feat_eyebrow: "لماذا منصتنا؟",
     feat_title: "إيه اللي هتلاقيه على المنصة؟",
     f1_title: "شرح مبسط ومركز",
@@ -774,21 +672,17 @@ hero_eyebrow: "محمود خضر — محاضر ومدرس للمواد الطب
     f2_desc: "امتحانات MCQ وOSCE تفاعلية بنفس شكل الامتحانات الجامعية علشان تعيش جو الامتحان.",
     f3_title: "متابعة دورية وتقييم مستمر",
     f3_desc: "تقدمك بيتراجع أسبوعياً وبنقدملك توصيات حسب نقاط ضعفك ومتابعة أول بأول.",
-
     honor_title: "أوائل خِـــضـر",
     honor_sub: "أسماء وصلت لأعلى التقديرات والدرجات في كليات العلاج الطبيعي، ودي حصيلة سنين من الشرح والمتابعة",
     h1: "طالب بتقدير امتياز",
     h2: "الأول على دفعته",
     h3: "دفعات 2021 - 2026",
     h4: "نسبة اجتياز الـ OSCE",
-
     rev_title: "طلاب قالوا إيه عنا؟",
     r1_text: "\"بعد ما انضميت للمنصة مع دكتور خضر، بقيت أفهم الميكانيكا الحيوية من أول محاضرة بدل الحفظ.\"",
-    r2_text: "\"الشرح بسيط وفعلاً بحس إني فاهم مش بحفظ وخلاص عشان الامتحان.\"",
-
     inst_eyebrow: "عن الشارح ومؤسس المنصة",
     inst_name: "محمود خضر",
-inst_bio: "شارح ومدرس للمواد الطبية والأكاديمية بكلية العلاج الطبيعي بخبرة سنتين في التدريس الشامل، يركز على تقديم شرح مبسط، منظم، وعملي يساعد الطلاب على فهم الأساسيات والتطبيق والتجهيز بثقة للامتحانات.",
+    inst_bio: "شارح ومدرس للمواد الطبية والأكاديمية بكلية العلاج الطبيعي بخبرة سنتين في التدريس الشامل، يركز على تقديم شرح مبسط، منظم، وعملي يساعد الطلاب على فهم الأساسيات والتطبيق والتجهيز بثقة للامتحانات.",
     auth_tab_login: "تسجيل الدخول",
     auth_tab_register: "حساب جديد",
     auth_name: "الاسم بالكامل",
@@ -796,31 +690,20 @@ inst_bio: "شارح ومدرس للمواد الطبية والأكاديمية 
     auth_password: "كلمة المرور",
     auth_login_btn: "تسجيل الدخول",
     auth_register_btn: "إنشاء الحساب",
-
     foot_about: "المنصة التعليمية الأولى المتخصصة لطلاب وخريجي العلاج الطبيعي لتبسيط العلوم الحركية والإكلينيكية.",
     foot_pages: "الصفحات",
     foot_social: "السوشيال ميديا",
     foot_contact: "تواصل معنا",
-    btn_support: "الدعم الفني",
-    foot_rights: "جميع الحقوق محفوظة © 2026 KHEDR & PHYSIO",
-
-    sm_fb: "فيسبوك",
-    sm_ig: "انستجرام",
-    sm_tt: "تيك توك",
-    sm_yt: "يوتيوب",
-    sm_li: "لينكد إن"
+    foot_rights: "جميع الحقوق محفوظة © 2026 KHEDR & PHYSIO"
   },
-
   en: {
     brand: "KHEDR & PHYSIO",
     nav_login: "Log In",
-
-hero_eyebrow: "Mahmoud Khedr — Physiotherapy Student & Medical Education Instructor",
+    hero_eyebrow: "Mahmoud Khedr — Physiotherapy Instructor",
     hero_title: "Your Journey Starts with <span class='text-amber-300'>KHEDR</span><br/>Take the First Step with Confidence",
     hero_sub: "A complete educational experience designed specifically for physical therapy students.",
     hero_cta1: "Sign Up & Start",
     hero_footer_note: "Khedr Platform: The premier educational platform for physical therapy students",
-
     years_eyebrow: "University Tracks",
     years_title: "Academic Years & Levels",
     years_sub: "Enroll now and start studying physical therapy subjects on your mobile, tablet, or laptop.",
@@ -828,13 +711,11 @@ hero_eyebrow: "Mahmoud Khedr — Physiotherapy Student & Medical Education Instr
     year1_desc: "Anatomy, Physiology, Histology, Intro to Biomechanics, Ethics.",
     year2_title: "Second Year",
     year2_desc: "Biomechanics, Electrotherapy, Hydrotherapy, Kinesiology, Pathology.",
-     btn_enter_year: "View Year Courses →",
-
+    btn_enter_year: "View Year Courses →",
     courses_eyebrow: "Platform Packages",
     courses_title: "Choose The Right Package For Your Batch",
     egp: "EGP",
     btn_details: "View Details",
-
     feat_eyebrow: "Why Us?",
     feat_title: "What You Get On The Platform",
     f1_title: "Simplified Clinical Learning",
@@ -843,21 +724,17 @@ hero_eyebrow: "Mahmoud Khedr — Physiotherapy Student & Medical Education Instr
     f2_desc: "Interactive MCQ and OSCE exams mimicking real university exam environments.",
     f3_title: "Continuous Progress Tracking",
     f3_desc: "Weekly progress reviews and personalized recommendations based on weak areas.",
-
     honor_title: "Top Khedr Alumni",
     honor_sub: "Students who achieved top honors in physical therapy faculties after years of training",
     h1: "Excellence Students",
     h2: "Top of Batch Graduates",
     h3: "Batches 2021 - 2026",
     h4: "OSCE Pass Rate",
-
     rev_title: "Student Reviews",
     r1_text: "\"After joining Dr. Khedr's platform, Biomechanics became crystal clear from lecture one.\"",
-    r2_text: "\"The explanations are so logical that I actually understand instead of memorizing blindly.\"",
-
     inst_eyebrow: "About The Tutor & Founder",
     inst_name: "Mahmoud Khedr",
-inst_bio: "Physiotherapy student and medical education instructor with 2 years of experience teaching medical college subjects. I focus on delivering clear, structured, and practical explanations that help students understand the basics, apply their knowledge, and prepare confidently for exams.",
+    inst_bio: "Physiotherapy student and medical education instructor with 2 years of experience teaching medical college subjects.",
     auth_tab_login: "Log In",
     auth_tab_register: "New Account",
     auth_name: "Full Name",
@@ -865,19 +742,11 @@ inst_bio: "Physiotherapy student and medical education instructor with 2 years o
     auth_password: "Password",
     auth_login_btn: "Log In",
     auth_register_btn: "Create Account",
-
     foot_about: "The premier educational platform for physical therapy students and graduates.",
     foot_pages: "Pages",
     foot_social: "Social Media",
     foot_contact: "Contact Us",
-    btn_support: "Tech Support",
-    foot_rights: "All Rights Reserved © 2026 KHEDR & PHYSIO",
-
-    sm_fb: "Facebook",
-    sm_ig: "Instagram",
-    sm_tt: "TikTok",
-    sm_yt: "YouTube",
-    sm_li: "LinkedIn"
+    foot_rights: "All Rights Reserved © 2026 KHEDR & PHYSIO"
   }
 };
 
@@ -896,7 +765,8 @@ function applyLanguage(lang) {
     }
   });
 
-  document.getElementById("langLabel").textContent = lang === "ar" ? "EN" : "AR";
+  const langLabel = document.getElementById("langLabel");
+  if (langLabel) langLabel.textContent = lang === "ar" ? "EN" : "AR";
 }
 
 function toggleLanguage() {
@@ -934,7 +804,6 @@ function animateCount(el) {
   requestAnimationFrame(step);
 }
 
-// Scroll Progress Bar Tracker
 window.addEventListener('scroll', () => {
   const winScroll = document.documentElement.scrollTop || document.body.scrollTop;
   const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
@@ -943,49 +812,16 @@ window.addEventListener('scroll', () => {
   if (bar) bar.style.width = scrolled + '%';
 });
 
-document.addEventListener("DOMContentLoaded", () => {
-  
-  applyLanguage("ar");
-  setAuthTab("login");
-  renderCatalog();
-
-  const langBtn = document.getElementById("langBtn");
-  if (langBtn) langBtn.addEventListener("click", toggleLanguage);
-
-  const themeBtn = document.getElementById("themeBtn");
-  if (themeBtn) themeBtn.addEventListener("click", toggleTheme);
-
-  const drawerBtn = document.getElementById("drawerBtn");
-  if (drawerBtn) drawerBtn.addEventListener("click", toggleDrawer);
-
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach((entry) => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add("show");
-        const countEl = entry.target.querySelector("[data-count]");
-        if (countEl && !countEl.dataset.counted) {
-          countEl.dataset.counted = "true";
-          animateCount(countEl);
-        }
-        observer.unobserve(entry.target);
-      }
-    });
-  }, { threshold: 0.15 });
-
-  document.querySelectorAll(".fade-up").forEach((el) => observer.observe(el));
-});
-
 // ============ DATABASE: ALL COURSES & PACKAGES ============
-const catalogData = {
-  // --- كورس المصطلحات الطبية (متاح لجميع الطلاب) ---
+window.catalogData = {
   c_medterm: {
     id: "c_medterm",
     type: "single",
-    year: "all", // متاح للكل
+    year: "all",
     code: "عام",
     category: "متاح لجميع الفرق • أساسيات طبية",
     title: "Medical Terminology — كورس المصطلحات الطبية",
-    desc: "The Language of Medicine: تعلم أصول المصطلحات الطبية (Prefix, Root, Suffix) مع محاضرات مسجلة، لايف، ملخصات PDF، وبنك أسئلة وامتحانات تجريبية.",
+    desc: "The Language of Medicine: تعلم أصول المصطلحات الطبية (Prefix, Root, Suffix) مع شروحات وتطبيقات.",
     badge: "متاح للجميع 🎓",
     price: "399 ج.م",
     oldPrice: "550.00 ج.م",
@@ -993,13 +829,10 @@ const catalogData = {
     lessons: [
       { id: "mt_1", title: "01. Introduction to Medical Language (Prefix, Root, Suffix)", duration: "30 دقيقة", isFree: true, desc: "مقدمة تركيب وفهم الكلمات والمصطلحات الطبية مجاناً." },
       { id: "mt_2", title: "02. Body Structure & Directional Terms", duration: "45 دقيقة", isFree: false, desc: "المصطلحات الخاصة باتجاهات الجسم وتراكيب الأعضاء." },
-      { id: "mt_3", title: "03. Cardiovascular & Respiratory Terminology", duration: "50 دقيقة", isFree: false, desc: "مصطلحات القلب، الأوعية الدموية والجهاز التنفسي." },
-      { id: "mt_4", title: "04. Musculoskeletal & Nervous System Terms", duration: "55 دقيقة", isFree: false, desc: "مصطلحات العظام، العضلات والأعصاب المخصصة للعلاج الطبيعي." },
-      { id: "mt_5", title: "05. Digestive & Urinary Systems Terminology", duration: "45 دقيقة", isFree: false, desc: "مصطلحات الجهاز الهضمي والبولي والأمراض الشائعة." },
-      { id: "mt_6", title: "06. Mock Exams & Question Bank Solving", duration: "50 دقيقة", isFree: false, desc: "حل بنك الأسئلة والامتحانات التجريبية ومراجعة شاملة." }
+      { id: "mt_3", title: "03. Cardiovascular & Respiratory Terminology", duration: "50 دقيقة", isFree: false, desc: "مصطلحات القلب والأوعية الدموية والتنفس." },
+      { id: "mt_4", title: "04. Musculoskeletal & Nervous System Terms", duration: "55 دقيقة", isFree: false, desc: "مصطلحات العظام، العضلات والأعصاب." }
     ]
   },
-  // --- باقات الترم والسنة ---
   pkg_y1s1: {
     id: "pkg_y1s1",
     type: "package",
@@ -1008,7 +841,6 @@ const catalogData = {
     title: "باقة الفرقة الأولى (الترم الأول كامل - 4 مواد)",
     sub: "تشمل Anatomy 1, Physiology 1, Histology 1, Biophysics 1 بالكامل مع ورش العملي وبنك الأسئلة.",
     badge: "وفر 400 ج 🔥",
-    priceNum: 1499,
     price: "1,499 ج.م",
     oldPrice: "1,899.00 ج.م",
     img: "image/pkg_y1s1.png",
@@ -1027,38 +859,18 @@ const catalogData = {
     title: "باقة الفرقة الثانية (الترم الأول كامل - 6 مواد)",
     sub: "تشمل Anatomy 3, Biomechanics 2, Hydrotherapy, Electrotherapy, Tests & Measurements, Neurophysiology.",
     badge: "وفر 800 ج 🔥",
-    priceNum: 2199,
     price: "2,199 ج.م",
     oldPrice: "2,999.00 ج.م",
     img: "image/pkg_y2s1.png",
     courses: [
-      { name: "Anatomy 3 (تشريح تخصصي)", desc: "Head, Neck, Trunk, Nervous System & Relations", id: "c_anat3" },
-      { name: "Biomechanics 2 (ميكانيكا حيوية متقدمة)", desc: "Upper/Lower Limb, Spine, Gait & Kinetics", id: "c_biomech2" },
-      { name: "Hydrotherapy (علاج مائي)", desc: "Buoyancy, Hydrodynamics, Techniques & Exercises", id: "c_hydro" },
-      { name: "Electrotherapy (علاج كهربائي)", desc: "TENS, NMES, Ultrasound, Faradic & Parameters", id: "c_electro" },
-      { name: "Tests & Measurements (تقييم وقياسات)", desc: "ROM, Goniometry, MMT, Balance & Posture", id: "c_tests" },
-      { name: "Neurophysiology (فسيولوجيا الجهاز العصبي)", desc: "Synapse, Reflexes, Muscle Tone & Motor Control", id: "c_neuro" }
+      { name: "Anatomy 3 (تشريح تخصصي)", desc: "Head, Neck, Trunk & Nervous System", id: "c_anat3" },
+      { name: "Biomechanics 2 (ميكانيكا حيوية متقدمة)", desc: "Upper/Lower Limb, Spine & Gait", id: "c_biomech2" },
+      { name: "Hydrotherapy (علاج مائي)", desc: "Buoyancy, Hydrodynamics & Techniques", id: "c_hydro" },
+      { name: "Electrotherapy (علاج كهربائي)", desc: "TENS, NMES, Ultrasound & Parameters", id: "c_electro" },
+      { name: "Tests & Measurements (تقييم وقياسات)", desc: "ROM, Goniometry & MMT", id: "c_tests" },
+      { name: "Neurophysiology (فسيولوجيا الجهاز العصبي)", desc: "Synapse, Reflexes & Motor Control", id: "c_neuro" }
     ]
   },
-  pkg_y1full: {
-    id: "pkg_y1full",
-    type: "package",
-    year: "y1",
-    category: "الفرقة الأولى • Full Year Pass",
-    title: "باقة سنة أولى السنوية (الترمين معاً)",
-    sub: "اشتراك يفتح الترم الأول حالياً مع وصول فوري وتلقائي للترم الثاني فور نزوله دون دفع أي رسوم إضافية.",
-    badge: "السنة كاملة 🚀",
-    priceNum: 2699,
-    price: "2,699 ج.م",
-    oldPrice: "3,400.00 ج.م",
-    img: "image/pkg_y1full.png",
-    courses: [
-      { name: "مقررات الترم الأول بالكامل (4 مواد)", desc: "متاحة فوراً للدراسة", id: "pkg_y1s1" },
-      { name: "مقررات الترم الثاني (5 مواد)", desc: "تفتح تلقائياً في حسابك مع بداية الترم الثاني", id: "pkg_y1s2" }
-    ]
-  },
-
-  // --- مواد سنة أولى (ترم أول - 4 مواد) ---
   c_anat1: {
     id: "c_anat1",
     type: "single",
@@ -1066,17 +878,15 @@ const catalogData = {
     code: "1ع",
     category: "الفرقة الأولى • ترم أول",
     title: "Anatomy 1 — كورس التشريح العام",
-    desc: "دراسة شاملة لـ Anatomical position, Planes, Bones, Joints, Muscles, Upper & Lower limbs, Trunk.",
+    desc: "دراسة شاملة لـ Anatomical position, Planes, Bones, Joints, Muscles, Upper & Lower limbs.",
     price: "450 ج.م",
     oldPrice: "599.00 ج.م",
     img: "image/anatomy1.png",
     lessons: [
       { id: "a1_1", title: "01. Anatomical Terminology & Position", duration: "25 دقيقة", isFree: true, desc: "المقدمة والأوضاع التشريحية الأساسية مجاناً." },
-      { id: "a1_2", title: "02. Anatomical Planes & Movements", duration: "40 دقيقة", isFree: false, desc: "محاور الحركة والمستويات التشريحية بالتفصيل." },
+      { id: "a1_2", title: "02. Anatomical Planes & Movements", duration: "40 دقيقة", isFree: false, desc: "محاور الحركة والمستويات التشريحية." },
       { id: "a1_3", title: "03. Skeletal System (Bones & Joints)", duration: "55 دقيقة", isFree: false, desc: "تصنيف العظام والمفاصل وأنواعها." },
-      { id: "a1_4", title: "04. Muscular System Overview", duration: "50 دقيقة", isFree: false, desc: "المنشأ، الاندغام وعمل العضلات." },
-      { id: "a1_5", title: "05. Upper & Lower Limb Basics", duration: "65 دقيقة", isFree: false, desc: "تشريح الأطراف العلوية والسفلية الإكلينيكي." },
-      { id: "a1_6", title: "06. Basic Trunk Anatomy & OSCE Review", duration: "50 دقيقة", isFree: false, desc: "تشريح الجذع ومراجعة نماذج الامتحان العملي." }
+      { id: "a1_4", title: "04. Muscular System Overview", duration: "50 دقيقة", isFree: false, desc: "المنشأ والاندغام وعمل العضلات." }
     ]
   },
   c_phys1: {
@@ -1086,17 +896,13 @@ const catalogData = {
     code: "1ع",
     category: "الفرقة الأولى • ترم أول",
     title: "Physiology 1 — وظائف الأعضاء",
-    desc: "تغطية Cell physiology, Homeostasis, Blood, CVS, Respiratory system, Basic nervous physiology.",
+    desc: "تغطية Cell physiology, Homeostasis, Blood, CVS, Respiratory system.",
     price: "450 ج.م",
     oldPrice: "599.00 ج.م",
     img: "image/physiology1.png",
     lessons: [
       { id: "p1_1", title: "01. Cell Physiology & Transport", duration: "30 دقيقة", isFree: true, desc: "فسيولوجيا الخلية والنقل عبر الغشاء مجاناً." },
-      { id: "p1_2", title: "02. Homeostasis & Body Fluids", duration: "45 دقيقة", isFree: false, desc: "الاتزان الداخلي وسوائل الجسم." },
-      { id: "p1_3", title: "03. Blood Physiology & Immunity", duration: "50 دقيقة", isFree: false, desc: "وظائف الدم والمناعة والتجلط." },
-      { id: "p1_4", title: "04. Cardiovascular System (CVS)", duration: "60 دقيقة", isFree: false, desc: "الدورة الدموية والقلب وضغط الدم." },
-      { id: "p1_5", title: "05. Respiratory System Mechanics", duration: "55 دقيقة", isFree: false, desc: "ميكانيكا التنفس وتبادل الغازات." },
-      { id: "p1_6", title: "06. Basic Nervous System Physiology", duration: "50 دقيقة", isFree: false, desc: "الجهد التأثيري وانتقال الإشارات العصبية." }
+      { id: "p1_2", title: "02. Homeostasis & Body Fluids", duration: "45 دقيقة", isFree: false, desc: "الاتزان الداخلي وسوائل الجسم." }
     ]
   },
   c_hist1: {
@@ -1106,16 +912,12 @@ const catalogData = {
     code: "1ع",
     category: "الفرقة الأولى • ترم أول",
     title: "Histology 1 — علم الأنسجة",
-    desc: "دراسة Cell structure, Epithelial tissue, Connective tissue, Muscle tissue, Nervous tissue.",
+    desc: "دراسة Cell structure, Epithelial tissue, Connective tissue, Muscle tissue.",
     price: "400 ج.م",
     oldPrice: "550.00 ج.م",
     img: "image/histology1.png",
     lessons: [
-      { id: "h1_1", title: "01. Cell Structure & Microscopy", duration: "25 دقيقة", isFree: true, desc: "تركيب الخلية وأنواع الميكروسكوبات مجاناً." },
-      { id: "h1_2", title: "02. Epithelial Tissue Classification", duration: "45 دقيقة", isFree: false, desc: "أنواع النسيج الطلائي والوظائف." },
-      { id: "h1_3", title: "03. Connective Tissue Proper & Specialized", duration: "50 دقيقة", isFree: false, desc: "النسيج الضام، الغضاريف والعظام." },
-      { id: "h1_4", title: "04. Muscle Tissue (Skeletal, Cardiac, Smooth)", duration: "40 دقيقة", isFree: false, desc: "فحص الشرائح العضلية تحت المجهر." },
-      { id: "h1_5", title: "05. Nervous Tissue & Practical Slides", duration: "45 دقيقة", isFree: false, desc: "الخلايا العصبية والتدريب على صور العملي." }
+      { id: "h1_1", title: "01. Cell Structure & Microscopy", duration: "25 دقيقة", isFree: true, desc: "تركيب الخلية وأنواع الميكروسكوبات مجاناً." }
     ]
   },
   c_bioph1: {
@@ -1125,20 +927,14 @@ const catalogData = {
     code: "1ع",
     category: "الفرقة الأولى • ترم أول",
     title: "Biophysics 1 — الفيزياء الحيوية",
-    desc: "تطبيقات Mechanics, Pressure, Heat, Light, Sound, Electricity في العلاج الطبيعي.",
+    desc: "تطبيقات Mechanics, Pressure, Heat, Light, Sound في العلاج الطبيعي.",
     price: "400 ج.م",
     oldPrice: "550.00 ج.م",
     img: "image/biophysics1.png",
     lessons: [
-      { id: "bp1_1", title: "01. Basic Physical Principles & Units", duration: "20 دقيقة", isFree: true, desc: "المفاهيم الفيزيائية العامة مجاناً." },
-      { id: "bp1_2", title: "02. Mechanics & Levers in Human Body", duration: "45 دقيقة", isFree: false, desc: "الروافع والقوى الميكانيكية بالجسم." },
-      { id: "bp1_3", title: "03. Hydrostatic Pressure & Viscosity", duration: "40 دقيقة", isFree: false, desc: "الضغط وسريان السوائل الحيوية." },
-      { id: "bp1_4", title: "04. Heat, Light & Sound in Therapy", duration: "50 دقيقة", isFree: false, desc: "الأمواج والحرارة وتطبيقاتها العلاجية." },
-      { id: "bp1_5", title: "05. Bioelectricity & MCQ Solving", duration: "45 دقيقة", isFree: false, desc: "الكهرباء الحيوية وحل بنك المسائل." }
+      { id: "bp1_1", title: "01. Basic Physical Principles & Units", duration: "20 دقيقة", isFree: true, desc: "المفاهيم الفيزيائية العامة مجاناً." }
     ]
   },
-
-  // --- مواد سنة تانية (ترم أول - 6 مواد) ---
   c_anat3: {
     id: "c_anat3",
     type: "single",
@@ -1146,16 +942,12 @@ const catalogData = {
     code: "2ع",
     category: "الفرقة الثانية • ترم أول",
     title: "Anatomy 3 — التشريح المتقدم",
-    desc: "تشريح Head & neck, Trunk, Nervous system, Major nerves & vessels, Clinical relations.",
+    desc: "تشريح Head & neck, Trunk, Nervous system, Major nerves & vessels.",
     price: "499 ج.م",
     oldPrice: "650.00 ج.م",
     img: "image/anatomy3.png",
     lessons: [
-      { id: "a3_1", title: "01. Regional Anatomy: Head & Neck", duration: "35 دقيقة", isFree: true, desc: "تشريح عضلات وأعصاب الرأس والعنق مجاناً." },
-      { id: "a3_2", title: "02. Vertebral Column & Trunk Anatomy", duration: "55 دقيقة", isFree: false, desc: "العمود الفقري وجدار البطن والظهر." },
-      { id: "a3_3", title: "03. Central Nervous System Anatomy", duration: "60 دقيقة", isFree: false, desc: "المخ، الحبل الشوكي والمساكن السحائية." },
-      { id: "a3_4", title: "04. Cranial & Peripheral Nerves Pathway", duration: "50 دقيقة", isFree: false, desc: "مسارات الأعصاب القحفية والطرفية." },
-      { id: "a3_5", title: "05. Clinical Anatomical Relations & OSCE", duration: "45 دقيقة", isFree: false, desc: "العلاقات الإكلينيكية وأسئلة العملي." }
+      { id: "a3_1", title: "01. Regional Anatomy: Head & Neck", duration: "35 دقيقة", isFree: true, desc: "تشريح عضلات وأعصاب الرأس والعنق مجاناً." }
     ]
   },
   c_biomech2: {
@@ -1165,17 +957,12 @@ const catalogData = {
     code: "2ع",
     category: "الفرقة الثانية • ترم أول",
     title: "Biomechanics 2 — الميكانيكا الحيوية 2",
-    desc: "تحليل مفاصل Shoulder, Elbow, Wrist, Hip, Knee, Ankle, Spine, Gait & Kinematics.",
+    desc: "تحليل مفاصل Shoulder, Elbow, Wrist, Hip, Knee, Ankle, Spine, Gait.",
     price: "550 ج.م",
     oldPrice: "750.00 ج.م",
     img: "image/biomechanics2.png",
     lessons: [
-      { id: "bm2_1", title: "01. Shoulder Complex Biomechanics", duration: "40 دقيقة", isFree: true, desc: "حركية مفصل الكتف وقوى العضلات مجاناً." },
-      { id: "bm2_2", title: "02. Elbow, Wrist & Hand Kinetics", duration: "50 دقيقة", isFree: false, desc: "عزوم الكوع والرسغ وقوة القبضة." },
-      { id: "bm2_3", title: "03. Hip & Pelvis Load Distribution", duration: "55 دقيقة", isFree: false, desc: "توزيع الأحمال على الحوض ومفصل الفخذ." },
-      { id: "bm2_4", title: "04. Knee & Patellofemoral Mechanics", duration: "60 دقيقة", isFree: false, desc: "ميكانيكا الركبة وأربطة الصليبي والغضاريف." },
-      { id: "bm2_5", title: "05. Ankle, Foot & Spine Biomechanics", duration: "55 دقيقة", isFree: false, desc: "أقواس القدم وحركية فقرات الظهر." },
-      { id: "bm2_6", title: "06. Gait Analysis (Stance & Swing Phases)", duration: "65 دقيقة", isFree: false, desc: "تحليل المشية الطبيعية والأخطاء الحركية." }
+      { id: "bm2_1", title: "01. Shoulder Complex Biomechanics", duration: "40 دقيقة", isFree: true, desc: "حركية مفصل الكتف وقوى العضلات مجاناً." }
     ]
   },
   c_hydro: {
@@ -1185,16 +972,12 @@ const catalogData = {
     code: "2ع",
     category: "الفرقة الثانية • ترم أول",
     title: "Hydrotherapy — العلاج المائي",
-    desc: "دراسة Buoyancy, Hydrostatic pressure, Hydrodynamics, Therapeutic techniques & Exercises.",
+    desc: "دراسة Buoyancy, Hydrostatic pressure, Hydrodynamics, Exercises.",
     price: "450 ج.م",
     oldPrice: "600.00 ج.م",
     img: "image/hydrotherapy.png",
     lessons: [
-      { id: "hy_1", title: "01. Physical Properties of Water", duration: "30 دقيقة", isFree: true, desc: "خواص الماء وقوة الطفو مجاناً." },
-      { id: "hy_2", title: "02. Hydrostatic Pressure & Hydrodynamics", duration: "45 دقيقة", isFree: false, desc: "الضغط الهيدروستاتيكي وتأثير الدوامات." },
-      { id: "hy_3", title: "03. Physiological Effects of Immersion", duration: "40 دقيقة", isFree: false, desc: "التأثيرات الفسيولوجية على الدورة الدموية والتنفس." },
-      { id: "hy_4", title: "04. Aquatic Exercise Protocols (Bad Ragaz & Halliwick)", duration: "50 دقيقة", isFree: false, desc: "تقنيات التمارين المائية المتخصصة." },
-      { id: "hy_5", title: "05. Indications, Precautions & Contraindications", duration: "35 دقيقة", isFree: false, desc: "دواعي وموانع استخدام العلاج المائي." }
+      { id: "hy_1", title: "01. Physical Properties of Water", duration: "30 دقيقة", isFree: true, desc: "خواص الماء وقوة الطفو مجاناً." }
     ]
   },
   c_electro: {
@@ -1204,16 +987,12 @@ const catalogData = {
     code: "2ع",
     category: "الفرقة الثانية • ترم أول",
     title: "Electrotherapy — العلاج الكهربائي",
-    desc: "أجهزة TENS, NMES/EMS, IFT, Faradic/Galvanic, Ultrasound, Parameters & Safety.",
+    desc: "أجهزة TENS, NMES, Ultrasound, Parameters & Safety.",
     price: "500 ج.م",
     oldPrice: "700.00 ج.م",
     img: "image/electrotherapy.png",
     lessons: [
-      { id: "el_1", title: "01. Principles of Electricity & Patient Safety", duration: "30 دقيقة", isFree: true, desc: "أساسيات التيارات والأمان الكهربائي مجاناً." },
-      { id: "el_2", title: "02. Low Frequency: TENS & NMES", duration: "55 دقيقة", isFree: false, desc: "تسكين الألم وتحفيز العضلات الضامرة." },
-      { id: "el_3", title: "03. Medium Frequency: Interferential (IFT)", duration: "45 دقيقة", isFree: false, desc: "التيارات المتداخلة وعمق الاختراق." },
-      { id: "el_4", title: "04. Galvanic & Faradic Currents Application", duration: "40 دقيقة", isFree: false, desc: "التيار المستمر والفاراديكي لتأهيل الأعصاب." },
-      { id: "el_5", title: "05. Therapeutic Ultrasound & Dosimetry", duration: "50 دقيقة", isFree: false, desc: "الموجات فوق الصوتية وحساب الجرعات." }
+      { id: "el_1", title: "01. Principles of Electricity & Patient Safety", duration: "30 دقيقة", isFree: true, desc: "أساسيات التيارات والأمان الكهربائي مجاناً." }
     ]
   },
   c_tests: {
@@ -1223,16 +1002,12 @@ const catalogData = {
     code: "2ع",
     category: "الفرقة الثانية • ترم أول",
     title: "Tests & Measurements — التقييم والقياسات",
-    desc: "تطبيقات ROM, Goniometry, MMT, Anthropometry, Flexibility, Balance & Functional tests.",
+    desc: "تطبيقات ROM, Goniometry, MMT, Anthropometry, Functional tests.",
     price: "499 ج.م",
     oldPrice: "650.00 ج.م",
     img: "image/tests_measurements.png",
     lessons: [
-      { id: "tm_1", title: "01. Principles of Physical Therapy Assessment", duration: "30 دقيقة", isFree: true, desc: "مبادئ الفحص الإكلينيكي مجاناً." },
-      { id: "tm_2", title: "02. Goniometry & Range of Motion (ROM)", duration: "60 دقيقة", isFree: false, desc: "طريقة قياس المدى الحركي لكل المفاصل." },
-      { id: "tm_3", title: "03. Manual Muscle Testing (MMT Grades 0-5)", duration: "65 دقيقة", isFree: false, desc: "اختبار قوة العضلات وعزل المجموعات العضلية." },
-      { id: "tm_4", title: "04. Anthropometric Measurements & Posture", duration: "45 دقيقة", isFree: false, desc: "قياسات الأطوال والمحيطات وتحليل القوام." },
-      { id: "tm_5", title: "05. Balance, Flexibility & Functional Tests", duration: "50 دقيقة", isFree: false, desc: "اختبارات التوازن والوظائف الحركية." }
+      { id: "tm_1", title: "01. Principles of Physical Therapy Assessment", duration: "30 دقيقة", isFree: true, desc: "مبادئ الفحص الإكلينيكي مجاناً." }
     ]
   },
   c_neuro: {
@@ -1242,30 +1017,25 @@ const catalogData = {
     code: "2ع",
     category: "الفرقة الثانية • ترم أول",
     title: "Neurophysiology — الفسيولوجيا العصبية",
-    desc: "دراسة Neuron, Synapse, CNS/PNS, Sensory & Motor systems, Reflexes, Muscle tone, Motor control.",
+    desc: "دراسة Neuron, Synapse, Sensory & Motor systems, Reflexes.",
     price: "499 ج.م",
     oldPrice: "650.00 ج.م",
     img: "image/neurophysiology.png",
     lessons: [
-      { id: "np_1", title: "01. Neuron Structure, Synapse & Transmission", duration: "35 دقيقة", isFree: true, desc: "الخلية العصبية ونواقل الإشارات مجاناً." },
-      { id: "np_2", title: "02. Sensory Pathways & Receptors", duration: "50 دقيقة", isFree: false, desc: "مسارات الإحساس السطحي والعميق." },
-      { id: "np_3", title: "03. Motor System & Corticospinal Tracts", duration: "55 دقيقة", isFree: false, desc: "التحكم الحركي والمسارات الهرمية." },
-      { id: "np_4", title: "04. Reflexes, Muscle Spindle & Tone Regulation", duration: "50 دقيقة", isFree: false, desc: "المنعكسات ونغمة العضلات والـ Spasticity." },
-      { id: "np_5", title: "05. Basal Ganglia, Cerebellum & ANS", duration: "60 دقيقة", isFree: false, desc: "العقد القاعدية والمخيخ والجهاز العصبي الذاتي." }
+      { id: "np_1", title: "01. Neuron Structure, Synapse & Transmission", duration: "35 دقيقة", isFree: true, desc: "الخلية العصبية ونواقل الإشارات مجاناً." }
     ]
   }
 };
 
 let currentFilter = "all";
-let currentItemData = null;
+window.currentItemData = null;
+let currentOpenedPkgId = "pkg_y1s1";
 
-// دالة رسم كروت السلايدر مع فلترة منضبطة 100%
-// دالة رسم كروت السلايدر (تم إزالة fade-up لضمان ظهور الكروت فوراً بدون اختفاء)
 function renderCatalog() {
   const container = document.getElementById("coursesSlider");
   if (!container) return;
 
-const items = Object.values(catalogData).filter(item => {
+  const items = Object.values(window.catalogData).filter(item => {
     if (currentFilter === "all") return true;
     if (currentFilter === "pkg") return item.type === "package";
     if (currentFilter === "y1") return item.year === "y1" || item.year === "all";
@@ -1286,18 +1056,15 @@ const items = Object.values(catalogData).filter(item => {
     return `
       <article class="min-w-[300px] sm:min-w-[340px] md:min-w-[370px] max-w-[370px] shrink-0 snap-start card-hover rounded-3xl overflow-hidden border ${isPkg ? "border-brand shadow-rose-950/20" : "border-slate-800"} bg-[#0F1D2D] p-3.5 shadow-2xl flex flex-col justify-between relative transition-all duration-300">
         
-        <!-- بوستر الكورس العلوي -->
         <div class="rounded-2xl overflow-hidden relative aspect-[4/3] w-full bg-[#07111D] border border-slate-700/50 flex items-center justify-center">
           ${badgeText}
-<img src="${item.img}" alt="${item.title}" class="w-full h-full object-cover object-top rounded-xl transition duration-300 transform group-hover:scale-105" onerror="this.style.display='none'; this.nextElementSibling.classList.remove('hidden');" />          
-          <!-- بديل احتياطي أنيق في حال لم تكن الصورة مرفوعة بعد -->
+          <img src="${item.img}" alt="${item.title}" class="w-full h-full object-cover object-top rounded-xl transition duration-300 transform group-hover:scale-105" onerror="this.style.display='none'; this.nextElementSibling.classList.remove('hidden');" />          
           <div class="hidden flex flex-col items-center justify-center text-center p-4 text-rose-300">
             <span class="text-3xl mb-1">${isPkg ? '📦' : '🩺'}</span>
             <span class="font-bold text-xs">${item.title}</span>
           </div>
         </div>
 
-        <!-- محتوى الكارت -->
         <div class="p-3 flex-1 flex flex-col justify-between space-y-4">
           <div>
             <div class="flex items-start gap-2.5">
@@ -1321,7 +1088,6 @@ const items = Object.values(catalogData).filter(item => {
             </div>
           </div>
 
-          <!-- أزرار الإجراءات حسب حالة التفعيل -->
           <div class="space-y-2 pt-1">
             <button onclick="${isPkg ? `openPackageDetails('${item.id}')` : `openCourseView('${item.id}')`}" class="w-full py-2.5 rounded-xl border border-cyan-500/40 text-cyan-300 font-black text-xs hover:bg-cyan-500/10 transition duration-200">
               الدخول للمحتوى
@@ -1330,11 +1096,11 @@ const items = Object.values(catalogData).filter(item => {
             ${item.isEnrolled ? `
               <div class="w-full py-2.5 rounded-xl bg-emerald-600/90 text-white font-black text-xs text-center shadow-lg border border-emerald-400/40 flex items-center justify-center gap-1.5 cursor-default">
                 <span>✓</span>
-                <span>مشترك في الكورس </span>
+                <span>مشترك في الكورس</span>
               </div>
             ` : `
               <button onclick="${isPkg ? `openPackageDetails('${item.id}')` : `openCourseView('${item.id}')`}" class="w-full py-2.5 rounded-xl bg-brand hover:bg-rose-900 text-white font-black text-xs shadow-lg transition duration-200">
-                الإشتراك في الكورس !
+                الاشتراك الآن 🚀
               </button>
             `}
           </div>
@@ -1345,12 +1111,10 @@ const items = Object.values(catalogData).filter(item => {
   }).join("");
 }
 
-// دالة تحريك السلايدر بالأسهم الجانبية الكبيرة
 function scrollSlider(direction) {
   const slider = document.getElementById("coursesSlider");
   if (!slider) return;
   const scrollAmount = 390;
-  // في وضع الـ RTL يتم عكس إشارة التمرير
   if (direction === "left") {
     slider.scrollBy({ left: scrollAmount, behavior: "smooth" });
   } else {
@@ -1358,7 +1122,6 @@ function scrollSlider(direction) {
   }
 }
 
-// دالة التصفية الصحيحة
 function filterCourses(type) {
   currentFilter = type;
   document.querySelectorAll(".filter-tab").forEach(btn => {
@@ -1372,22 +1135,17 @@ function filterCourses(type) {
   }
   renderCatalog();
 }
-// دالة الانتقال المباشر وتصفية المقررات عند الضغط من سكشن السنوات
-function goToYearCourses(yearKey) {
-  // تفعيل فلتر السنة المطلوبة (y1 أو y2)
-  filterCourses(yearKey);
 
-  // التمرير السلس إلى سكشن الكورسات
+function goToYearCourses(yearKey) {
+  filterCourses(yearKey);
   const coursesSection = document.getElementById("courses");
-  if (coursesSection) {
-    coursesSection.scrollIntoView({ behavior: "smooth", block: "start" });
-  }
+  if (coursesSection) coursesSection.scrollIntoView({ behavior: "smooth", block: "start" });
 }
-// فتح تفاصيل الباقة المجمعة
-// فتح تفاصيل الباقة المجمعة (مع إخفاء زر الدعم والفوتر)
+
 function openPackageDetails(pkgKey) {
-  const data = catalogData[pkgKey];
+  const data = window.catalogData[pkgKey];
   if (!data) return;
+  currentOpenedPkgId = pkgKey;
 
   document.getElementById("pkgTitle").textContent = data.title;
   document.getElementById("pkgBadge").textContent = data.badge;
@@ -1409,8 +1167,7 @@ function openPackageDetails(pkgKey) {
     </div>
   `).join("");
 
-  // إخفاء كل عناصر الصفحة الرئيسية بما فيها الفوتر وزر الدعم
-  ["hero", "years", "courses", "features", "honors", "reviews", "instructor", "auth", "mainFooter", "supportFloatingWidget"].forEach(id => {
+  ["hero", "years", "courses", "features", "honors", "reviews", "instructor", "authSection", "mainFooter", "supportFloatingWidget"].forEach(id => {
     const el = document.getElementById(id);
     if (el) el.classList.add("hidden");
   });
@@ -1420,21 +1177,22 @@ function openPackageDetails(pkgKey) {
   window.scrollTo({ top: 0, behavior: "smooth" });
 }
 
-// إغلاق تفاصيل الباقة (وإعادة إظهار كل شيء)
 function closePackageDetails() {
   document.getElementById("packageDetailsView").classList.add("hidden");
   
-  ["hero", "years", "courses", "features", "honors", "reviews", "instructor", "auth", "mainFooter", "supportFloatingWidget"].forEach(id => {
+  ["hero", "years", "courses", "features", "honors", "reviews", "instructor", "authSection", "mainFooter", "supportFloatingWidget"].forEach(id => {
     const el = document.getElementById(id);
-    if (el) el.classList.remove("hidden");
+    if (el) {
+      if (id === "authSection" && window.isUserLoggedIn) return;
+      el.classList.remove("hidden");
+    }
   });
   window.scrollTo({ top: 0, behavior: "smooth" });
 }
 
-// فتح شاشة المادة والمحاضرات (مع إخفاء زر الدعم والفوتر)
 function openCourseView(courseId) {
-  const crs = catalogData[courseId] || catalogData["c_anat1"];
-  currentItemData = crs;
+  const crs = window.catalogData[courseId] || window.catalogData["c_anat1"];
+  window.currentItemData = crs;
 
   document.getElementById("crsCategory").textContent = crs.category;
   document.getElementById("crsTitle").textContent = crs.title;
@@ -1443,8 +1201,7 @@ function openCourseView(courseId) {
 
   renderCourseCurriculum();
 
-  // إخفاء كل عناصر الصفحة الرئيسية بما فيها الفوتر وزر الدعم
-  ["hero", "years", "courses", "features", "honors", "reviews", "instructor", "auth", "mainFooter", "supportFloatingWidget"].forEach(id => {
+  ["hero", "years", "courses", "features", "honors", "reviews", "instructor", "authSection", "mainFooter", "supportFloatingWidget"].forEach(id => {
     const el = document.getElementById(id);
     if (el) el.classList.add("hidden");
   });
@@ -1453,19 +1210,21 @@ function openCourseView(courseId) {
   window.scrollTo({ top: 0, behavior: "smooth" });
 }
 
-// إغلاق شاشة المادة (وإعادة إظهار كل شيء)
 function closeCourseView() {
   document.getElementById("courseView").classList.add("hidden");
   
-  ["hero", "years", "courses", "features", "honors", "reviews", "instructor", "auth", "mainFooter", "supportFloatingWidget"].forEach(id => {
+  ["hero", "years", "courses", "features", "honors", "reviews", "instructor", "authSection", "mainFooter", "supportFloatingWidget"].forEach(id => {
     const el = document.getElementById(id);
-    if (el) el.classList.remove("hidden");
+    if (el) {
+      if (id === "authSection" && window.isUserLoggedIn) return;
+      el.classList.remove("hidden");
+    }
   });
   window.scrollTo({ top: 0, behavior: "smooth" });
 }
 
 function renderCourseCurriculum() {
-  const crs = currentItemData;
+  const crs = window.currentItemData;
   if (!crs || !crs.lessons) return;
 
   const btn = document.getElementById("crsActionBtn");
@@ -1507,51 +1266,37 @@ function renderCourseCurriculum() {
   }).join("");
 }
 
-// دالة تشغيل الدرس أو إلزام الطالب بتسجيل الدخول
 function selectLesson(lessonId) {
-  const crs = currentItemData;
+  const crs = window.currentItemData;
   if (!crs || !crs.lessons) return;
   const lesson = crs.lessons.find(l => l.id === lessonId);
   if (!lesson) return;
 
-  // التحقق من حالة تسجيل الدخول عبر Firebase Auth
-  const user = auth.currentUser;
-
-  if (!user) {
+  if (!window.isUserLoggedIn) {
     alert("🔒 يرجى تسجيل الدخول أو إنشاء حساب جديد أولاً لمشاهدة المحاضرات والملفات.");
-    
-    // إغلاق شاشة الكورس والعودة للصفحة الرئيسية
     closeCourseView();
-    
-    // التمرير مباشرة لقسم تسجيل الدخول مع التركيز على حقل البريد
-    const authSection = document.getElementById("auth");
+    const authSection = document.getElementById("authSection");
     if (authSection) {
+      authSection.classList.remove("hidden");
       authSection.scrollIntoView({ behavior: "smooth", block: "center" });
       setAuthTab("login");
-      setTimeout(() => {
-        const emailInput = document.getElementById("loginEmail");
-        if (emailInput) emailInput.focus();
-      }, 600);
     }
     return;
   }
 
-  // إذا كان مسجلاً للدخول بالفعل، نفحص هل المحاضرة مجانية أم يحتاج للاشتراك
   const canAccess = lesson.isFree || crs.isEnrolled;
-
   if (!canAccess) {
-    alert("🔒 هذه المحاضرة مغلقة للمشتركين. يرجى الضغط على زر 'الاشتراك في هذا المقرر' لفتح جميع المحاضرات والشيتات.");
+    alert("🔒 هذه المحاضرة مغلقة للمشتركين. يرجى الضغط على زر 'الاشتراك في هذا المقرر' لتفعيل الكورس بالكامل.");
     return;
   }
 
-  // عرض تفاصيل الدرس وتشغيل المحتوى
   document.getElementById("currentLessonTitle").textContent = lesson.title;
   document.getElementById("currentLessonDesc").textContent = lesson.desc;
 
   const iframe = document.getElementById("videoIframe");
   const placeholder = document.getElementById("videoPlaceholder");
 
-  if (lesson.type === "video" && lesson.videoUrl) {
+  if (lesson.videoUrl) {
     iframe.src = lesson.videoUrl;
     iframe.classList.remove("hidden");
     placeholder.classList.add("hidden");
@@ -1563,50 +1308,65 @@ function selectLesson(lessonId) {
   }
 }
 
-// دالة الاشتراك وتوجيه الطالب للتحويل والدعم الفني
-// دالة الاشتراك وتوجيه الطالب للتحويل والدعم الفني
-function toggleCourseEnrollment() {
-  if (!currentItemData) return;
-
-  // 1. فحص هل الطالب مسجل دخول أصلاً؟
-  const user = auth.currentUser;
-  if (!user) {
-    alert("🔒 يرجى تسجيل الدخول أو إنشاء حساب على المنصة أولاً لتتمكن من الاشتراك.");
-    closeCourseView();
-    closePackageDetails();
-    const authSection = document.getElementById("auth");
-    if (authSection) {
-      authSection.scrollIntoView({ behavior: "smooth", block: "center" });
-      setAuthTab("login");
-      setTimeout(() => {
-        const emailInput = document.getElementById("loginEmail");
-        if (emailInput) emailInput.focus();
-      }, 600);
-    }
-    return;
-  }
-
-  // 2. فحص هل هو مشترك ومفعل بالفعل من المشرف؟
-  if (currentItemData.isEnrolled) {
-    alert("✅ أنت مشترك بالفعل في هذا المحتوى ومفتوح لك بالكامل!");
-    return;
-  }
-
-  // 3. إذا كان مسجل دخول لكن غير مفعل، يتم توجيهه للدعم لتأكيد الدفع
-  const confirmRedirect = confirm(
-    `📌 للاشتراك في "${currentItemData.title}" بسعر (${currentItemData.price}):\n\n` +
-    `يرجى تحويل الرسوم وإرسال صورة إيصال التحويل مع إيميل حسابك (${user.email}) لتيم الدعم الفني ليتم تفعيل حسابك فوراً.\n\n` +
-    `هل تريد فتح محادثة الدعم الفني على تليجرام الآن؟`
-  );
-
-  if (confirmRedirect) {
-    window.open("https://t.me/Khedr_physio", "_blank");
+function handlePkgSubscribe() {
+  const data = window.catalogData[currentOpenedPkgId];
+  if (data && typeof window.handleSubscribe === "function") {
+    window.handleSubscribe(data.id, data.title);
   }
 }
 
+function toggleCourseEnrollment() {
+  if (!window.currentItemData) return;
+  if (typeof window.handleSubscribe === "function") {
+    window.handleSubscribe(window.currentItemData.id, window.currentItemData.title);
+  }
+}
 
+function toggleSupportTooltip(show) {
+  const tip = document.getElementById("supportTooltip");
+  if (!tip) return;
+  if (show === undefined) {
+    tip.classList.toggle("hidden");
+  } else if (show) {
+    tip.classList.remove("hidden");
+  } else {
+    tip.classList.add("hidden");
+  }
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+  applyLanguage("ar");
+  setAuthTab("login");
+  renderCatalog();
+
+  const langBtn = document.getElementById("langBtn");
+  if (langBtn) langBtn.addEventListener("click", toggleLanguage);
+
+  const themeBtn = document.getElementById("themeBtn");
+  if (themeBtn) themeBtn.addEventListener("click", toggleTheme);
+
+  const drawerBtn = document.getElementById("drawerBtn");
+  if (drawerBtn) drawerBtn.addEventListener("click", toggleDrawer);
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add("show");
+        const countEl = entry.target.querySelector("[data-count]");
+        if (countEl && !countEl.dataset.counted) {
+          countEl.dataset.counted = "true";
+          animateCount(countEl);
+        }
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.15 });
+
+  document.querySelectorAll(".fade-up").forEach((el) => observer.observe(el));
+});
 </script>
 
+<!-- ============ FIREBASE MODULE ============ -->
 <script type="module">
   import { 
     auth, 
@@ -1622,7 +1382,8 @@ function toggleCourseEnrollment() {
     onAuthStateChanged 
   } from "./firebase-config.js";
 
-  let currentUserData = null;
+  window.currentUserData = null;
+  window.isUserLoggedIn = false;
 
   function showError(elId, msg) {
     const el = document.getElementById(elId);
@@ -1632,7 +1393,6 @@ function toggleCourseEnrollment() {
     }
   }
 
-  // --- 1. متابعة حالة المستخدم وتحديث واجهة المنصة ---
   onAuthStateChanged(auth, async (user) => {
     const guestNav = document.getElementById("guestNav");
     const userNav = document.getElementById("userNav");
@@ -1640,20 +1400,18 @@ function toggleCourseEnrollment() {
     const authSection = document.getElementById("authSection");
 
     if (user) {
-      // إخفاء أزرار الزائر وصندوق تسجيل الدخول
+      window.isUserLoggedIn = true;
       if (guestNav) guestNav.classList.add("hidden");
       if (authSection) authSection.classList.add("hidden");
       
-      // إظهار بيانات المستخدم
       if (userNav) userNav.classList.remove("hidden");
       if (navUserName) navUserName.textContent = user.displayName || user.email.split('@')[0];
 
-      // جلب بيانات واشتراكات الطالب من Firestore
       try {
         const studentDoc = await getDoc(doc(db, "students", user.uid));
         if (studentDoc.exists()) {
-          currentUserData = studentDoc.data();
-          const enrolledCourses = currentUserData.enrolledCourses || [];
+          window.currentUserData = studentDoc.data();
+          const enrolledCourses = window.currentUserData.enrolledCourses || [];
           
           enrolledCourses.forEach(cId => {
             if (window.catalogData && window.catalogData[cId]) {
@@ -1661,39 +1419,44 @@ function toggleCourseEnrollment() {
             }
           });
 
-          if (typeof renderCatalog === "function") renderCatalog();
+          renderCatalog();
           if (window.currentItemData && enrolledCourses.includes(window.currentItemData.id)) {
             window.currentItemData.isEnrolled = true;
-            if (typeof renderCourseCurriculum === "function") renderCourseCurriculum();
+            renderCourseCurriculum();
           }
         }
       } catch (e) {
         console.error("خطأ أثناء جلب بيانات الطالب:", e);
       }
     } else {
-      currentUserData = null;
+      window.isUserLoggedIn = false;
+      window.currentUserData = null;
       if (guestNav) guestNav.classList.remove("hidden");
       if (userNav) userNav.classList.add("hidden");
       if (authSection) authSection.classList.remove("hidden");
     }
   });
 
-  // --- 2. منطق زر الاشتراك الذكي ---
   window.handleSubscribe = function(itemId, itemTitle) {
     const user = auth.currentUser;
     if (!user) {
-      // إذا لم يكن مسجل دخول، انقله لصندوق التسجيل
       const authSec = document.getElementById("authSection");
-      if (authSec) authSec.classList.remove("hidden");
-      location.href = "#authSection";
+      if (authSec) {
+        authSec.classList.remove("hidden");
+        authSec.scrollIntoView({ behavior: "smooth", block: "center" });
+      }
       alert("⚠️ يرجى تسجيل الدخول أو إنشاء حساب أولاً للاشتراك.");
       return;
     }
 
-    // إذا كان مسجل دخول بالفعل، تحويل مباشر إلى تليجرام بالبيانات لتأكيد الدفع
+    if (window.currentItemData && window.currentItemData.isEnrolled) {
+      alert("✅ أنت مشترك بالفعل في هذا المحتوى ومفتوح لك بالكامل!");
+      return;
+    }
+
     const studentName = user.displayName || "طالب";
-    const studentPhone = currentUserData?.phone || "غير مسجل";
-    const telegramUser = "khedr_physio"; // يوزر تليجرام الخاص بالدعم/المحاضر
+    const studentPhone = window.currentUserData?.phone || "غير مسجل";
+    const telegramUser = "Khedr_physio";
     
     const message = encodeURIComponent(
       `مرحباً دكتور محمود 👋\nأنا الطالب: ${studentName}\nرقم الهاتف: ${studentPhone}\nالإيميل: ${user.email}\n\nأرغب في تفعيل الاشتراك في:\n📚 ${itemTitle || itemId}`
@@ -1702,7 +1465,6 @@ function toggleCourseEnrollment() {
     window.open(`https://t.me/${telegramUser}?text=${message}`, "_blank");
   };
 
-  // --- 3. تسجيل الخروج ---
   const navLogoutBtn = document.getElementById("navLogoutBtn");
   if (navLogoutBtn) {
     navLogoutBtn.addEventListener("click", async () => {
@@ -1711,7 +1473,6 @@ function toggleCourseEnrollment() {
     });
   }
 
-  // --- 4. تسجيل الدخول ---
   const loginForm = document.getElementById("loginForm");
   if (loginForm) {
     loginForm.addEventListener("submit", async (e) => {
@@ -1733,7 +1494,6 @@ function toggleCourseEnrollment() {
     });
   }
 
-  // --- 5. إنشاء حساب جديد ---
   const registerForm = document.getElementById("registerForm");
   if (registerForm) {
     registerForm.addEventListener("submit", async (e) => {
@@ -1776,4 +1536,4 @@ function toggleCourseEnrollment() {
   }
 </script>
 </body>
-          </html>
+</html>
