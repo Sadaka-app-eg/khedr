@@ -601,7 +601,7 @@
   </div>
 </div>
 <!-- ============ RICH FOOTER ============ -->
-<footer class="bg-slate-900 text-white border-t border-slate-800 pt-12 pb-8 px-5">
+<footer id="mainFooter" class="bg-slate-900 text-white border-t border-slate-800 pt-12 pb-8 px-5">
   <div class="w-full max-w-[1550px] mx-auto grid grid-cols-1 md:grid-cols-4 gap-8 mb-10 text-center md:text-start">
 
     <!-- Column 1: Logo & Info -->
@@ -1336,6 +1336,7 @@ function goToYearCourses(yearKey) {
   }
 }
 // فتح تفاصيل الباقة المجمعة
+// فتح تفاصيل الباقة المجمعة (مع إخفاء زر الدعم والفوتر)
 function openPackageDetails(pkgKey) {
   const data = catalogData[pkgKey];
   if (!data) return;
@@ -1360,7 +1361,8 @@ function openPackageDetails(pkgKey) {
     </div>
   `).join("");
 
-  ["hero", "years", "courses", "features", "honors", "reviews", "instructor", "auth"].forEach(id => {
+  // إخفاء كل عناصر الصفحة الرئيسية بما فيها الفوتر وزر الدعم
+  ["hero", "years", "courses", "features", "honors", "reviews", "instructor", "auth", "mainFooter", "supportFloatingWidget"].forEach(id => {
     const el = document.getElementById(id);
     if (el) el.classList.add("hidden");
   });
@@ -1370,16 +1372,18 @@ function openPackageDetails(pkgKey) {
   window.scrollTo({ top: 0, behavior: "smooth" });
 }
 
+// إغلاق تفاصيل الباقة (وإعادة إظهار كل شيء)
 function closePackageDetails() {
   document.getElementById("packageDetailsView").classList.add("hidden");
-  ["hero", "years", "courses", "features", "honors", "reviews", "instructor", "auth"].forEach(id => {
+  
+  ["hero", "years", "courses", "features", "honors", "reviews", "instructor", "auth", "mainFooter", "supportFloatingWidget"].forEach(id => {
     const el = document.getElementById(id);
     if (el) el.classList.remove("hidden");
   });
   window.scrollTo({ top: 0, behavior: "smooth" });
 }
 
-// فتح شاشة المادة المنفصلة والمحاضرات من catalogData
+// فتح شاشة المادة والمحاضرات (مع إخفاء زر الدعم والفوتر)
 function openCourseView(courseId) {
   const crs = catalogData[courseId] || catalogData["c_anat1"];
   currentItemData = crs;
@@ -1391,12 +1395,24 @@ function openCourseView(courseId) {
 
   renderCourseCurriculum();
 
-  ["hero", "years", "courses", "features", "honors", "reviews", "instructor", "auth"].forEach(id => {
+  // إخفاء كل عناصر الصفحة الرئيسية بما فيها الفوتر وزر الدعم
+  ["hero", "years", "courses", "features", "honors", "reviews", "instructor", "auth", "mainFooter", "supportFloatingWidget"].forEach(id => {
     const el = document.getElementById(id);
     if (el) el.classList.add("hidden");
   });
 
   document.getElementById("courseView").classList.remove("hidden");
+  window.scrollTo({ top: 0, behavior: "smooth" });
+}
+
+// إغلاق شاشة المادة (وإعادة إظهار كل شيء)
+function closeCourseView() {
+  document.getElementById("courseView").classList.add("hidden");
+  
+  ["hero", "years", "courses", "features", "honors", "reviews", "instructor", "auth", "mainFooter", "supportFloatingWidget"].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.classList.remove("hidden");
+  });
   window.scrollTo({ top: 0, behavior: "smooth" });
 }
 
@@ -1484,14 +1500,7 @@ function toggleCourseEnrollment() {
   alert("🎉 مبروك! تم الاشتراك في المقرر بنجاح وفتح جميع المحاضرات.");
 }
 
-function closeCourseView() {
-  document.getElementById("courseView").classList.add("hidden");
-  ["hero", "years", "courses", "features", "honors", "reviews", "instructor", "auth"].forEach(id => {
-    const el = document.getElementById(id);
-    if (el) el.classList.remove("hidden");
-  });
-  window.scrollTo({ top: 0, behavior: "smooth" });
-}
+
 </script>
 
 <!-- ============ FIREBASE AUTH LOGIC ============ -->
