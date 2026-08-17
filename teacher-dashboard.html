@@ -115,6 +115,107 @@
     </div>
   </section>
 
+
+  <!-- ============ COURSE & LECTURE MANAGER WITH CLOUDINARY & QUIZ BUILDER ============ -->
+  <section class="mt-12 bg-card-theme border border-slate-800 rounded-3xl p-6 md:p-8 shadow-2xl">
+    <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8 border-b border-slate-800 pb-6">
+      <div>
+        <span class="text-xs font-black text-rose-400 uppercase tracking-wider">لوحة النشر السحابية</span>
+        <h2 class="text-xl md:text-2xl font-black text-white mt-1">📚 إدارة المحاضرات وبنوك الأسئلة</h2>
+      </div>
+      
+      <div class="flex items-center gap-3">
+        <label class="text-xs font-bold text-slate-300">اختر المقرر:</label>
+        <select id="adminCourseSelect" class="bg-[#07111D] border border-slate-700 text-amber-300 font-bold text-xs md:text-sm rounded-xl px-4 py-2.5 focus:border-brand">
+          <!-- يتعبأ تلقائياً -->
+        </select>
+      </div>
+    </div>
+
+    <!-- نموذج إضافة محاضرة جديدة -->
+    <form id="addLectureForm" class="space-y-6 bg-[#07111D] border border-slate-800 p-6 rounded-2xl">
+      <h3 class="text-base font-black text-amber-400 flex items-center gap-2">
+        <span>➕</span> إضافة محاضرة / درس جديد
+      </h3>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div class="space-y-1">
+          <label class="text-xs font-bold text-slate-300">عنوان المحاضرة</label>
+          <input type="text" id="lecTitle" required placeholder="مثال: 01. Upper Limb Bones" class="w-full bg-[#0F1D2D] border border-slate-700 rounded-xl px-3 py-2.5 text-xs text-white focus:border-brand" />
+        </div>
+
+        <div class="space-y-1">
+          <label class="text-xs font-bold text-slate-300">مدة المحاضرة</label>
+          <input type="text" id="lecDuration" required placeholder="مثال: 45 دقيقة" class="w-full bg-[#0F1D2D] border border-slate-700 rounded-xl px-3 py-2.5 text-xs text-white focus:border-brand" />
+        </div>
+
+        <div class="space-y-1">
+          <label class="text-xs font-bold text-slate-300">نوع الإتاحة</label>
+          <select id="lecIsFree" class="w-full bg-[#0F1D2D] border border-slate-700 rounded-xl px-3 py-2.5 text-xs text-white focus:border-brand">
+            <option value="false">🔒 مخصصة للمشتركين فقط</option>
+            <option value="true">🔓 معاينة مجانية (مفتوحة للجميع)</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="space-y-1">
+        <label class="text-xs font-bold text-slate-300">وصف موجز للمحاضرة</label>
+        <input type="text" id="lecDesc" placeholder="نبذة توضيحية عما يتعلمه الطالب في الدرس..." class="w-full bg-[#0F1D2D] border border-slate-700 rounded-xl px-3 py-2.5 text-xs text-white focus:border-brand" />
+      </div>
+
+      <!-- رفع الفيديو والـ PDF عبر Cloudinary -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 pt-2">
+        <div class="border border-dashed border-slate-700 bg-[#0F1D2D]/60 p-4 rounded-2xl space-y-3">
+          <div class="flex items-center justify-between">
+            <span class="text-xs font-black text-rose-300">🎬 فيديو المحاضرة (Cloudinary)</span>
+            <span id="videoUploadStatus" class="text-[10px] text-slate-400">جاهز للرفع</span>
+          </div>
+          <input type="file" id="videoFileInput" accept="video/*" class="w-full text-xs text-slate-400 file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-bold file:bg-brand file:text-white hover:file:bg-rose-900" />
+          <div class="flex items-center gap-2">
+            <span class="text-[10px] text-slate-500">أو رابط فيديو خارجي:</span>
+            <input type="url" id="videoUrlManual" placeholder="https://..." class="flex-1 bg-[#07111D] border border-slate-800 rounded-lg px-2.5 py-1 text-xs text-white" />
+          </div>
+        </div>
+
+        <div class="border border-dashed border-slate-700 bg-[#0F1D2D]/60 p-4 rounded-2xl space-y-3">
+          <div class="flex items-center justify-between">
+            <span class="text-xs font-black text-rose-300">📄 ملخص وتفريغ المحاضرة (PDF)</span>
+            <span id="pdfUploadStatus" class="text-[10px] text-slate-400">جاهز للرفع</span>
+          </div>
+          <input type="file" id="pdfFileInput" accept="application/pdf" class="w-full text-xs text-slate-400 file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-bold file:bg-brand file:text-white hover:file:bg-rose-900" />
+          <div class="flex items-center gap-2">
+            <span class="text-[10px] text-slate-500">أو رابط PDF جاهز:</span>
+            <input type="url" id="pdfUrlManual" placeholder="https://..." class="flex-1 bg-[#07111D] border border-slate-800 rounded-lg px-2.5 py-1 text-xs text-white" />
+          </div>
+        </div>
+      </div>
+
+      <!-- بنك الأسئلة MCQ -->
+      <div class="border-t border-slate-800 pt-5 space-y-4">
+        <div class="flex items-center justify-between">
+          <h4 class="text-xs md:text-sm font-black text-amber-300 flex items-center gap-2">
+            <span>❓</span> بنك أسئلة الـ MCQ المرفق مع المحاضرة
+          </h4>
+          <button type="button" onclick="addQuizQuestionInput()" class="px-3 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 text-amber-300 text-xs font-bold transition">
+            + إضافة سؤال جديد
+          </button>
+        </div>
+        <div id="quizQuestionsContainer" class="space-y-4"></div>
+      </div>
+
+      <div class="pt-4 flex justify-end">
+        <button type="submit" id="saveLectureBtn" class="px-8 py-3 rounded-xl bg-brand hover:bg-rose-900 text-white font-black text-xs md:text-sm shadow-xl transition active:scale-95">
+          نشر المحاضرة للمقرر 🚀
+        </button>
+      </div>
+    </form>
+
+    <!-- قائمة المحاضرات المنشورة -->
+    <div class="mt-8 space-y-4">
+      <h3 class="text-sm font-black text-slate-200">📋 المحاضرات المنشورة في هذا المقرر:</h3>
+      <div id="publishedLecturesList" class="space-y-3"></div>
+    </div>
+  </section>
 </div>
 
 <!-- نافذة المودال لإدارة كورسات الطالب (Course Activation Modal) -->
@@ -144,8 +245,7 @@
 <!-- ============ FIREBASE LOGIC FOR ADMIN ============ -->
 <script type="module">
   import { auth, db, onAuthStateChanged, signOut, doc, updateDoc } from "./firebase-config.js";
-  import { collection, getDocs } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-firestore.js";
-
+import { collection, getDocs, addDoc, deleteDoc, query, where } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-firestore.js";
   // 🔴 ضع هنا إيميلك المسجل به في المنصة
   const ADMIN_EMAILS = [
     "admin@khedr.com", // استبدله بإيميلك الفعلي
@@ -359,6 +459,198 @@
   const yFilter = document.getElementById("yearFilter");
   if (sInput) sInput.addEventListener("input", renderStudents);
   if (yFilter) yFilter.addEventListener("change", renderStudents);
+
+  // ============ إعدادات CLOUDINARY ============
+  const CLOUD_NAME = "sohjyczp";
+  const UPLOAD_PRESET = "khedr_uploads";
+
+  let currentSelectedCourse = allCourses[0].id;
+
+  // ملء قائمة الكورسات
+  const adminCourseSelect = document.getElementById("adminCourseSelect");
+  if (adminCourseSelect) {
+    adminCourseSelect.innerHTML = allCourses.map(c => `<option value="${c.id}">${c.title}</option>`).join("");
+    adminCourseSelect.addEventListener("change", (e) => {
+      currentSelectedCourse = e.target.value;
+      loadPublishedLectures();
+    });
+  }
+
+  // دالة رفع الملفات إلى Cloudinary
+  async function uploadToCloudinary(file, resourceType, statusElementId) {
+    const statusEl = document.getElementById(statusElementId);
+    if (statusEl) statusEl.textContent = "⏳ جارٍ الرفع إلى Cloudinary...";
+
+    const formData = new FormData();
+    formData.append("file", file);
+    formData.append("upload_preset", UPLOAD_PRESET);
+
+    try {
+      const res = await fetch(`https://api.cloudinary.com/v1_1/${CLOUD_NAME}/${resourceType}/upload`, {
+        method: "POST",
+        body: formData
+      });
+      const data = await res.json();
+      if (data.secure_url) {
+        if (statusEl) statusEl.textContent = "✅ تم الرفع بنجاح!";
+        return data.secure_url;
+      } else {
+        throw new Error(data.error?.message || "Upload failed");
+      }
+    } catch (err) {
+      console.error(err);
+      if (statusEl) statusEl.textContent = "❌ فشل الرفع";
+      alert("حدث خطأ أثناء رفع الملف إلى Cloudinary.");
+      return null;
+    }
+  }
+
+  // إضافة سؤال MCQ في الواجهة
+  window.addQuizQuestionInput = function() {
+    const container = document.getElementById("quizQuestionsContainer");
+    const qIndex = container.children.length;
+
+    const qDiv = document.createElement("div");
+    qDiv.className = "p-4 rounded-xl border border-slate-800 bg-[#0F1D2D] space-y-3";
+    qDiv.innerHTML = `
+      <div class="flex items-center justify-between">
+        <span class="text-xs font-black text-amber-400">سؤال #${qIndex + 1}</span>
+        <button type="button" onclick="this.parentElement.parentElement.remove()" class="text-rose-400 hover:text-rose-300 text-xs font-bold">حذف السؤال ✕</button>
+      </div>
+      <input type="text" placeholder="نص السؤال..." class="quiz-q-text w-full bg-[#07111D] border border-slate-700 rounded-lg px-3 py-2 text-xs text-white" required />
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+        <input type="text" placeholder="الخيار A" class="quiz-opt-0 bg-[#07111D] border border-slate-700 rounded-lg px-2.5 py-1.5 text-xs text-white" required />
+        <input type="text" placeholder="الخيار B" class="quiz-opt-1 bg-[#07111D] border border-slate-700 rounded-lg px-2.5 py-1.5 text-xs text-white" required />
+        <input type="text" placeholder="الخيار C" class="quiz-opt-2 bg-[#07111D] border border-slate-700 rounded-lg px-2.5 py-1.5 text-xs text-white" required />
+        <input type="text" placeholder="الخيار D" class="quiz-opt-3 bg-[#07111D] border border-slate-700 rounded-lg px-2.5 py-1.5 text-xs text-white" required />
+      </div>
+      <div class="flex items-center gap-2">
+        <span class="text-xs font-bold text-slate-400">الإجابة الصحيحة:</span>
+        <select class="quiz-correct bg-[#07111D] border border-slate-700 rounded-lg px-3 py-1 text-xs text-emerald-400 font-bold">
+          <option value="0">الخيار A</option>
+          <option value="1">الخيار B</option>
+          <option value="2">الخيار C</option>
+          <option value="3">الخيار D</option>
+        </select>
+      </div>
+    `;
+    container.appendChild(qDiv);
+  };
+
+  // نشر المحاضرة
+  const addLectureForm = document.getElementById("addLectureForm");
+  if (addLectureForm) {
+    addLectureForm.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const saveBtn = document.getElementById("saveLectureBtn");
+      saveBtn.disabled = true;
+      saveBtn.textContent = "⏳ جارٍ رفع الوسائط وحفظ المحاضرة...";
+
+      try {
+        const videoFile = document.getElementById("videoFileInput").files[0];
+        const pdfFile = document.getElementById("pdfFileInput").files[0];
+
+        let videoUrl = document.getElementById("videoUrlManual").value.trim();
+        let pdfUrl = document.getElementById("pdfUrlManual").value.trim();
+
+        if (videoFile) {
+          const uploadedVideo = await uploadToCloudinary(videoFile, "video", "videoUploadStatus");
+          if (uploadedVideo) videoUrl = uploadedVideo;
+        }
+
+        if (pdfFile) {
+          const uploadedPdf = await uploadToCloudinary(pdfFile, "raw", "pdfUploadStatus");
+          if (uploadedPdf) pdfUrl = uploadedPdf;
+        }
+
+        const quiz = [];
+        document.querySelectorAll("#quizQuestionsContainer > div").forEach(div => {
+          const qText = div.querySelector(".quiz-q-text").value.trim();
+          const opts = [
+            div.querySelector(".quiz-opt-0").value.trim(),
+            div.querySelector(".quiz-opt-1").value.trim(),
+            div.querySelector(".quiz-opt-2").value.trim(),
+            div.querySelector(".quiz-opt-3").value.trim()
+          ];
+          const correct = parseInt(div.querySelector(".quiz-correct").value, 10);
+          if (qText) quiz.push({ question: qText, options: opts, correctIndex: correct });
+        });
+
+        await addDoc(collection(db, "lectures"), {
+          courseId: currentSelectedCourse,
+          title: document.getElementById("lecTitle").value.trim(),
+          duration: document.getElementById("lecDuration").value.trim(),
+          desc: document.getElementById("lecDesc").value.trim(),
+          isFree: document.getElementById("lecIsFree").value === "true",
+          videoUrl: videoUrl,
+          pdfUrl: pdfUrl,
+          quiz: quiz,
+          createdAt: new Date()
+        });
+
+        alert("🎉 تم نشر المحاضرة بنجاح وحفظها سحابياً!");
+        addLectureForm.reset();
+        document.getElementById("quizQuestionsContainer").innerHTML = "";
+        loadPublishedLectures();
+      } catch (err) {
+        console.error(err);
+        alert("حدث خطأ أثناء نشر المحاضرة.");
+      } finally {
+        saveBtn.disabled = false;
+        saveBtn.textContent = "نشر المحاضرة للمقرر 🚀";
+      }
+    });
+  }
+
+  // جلب المحاضرات المنشورة
+  async function loadPublishedLectures() {
+    const container = document.getElementById("publishedLecturesList");
+    if (!container) return;
+    container.innerHTML = `<span class="text-xs text-slate-500">جارٍ جلب المحاضرات...</span>`;
+
+    try {
+      const q = query(collection(db, "lectures"), where("courseId", "==", currentSelectedCourse));
+      const snap = await getDocs(q);
+      
+      if (snap.empty) {
+        container.innerHTML = `<span class="text-xs text-slate-500 font-bold">لا توجد محاضرات منشورة لهذا المقرر بعد.</span>`;
+        return;
+      }
+
+      container.innerHTML = snap.docs.map(docSnap => {
+        const lec = docSnap.data();
+        return `
+          <div class="p-3.5 rounded-xl border border-slate-800 bg-[#07111D] flex items-center justify-between">
+            <div class="space-y-1">
+              <div class="flex items-center gap-2">
+                <span class="text-xs font-black text-white">${lec.title}</span>
+                <span class="text-[10px] font-bold px-2 py-0.5 rounded ${lec.isFree ? 'bg-emerald-950 text-emerald-400 border border-emerald-800/40' : 'bg-slate-800 text-rose-300'}">
+                  ${lec.isFree ? 'معاينة مجانية' : 'مقفولة للمشتركين'}
+                </span>
+              </div>
+              <span class="text-[10px] text-slate-400 block">${lec.duration} • ${lec.quiz ? lec.quiz.length : 0} أسئلة MCQ</span>
+            </div>
+            <button onclick="deleteLecture('${docSnap.id}')" class="px-3 py-1.5 rounded-lg bg-rose-950/60 hover:bg-rose-900 border border-rose-800/40 text-rose-300 text-xs font-bold transition">
+              حذف ✕
+            </button>
+          </div>
+        `;
+      }).join("");
+    } catch (e) {
+      console.error(e);
+    }
+  }
+
+  // حذف محاضرة
+  window.deleteLecture = async function(lecId) {
+    if (!confirm("هل أنت متأكد من حذف هذه المحاضرة؟")) return;
+    try {
+      await deleteDoc(doc(db, "lectures", lecId));
+      loadPublishedLectures();
+    } catch (e) {
+      alert("حدث خطأ أثناء الحذف.");
+    }
+  };
 </script>
 </body>
 </html>
