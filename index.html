@@ -518,13 +518,11 @@
           </div>
         </div>
 
-        <div class="bg-black/30 backdrop-blur-md p-6 rounded-2xl border border-white/15 text-center shrink-0 space-y-4">
-          <div>
-            <span class="text-xs opacity-70 block">سعر الاشتراك</span>
-            <span id="crsPrice" class="text-3xl font-black text-amber-300 num-font">0 ج.م</span>
-          </div>
-          <button id="crsActionBtn" onclick="toggleCourseEnrollment()" class="w-full bg-white text-[#7A0B30] font-black text-xs md:text-sm px-6 py-3 rounded-xl shadow-xl hover:bg-rose-50 transition transform hover:scale-105">
-            الاشتراك في الكورس الآن 🚀
+<div class="bg-black/40 backdrop-blur-md p-5 sm:p-6 rounded-3xl border border-white/15 text-center shrink-0 flex flex-col items-center justify-center gap-3 min-w-[200px] shadow-xl">
+          <span class="text-xs font-bold text-rose-200">سعر الاشتراك بالمقرر</span>
+          <span id="crsPrice" class="text-3xl sm:text-4xl font-black text-amber-300 num-font tracking-wide">0 ج.م</span>
+          <button id="crsActionBtn" onclick="toggleCourseEnrollment()" class="w-full bg-white text-[#7A0B30] font-black text-xs md:text-sm px-6 py-3 rounded-2xl shadow-xl hover:bg-rose-50 transition transform active:scale-95">
+            الاشتراك في هذا المقرر الآن 🚀
           </button>
         </div>
       </div>
@@ -1545,8 +1543,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 <!-- ============ FIREBASE MODULE ============ -->
 <script type="module">
-  window.authInstance = auth;
-  import { 
+import { 
     auth, 
     db, 
     signInWithEmailAndPassword, 
@@ -1559,6 +1556,9 @@ document.addEventListener("DOMContentLoaded", () => {
     serverTimestamp, 
     onAuthStateChanged 
   } from "./firebase-config.js";
+  import { collection, getDocs, query, where } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-firestore.js";
+
+  window.authInstance = auth;
 
   window.currentUserData = null;
   window.isUserLoggedIn = false;
@@ -1591,11 +1591,20 @@ document.addEventListener("DOMContentLoaded", () => {
           window.currentUserData = studentDoc.data();
           const enrolledCourses = window.currentUserData.enrolledCourses || [];
           
-          enrolledCourses.forEach(cId => {
+enrolledCourses.forEach(cId => {
             if (window.catalogData && window.catalogData[cId]) {
               window.catalogData[cId].isEnrolled = true;
             }
           });
+
+          // فحص منطقي: لو الطالب مفعل له مواد الفرقة الأولى كاملة، تظهر باقة سنة أولى كمشترك
+          if (window.catalogData && window.catalogData["pkg_y1s1"]) {
+            const y1Subjects = ["c_anat1", "c_phys1", "c_hist1", "c_bioph1"];
+            const hasAllY1 = y1Subjects.every(sub => enrolledCourses.includes(sub));
+            if (hasAllY1 || enrolledCourses.includes("pkg_y1s1") || enrolledCourses.includes("bundle_y1_t1")) {
+              window.catalogData["pkg_y1s1"].isEnrolled = true;
+            }
+          }
 
           renderCatalog();
           if (window.currentItemData && enrolledCourses.includes(window.currentItemData.id)) {
@@ -1767,7 +1776,7 @@ document.addEventListener("keydown", (e) => {
     return false;
   }
 });
-import { collection, getDocs, query, where } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-firestore.js";
+
 
 // دالة تحميل المحاضرات المرفوعة من المشرف للكورس المفتوح
 window.loadFirestoreLectures = async function(courseId) {
