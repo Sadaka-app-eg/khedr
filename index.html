@@ -2039,12 +2039,12 @@ import {
 
   // منع وميض شاشات تسجيل الدخول إذا كان المستخدم مسجلاً مسبقاً
 if (localStorage.getItem("khedr_user_active") === "true") {
-  const guestNav = document.getElementById("guestNav");
   const authSection = document.getElementById("authSection");
   const heroGuestCta = document.getElementById("heroGuestCta");
-  if (guestNav) guestNav.classList.add("hidden");
+  const supportWidget = document.getElementById("supportFloatingWidget");
   if (authSection) authSection.classList.add("hidden");
   if (heroGuestCta) heroGuestCta.classList.add("hidden");
+  if (supportWidget) supportWidget.classList.add("hidden");
 }
 
   function showError(elId, msg) {
@@ -2077,6 +2077,9 @@ const guestActions = document.getElementById("drawerGuestActions");
       window.isUserLoggedIn = true;
       localStorage.setItem("khedr_user_active", "true");
       if (authSection) authSection.classList.add("hidden");
+      // إخفاء زر الدعم الفني للطالب المسجل
+      const supportWidget = document.getElementById("supportFloatingWidget");
+      if (supportWidget) supportWidget.classList.add("hidden");
 
       const displayName = user.displayName || user.email.split('@')[0];
 
@@ -2157,6 +2160,10 @@ try {
         console.error("خطأ أثناء جلب بيانات الطالب:", e);
       }
     } else {
+
+      // إظهار زر الدعم الفني للزائر غير المسجل
+      const supportWidget = document.getElementById("supportFloatingWidget");
+      if (supportWidget) supportWidget.classList.remove("hidden");
       window.isUserLoggedIn = false;
       window.currentUserData = null;
    if (guestActions) { guestActions.classList.remove("hidden"); guestActions.classList.add("flex"); }
