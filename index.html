@@ -200,53 +200,51 @@
 </header>
 
 <!-- ============ HERO SECTION ============ -->
+<section id="hero" class="w-full max-w-[1650px] mx-auto px-3 sm:px-6 md:px-8 pt-28 md:pt-24 pb-8">
+  <div class="relative overflow-hidden rounded-[2.5rem] hero-banner-bg min-h-[520px] md:min-h-[580px] lg:min-h-[640px] flex flex-col md:flex-row items-center justify-between px-6 sm:px-10 md:px-16 py-10 md:py-12 border border-white/10 shadow-2xl">
+    
+    <!-- نصوص الهيرو والترحيب (تبقى في الواجهة z-10) -->
+    <div class="w-full md:w-7/12 text-center md:text-right text-white space-y-5 md:space-y-6 z-10 relative">
+      <span class="inline-block text-xs sm:text-sm md:text-base font-black text-rose-300 tracking-wide" data-i18n="hero_eyebrow">
+        محمود خضر — محاضر ومدرس للمواد الطبية بكلية العلاج الطبيعي
+      </span>
 
-<section id="hero" class="w-full max-w-[1650px] mx-auto px-3 sm:px-6 md:px-8 pt-20 pb-8">
-    <div class="relative overflow-hidden rounded-[2.5rem] hero-banner-bg min-h-[550px] lg:min-h-[640px] flex flex-col md:flex-row items-center justify-between px-6 sm:px-10 md:px-16 pt-8 pb-0 md:py-12 border border-white/10 shadow-2xl">
-    
-    <!-- النصوص والأزرار (في الموبايل بالأعلى وفي الكمبيوتر باليمين) -->
-    <div class="w-full md:w-7/12 text-center md:text-right text-white space-y-5 md:space-y-7 z-10">
-      <span class="inline-block text-xs sm:text-sm md:text-lg font-black text-rose-300 tracking-wide" data-i18n="hero_eyebrow">
-        محمود خضر — محاضر ومدرس للمواد الطبية بكلية العلاج الطبيعي
-      </span>
+      <h1 class="text-3xl sm:text-5xl lg:text-6xl font-black leading-[1.25] tracking-tight" data-i18n="hero_title">
+        رحلتك بتبدأ مع <span class="text-amber-300">خِـضـر</span><br/>
+        خُد أول خطوة.. وأنت واثق
+      </h1>
 
-      <h1 class="text-3xl sm:text-5xl lg:text-6xl font-black leading-[1.2] tracking-tight" data-i18n="hero_title">
-        رحلتك بتبدأ مع <span class="text-amber-300">خِـضـر</span><br/>
-        خُد أول خطوة.. وأنت واثق
-      </h1>
+      <p class="text-xs sm:text-base md:text-lg font-semibold opacity-90 leading-6 md:leading-8 max-w-xl mx-auto md:mx-0 text-rose-100" data-i18n="hero_sub">
+        تجربة تعليمية متكاملة تستحق تبدأ بيها لأن كل تفصيلة مصممة علشانك
+      </p>
 
-      <p class="text-xs sm:text-base md:text-lg font-semibold opacity-90 leading-6 md:leading-8 max-w-xl mx-auto md:mx-0 text-rose-100" data-i18n="hero_sub">
-        تجربة تعليمية متكاملة تستحق تبدأ بيها لأن كل تفصيلة مصممة علشانك
-      </p>
+      <!-- زر الهيرو التفاعلي -->
+      <div class="pt-2 flex justify-center md:justify-start">
+        <div id="heroGuestCta">
+          <button onclick="openAuthView('register')" class="inline-block bg-white text-[#7A0B30] font-black text-xs sm:text-sm md:text-base px-8 sm:px-10 py-3.5 sm:py-4 rounded-2xl shadow-2xl hover:bg-rose-50 transition transform hover:scale-105 cursor-pointer" data-i18n="hero_cta1">
+            سجل وخد أول خطوة
+          </button>
+        </div>
 
-      <!-- زر الهيرو التفاعلي -->
-      <div class="pt-2 flex justify-center md:justify-start">
-        <div id="heroGuestCta">
-<button onclick="openAuthView('register')" class="inline-block bg-white text-[#7A0B30] font-black text-xs sm:text-sm md:text-base px-8 sm:px-10 py-3.5 sm:py-4 rounded-2xl shadow-2xl hover:bg-rose-50 transition transform hover:scale-105 cursor-pointer" data-i18n="hero_cta1">
-  سجل وخد أول خطوة
-</button>
-        </div>
+        <div id="heroUserCta" class="hidden">
+          <div class="inline-flex items-center gap-2 bg-black/40 backdrop-blur-md px-5 py-2.5 rounded-2xl border border-white/15 text-amber-300 font-black text-xs sm:text-sm shadow-lg">
+            <span>👋</span>
+            <span>منورنا يا دكتور <span id="heroUserName" class="text-white"></span></span>
+          </div>
+        </div>
+      </div>
 
-<div id="heroUserCta" class="hidden space-y-2.5">
-          <div class="inline-flex items-center gap-2 bg-black/40 backdrop-blur-md px-4 py-2 rounded-2xl border border-white/15 text-amber-300 font-black text-xs sm:text-sm shadow-lg">
-            <span>👋</span>
-            <span>منورنا يا دكتور <span id="heroUserName" class="text-white"></span></span>
-          </div>
+      <div class="pt-4 border-t border-white/15 text-[11px] md:text-sm font-bold opacity-80 hidden md:block" data-i18n="hero_footer_note">
+        منصة خِضر: أفضل منصة تعليمية مخصصة لطلاب علاج طبيعي
+      </div>
+    </div>
 
-        </div>
-      </div>
+    <!-- صورة المحاضر: في الموبايل تظهر في الخلفية تحت الكلام مع شفافية وتلاشي، وفي الشاشات الكبيرة تظهر بالجانب الأيسر كاملة -->
+    <div class="absolute inset-0 md:static md:w-5/12 flex justify-center md:justify-end items-end pointer-events-none md:pointer-events-auto z-0 opacity-25 md:opacity-100">
+      <img src="khedr.jpg" alt="محمود خضر" class="max-h-[480px] lg:max-h-[580px] w-auto object-contain drop-shadow-[0_20px_30px_rgba(0,0,0,0.85)] scale-110 md:scale-105 transform translate-y-6 md:translate-y-0" onerror="this.src='khedr.png'" />
+    </div>
 
-      <div class="pt-4 border-t border-white/15 text-[11px] md:text-sm font-bold opacity-80 hidden md:block" data-i18n="hero_footer_note">
-        منصة خِضر: أفضل منصة تعليمية مخصصة لطلاب علاج طبيعي
-      </div>
-    </div>
-
-    <!-- صورة المحاضر (في الموبايل تظهر بالأسفل كبيرة مثل الجوهري وفي الكمبيوتر باليسار) -->
-    <div class="w-full md:w-5/12 relative flex justify-center items-end mt-6 md:mt-0 z-0">
-      <img src="khedr.jpg" alt="محمود خضر" class="max-h-[340px] sm:max-h-[460px] lg:max-h-[580px] w-auto object-contain drop-shadow-[0_20px_30px_rgba(0,0,0,0.85)] scale-105 transform translate-y-2 md:translate-y-0" onerror="this.src='khedr.png'" />
-    </div>
-
-  </div>
+  </div>
 </section>
 
 <!-- ============ ACADEMIC YEARS ============ -->
