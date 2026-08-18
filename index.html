@@ -1063,7 +1063,6 @@ window.addEventListener('scroll', () => {
   const bar = document.getElementById('scrollProgress');
   if (bar) bar.style.width = scrolled + '%';
 });
-
 window.catalogData = {
   c_medterm: {
     id: "c_medterm",
@@ -1078,8 +1077,7 @@ window.catalogData = {
     oldPrice: "550.00",
     img: "image/med_term.png",
     lessons: [
-      { id: "mt_1", title: { ar: "01. مقدمة تركيب المصطلحات الطبية", en: "01. Introduction to Medical Language" }, duration: { ar: "30 دقيقة", en: "30 Mins" }, isFree: true, desc: { ar: "مقدمة تركيب وفهم الكلمات والمصطلحات الطبية مجاناً.", en: "Free overview on word structure, roots, and prefixes." } },
-      { id: "mt_2", title: { ar: "02. مصطلحات اتجاهات وتراكيب الجسم", en: "02. Body Structure & Directional Terms" }, duration: { ar: "45 دقيقة", en: "45 Mins" }, isFree: false, desc: { ar: "المصطلحات الخاصة باتجاهات الجسم وتراكيب الأعضاء.", en: "Directional terms, body planes, and anatomical cavities." } }
+      { id: "mt_1", title: { ar: "01. مقدمة تركيب المصطلحات الطبية", en: "01. Introduction to Medical Language" }, duration: { ar: "30 دقيقة", en: "30 Mins" }, isFree: true, desc: { ar: "مقدمة تركيب وفهم الكلمات والمصطلحات الطبية مجاناً.", en: "Free overview on word structure, roots, and prefixes." } }
     ]
   },
   pkg_y1s1: {
@@ -1132,8 +1130,7 @@ window.catalogData = {
     oldPrice: "750.00",
     img: "image/anatomy1.png",
     lessons: [
-      { id: "a1_1", title: { ar: "01. الأوضاع والمصطلحات التشريحية", en: "01. Anatomical Terminology & Position" }, duration: { ar: "25 دقيقة", en: "25 Mins" }, isFree: true, desc: { ar: "المقدمة والأوضاع التشريحية الأساسية مجاناً.", en: "Free access to fundamental body positions and terms." } },
-      { id: "a1_2", title: { ar: "02. مستويات الحركة والمحاور", en: "02. Anatomical Planes & Movements" }, duration: { ar: "40 دقيقة", en: "40 Mins" }, isFree: false, desc: { ar: "محاور الحركة والمستويات التشريحية بالتفصيل.", en: "In-depth breakdown of axes and movement planes." } }
+      { id: "a1_1", title: { ar: "01. الأوضاع والمصطلحات التشريحية", en: "01. Anatomical Terminology & Position" }, duration: { ar: "25 دقيقة", en: "25 Mins" }, isFree: true, desc: { ar: "المقدمة والأوضاع التشريحية الأساسية مجاناً.", en: "Free access to fundamental body positions and terms." } }
     ]
   },
   c_phys1: {
@@ -1151,6 +1148,51 @@ window.catalogData = {
       { id: "p1_1", title: { ar: "01. فسيولوجيا الخلية والنقل الغشائي", en: "01. Cell Physiology & Membrane Transport" }, duration: { ar: "30 دقيقة", en: "30 Mins" }, isFree: true, desc: { ar: "فسيولوجيا الخلية والنقل عبر الغشاء مجاناً.", en: "Free trial lecture on cell transport and homeostasis." } }
     ]
   },
+  c_hist1: {
+    id: "c_hist1",
+    type: "single",
+    year: "y1",
+    code: { ar: "1ع", en: "Y1" },
+    category: { ar: "الفرقة الأولى • ترم أول", en: "Year 1 • Term 1" },
+    title: { ar: "Histology 1 — علم الأنسجة", en: "Histology 1 — General Histology" },
+    desc: { ar: "دراسة Cell structure, Epithelial tissue, Connective tissue, Muscle tissue.", en: "Study of Cell structure, Epithelial tissue, Connective tissue & Muscular tissue." },
+    price: "399",
+    oldPrice: "550.00",
+    img: "image/histology1.png",
+    lessons: [
+      { id: "h1_1", title: { ar: "01. تركيب الخلية والأنسجة الطلائية", en: "01. Cell Structure & Epithelium" }, duration: { ar: "25 دقيقة", en: "25 Mins" }, isFree: true, desc: { ar: "مقدمة علم الأنسجة مجاناً.", en: "Free intro to histology." } }
+    ]
+  },
+  c_bioph1: {
+    id: "c_bioph1",
+    type: "single",
+    year: "y1",
+    code: { ar: "1ع", en: "Y1" },
+    category: { ar: "الفرقة الأولى • ترم أول", en: "Year 1 • Term 1" },
+    title: { ar: "Biophysics 1 — الفيزياء الحيوية", en: "Biophysics 1 — Medical Biophysics" },
+    desc: { ar: "تطبيقات Mechanics, Pressure, Heat, Light, Sound في العلاج الطبيعي.", en: "Applications of Mechanics, Heat, Light & Electricity in Physical Therapy." },
+    price: "399",
+    oldPrice: "550.00",
+    img: "image/biophysics1.png",
+    lessons: [
+      { id: "bp1_1", title: { ar: "01. المبادئ الفيزيائية العامة", en: "01. Basic Physical Principles" }, duration: { ar: "20 دقيقة", en: "20 Mins" }, isFree: true, desc: { ar: "المفاهيم الفيزيائية العامة مجاناً.", en: "Free overview on biophysical concepts." } }
+    ]
+  },
+  c_anat3: {
+    id: "c_anat3",
+    type: "single",
+    year: "y2",
+    code: { ar: "2ع", en: "Y2" },
+    category: { ar: "الفرقة الثانية • ترم أول", en: "Year 2 • Term 1" },
+    title: { ar: "Anatomy 3 — التشريح المتقدم", en: "Anatomy 3 — Advanced Regional Anatomy" },
+    desc: { ar: "تشريح Head & neck, Trunk, Nervous system, Major nerves & vessels.", en: "Detailed anatomy of Head, Neck, Trunk & Neuroanatomy." },
+    price: "599",
+    oldPrice: "650.00",
+    img: "image/anatomy3.png",
+    lessons: [
+      { id: "a3_1", title: { ar: "01. تشريح الرأس والعنق", en: "01. Head & Neck Regional Anatomy" }, duration: { ar: "35 دقيقة", en: "35 Mins" }, isFree: true, desc: { ar: "تشريح عضلات وأعصاب الرأس مجاناً.", en: "Free lesson on head and neck muscles." } }
+    ]
+  },
   c_biomech2: {
     id: "c_biomech2",
     type: "single",
@@ -1164,6 +1206,66 @@ window.catalogData = {
     img: "image/biomechanics2.png",
     lessons: [
       { id: "bm2_1", title: { ar: "01. ميكانيكا مفصل الكتف", en: "01. Shoulder Complex Biomechanics" }, duration: { ar: "40 دقيقة", en: "40 Mins" }, isFree: true, desc: { ar: "حركية مفصل الكتف وقوى العضلات مجاناً.", en: "Free overview on shoulder joint kinematics." } }
+    ]
+  },
+  c_hydro: {
+    id: "c_hydro",
+    type: "single",
+    year: "y2",
+    code: { ar: "2ع", en: "Y2" },
+    category: { ar: "الفرقة الثانية • ترم أول", en: "Year 2 • Term 1" },
+    title: { ar: "Hydrotherapy — العلاج المائي", en: "Hydrotherapy — Aquatic Physical Therapy" },
+    desc: { ar: "دراسة Buoyancy, Hydrostatic pressure, Hydrodynamics, Exercises.", en: "Hydrodynamics, buoyancy, aquatic techniques & therapeutic pools." },
+    price: "499",
+    oldPrice: "600.00",
+    img: "image/hydrotherapy.png",
+    lessons: [
+      { id: "hy_1", title: { ar: "01. الخواص الفيزيائية للماء", en: "01. Physical Properties of Water" }, duration: { ar: "30 دقيقة", en: "30 Mins" }, isFree: true, desc: { ar: "خواص الماء وقوة الطفو مجاناً.", en: "Free lesson on water properties." } }
+    ]
+  },
+  c_electro: {
+    id: "c_electro",
+    type: "single",
+    year: "y2",
+    code: { ar: "2ع", en: "Y2" },
+    category: { ar: "الفرقة الثانية • ترم أول", en: "Year 2 • Term 1" },
+    title: { ar: "Electrotherapy — العلاج الكهربائي", en: "Electrotherapy — Clinical Modalities" },
+    desc: { ar: "أجهزة TENS, NMES, Ultrasound, Parameters & Safety.", en: "TENS, NMES, Ultrasound parameters, indications and safety protocols." },
+    price: "399",
+    oldPrice: "500.00",
+    img: "image/electrotherapy.png",
+    lessons: [
+      { id: "el_1", title: { ar: "01. مبادئ التيارات الكهربية والأمان", en: "01. Principles of Currents & Safety" }, duration: { ar: "30 دقيقة", en: "30 Mins" }, isFree: true, desc: { ar: "أساسيات التيارات والأمان الكهربائي مجاناً.", en: "Free electrical safety principles." } }
+    ]
+  },
+  c_tests: {
+    id: "c_tests",
+    type: "single",
+    year: "y2",
+    code: { ar: "2ع", en: "Y2" },
+    category: { ar: "الفرقة الثانية • ترم أول", en: "Year 2 • Term 1" },
+    title: { ar: "Tests & Measurements — التقييم والقياسات", en: "Tests & Measurements — Physical Assessment" },
+    desc: { ar: "تطبيقات ROM, Goniometry, MMT, Anthropometry, Functional tests.", en: "Clinical assessment of ROM, Goniometry, MMT and functional tests." },
+    price: "599",
+    oldPrice: "650.00",
+    img: "image/tests_measurements.png",
+    lessons: [
+      { id: "tm_1", title: { ar: "01. مبادئ الفحص الإكلينيكي", en: "01. Clinical Assessment Principles" }, duration: { ar: "30 دقيقة", en: "30 Mins" }, isFree: true, desc: { ar: "مبادئ الفحص الإكلينيكي مجاناً.", en: "Free overview on clinical tests." } }
+    ]
+  },
+  c_neuro: {
+    id: "c_neuro",
+    type: "single",
+    year: "y2",
+    code: { ar: "2ع", en: "Y2" },
+    category: { ar: "الفرقة الثانية • ترم أول", en: "Year 2 • Term 1" },
+    title: { ar: "Neurophysiology — الفسيولوجيا العصبية", en: "Neurophysiology — Clinical Neurophysiology" },
+    desc: { ar: "دراسة Neuron, Synapse, Sensory & Motor systems, Reflexes.", en: "Action potentials, neuromuscular transmission, motor pathways & reflexes." },
+    price: "499",
+    oldPrice: "650.00",
+    img: "image/neurophysiology.png",
+    lessons: [
+      { id: "np_1", title: { ar: "01. الخلية العصبية والنقل المشبكي", en: "01. Neuron & Synaptic Transmission" }, duration: { ar: "35 دقيقة", en: "35 Mins" }, isFree: true, desc: { ar: "الخلية العصبية ونواقل الإشارات مجاناً.", en: "Free intro to neurophysiology." } }
     ]
   }
 };
