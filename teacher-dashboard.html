@@ -193,16 +193,30 @@
         <span>➕</span> إضافة محاضرة / درس جديد
       </h3>
 
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-        <div class="space-y-1">
-          <label class="text-xs font-bold text-slate-300">عنوان المحاضرة</label>
-          <input type="text" id="lecTitle" required placeholder="مثال: 01. Upper Limb Bones" class="w-full bg-[#0F1D2D] border border-slate-700 rounded-xl px-3 py-2.5 text-xs text-white focus:border-brand" />
-        </div>
 
-        <div class="space-y-1">
-          <label class="text-xs font-bold text-slate-300">مدة المحاضرة</label>
-          <input type="text" id="lecDuration" required placeholder="مثال: 45 دقيقة" class="w-full bg-[#0F1D2D] border border-slate-700 rounded-xl px-3 py-2.5 text-xs text-white focus:border-brand" />
-        </div>
+
+<div class="space-y-1">
+      <label class="text-xs font-bold text-slate-300">ترتيب المحاضرة</label>
+      <select id="lecNumber" class="w-full bg-[#0F1D2D] border border-slate-700 rounded-xl px-3 py-2.5 text-xs text-amber-300 font-bold focus:border-brand">
+        <option value="المحاضرة الأولى">المحاضرة الأولى (1)</option>
+        <option value="المحاضرة الثانية">المحاضرة الثانية (2)</option>
+        <option value="المحاضرة الثالثة">المحاضرة الثالثة (3)</option>
+        <option value="المحاضرة الرابعة">المحاضرة الرابعة (4)</option>
+        <option value="المحاضرة الخامسة">المحاضرة الخامسة (5)</option>
+        <option value="المحاضرة السادسة">المحاضرة السادسة (6)</option>
+        <option value="المحاضرة السابعة">المحاضرة السابعة (7)</option>
+        <option value="المحاضرة الثامنة">المحاضرة الثامنة (8)</option>
+        <option value="المحاضرة التاسعة">المحاضرة التاسعة (9)</option>
+        <option value="المحاضرة العاشرة">المحاضرة العاشرة (10)</option>
+        <option value="المحاضرة الحادية عشرة">المحاضرة الحادية عشرة (11)</option>
+        <option value="المحاضرة الثانية عشرة">المحاضرة الثانية عشرة (12)</option>
+      </select>
+    </div>
+
+    <div class="space-y-1">
+      <label class="text-xs font-bold text-slate-300">عنوان أو اسم المحاضرة</label>
+      <input type="text" id="lecCustomName" required placeholder="مثال: Upper Limb Bones" class="w-full bg-[#0F1D2D] border border-slate-700 rounded-xl px-3 py-2.5 text-xs text-white focus:border-brand" />
+    </div>
 
         <div class="space-y-1">
           <label class="text-xs font-bold text-slate-300">نوع الإتاحة</label>
@@ -653,7 +667,8 @@ import { auth, db, onAuthStateChanged, signOut, doc } from "./firebase-config.js
 
         await addDoc(collection(db, "lectures"), {
           courseId: currentSelectedCourse,
-          title: document.getElementById("lecTitle").value.trim(),
+title: `${document.getElementById("lecNumber").value}: ${document.getElementById("lecCustomName").value.trim()}`,
+order: parseInt(document.getElementById("lecNumber").selectedIndex, 10), // للترتيب التلقائي          
           duration: document.getElementById("lecDuration").value.trim(),
           desc: document.getElementById("lecDesc").value.trim(),
           isFree: document.getElementById("lecIsFree").value === "true",
@@ -770,15 +785,22 @@ return `
   };
 
   // 2. تفعيل التعديل على أي محاضرة منشورة
-  window.editLecture = function(lecId, title, duration, isFree, desc, videoUrl, pdfUrl) {
-    document.getElementById("lecTitle").value = title || "";
+window.editLecture = function(lecId, fullTitle, duration, isFree, desc, videoUrl, pdfUrl) {
+    // فصل رقم المحاضرة عن الاسم المخصص (مثلا: "المحاضرة الخامسة: اسم الدرس")
+    let parts = fullTitle.split(":");
+    let lecNum = parts[0] ? parts[0].trim() : "المحاضرة الأولى";
+    let lecName = parts[1] ? parts[1].trim() : fullTitle;
+
+    const numSelect = document.getElementById("lecNumber");
+    if (numSelect) numSelect.value = lecNum;
+
+    document.getElementById("lecCustomName").value = lecName;
     document.getElementById("lecDuration").value = duration || "";
     document.getElementById("lecIsFree").value = isFree ? "true" : "false";
     document.getElementById("lecDesc").value = desc || "";
     document.getElementById("videoUrlManual").value = videoUrl || "";
     document.getElementById("pdfUrlManual").value = pdfUrl || "";
 
-    // تحويل زر النشر لزر تحديث
     const saveBtn = document.getElementById("saveLectureBtn");
     saveBtn.textContent = "حفظ التعديلات على المحاضرة 💾";
     saveBtn.dataset.editingId = lecId;

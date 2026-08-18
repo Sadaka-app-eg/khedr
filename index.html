@@ -2381,7 +2381,7 @@ window.loadFirestoreLectures = async function(courseId) {
       liveLessons.push({ id: docSnap.id, ...docSnap.data() });
     });
 
-    // ترتيب المحاضرات حسب حقل order
+  // ترتيب المحاضرات تصاعدياً حسب رقم المحاضرة المختار
     liveLessons.sort((a, b) => (a.order || 0) - (b.order || 0));
 
     window.renderDynamicLessonsAccordion(liveLessons);
