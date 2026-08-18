@@ -29,7 +29,14 @@
 
   body { background-color: var(--dark-bg); color: #EAF3F3; transition: background-color 0.3s ease, color 0.3s ease; }
   body.light { background-color: #F8FAFC; color: #0E2A38; }
-
+.hero-banner-bg {
+    background: linear-gradient(135deg, #2D0310 0%, #4A051B 45%, #6B0828 100%);
+    box-shadow: 0 20px 50px -10px rgba(0, 0, 0, 0.7);
+  }
+  body.light .hero-banner-bg {
+    background: linear-gradient(135deg, #5E0824 0%, #7A0B30 50%, #8E0E38 100%) !important;
+    box-shadow: 0 20px 40px -10px rgba(142, 14, 56, 0.25);
+  }
   .bg-card-theme { background-color: var(--dark-card); border-color: var(--dark-line); color: #EAF3F3; }
   body.light .bg-card-theme { background-color: #FFFFFF !important; border-color: #E2E8F0 !important; color: #0E2A38 !important; }
   
@@ -191,10 +198,27 @@
         تجربة تعليمية متكاملة تستحق تبدأ بيها لأن كل تفصيلة مصممة علشانك
       </p>
 
+<!-- زر الهيرو التفاعلي: يتبدل عند تسجيل الدخول -->
       <div class="pt-2">
-        <a href="#authSection" class="inline-block bg-white text-[#7A0B30] font-black text-sm md:text-lg px-10 py-4 rounded-2xl shadow-2xl hover:bg-rose-50 transition transform hover:scale-105" data-i18n="hero_cta1">
-          سجل وخد أول خطوة
-        </a>
+        <!-- يظهر للزائر غير المسجل -->
+        <div id="heroGuestCta">
+          <a href="#authSection" class="inline-block bg-white text-[#7A0B30] font-black text-sm md:text-lg px-10 py-4 rounded-2xl shadow-2xl hover:bg-rose-50 transition transform hover:scale-105" data-i18n="hero_cta1">
+            سجل وخد أول خطوة
+          </a>
+        </div>
+
+        <!-- يظهر للطالب المسجل -->
+        <div id="heroUserCta" class="hidden space-y-3">
+          <div class="inline-flex items-center gap-2 bg-black/40 backdrop-blur-md px-5 py-2.5 rounded-2xl border border-white/15 text-amber-300 font-black text-sm md:text-base shadow-lg">
+            <span>👋</span>
+            <span>منورنا يا دكتور <span id="heroUserName" class="text-white"></span></span>
+          </div>
+          <div>
+            <a href="#courses" class="inline-block bg-amber-400 text-slate-950 font-black text-xs md:text-sm px-8 py-3.5 rounded-2xl shadow-xl hover:bg-amber-300 transition transform hover:scale-105">
+              استكمل مذاكرتك ومقرراتك 📚 ←
+            </a>
+          </div>
+        </div>
       </div>
 
       <div class="pt-6 border-t border-white/15 text-xs md:text-base font-bold opacity-80 hidden md:block" data-i18n="hero_footer_note">
@@ -731,7 +755,7 @@
   <div id="supportTooltip" class="relative hidden sm:flex items-center gap-2 bg-[#0F1D2D] border border-cyan-500/30 text-white text-xs font-bold py-2 ps-3.5 pe-8 rounded-2xl shadow-2xl transition-all duration-300">
     <span class="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
     <span>تيم الدعم الفني متاح للمساعدة</span>
-    <button onclick="toggleSupportTooltip(false)" class="absolute end-2 top-1/2 -translate-y-1/2 w-5 h-5 rounded-full bg-slate-800 hover:bg-rose-900 text-slate-300 hover:text-white flex items-center justify-center text-[10px] transition" title="إغلاق">
+<button type="button" onclick="document.getElementById('supportTooltip').style.display='none';" class="absolute end-2 top-1/2 -translate-y-1/2 w-5 h-5 rounded-full bg-slate-800 hover:bg-rose-900 text-slate-300 hover:text-white flex items-center justify-center text-[10px] transition cursor-pointer z-30" title="إغلاق">
       ✕
     </button>
   </div>
@@ -1580,16 +1604,32 @@ import {
     const navUserName = document.getElementById("navUserName");
     const authSection = document.getElementById("authSection");
 
+const heroGuestCta = document.getElementById("heroGuestCta");
+    const heroUserCta = document.getElementById("heroUserCta");
+    const heroUserName = document.getElementById("heroUserName");
+
     if (user) {
       window.isUserLoggedIn = true;
       if (guestNav) guestNav.classList.add("hidden");
       if (authSection) authSection.classList.add("hidden");
       
+      const displayName = user.displayName || user.email.split('@')[0];
+
       if (userNav) userNav.classList.remove("hidden");
-      if (navUserName) navUserName.textContent = user.displayName || user.email.split('@')[0];
-// فحص إيميل المشرف لإظهار زر لوحة التحكم له فقط
+      if (navUserName) navUserName.textContent = displayName;
+
+      // تبديل زر الهيرو إلى رسالة ترحيبية
+      if (heroGuestCta) heroGuestCta.classList.add("hidden");
+      if (heroUserCta) heroUserCta.classList.remove("hidden");
+      if (heroUserName) heroUserName.textContent = displayName;
+
+      // قائمة المشرفين المصرح لهم بظهور زر الإدارة
       const adminLink = document.getElementById("adminDashboardLink");
-      const ADMIN_EMAILS = ["admin@khedr.com", "khedr@physio.com"]; // اكتب إيميلك هنا
+      const ADMIN_EMAILS = [
+        "ahmedmohamedhosny100@gmail.com", // إيميلك المسجل في الصورة
+        "admin@khedr.com",
+        "khedr@physio.com"
+      ];
       const userEmail = (user.email || "").toLowerCase().trim();
       
       if (adminLink) {
@@ -1598,6 +1638,7 @@ import {
         } else {
           adminLink.classList.add("hidden");
         }
+      }
       }
       try {
         const studentDoc = await getDoc(doc(db, "students", user.uid));
