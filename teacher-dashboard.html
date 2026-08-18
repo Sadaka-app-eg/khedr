@@ -187,36 +187,35 @@
       </div>
     </div>
 
-    <!-- نموذج إضافة محاضرة جديدة -->
+<!-- نموذج إضافة محاضرة جديدة -->
     <form id="addLectureForm" class="space-y-6 bg-[#07111D] border border-slate-800 p-6 rounded-2xl">
       <h3 class="text-base font-black text-amber-400 flex items-center gap-2">
         <span>➕</span> إضافة محاضرة / درس جديد
       </h3>
 
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div class="space-y-1">
+          <label class="text-xs font-bold text-slate-300">ترتيب المحاضرة</label>
+          <select id="lecNumber" class="w-full bg-[#0F1D2D] border border-slate-700 rounded-xl px-3 py-2.5 text-xs text-amber-300 font-bold focus:border-brand">
+            <option value="المحاضرة الأولى">المحاضرة الأولى (1)</option>
+            <option value="المحاضرة الثانية">المحاضرة الثانية (2)</option>
+            <option value="المحاضرة الثالثة">المحاضرة الثالثة (3)</option>
+            <option value="المحاضرة الرابعة">المحاضرة الرابعة (4)</option>
+            <option value="المحاضرة الخامسة">المحاضرة الخامسة (5)</option>
+            <option value="المحاضرة السادسة">المحاضرة السادسة (6)</option>
+            <option value="المحاضرة السابعة">المحاضرة السابعة (7)</option>
+            <option value="المحاضرة الثامنة">المحاضرة الثامنة (8)</option>
+            <option value="المحاضرة التاسعة">المحاضرة التاسعة (9)</option>
+            <option value="المحاضرة العاشرة">المحاضرة العاشرة (10)</option>
+            <option value="المحاضرة الحادية عشرة">المحاضرة الحادية عشرة (11)</option>
+            <option value="المحاضرة الثانية عشرة">المحاضرة الثانية عشرة (12)</option>
+          </select>
+        </div>
 
-
-<div class="space-y-1">
-      <label class="text-xs font-bold text-slate-300">ترتيب المحاضرة</label>
-      <select id="lecNumber" class="w-full bg-[#0F1D2D] border border-slate-700 rounded-xl px-3 py-2.5 text-xs text-amber-300 font-bold focus:border-brand">
-        <option value="المحاضرة الأولى">المحاضرة الأولى (1)</option>
-        <option value="المحاضرة الثانية">المحاضرة الثانية (2)</option>
-        <option value="المحاضرة الثالثة">المحاضرة الثالثة (3)</option>
-        <option value="المحاضرة الرابعة">المحاضرة الرابعة (4)</option>
-        <option value="المحاضرة الخامسة">المحاضرة الخامسة (5)</option>
-        <option value="المحاضرة السادسة">المحاضرة السادسة (6)</option>
-        <option value="المحاضرة السابعة">المحاضرة السابعة (7)</option>
-        <option value="المحاضرة الثامنة">المحاضرة الثامنة (8)</option>
-        <option value="المحاضرة التاسعة">المحاضرة التاسعة (9)</option>
-        <option value="المحاضرة العاشرة">المحاضرة العاشرة (10)</option>
-        <option value="المحاضرة الحادية عشرة">المحاضرة الحادية عشرة (11)</option>
-        <option value="المحاضرة الثانية عشرة">المحاضرة الثانية عشرة (12)</option>
-      </select>
-    </div>
-
-    <div class="space-y-1">
-      <label class="text-xs font-bold text-slate-300">عنوان أو اسم المحاضرة</label>
-      <input type="text" id="lecCustomName" required placeholder="مثال: Upper Limb Bones" class="w-full bg-[#0F1D2D] border border-slate-700 rounded-xl px-3 py-2.5 text-xs text-white focus:border-brand" />
-    </div>
+        <div class="space-y-1">
+          <label class="text-xs font-bold text-slate-300">عنوان أو اسم المحاضرة</label>
+          <input type="text" id="lecCustomName" required placeholder="مثال: Upper Limb Bones" class="w-full bg-[#0F1D2D] border border-slate-700 rounded-xl px-3 py-2.5 text-xs text-white focus:border-brand" />
+        </div>
 
         <div class="space-y-1">
           <label class="text-xs font-bold text-slate-300">نوع الإتاحة</label>
@@ -669,7 +668,6 @@ import { auth, db, onAuthStateChanged, signOut, doc } from "./firebase-config.js
           courseId: currentSelectedCourse,
 title: `${document.getElementById("lecNumber").value}: ${document.getElementById("lecCustomName").value.trim()}`,
 order: parseInt(document.getElementById("lecNumber").selectedIndex, 10), // للترتيب التلقائي          
-          duration: document.getElementById("lecDuration").value.trim(),
           desc: document.getElementById("lecDesc").value.trim(),
           isFree: document.getElementById("lecIsFree").value === "true",
           videoUrl: videoUrl,
@@ -795,7 +793,6 @@ window.editLecture = function(lecId, fullTitle, duration, isFree, desc, videoUrl
     if (numSelect) numSelect.value = lecNum;
 
     document.getElementById("lecCustomName").value = lecName;
-    document.getElementById("lecDuration").value = duration || "";
     document.getElementById("lecIsFree").value = isFree ? "true" : "false";
     document.getElementById("lecDesc").value = desc || "";
     document.getElementById("videoUrlManual").value = videoUrl || "";
