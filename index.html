@@ -1626,7 +1626,6 @@ function closeCourseView() {
   window.scrollTo({ top: 0, behavior: "smooth" });
 }
 
-// ============ بناء فهرس المحاضرات التفاعلي (Accordion System) ============
 window.renderDynamicLessonsAccordion = function(lessonsList) {
   const container = document.getElementById("lessonsList");
   if (!container) return;
@@ -1644,7 +1643,9 @@ window.renderDynamicLessonsAccordion = function(lessonsList) {
   }
 
   container.innerHTML = lessonsList.map((lec, index) => {
-    const canAccess = lec.isFree || isEnrolled;
+    // التأكد من حالة المجانية سواء كانت Boolean أو String
+    const isFree = lec.isFree === true || lec.isFree === "true";
+    const canAccess = isFree || isEnrolled;
     const isLocked = !canAccess;
 
     return `
@@ -1660,7 +1661,7 @@ window.renderDynamicLessonsAccordion = function(lessonsList) {
             <div>
               <h4 class="text-xs sm:text-sm font-black text-white">${lec.title}</h4>
               <span class="text-[10px] text-slate-400 block mt-0.5">
-                ${lec.isFree ? '🔓 معاينة مجانية' : (isLocked ? '🔒 يتطلب اشتراك' : 'محتوى متاح')}
+                ${isFree ? '🔓 معاينة مجانية' : (isLocked ? '🔒 يتطلب اشتراك' : 'محتوى متاح')}
               </span>
             </div>
           </div>
@@ -1675,7 +1676,7 @@ window.renderDynamicLessonsAccordion = function(lessonsList) {
               🔒 المحاضرة مغلقة. اشترك في المادة لفتح الفيديو والملفات والكويزات.
             </div>
           ` : `
-            <!-- 1. تفرع الفيديو مع التحكم بالسرعات -->
+            <!-- 1. تفرع الفيديو -->
             ${lec.videoUrl ? `
               <div class="p-3 rounded-xl bg-[#0F1D2D] border border-slate-800 flex items-center justify-between">
                 <div class="flex items-center gap-2.5">
@@ -1685,7 +1686,7 @@ window.renderDynamicLessonsAccordion = function(lessonsList) {
                     <span class="block text-[10px] text-slate-400">مشاهدة بدقة عالية مع الحماية</span>
                   </div>
                 </div>
-                <button onclick="playLessonVideo('${lec.videoUrl}', '${lec.title}')" class="px-3 py-1.5 rounded-lg bg-brand hover:bg-rose-900 text-white text-[11px] font-black transition shadow">
+                <button onclick="playLessonVideo('${lec.videoUrl}', '${lec.title.replace(/'/g, "\\'")}', '${(lec.desc || '').replace(/'/g, "\\'")}')" class="px-3.5 py-1.5 rounded-lg bg-brand hover:bg-rose-900 text-white text-[11px] font-black transition shadow cursor-pointer">
                   تشغيل الفيديو ▶
                 </button>
               </div>
@@ -1702,14 +1703,9 @@ window.renderDynamicLessonsAccordion = function(lessonsList) {
                   </div>
                 </div>
                 <div class="flex items-center gap-2">
-                  <button onclick="openPdfViewer('${lec.pdfUrl}')" class="px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 text-[11px] font-bold transition">
+                  <button onclick="openPdfViewer('${lec.pdfUrl}')" class="px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 text-[11px] font-bold transition cursor-pointer">
                     معاينة 👁️
                   </button>
-                  ${lec.allowPdfDownload ? `
-                    <a href="${lec.pdfUrl}" target="_blank" download class="px-3 py-1.5 rounded-lg bg-cyan-950 text-cyan-300 hover:bg-cyan-900 border border-cyan-800/40 text-[11px] font-bold transition">
-                      تحميل 📥
-                    </a>
-                  ` : ''}
                 </div>
               </div>
             ` : ''}
@@ -1724,7 +1720,7 @@ window.renderDynamicLessonsAccordion = function(lessonsList) {
                     <span class="block text-[10px] text-slate-400">${lec.quiz.length} أسئلة MCQ مع التفسير</span>
                   </div>
                 </div>
-                <button onclick='startInteractiveQuiz(${JSON.stringify(lec.quiz)}, "${lec.id || index}")' class="px-3 py-1.5 rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white text-[11px] font-black transition shadow">
+                <button onclick='startInteractiveQuiz(${JSON.stringify(lec.quiz)}, "${lec.id || index}")' class="px-3 py-1.5 rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white text-[11px] font-black transition shadow cursor-pointer">
                   بدء الاختبار ⏱️
                 </button>
               </div>
@@ -1735,6 +1731,12 @@ window.renderDynamicLessonsAccordion = function(lessonsList) {
       </div>
     `;
   }).join("");
+
+  // تشغيل أول درس متاح تلقائياً في مشغل الفيديو
+  const firstAvailable = lessonsList.find(l => (l.isFree === true || l.isFree === "true") || isEnrolled);
+  if (firstAvailable && firstAvailable.videoUrl) {
+    playLessonVideo(firstAvailable.videoUrl, firstAvailable.title, firstAvailable.desc);
+  }
 };
 
 // دالة فتح وغلق التفرعات
@@ -1929,8 +1931,8 @@ document.addEventListener("DOMContentLoaded", () => {
 <script type="module">
 
 import { updateDoc, arrayUnion } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-firestore.js";
-  // تشغيل الفيديو مع شريط التحكم بالسرعة
-  window.playLessonVideo = function(videoUrl, title) {
+// تشغيل الفيديو وتحديث بيانات الشرح
+  window.playLessonVideo = function(videoUrl, title, desc) {
     const iframe = document.getElementById("videoIframe");
     const placeholder = document.getElementById("videoPlaceholder");
     
@@ -1940,11 +1942,10 @@ import { updateDoc, arrayUnion } from "https://www.gstatic.com/firebasejs/10.13.
     iframe.classList.remove("hidden");
     if (placeholder) placeholder.classList.add("hidden");
 
-    document.getElementById("currentLessonTitle").textContent = title;
+    if (title) document.getElementById("currentLessonTitle").textContent = title;
+    if (desc) document.getElementById("currentLessonDesc").textContent = desc;
     
-    // تشغيل العلامة المائية المتحركة لحماية المحتوى
     if (typeof startWatermark === "function") startWatermark();
-    window.scrollTo({ top: 180, behavior: "smooth" });
   };
 
   // فتح عارض الـ PDF

@@ -74,35 +74,45 @@
 
 <div class="max-w-[1550px] mx-auto px-4 md:px-8 py-8">
 
-  <!-- Header -->
-  <header class="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-6 border-b border-slate-800">
-    <div class="flex items-center gap-3">
-      <div class="w-12 h-12 rounded-2xl bg-brand flex items-center justify-center text-white font-black text-xl shadow-lg">
-        خِـ
-      </div>
-      <div>
-        <h1 class="text-xl md:text-2xl font-black text-white">لوحة تحكم وتفعيل الطلاب 🩺</h1>
-        <p class="text-xs text-slate-400">إدارة حسابات طلاب العلاج الطبيعي وتفعيل المقررات الأكاديمية</p>
+<header class="flex flex-col lg:flex-row lg:items-center justify-between gap-4 pb-6 border-b border-slate-800">
+    <div class="flex items-center justify-between w-full lg:w-auto">
+      <div class="flex items-center gap-3">
+        <div class="w-12 h-12 rounded-2xl bg-brand flex items-center justify-center text-white font-black text-xl shadow-lg">
+          خِـ
+        </div>
+        <div>
+          <h1 class="text-lg md:text-xl font-black text-white">لوحة تحكم المشرف 🩺</h1>
+          <p class="text-[11px] text-slate-400">إدارة الطلاب والمحاضرات وبنوك الأسئلة</p>
+        </div>
       </div>
     </div>
 
-<div class="flex items-center gap-3">
-      <!-- زر التبديل بين الوضع الليلي والنهاري -->
-      <div id="themeBtn" class="theme-toggle-pill" title="تبديل الوضع النهاري/الليلي">
+    <!-- أزرار التبويبات للتقسيم والتنظيم -->
+    <div class="flex items-center gap-2 bg-[#0F1D2D] p-1.5 rounded-2xl border border-slate-800 self-start lg:self-auto">
+      <button onclick="switchAdminTab('students')" id="adminTabStudents" class="px-4 py-2 rounded-xl text-xs font-black transition bg-brand text-white shadow">
+        👥 إدارة وتفعيل الطلاب
+      </button>
+      <button onclick="switchAdminTab('lectures')" id="adminTabLectures" class="px-4 py-2 rounded-xl text-xs font-black transition text-slate-400 hover:text-white">
+        📚 إدارة ونشر المحاضرات
+      </button>
+    </div>
+
+    <div class="flex items-center gap-2.5">
+      <div id="themeBtn" class="theme-toggle-pill" title="تبديل الوضع">
         <span class="text-[10px] z-10">☀️</span>
         <span class="text-[10px] z-10">🌙</span>
         <div class="theme-toggle-thumb"></div>
       </div>
-
-      <a href="index.html" class="px-4 py-2 rounded-xl border border-slate-700 hover:border-slate-500 text-xs font-bold text-slate-200 transition">
-        ← العودة للمنصة
+      <a href="index.html" class="px-3.5 py-2 rounded-xl border border-slate-700 hover:border-slate-500 text-xs font-bold text-slate-200 transition">
+        ← المنصة
       </a>
-      <button id="logoutBtn" class="px-4 py-2 rounded-xl bg-rose-950/60 text-rose-300 hover:bg-rose-900 text-xs font-bold transition">
-        تسجيل الخروج
+      <button id="logoutBtn" class="px-3.5 py-2 rounded-xl bg-rose-950/60 text-rose-300 hover:bg-rose-900 text-xs font-bold transition">
+        خروج
       </button>
     </div>
   </header>
-
+<!-- ============ تبويب إدارة الطلاب ============ -->
+  <div id="sectionStudentsTab" class="space-y-6">
   <!-- إحصائيات سريعة -->
   <section class="grid grid-cols-2 md:grid-cols-4 gap-4 my-6">
     <div class="p-5 rounded-2xl bg-card-theme border border-slate-800 shadow-md">
@@ -156,7 +166,10 @@
       </table>
     </div>
   </section>
+</div> <!-- نهاية قسم الطلاب -->
 
+  <!-- ============ تبويب إدارة ونشر المحاضرات ============ -->
+  <div id="sectionLecturesTab" class="hidden space-y-6">
 
   <!-- ============ COURSE & LECTURE MANAGER WITH CLOUDINARY & QUIZ BUILDER ============ -->
   <section class="mt-12 bg-card-theme border border-slate-800 rounded-3xl p-6 md:p-8 shadow-2xl">
@@ -213,6 +226,8 @@
             <span id="videoUploadStatus" class="text-[10px] text-slate-400">جاهز للرفع</span>
           </div>
           <input type="file" id="videoFileInput" accept="video/*" class="w-full text-xs text-slate-400 file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-bold file:bg-brand file:text-white hover:file:bg-rose-900" />
+         
+         
           <div class="flex items-center gap-2">
             <span class="text-[10px] text-slate-500">أو رابط فيديو خارجي:</span>
             <input type="url" id="videoUrlManual" placeholder="https://..." class="flex-1 bg-[#07111D] border border-slate-800 rounded-lg px-2.5 py-1 text-xs text-white" />
@@ -259,7 +274,7 @@
     </div>
   </section>
 </div>
-
+</div>
 <!-- نافذة المودال لإدارة كورسات الطالب (Course Activation Modal) -->
 <div id="courseModal" class="hidden fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm p-4">
   <div class="bg-[#0F1D2D] border border-slate-700 rounded-3xl max-w-lg w-full p-6 space-y-5 shadow-2xl">
@@ -673,7 +688,9 @@ return `
               </div>
               <span class="text-[10px] text-slate-400 block">${lec.duration} • ${lec.quiz ? lec.quiz.length : 0} أسئلة MCQ</span>
             </div>
-            
+<button onclick="editLecture('${docSnap.id}', '${lec.title.replace(/'/g, "\\'")}', '${lec.duration || ''}', ${lec.isFree}, '${(lec.desc || '').replace(/'/g, "\\'")}', '${lec.videoUrl || ''}', '${lec.pdfUrl || ''}')" class="px-3 py-1.5 rounded-lg bg-amber-500/20 hover:bg-amber-500/40 border border-amber-500/40 text-amber-300 text-xs font-bold transition">
+    تعديل ✏️
+  </button>
             <div class="flex items-center gap-2">
               ${lec.videoUrl ? `<a href="${lec.videoUrl}" target="_blank" class="px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-cyan-300 text-xs font-bold transition">🎬 مشاهدة الفيديو</a>` : ''}
               ${lec.pdfUrl ? `<a href="${lec.pdfUrl}" target="_blank" class="px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-amber-300 text-xs font-bold transition">📄 فتح الـ PDF</a>` : ''}
@@ -713,6 +730,44 @@ return `
       localStorage.setItem("adminTheme", isLight ? "light" : "dark");
     });
   }
+
+  // 1. التبديل بين تبويب الطلاب والمحاضرات
+  window.switchAdminTab = function(tab) {
+    const secStudents = document.getElementById("sectionStudentsTab");
+    const secLectures = document.getElementById("sectionLecturesTab");
+    const btnStudents = document.getElementById("adminTabStudents");
+    const btnLectures = document.getElementById("adminTabLectures");
+
+    if (tab === 'students') {
+      secStudents.classList.remove("hidden");
+      secLectures.classList.add("hidden");
+      btnStudents.className = "px-4 py-2 rounded-xl text-xs font-black transition bg-brand text-white shadow";
+      btnLectures.className = "px-4 py-2 rounded-xl text-xs font-black transition text-slate-400 hover:text-white";
+    } else {
+      secStudents.classList.add("hidden");
+      secLectures.classList.remove("hidden");
+      btnLectures.className = "px-4 py-2 rounded-xl text-xs font-black transition bg-brand text-white shadow";
+      btnStudents.className = "px-4 py-2 rounded-xl text-xs font-black transition text-slate-400 hover:text-white";
+      loadPublishedLectures();
+    }
+  };
+
+  // 2. تفعيل التعديل على أي محاضرة منشورة
+  window.editLecture = function(lecId, title, duration, isFree, desc, videoUrl, pdfUrl) {
+    document.getElementById("lecTitle").value = title || "";
+    document.getElementById("lecDuration").value = duration || "";
+    document.getElementById("lecIsFree").value = isFree ? "true" : "false";
+    document.getElementById("lecDesc").value = desc || "";
+    document.getElementById("videoUrlManual").value = videoUrl || "";
+    document.getElementById("pdfUrlManual").value = pdfUrl || "";
+
+    // تحويل زر النشر لزر تحديث
+    const saveBtn = document.getElementById("saveLectureBtn");
+    saveBtn.textContent = "حفظ التعديلات على المحاضرة 💾";
+    saveBtn.dataset.editingId = lecId;
+
+    document.getElementById("addLectureForm").scrollIntoView({ behavior: "smooth" });
+  };
 </script>
 </body>
 </html>
