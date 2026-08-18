@@ -115,90 +115,89 @@
 <div id="scrollProgress"></div>
 
 <!-- ============ NAVBAR ============ -->
-<header class="sticky top-0 z-50 backdrop-blur-md bg-[#07111D]/95 border-b border-slate-800 transition-colors">
-  <div class="w-full max-w-[1600px] mx-auto px-4 md:px-8 h-16 flex items-center justify-between">
+<header class="fixed top-0 inset-x-0 z-[100] backdrop-blur-md bg-[#07111D]/95 border-b border-slate-800 transition-colors">
+  <div class="w-full max-w-[1650px] mx-auto px-4 md:px-8 h-20 flex items-center justify-between">
 
-<!-- اليمين: زر القائمة للموبايل + منطقة تسجيل الدخول ولوحة الطالب -->
-<div class="flex items-center gap-3">
-      <button id="drawerBtn" onclick="toggleDrawer()" class="w-11 h-11 rounded-2xl bg-[#0F1D2D] border border-slate-700 hover:border-brand text-amber-400 flex items-center justify-center shadow-lg transition-all duration-300 active:scale-95 group" title="القائمة">
-        <!-- 1. أيقونة الـ 3 شُرَط (تظهر في البداية) -->
-        <svg id="iconBars" class="w-6 h-6 transition-all duration-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
-          <line x1="4" y1="6" x2="20" y2="6"></line>
-          <line x1="4" y1="12" x2="20" y2="12"></line>
-          <line x1="4" y1="18" x2="20" y2="18"></line>
-        </svg>
+    <!-- 1. اليمين: اللوجو بحجمه الواضح الأصلي -->
+    <a href="#" onclick="window.scrollTo({top: 0, behavior: 'smooth'}); return false;" class="flex items-center gap-3">
+      <img src="logo.png" alt="KHEDR & PHYSIO" class="h-11 md:h-12 w-auto object-contain" onerror="this.src='logo.png'" />
+      <span class="hidden sm:inline font-black text-base md:text-lg text-white tracking-wide" data-i18n="brand">KHEDR & PHYSIO</span>
+    </a>
 
-        <!-- 2. أيقونة النجمة / الذرة الدوارة (تظهر عند الفتح) -->
-        <svg id="iconAtom" class="hidden w-6 h-6 transition-all duration-500 animate-spin" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
-          <ellipse cx="12" cy="12" rx="10" ry="4.2" transform="rotate(0 12 12)"></ellipse>
-          <ellipse cx="12" cy="12" rx="10" ry="4.2" transform="rotate(60 12 12)"></ellipse>
-          <ellipse cx="12" cy="12" rx="10" ry="4.2" transform="rotate(120 12 12)"></ellipse>
-          <circle cx="12" cy="12" r="2.2" fill="currentColor"></circle>
-        </svg>
-      </button>
-    </div>
+    <!-- 2. الشمال: أزرار التحكم + زر الـ 3 شُرَط والقائمة المنسدلة -->
+    <div class="flex items-center gap-3">
+      
+      <!-- زر تبديل الثيم -->
+      <div id="themeBtn" class="theme-toggle-pill" title="Toggle Dark/Light Mode">
+        <span class="text-[10px] z-10">☀️</span>
+        <span class="text-[10px] z-10">🌙</span>
+        <div class="theme-toggle-thumb"></div>
+      </div>
 
-    <!-- المنتصف: اللوجو -->
-    <a href="#" onclick="window.scrollTo({top: 0, behavior: 'smooth'}); return false;" class="flex items-center gap-2">
-      <img src="logo.png" alt="KHEDR PHYSIO" class="h-9 md:h-11 w-auto object-contain" onerror="this.src='logo.png'" />
-      <span class="hidden lg:inline font-black text-sm md:text-base text-white" data-i18n="brand">KHEDR & PHYSIO</span>
-    </a>
+      <!-- زر تبديل اللغة -->
+      <button id="langBtn" class="text-xs font-bold px-3 h-8 rounded-full border border-slate-700 text-slate-200 flex items-center gap-1.5 hover:border-brand transition">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.7 2.5 15.3 0 18M12 3c-2.5 2.7-2.5 15.3 0 18"/></svg>
+        <span id="langLabel">EN</span>
+      </button>
 
-    <!-- الشمال: الثيم وتغيير اللغة -->
-    <div class="flex items-center gap-2">
-      <div id="themeBtn" class="theme-toggle-pill" title="Toggle Dark/Light Mode">
-        <span class="text-[10px] z-10">☀️</span>
-        <span class="text-[10px] z-10">🌙</span>
-        <div class="theme-toggle-thumb"></div>
-      </div>
+      <!-- حاوية زر القائمة المنسدلة -->
+      <div class="relative">
+        <button id="drawerBtn" onclick="toggleDrawer()" class="w-11 h-11 rounded-2xl bg-[#0F1D2D] border border-slate-700 hover:border-brand text-amber-400 flex items-center justify-center shadow-lg transition active:scale-95 cursor-pointer" title="القائمة">
+          <svg id="iconBars" class="w-6 h-6 transition-all duration-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
+            <line x1="4" y1="6" x2="20" y2="6"></line>
+            <line x1="4" y1="12" x2="20" y2="12"></line>
+            <line x1="4" y1="18" x2="20" y2="18"></line>
+          </svg>
+          <svg id="iconAtom" class="hidden w-6 h-6 transition-all duration-500 animate-spin" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+            <ellipse cx="12" cy="12" rx="10" ry="4.2" transform="rotate(0 12 12)"></ellipse>
+            <ellipse cx="12" cy="12" rx="10" ry="4.2" transform="rotate(60 12 12)"></ellipse>
+            <ellipse cx="12" cy="12" rx="10" ry="4.2" transform="rotate(120 12 12)"></ellipse>
+            <circle cx="12" cy="12" r="2.2" fill="currentColor"></circle>
+          </svg>
+        </button>
 
-<button id="langBtn" class="text-xs font-bold px-2.5 h-7 rounded-full border border-slate-700 text-slate-200 flex items-center gap-1 hover:border-brand transition">
-        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.7 2.5 15.3 0 18M12 3c-2.5 2.7-2.5 15.3 0 18"/></svg>
-        <span id="langLabel">EN</span>
-      </button>
-</div>
-  </div>
+        <!-- المينيو المنبثقة الصغيرة في الشمال تحت الزر مباشرة -->
+        <div id="drawer" class="hidden absolute top-14 left-0 z-50 w-56 p-2.5 rounded-2xl bg-[#0F1D2D]/95 backdrop-blur-xl border border-slate-700 shadow-2xl space-y-1.5">
+          
+          <!-- أزرار الزائر -->
+          <div id="drawerGuestActions" class="flex flex-col gap-1.5">
+            <button onclick="toggleDrawer(); openAuthView('register');" class="w-full py-2.5 px-3 rounded-xl bg-brand hover:bg-rose-900 text-white font-black text-xs transition active:scale-95 text-start flex items-center gap-2 cursor-pointer">
+              <span>✨</span> <span>حساب جديد</span>
+            </button>
+            <button onclick="toggleDrawer(); openAuthView('login');" class="w-full py-2.5 px-3 rounded-xl bg-[#07111D] hover:bg-slate-800 text-slate-200 font-bold text-xs border border-slate-700/60 transition active:scale-95 text-start flex items-center gap-2 cursor-pointer">
+              <span>🔑</span> <span>تسجيل الدخول</span>
+            </button>
+          </div>
+
+          <!-- أزرار الطالب -->
+          <div id="drawerStudentActions" class="hidden flex-col gap-1.5">
+            <a href="dashboard.html" class="w-full py-2.5 px-3 rounded-xl bg-brand hover:bg-rose-900 text-white font-black text-xs transition flex items-center gap-2">
+              <span>🎓</span> <span>لوحة تحكم الطالب</span>
+            </a>
+            <button onclick="handleLogoutClick();" class="w-full py-2 px-3 rounded-xl bg-rose-950/40 hover:bg-rose-900/60 text-rose-300 font-bold text-xs border border-rose-900/30 transition text-start flex items-center gap-2 cursor-pointer">
+              <span>🚪</span> <span>تسجيل الخروج</span>
+            </button>
+          </div>
+
+          <!-- أزرار المشرف -->
+          <div id="drawerAdminActions" class="hidden flex-col gap-1.5">
+            <a href="teacher-dashboard.html" class="w-full py-2.5 px-3 rounded-xl bg-amber-400 hover:bg-amber-300 text-slate-950 font-black text-xs transition flex items-center gap-2">
+              <span>⚙️</span> <span>لوحة المشرف</span>
+            </a>
+            <a href="dashboard.html" class="w-full py-2 px-3 rounded-xl bg-[#07111D] hover:bg-slate-800 text-slate-200 font-bold text-xs border border-slate-700 transition flex items-center gap-2">
+              <span>🎓</span> <span>لوحة الطالب</span>
+            </a>
+            <button onclick="handleLogoutClick();" class="w-full py-2 px-3 rounded-xl bg-rose-950/40 hover:bg-rose-900/60 text-rose-300 font-bold text-xs border border-rose-900/30 transition text-start flex items-center gap-2 cursor-pointer">
+              <span>🚪</span> <span>تسجيل الخروج</span>
+            </button>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </div>
 </header>
-
-<!-- القائمة المنسدلة العائمة المصغرة -->
-<div id="drawer" class="hidden absolute top-16 start-4 md:start-8 z-50 w-56 transition-all duration-200 origin-top">
-  <div class="rounded-2xl bg-[#0F1D2D]/95 backdrop-blur-xl p-2.5 shadow-[0_15px_35px_rgba(0,0,0,0.6)] border border-slate-700/70 space-y-1.5 animate-in fade-in zoom-in-95">
-    
-    <!-- 1. أزرار الزائر -->
-    <div id="drawerGuestActions" class="flex flex-col gap-1.5">
-      <button onclick="toggleDrawer(); openAuthView('register');" class="w-full py-2.5 px-3 rounded-xl bg-brand hover:bg-rose-900 text-white font-black text-xs shadow-md transition active:scale-95 text-start flex items-center gap-2 cursor-pointer">
-        <span>✨</span> <span>حساب جديد</span>
-      </button>
-      <button onclick="toggleDrawer(); openAuthView('login');" class="w-full py-2.5 px-3 rounded-xl bg-[#07111D] hover:bg-slate-800 text-slate-200 font-bold text-xs border border-slate-700/60 transition active:scale-95 text-start flex items-center gap-2 cursor-pointer">
-        <span>🔑</span> <span>تسجيل الدخول</span>
-      </button>
-    </div>
-
-    <!-- 2. أزرار الطالب المسجل -->
-    <div id="drawerStudentActions" class="hidden flex-col gap-1.5">
-      <a href="dashboard.html" class="w-full py-2.5 px-3 rounded-xl bg-brand hover:bg-rose-900 text-white font-black text-xs shadow-md transition active:scale-95 flex items-center gap-2">
-        <span>🎓</span> <span>لوحة تحكم الطالب</span>
-      </a>
-      <button onclick="handleLogoutClick();" class="w-full py-2 px-3 rounded-xl bg-rose-950/40 hover:bg-rose-900/60 text-rose-300 font-bold text-xs border border-rose-900/30 transition text-start flex items-center gap-2 cursor-pointer">
-        <span>🚪</span> <span>تسجيل الخروج</span>
-      </button>
-    </div>
-
-    <!-- 3. أزرار المشرف (Admin) -->
-    <div id="drawerAdminActions" class="hidden flex-col gap-1.5">
-      <a href="teacher-dashboard.html" class="w-full py-2.5 px-3 rounded-xl bg-amber-400 hover:bg-amber-300 text-slate-950 font-black text-xs shadow-md transition active:scale-95 flex items-center gap-2">
-        <span>⚙️</span> <span>لوحة تحكم المشرف</span>
-      </a>
-      <a href="dashboard.html" class="w-full py-2 px-3 rounded-xl bg-[#07111D] hover:bg-slate-800 text-slate-200 font-bold text-xs border border-slate-700 transition flex items-center gap-2">
-        <span>🎓</span> <span>لوحة الطالب</span>
-      </a>
-      <button onclick="handleLogoutClick();" class="w-full py-2 px-3 rounded-xl bg-rose-950/40 hover:bg-rose-900/60 text-rose-300 font-bold text-xs border border-rose-900/30 transition text-start flex items-center gap-2 cursor-pointer">
-        <span>🚪</span> <span>تسجيل الخروج</span>
-      </button>
-    </div>
-
-  </div>
-</div>
 
 <!-- ============ HERO SECTION ============ -->
 
@@ -1568,13 +1567,42 @@ function openPackageDetails(pkgKey) {
 function closePackageDetails() {
   document.getElementById("packageDetailsView").classList.add("hidden");
   
-  ["hero", "years", "courses", "features", "honors", "reviews", "instructor", "authSection", "mainFooter", "supportFloatingWidget"].forEach(id => {
+  ["hero", "courses", "features", "honors", "reviews", "instructor", "mainFooter"].forEach(id => {
     const el = document.getElementById(id);
-    if (el) {
-      if (id === "authSection" && window.isUserLoggedIn) return;
-      el.classList.remove("hidden");
-    }
+    if (el) el.classList.remove("hidden");
   });
+
+  // إظهار سكشن السنوات والفلاتر للزائر فقط وليس للطالب المسجل
+  if (!window.isUserLoggedIn) {
+    const years = document.getElementById("years");
+    const filter = document.getElementById("coursesFilterBar");
+    const support = document.getElementById("supportFloatingWidget");
+    if (years) years.classList.remove("hidden");
+    if (filter) filter.classList.remove("hidden");
+    if (support) support.classList.remove("hidden");
+  }
+
+  window.scrollTo({ top: 0, behavior: "smooth" });
+}
+
+function closeCourseView() {
+  document.getElementById("courseView").classList.add("hidden");
+  
+  ["hero", "courses", "features", "honors", "reviews", "instructor", "mainFooter"].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.classList.remove("hidden");
+  });
+
+  // إظهار سكشن السنوات والفلاتر للزائر فقط وليس للطالب المسجل
+  if (!window.isUserLoggedIn) {
+    const years = document.getElementById("years");
+    const filter = document.getElementById("coursesFilterBar");
+    const support = document.getElementById("supportFloatingWidget");
+    if (years) years.classList.remove("hidden");
+    if (filter) filter.classList.remove("hidden");
+    if (support) support.classList.remove("hidden");
+  }
+
   window.scrollTo({ top: 0, behavior: "smooth" });
 }
 
@@ -1645,18 +1673,7 @@ function openCourseView(courseId) {
   }
 }
 
-function closeCourseView() {
-  document.getElementById("courseView").classList.add("hidden");
-  
-  ["hero", "years", "courses", "features", "honors", "reviews", "instructor", "authSection", "mainFooter", "supportFloatingWidget"].forEach(id => {
-    const el = document.getElementById(id);
-    if (el) {
-      if (id === "authSection" && window.isUserLoggedIn) return;
-      el.classList.remove("hidden");
-    }
-  });
-  window.scrollTo({ top: 0, behavior: "smooth" });
-}
+
 
 window.renderDynamicLessonsAccordion = function(lessonsList) {
   const container = document.getElementById("lessonsList");
