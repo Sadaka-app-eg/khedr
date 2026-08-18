@@ -118,36 +118,33 @@
 <header class="sticky top-0 z-50 backdrop-blur-md bg-[#07111D]/95 border-b border-slate-800 transition-colors">
   <div class="w-full max-w-[1600px] mx-auto px-4 md:px-8 h-16 flex items-center justify-between">
 
-    <!-- اليمين: زر القائمة للموبايل + أزرار الدخول -->
-    <div class="flex items-center gap-3">
+<!-- اليمين: زر القائمة للموبايل + منطقة تسجيل الدخول ولوحة الطالب -->
+    <div class="flex items-center gap-2 sm:gap-3">
       <button id="drawerBtn" class="md:hidden w-10 h-10 flex items-center justify-center text-amber-400 hover:text-white transition">
         <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
       </button>
 
-      <!-- الدخول والتسجيل (مخفي في الموبايل ويظهر في الكمبيوتر فقط) -->
-      <div class="hidden md:flex items-center gap-2">
-        <div id="guestNav" class="flex items-center gap-3">
-       <button onclick="openAuthView('login')" class="text-xs font-bold text-slate-300 hover:text-white transition cursor-pointer" data-i18n="auth_tab_login">تسجيل الدخول</button>
-<button onclick="openAuthView('register')" class="text-xs font-black px-4 py-2 rounded-xl bg-brand text-white shadow-md hover:bg-rose-900 transition cursor-pointer" data-i18n="auth_tab_register">حساب جديد</button>
-        </div>
+      <!-- يظهر للزائر -->
+      <div id="guestNav" class="flex items-center gap-2">
+        <button onclick="openAuthView('login')" class="text-xs font-bold text-slate-300 hover:text-white px-2 py-1.5 transition cursor-pointer" data-i18n="auth_tab_login">تسجيل الدخول</button>
+        <button onclick="openAuthView('register')" class="text-xs font-black px-3.5 py-1.5 rounded-xl bg-brand text-white shadow-md hover:bg-rose-900 transition cursor-pointer" data-i18n="auth_tab_register">حساب جديد</button>
+      </div>
 
-<div id="userNav" class="hidden flex items-center gap-2 sm:gap-3">
-  <!-- زر لوحة الطالب للمسجلين -->
-  <a href="dashboard.html" class="text-[11px] font-black px-3 py-1.5 rounded-xl bg-brand hover:bg-rose-900 text-white shadow-md transition flex items-center gap-1.5">
-    <span>🎓</span> <span>لوحة الطالب</span>
-  </a>
+      <!-- يظهر للطالب المسجل -->
+      <div id="userNav" class="hidden items-center gap-2 sm:gap-3">
+        <a href="dashboard.html" class="text-xs font-black px-3.5 py-1.5 rounded-xl bg-gradient-to-r from-amber-400 to-amber-500 text-slate-950 hover:brightness-110 shadow-lg transition flex items-center gap-1.5">
+          <span>🎓</span> <span>لوحة الطالب</span>
+        </a>
 
-  <!-- زر لوحة المشرف (للأدمن فقط) -->
-  <a id="adminDashboardLink" href="teacher-dashboard.html" class="hidden text-[11px] font-black px-3 py-1.5 rounded-xl bg-amber-400 text-slate-900 hover:bg-amber-300 transition shadow">
-    ⚙️ الإدارة
-  </a>
+        <a id="adminDashboardLink" href="teacher-dashboard.html" class="hidden text-xs font-black px-3 py-1.5 rounded-xl bg-amber-400 text-slate-900 hover:bg-amber-300 transition shadow">
+          ⚙️ الإدارة
+        </a>
 
-  <span class="text-xs font-bold text-emerald-400 hidden sm:inline">مرحباً، <span id="navUserName" class="text-white"></span> 👋</span>
+        <span class="text-xs font-bold text-emerald-400 hidden lg:inline">مرحباً، <span id="navUserName" class="text-white"></span> 👋</span>
 
-  <button id="navLogoutBtn" class="text-[11px] font-bold px-2.5 sm:px-3 py-1.5 rounded-xl bg-rose-950/60 text-rose-300 hover:bg-rose-900 border border-rose-800/40 transition">
-    خروج
-  </button>
-</div>
+        <button id="navLogoutBtn" class="text-[11px] font-bold px-3 py-1.5 rounded-xl bg-rose-950/60 text-rose-300 hover:bg-rose-900 border border-rose-800/40 transition">
+          خروج
+        </button>
       </div>
     </div>
 
@@ -216,18 +213,13 @@
         </div>
 
 <div id="heroUserCta" class="hidden space-y-2.5">
-  <div class="inline-flex items-center gap-2 bg-black/40 backdrop-blur-md px-4 py-2 rounded-2xl border border-white/15 text-amber-300 font-black text-xs sm:text-sm shadow-lg">
-    <span>👋</span>
-    <span>منورنا يا دكتور <span id="heroUserName" class="text-white"></span></span>
-  </div>
-  <div>
-    <a href="dashboard.html" class="inline-block bg-amber-400 text-slate-950 font-black text-xs md:text-sm px-6 py-3 rounded-2xl shadow-xl hover:bg-amber-300 transition transform hover:scale-105">
-      الدخول للوحة الطالب ومتابعة المقررات 🎓 ←
-    </a>
-  </div>
-</div>
-            <a href="#courses" class="inline-block bg-amber-400 text-slate-950 font-black text-xs md:text-sm px-6 py-3 rounded-2xl shadow-xl hover:bg-amber-300 transition transform hover:scale-105">
-              استكمل مذاكرتك ومقرراتك 📚 ←
+          <div class="inline-flex items-center gap-2 bg-black/40 backdrop-blur-md px-4 py-2 rounded-2xl border border-white/15 text-amber-300 font-black text-xs sm:text-sm shadow-lg">
+            <span>👋</span>
+            <span>منورنا يا دكتور <span id="heroUserName" class="text-white"></span></span>
+          </div>
+          <div>
+            <a href="dashboard.html" class="inline-block bg-amber-400 hover:bg-amber-300 text-slate-950 font-black text-xs md:text-sm px-7 py-3 rounded-2xl shadow-xl transition transform hover:scale-105">
+              الدخول للوحة الطالب ومتابعة المقررات 🎓 ←
             </a>
           </div>
         </div>
