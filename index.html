@@ -215,12 +215,17 @@
 </button>
         </div>
 
-        <div id="heroUserCta" class="hidden space-y-2.5">
-          <div class="inline-flex items-center gap-2 bg-black/40 backdrop-blur-md px-4 py-2 rounded-2xl border border-white/15 text-amber-300 font-black text-xs sm:text-sm shadow-lg">
-            <span>👋</span>
-            <span>منورنا يا دكتور <span id="heroUserName" class="text-white"></span></span>
-          </div>
-          <div>
+<div id="heroUserCta" class="hidden space-y-2.5">
+  <div class="inline-flex items-center gap-2 bg-black/40 backdrop-blur-md px-4 py-2 rounded-2xl border border-white/15 text-amber-300 font-black text-xs sm:text-sm shadow-lg">
+    <span>👋</span>
+    <span>منورنا يا دكتور <span id="heroUserName" class="text-white"></span></span>
+  </div>
+  <div>
+    <a href="dashboard.html" class="inline-block bg-amber-400 text-slate-950 font-black text-xs md:text-sm px-6 py-3 rounded-2xl shadow-xl hover:bg-amber-300 transition transform hover:scale-105">
+      الدخول للوحة الطالب ومتابعة المقررات 🎓 ←
+    </a>
+  </div>
+</div>
             <a href="#courses" class="inline-block bg-amber-400 text-slate-950 font-black text-xs md:text-sm px-6 py-3 rounded-2xl shadow-xl hover:bg-amber-300 transition transform hover:scale-105">
               استكمل مذاكرتك ومقرراتك 📚 ←
             </a>
@@ -1937,7 +1942,7 @@ try {
           document.getElementById("loginEmail").value.trim(), 
           document.getElementById("loginPassword").value
         );
-        location.reload();
+window.location.href = "dashboard.html";        
       } catch (err) {
         showError("loginError", "بيانات الدخول غير صحيحة");
       } finally {
@@ -1975,7 +1980,8 @@ try {
         });
 
         alert("🎉 تم إنشاء الحساب بنجاح!");
-        location.reload();
+window.location.href = "dashboard.html";
+
       } catch (err) {
         let msg = "تعذر إنشاء الحساب";
         if (err.code === "auth/email-already-in-use") msg = "⚠️ البريد مسجل بالفعل";
