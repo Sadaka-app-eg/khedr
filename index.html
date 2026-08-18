@@ -1064,217 +1064,106 @@ window.addEventListener('scroll', () => {
   if (bar) bar.style.width = scrolled + '%';
 });
 
-// ============ DATABASE: ALL COURSES & PACKAGES ============
 window.catalogData = {
   c_medterm: {
     id: "c_medterm",
     type: "single",
     year: "all",
-    code: "عام",
-    category: "متاح لجميع الفرق • أساسيات طبية",
-    title: "Medical Terminology — كورس المصطلحات الطبية",
-    desc: "The Language of Medicine: تعلم أصول المصطلحات الطبية (Prefix, Root, Suffix) مع شروحات وتطبيقات.",
-    badge: "متاح للجميع 🎓",
-    price: "399 ج.م",
-    oldPrice: "550.00 ج.م",
+    code: { ar: "عام", en: "Gen" },
+    category: { ar: "متاح لجميع الفرق • أساسيات طبية", en: "All Years • Medical Basics" },
+    title: { ar: "Medical Terminology — كورس المصطلحات الطبية", en: "Medical Terminology Course" },
+    desc: { ar: "تعلم أصول المصطلحات الطبية (Prefix, Root, Suffix) مع تطبيقات سريرية.", en: "Master medical roots, prefixes, suffixes & clinical medical jargon." },
+    badge: { ar: "متاح للجميع 🎓", en: "Available for All 🎓" },
+    price: "399",
+    oldPrice: "550.00",
     img: "image/med_term.png",
     lessons: [
-      { id: "mt_1", title: "01. Introduction to Medical Language (Prefix, Root, Suffix)", duration: "30 دقيقة", isFree: true, desc: "مقدمة تركيب وفهم الكلمات والمصطلحات الطبية مجاناً." },
-      { id: "mt_2", title: "02. Body Structure & Directional Terms", duration: "45 دقيقة", isFree: false, desc: "المصطلحات الخاصة باتجاهات الجسم وتراكيب الأعضاء." },
-      { id: "mt_3", title: "03. Cardiovascular & Respiratory Terminology", duration: "50 دقيقة", isFree: false, desc: "مصطلحات القلب والأوعية الدموية والتنفس." },
-      { id: "mt_4", title: "04. Musculoskeletal & Nervous System Terms", duration: "55 دقيقة", isFree: false, desc: "مصطلحات العظام، العضلات والأعصاب." }
+      { id: "mt_1", title: { ar: "01. مقدمة تركيب المصطلحات الطبية", en: "01. Introduction to Medical Language" }, duration: { ar: "30 دقيقة", en: "30 Mins" }, isFree: true, desc: { ar: "مقدمة تركيب وفهم الكلمات والمصطلحات الطبية مجاناً.", en: "Free overview on word structure, roots, and prefixes." } },
+      { id: "mt_2", title: { ar: "02. مصطلحات اتجاهات وتراكيب الجسم", en: "02. Body Structure & Directional Terms" }, duration: { ar: "45 دقيقة", en: "45 Mins" }, isFree: false, desc: { ar: "المصطلحات الخاصة باتجاهات الجسم وتراكيب الأعضاء.", en: "Directional terms, body planes, and anatomical cavities." } }
     ]
   },
   pkg_y1s1: {
     id: "pkg_y1s1",
     type: "package",
     year: "y1",
-    category: "الفرقة الأولى • ترم أول كامل",
-    title: "باقة الفرقة الأولى (الترم الأول كامل - 4 مواد)",
-    sub: "تشمل Anatomy 1, Physiology 1, Histology 1, Biophysics 1 بالكامل مع ورش العملي وبنك الأسئلة.",
-    badge: "وفر 400 ج 🔥",
-    price: "1,499 ج.م",
-    oldPrice: "1,899.00 ج.م",
+    category: { ar: "الفرقة الأولى • ترم أول كامل", en: "Year 1 • Full Semester 1" },
+    title: { ar: "باقة الفرقة الأولى (الترم الأول كامل - 4 مواد)", en: "Year 1 Full Bundle (4 Specialized Courses)" },
+    sub: { ar: "تشمل Anatomy 1, Physiology 1, Histology 1, Biophysics 1 بالكامل مع ورش العملي وبنك الأسئلة.", en: "Complete bundle including Anatomy, Physiology, Histology & Biophysics with OSCE workshops." },
+    badge: { ar: "وفر 400 ج 🔥", en: "Save 400 EGP 🔥" },
+    price: "1,499",
+    oldPrice: "1,899.00",
     img: "image/pkg_y1s1.png",
     courses: [
       { name: "Anatomy 1 (تشريح عام وأطراف)", desc: "Terminology, Bones, Muscles & Limb Anatomy", id: "c_anat1" },
-      { name: "Physiology 1 (وظائف الأعضاء)", desc: "Cell, Homeostasis, Blood, CVS, Respiration & CNS", id: "c_phys1" },
-      { name: "Histology 1 (علم الأنسجة)", desc: "Epithelial, Connective, Muscle & Nervous Tissues", id: "c_hist1" },
-      { name: "Biophysics 1 (الفيزياء الحيوية)", desc: "Mechanics, Pressure, Heat, Light, Sound & Electricity", id: "c_bioph1" }
+      { name: "Physiology 1 (وظائف الأعضاء)", desc: "Cell, Homeostasis, Blood & CVS", id: "c_phys1" },
+      { name: "Histology 1 (علم الأنسجة)", desc: "Epithelial, Connective & Muscle Tissues", id: "c_hist1" },
+      { name: "Biophysics 1 (الفيزياء الحيوية)", desc: "Mechanics, Heat, Sound & Electricity", id: "c_bioph1" }
     ]
   },
   pkg_y2s1: {
     id: "pkg_y2s1",
     type: "package",
     year: "y2",
-    category: "الفرقة الثانية • ترم أول كامل",
-    title: "باقة الفرقة الثانية (الترم الأول كامل - 6 مواد)",
-    sub: "تشمل Anatomy 3, Biomechanics 2, Hydrotherapy, Electrotherapy, Tests & Measurements, Neurophysiology.",
-    badge: "وفر 895 ج 🔥",
-    price: "2,499 ج.م",
-    oldPrice: "3,394.00 ج.م",
+    category: { ar: "الفرقة الثانية • ترم أول كامل", en: "Year 2 • Full Semester 1" },
+    title: { ar: "باقة الفرقة الثانية (الترم الأول كامل - 6 مواد)", en: "Year 2 Full Bundle (6 Specialized Courses)" },
+    sub: { ar: "تشمل Anatomy 3, Biomechanics 2, Hydrotherapy, Electrotherapy, Tests & Measurements, Neurophysiology.", en: "Includes Anatomy 3, Biomechanics 2, Hydro, Electro, Tests & Neurophysiology." },
+    badge: { ar: "وفر 895 ج 🔥", en: "Save 895 EGP 🔥" },
+    price: "2,499",
+    oldPrice: "3,394.00",
     img: "image/pkg_y2s1.png",
     courses: [
       { name: "Anatomy 3 (تشريح تخصصي)", desc: "Head, Neck, Trunk & Nervous System", id: "c_anat3" },
-      { name: "Biomechanics 2 (ميكانيكا حيوية متقدمة)", desc: "Upper/Lower Limb, Spine & Gait", id: "c_biomech2" },
-      { name: "Hydrotherapy (علاج مائي)", desc: "Buoyancy, Hydrodynamics & Techniques", id: "c_hydro" },
-      { name: "Electrotherapy (علاج كهربائي)", desc: "TENS, NMES, Ultrasound & Parameters", id: "c_electro" },
+      { name: "Biomechanics 2 (ميكانيكا حيوية)", desc: "Upper/Lower Limb, Spine & Gait", id: "c_biomech2" },
+      { name: "Hydrotherapy (علاج مائي)", desc: "Buoyancy & Hydrodynamics", id: "c_hydro" },
+      { name: "Electrotherapy (علاج كهربائي)", desc: "TENS, NMES, Ultrasound & Safety", id: "c_electro" },
       { name: "Tests & Measurements (تقييم وقياسات)", desc: "ROM, Goniometry & MMT", id: "c_tests" },
-      { name: "Neurophysiology (فسيولوجيا الجهاز العصبي)", desc: "Synapse, Reflexes & Motor Control", id: "c_neuro" }
+      { name: "Neurophysiology (فسيولوجيا عصبية)", desc: "Synapse, Reflexes & Motor Control", id: "c_neuro" }
     ]
   },
   c_anat1: {
     id: "c_anat1",
     type: "single",
     year: "y1",
-    code: "1ع",
-    category: "الفرقة الأولى • ترم أول",
-    title: "Anatomy 1 — كورس التشريح العام",
-    desc: "دراسة شاملة لـ Anatomical position, Planes, Bones, Joints, Muscles, Upper & Lower limbs.",
-    price: "599 ج.م",
-   
+    code: { ar: "1ع", en: "Y1" },
+    category: { ar: "الفرقة الأولى • ترم أول", en: "Year 1 • Term 1" },
+    title: { ar: "Anatomy 1 — كورس التشريح العام", en: "Anatomy 1 — General Anatomy Course" },
+    desc: { ar: "دراسة شاملة لـ Anatomical position, Planes, Bones, Joints, Muscles, Upper & Lower limbs.", en: "Comprehensive study of Anatomical Planes, Bones, Joints, Muscular System & Extremities." },
+    price: "599",
+    oldPrice: "750.00",
     img: "image/anatomy1.png",
     lessons: [
-      { id: "a1_1", title: "01. Anatomical Terminology & Position", duration: "25 دقيقة", isFree: true, desc: "المقدمة والأوضاع التشريحية الأساسية مجاناً." },
-      { id: "a1_2", title: "02. Anatomical Planes & Movements", duration: "40 دقيقة", isFree: false, desc: "محاور الحركة والمستويات التشريحية." },
-      { id: "a1_3", title: "03. Skeletal System (Bones & Joints)", duration: "55 دقيقة", isFree: false, desc: "تصنيف العظام والمفاصل وأنواعها." },
-      { id: "a1_4", title: "04. Muscular System Overview", duration: "50 دقيقة", isFree: false, desc: "المنشأ والاندغام وعمل العضلات." }
+      { id: "a1_1", title: { ar: "01. الأوضاع والمصطلحات التشريحية", en: "01. Anatomical Terminology & Position" }, duration: { ar: "25 دقيقة", en: "25 Mins" }, isFree: true, desc: { ar: "المقدمة والأوضاع التشريحية الأساسية مجاناً.", en: "Free access to fundamental body positions and terms." } },
+      { id: "a1_2", title: { ar: "02. مستويات الحركة والمحاور", en: "02. Anatomical Planes & Movements" }, duration: { ar: "40 دقيقة", en: "40 Mins" }, isFree: false, desc: { ar: "محاور الحركة والمستويات التشريحية بالتفصيل.", en: "In-depth breakdown of axes and movement planes." } }
     ]
   },
   c_phys1: {
     id: "c_phys1",
     type: "single",
     year: "y1",
-    code: "1ع",
-    category: "الفرقة الأولى • ترم أول",
-    title: "Physiology 1 — وظائف الأعضاء",
-    desc: "تغطية Cell physiology, Homeostasis, Blood, CVS, Respiratory system.",
-    price: "499 ج.م",
-    oldPrice: "599.00 ج.م",
+    code: { ar: "1ع", en: "Y1" },
+    category: { ar: "الفرقة الأولى • ترم أول", en: "Year 1 • Term 1" },
+    title: { ar: "Physiology 1 — وظائف الأعضاء", en: "Physiology 1 — General Physiology" },
+    desc: { ar: "تغطية شاملة لـ Cell physiology, Homeostasis, Blood, CVS, Respiratory system.", en: "Full coverage of Cell physiology, Homeostasis, Blood & Cardiovascular system." },
+    price: "499",
+    oldPrice: "599.00",
     img: "image/physiology1.png",
     lessons: [
-      { id: "p1_1", title: "01. Cell Physiology & Transport", duration: "30 دقيقة", isFree: true, desc: "فسيولوجيا الخلية والنقل عبر الغشاء مجاناً." },
-      { id: "p1_2", title: "02. Homeostasis & Body Fluids", duration: "45 دقيقة", isFree: false, desc: "الاتزان الداخلي وسوائل الجسم." }
-    ]
-  },
-  c_hist1: {
-    id: "c_hist1",
-    type: "single",
-    year: "y1",
-    code: "1ع",
-    category: "الفرقة الأولى • ترم أول",
-    title: "Histology 1 — علم الأنسجة",
-    desc: "دراسة Cell structure, Epithelial tissue, Connective tissue, Muscle tissue.",
-    price: "399 ج.م",
-    oldPrice: "550.00 ج.م",
-    img: "image/histology1.png",
-    lessons: [
-      { id: "h1_1", title: "01. Cell Structure & Microscopy", duration: "25 دقيقة", isFree: true, desc: "تركيب الخلية وأنواع الميكروسكوبات مجاناً." }
-    ]
-  },
-  c_bioph1: {
-    id: "c_bioph1",
-    type: "single",
-    year: "y1",
-    code: "1ع",
-    category: "الفرقة الأولى • ترم أول",
-    title: "Biophysics 1 — الفيزياء الحيوية",
-    desc: "تطبيقات Mechanics, Pressure, Heat, Light, Sound في العلاج الطبيعي.",
-    price: "399 ج.م",
-    oldPrice: "550.00 ج.م",
-    img: "image/biophysics1.png",
-    lessons: [
-      { id: "bp1_1", title: "01. Basic Physical Principles & Units", duration: "20 دقيقة", isFree: true, desc: "المفاهيم الفيزيائية العامة مجاناً." }
-    ]
-  },
-  c_anat3: {
-    id: "c_anat3",
-    type: "single",
-    year: "y2",
-    code: "2ع",
-    category: "الفرقة الثانية • ترم أول",
-    title: "Anatomy 3 — التشريح المتقدم",
-    desc: "تشريح Head & neck, Trunk, Nervous system, Major nerves & vessels.",
-    price: "599 ج.م",
-    oldPrice: "650.00 ج.م",
-    img: "image/anatomy3.png",
-    lessons: [
-      { id: "a3_1", title: "01. Regional Anatomy: Head & Neck", duration: "35 دقيقة", isFree: true, desc: "تشريح عضلات وأعصاب الرأس والعنق مجاناً." }
+      { id: "p1_1", title: { ar: "01. فسيولوجيا الخلية والنقل الغشائي", en: "01. Cell Physiology & Membrane Transport" }, duration: { ar: "30 دقيقة", en: "30 Mins" }, isFree: true, desc: { ar: "فسيولوجيا الخلية والنقل عبر الغشاء مجاناً.", en: "Free trial lecture on cell transport and homeostasis." } }
     ]
   },
   c_biomech2: {
     id: "c_biomech2",
     type: "single",
     year: "y2",
-    code: "2ع",
-    category: "الفرقة الثانية • ترم أول",
-    title: "Biomechanics 2 — الميكانيكا الحيوية 2",
-    desc: "تحليل مفاصل Shoulder, Elbow, Wrist, Hip, Knee, Ankle, Spine, Gait.",
-    price: "599 ج.م",
-    oldPrice: "750.00 ج.م",
+    code: { ar: "2ع", en: "Y2" },
+    category: { ar: "الفرقة الثانية • ترم أول", en: "Year 2 • Term 1" },
+    title: { ar: "Biomechanics 2 — الميكانيكا الحيوية 2", en: "Biomechanics 2 — Advanced Kinesiology" },
+    desc: { ar: "تحليل مفاصل Shoulder, Elbow, Wrist, Hip, Knee, Ankle, Spine, Gait.", en: "Kinematic and kinetic analysis of Peripheral Joints, Spine & Gait Cycle." },
+    price: "599",
+    oldPrice: "750.00",
     img: "image/biomechanics2.png",
     lessons: [
-      { id: "bm2_1", title: "01. Shoulder Complex Biomechanics", duration: "40 دقيقة", isFree: true, desc: "حركية مفصل الكتف وقوى العضلات مجاناً." }
-    ]
-  },
-  c_hydro: {
-    id: "c_hydro",
-    type: "single",
-    year: "y2",
-    code: "2ع",
-    category: "الفرقة الثانية • ترم أول",
-    title: "Hydrotherapy — العلاج المائي",
-    desc: "دراسة Buoyancy, Hydrostatic pressure, Hydrodynamics, Exercises.",
-    price: "499 ج.م",
-    oldPrice: "600.00 ج.م",
-    img: "image/hydrotherapy.png",
-    lessons: [
-      { id: "hy_1", title: "01. Physical Properties of Water", duration: "30 دقيقة", isFree: true, desc: "خواص الماء وقوة الطفو مجاناً." }
-    ]
-  },
-  c_electro: {
-    id: "c_electro",
-    type: "single",
-    year: "y2",
-    code: "2ع",
-    category: "الفرقة الثانية • ترم أول",
-    title: "Electrotherapy — العلاج الكهربائي",
-    desc: "أجهزة TENS, NMES, Ultrasound, Parameters & Safety.",
-    price: "399 ج.م",
-    oldPrice: "500.00 ج.م",
-    img: "image/electrotherapy.png",
-    lessons: [
-      { id: "el_1", title: "01. Principles of Electricity & Patient Safety", duration: "30 دقيقة", isFree: true, desc: "أساسيات التيارات والأمان الكهربائي مجاناً." }
-    ]
-  },
-  c_tests: {
-    id: "c_tests",
-    type: "single",
-    year: "y2",
-    code: "2ع",
-    category: "الفرقة الثانية • ترم أول",
-    title: "Tests & Measurements — التقييم والقياسات",
-    desc: "تطبيقات ROM, Goniometry, MMT, Anthropometry, Functional tests.",
-    price: "599 ج.م",
-    oldPrice: "650.00 ج.م",
-    img: "image/tests_measurements.png",
-    lessons: [
-      { id: "tm_1", title: "01. Principles of Physical Therapy Assessment", duration: "30 دقيقة", isFree: true, desc: "مبادئ الفحص الإكلينيكي مجاناً." }
-    ]
-  },
-  c_neuro: {
-    id: "c_neuro",
-    type: "single",
-    year: "y2",
-    code: "2ع",
-    category: "الفرقة الثانية • ترم أول",
-    title: "Neurophysiology — الفسيولوجيا العصبية",
-    desc: "دراسة Neuron, Synapse, Sensory & Motor systems, Reflexes.",
-    price: "499 ج.م",
-    oldPrice: "650.00 ج.م",
-    img: "image/neurophysiology.png",
-    lessons: [
-      { id: "np_1", title: "01. Neuron Structure, Synapse & Transmission", duration: "35 دقيقة", isFree: true, desc: "الخلية العصبية ونواقل الإشارات مجاناً." }
+      { id: "bm2_1", title: { ar: "01. ميكانيكا مفصل الكتف", en: "01. Shoulder Complex Biomechanics" }, duration: { ar: "40 دقيقة", en: "40 Mins" }, isFree: true, desc: { ar: "حركية مفصل الكتف وقوى العضلات مجاناً.", en: "Free overview on shoulder joint kinematics." } }
     ]
   }
 };
@@ -1312,7 +1201,9 @@ function renderCatalog() {
   const container = document.getElementById("coursesSlider");
   if (!container) return;
 
-  const isEn = currentLang === "en";
+  const lang = currentLang; // "ar" أو "en"
+  const isEn = lang === "en";
+
   const items = Object.values(window.catalogData).filter(item => {
     if (currentFilter === "all") return true;
     if (currentFilter === "pkg") return item.type === "package";
@@ -1328,29 +1219,29 @@ function renderCatalog() {
 
   container.innerHTML = items.map(item => {
     const isPkg = item.type === "package";
-    const codeBadge = isPkg ? "⭐" : item.code;
+    const codeBadge = isPkg ? "⭐" : (typeof item.code === "object" ? item.code[lang] : item.code);
     
-    // ترجمة العملة والبادج
-    const priceText = isEn ? `${item.price.replace("ج.م", "").trim()} EGP` : item.price;
-    const oldPriceText = isEn ? `${item.oldPrice.replace("ج.م", "").trim()} EGP` : item.oldPrice;
+    // استخراج النصوص حسب اللغة المحددة
+    const titleText = typeof item.title === "object" ? item.title[lang] : item.title;
+    const categoryText = typeof item.category === "object" ? item.category[lang] : item.category;
+    const descText = isPkg 
+      ? (typeof item.sub === "object" ? item.sub[lang] : item.sub)
+      : (typeof item.desc === "object" ? item.desc[lang] : item.desc);
+    const badgeText = item.badge ? (typeof item.badge === "object" ? item.badge[lang] : item.badge) : "";
     
-    let categoryText = item.category;
-    if (isEn) {
-      if (item.year === "y1") categoryText = "Year 1 • Term 1";
-      else if (item.year === "y2") categoryText = "Year 2 • Term 1";
-      else categoryText = "General • All Years";
-    }
+    const priceText = `${item.price} ${isEn ? 'EGP' : 'ج.م'}`;
+    const oldPriceText = `${item.oldPrice} ${isEn ? 'EGP' : 'ج.م'}`;
 
     return `
       <article class="min-w-[300px] sm:min-w-[340px] md:min-w-[370px] max-w-[370px] shrink-0 snap-start card-hover rounded-3xl overflow-hidden border ${isPkg ? "border-brand shadow-rose-950/20" : "border-slate-800"} bg-[#0F1D2D] p-3.5 shadow-2xl flex flex-col justify-between relative transition-all duration-300">
         
-<!-- صورة الكورس بدون أي نصوص أو طبقات عند التمرير -->
+        <!-- صورة الكورس بدون أي نصوص أو طبقات عند التمرير -->
         <div onclick="openImageLightbox('${item.img}')" class="rounded-2xl overflow-hidden relative aspect-[4/3] w-full bg-[#07111D] border border-slate-700/50 flex items-center justify-center cursor-pointer">
-          ${item.badge ? `<span class="absolute top-2.5 start-2.5 z-10 text-[10px] font-black bg-amber-400 text-slate-900 px-2.5 py-1 rounded-md shadow-md">${item.badge}</span>` : ""}
-          <img src="${item.img}" alt="${item.title}" class="w-full h-full object-cover object-top rounded-xl hover:scale-105 transition duration-300" onerror="this.style.display='none'; this.nextElementSibling.classList.remove('hidden');" />          
+          ${badgeText ? `<span class="absolute top-2.5 start-2.5 z-10 text-[10px] font-black bg-amber-400 text-slate-900 px-2.5 py-1 rounded-md shadow-md">${badgeText}</span>` : ""}
+          <img src="${item.img}" alt="${titleText}" class="w-full h-full object-cover object-top rounded-xl hover:scale-105 transition duration-300" onerror="this.style.display='none'; this.nextElementSibling.classList.remove('hidden');" />          
           <div class="hidden flex flex-col items-center justify-center text-center p-4 text-rose-300">
             <span class="text-3xl mb-1">${isPkg ? '📦' : '🩺'}</span>
-            <span class="font-bold text-xs">${item.title}</span>
+            <span class="font-bold text-xs">${titleText}</span>
           </div>
         </div>
 
@@ -1358,7 +1249,7 @@ function renderCatalog() {
           <div>
             <div class="flex items-start gap-2.5">
               <span class="w-6 h-6 rounded-lg ${isPkg ? "bg-amber-400 text-slate-900" : "bg-brand/30 border border-brand text-rose-300"} font-black text-xs flex items-center justify-center shrink-0 mt-0.5">${codeBadge}</span>
-              <h3 class="font-black text-sm md:text-base text-slate-100 leading-snug line-clamp-2">${item.title}</h3>
+              <h3 class="font-black text-sm md:text-base text-slate-100 leading-snug line-clamp-2">${titleText}</h3>
             </div>
 
             <div class="mt-3 flex items-baseline justify-between">
@@ -1370,7 +1261,7 @@ function renderCatalog() {
             </div>
 
             <div class="mt-2.5 pt-2.5 border-t border-slate-800/80 text-[11px] text-slate-300 space-y-1">
-              <p class="font-semibold text-slate-400 line-clamp-2">${isPkg ? item.sub : item.desc}</p>
+              <p class="font-semibold text-slate-400 line-clamp-2">${descText}</p>
               <button onclick="${isPkg ? `openPackageDetails('${item.id}')` : `openCourseView('${item.id}')`}" class="text-rose-400 font-bold hover:underline">
                 ${isEn ? 'View Full Details →' : 'عرض باقي التفاصيل ←'}
               </button>
