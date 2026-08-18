@@ -1931,14 +1931,27 @@ document.addEventListener("DOMContentLoaded", () => {
 <script type="module">
 
 import { updateDoc, arrayUnion } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-firestore.js";
-// تشغيل الفيديو وتحديث بيانات الشرح
+// دالة مساعدة لتحويل روابط اليوتيوب العادية لروابط Embed صالحة للـ iframe
+  function formatEmbedUrl(url) {
+    if (!url) return "";
+    let formatted = url.trim();
+    if (formatted.includes("youtube.com/watch?v=")) {
+      formatted = formatted.replace("watch?v=", "embed/");
+    } else if (formatted.includes("youtu.be/")) {
+      formatted = formatted.replace("youtu.be/", "www.youtube.com/embed/");
+    }
+    return formatted;
+  }
+
+  // تشغيل الفيديو وتحديث بيانات الشرح
   window.playLessonVideo = function(videoUrl, title, desc) {
     const iframe = document.getElementById("videoIframe");
     const placeholder = document.getElementById("videoPlaceholder");
     
     if (!iframe || !videoUrl) return;
 
-    iframe.src = videoUrl;
+    // تحويل الرابط تلقائياً ليعمل في المشغل
+    iframe.src = formatEmbedUrl(videoUrl);
     iframe.classList.remove("hidden");
     if (placeholder) placeholder.classList.add("hidden");
 

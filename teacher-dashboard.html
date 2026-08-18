@@ -611,14 +611,31 @@ import { auth, db, onAuthStateChanged, signOut, doc } from "./firebase-config.js
         let videoUrl = document.getElementById("videoUrlManual").value.trim();
         let pdfUrl = document.getElementById("pdfUrlManual").value.trim();
 
-        if (videoFile) {
+ if (videoFile) {
           const uploadedVideo = await uploadToCloudinary(videoFile, "video", "videoUploadStatus");
-          if (uploadedVideo) videoUrl = uploadedVideo;
+          if (!uploadedVideo) {
+            saveBtn.disabled = false;
+            saveBtn.textContent = "نشر المحاضرة للمقرر 🚀";
+            return; // إيقاف النشر فوراً إذا فشل الرفع
+          }
+          videoUrl = uploadedVideo;
         }
 
         if (pdfFile) {
           const uploadedPdf = await uploadToCloudinary(pdfFile, "raw", "pdfUploadStatus");
-          if (uploadedPdf) pdfUrl = uploadedPdf;
+          if (!uploadedPdf) {
+            saveBtn.disabled = false;
+            saveBtn.textContent = "نشر المحاضرة للمقرر 🚀";
+            return;
+          }
+          pdfUrl = uploadedPdf;
+        }
+
+        // تحويل روابط اليوتيوب تلقائياً قبل حفظها في قاعدة البيانات
+        if (videoUrl.includes("youtube.com/watch?v=")) {
+          videoUrl = videoUrl.replace("watch?v=", "embed/");
+        } else if (videoUrl.includes("youtu.be/")) {
+          videoUrl = videoUrl.replace("youtu.be/", "www.youtube.com/embed/");
         }
 
         const quiz = [];
