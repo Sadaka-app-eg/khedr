@@ -127,8 +127,8 @@
       <!-- الدخول والتسجيل (مخفي في الموبايل ويظهر في الكمبيوتر فقط) -->
       <div class="hidden md:flex items-center gap-2">
         <div id="guestNav" class="flex items-center gap-3">
-          <a href="#authSection" class="text-xs font-bold text-slate-300 hover:text-white transition">تسجيل الدخول</a>
-          <a href="#authSection" onclick="setAuthTab('register')" class="text-xs font-black px-4 py-2 rounded-xl bg-brand text-white shadow-md">حساب جديد</a>
+       <button onclick="openAuthView('login')" class="text-xs font-bold text-slate-300 hover:text-white transition cursor-pointer" data-i18n="auth_tab_login">تسجيل الدخول</button>
+<button onclick="openAuthView('register')" class="text-xs font-black px-4 py-2 rounded-xl bg-brand text-white shadow-md hover:bg-rose-900 transition cursor-pointer" data-i18n="auth_tab_register">حساب جديد</button>
         </div>
 
 <div id="userNav" class="hidden flex items-center gap-3">
@@ -202,9 +202,9 @@
       <!-- زر الهيرو التفاعلي -->
       <div class="pt-2 flex justify-center md:justify-start">
         <div id="heroGuestCta">
-          <a href="#authSection" class="inline-block bg-white text-[#7A0B30] font-black text-xs sm:text-sm md:text-base px-8 sm:px-10 py-3.5 sm:py-4 rounded-2xl shadow-2xl hover:bg-rose-50 transition transform hover:scale-105" data-i18n="hero_cta1">
-            سجل وخد أول خطوة
-          </a>
+<button onclick="openAuthView('register')" class="inline-block bg-white text-[#7A0B30] font-black text-xs sm:text-sm md:text-base px-8 sm:px-10 py-3.5 sm:py-4 rounded-2xl shadow-2xl hover:bg-rose-50 transition transform hover:scale-105 cursor-pointer" data-i18n="hero_cta1">
+  سجل وخد أول خطوة
+</button>
         </div>
 
         <div id="heroUserCta" class="hidden space-y-2.5">
@@ -402,9 +402,21 @@
   </div>
 </section>
 
-<!-- ============ AUTHENTICATION SECTION ============ -->
-<section id="authSection" class="max-w-xl mx-auto px-5 py-16">
-  <div class="rounded-3xl border border-slate-800 bg-card-theme p-4 sm:p-6 shadow-2xl fade-up">
+<!-- ============ AUTHENTICATION INDEPENDENT VIEW ============ -->
+<div id="authSection" class="hidden fixed inset-0 z-[100] bg-[#07111D]/98 backdrop-blur-xl min-h-screen overflow-y-auto flex flex-col items-center justify-center p-4 sm:p-6 transition-all duration-300">
+  
+  <!-- رأس الشاشة المنفصلة: لوجو المنصة للعودة للرئيسية -->
+  <div class="mb-6 flex flex-col items-center gap-2 cursor-pointer group" onclick="closeAuthView()" title="اضغط للعودة للصفحة الرئيسية">
+    <div class="flex items-center gap-3 bg-[#0F1D2D] px-5 py-2.5 rounded-2xl border border-slate-800 group-hover:border-brand transition shadow-xl">
+      <img src="logo.png" alt="KHEDR PHYSIO" class="h-10 w-auto object-contain" onerror="this.src='logo.png'" />
+      <span class="font-black text-sm text-white" data-i18n="brand">KHEDR & PHYSIO</span>
+    </div>
+    <span class="text-[11px] font-bold text-slate-400 group-hover:text-amber-300 transition flex items-center gap-1">
+      <span>←</span> <span data-i18n="auth_back_home">اضغط على اللوجو للعودة للرئيسية</span>
+    </span>
+  </div>
+
+  <div class="w-full max-w-md rounded-3xl border border-slate-800 bg-[#0F1D2D] p-6 sm:p-8 shadow-2xl">
 
     <!-- Auth Tabs Switcher -->
     <div class="grid grid-cols-2 gap-1.5 p-1.5 auth-nav-bg rounded-2xl mb-6">
@@ -431,21 +443,21 @@
     <!-- REGISTER FORM -->
     <form id="registerForm" class="hidden flex-col gap-3.5" onsubmit="return false;">
       <label class="flex flex-col gap-1 text-xs md:text-sm font-bold text-theme-main">
-        <span>الاسم بالكامل (ثلاثي كما بالبطاقة)</span>
+        <span data-i18n="auth_name">الاسم بالكامل (ثلاثي كما بالبطاقة)</span>
         <input id="regName" type="text" required placeholder="مثال: محمود أحمد خضر" class="h-11 rounded-xl px-3 border border-slate-700 bg-transparent text-xs md:text-sm text-theme-main focus:border-brand" />
       </label>
 
       <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
         <label class="flex flex-col gap-1 text-xs md:text-sm font-bold text-theme-main">
-          <span>رقم الهاتف (واتساب)</span>
+          <span data-i18n="auth_phone">رقم الهاتف (واتساب)</span>
           <input id="regPhone" type="tel" required placeholder="010XXXXXXXX" dir="ltr" class="h-11 rounded-xl px-3 border border-slate-700 bg-transparent text-xs md:text-sm text-theme-main focus:border-brand" />
         </label>
         
         <label class="flex flex-col gap-1 text-xs md:text-sm font-bold text-theme-main">
-          <span>الفرقة الدراسية</span>
-          <select id="regYear" required class="h-11 rounded-xl px-3 border border-slate-700 bg-[#0F1D2D] text-xs md:text-sm text-theme-main focus:border-brand">
-            <option value="y1">الفرقة الأولى (First Year)</option>
-            <option value="y2">الفرقة الثانية (Second Year)</option>
+          <span data-i18n="auth_year">الفرقة الدراسية</span>
+          <select id="regYear" required class="h-11 rounded-xl px-3 border border-slate-700 bg-[#07111D] text-xs md:text-sm text-theme-main focus:border-brand">
+            <option value="y1" data-i18n="opt_y1">الفرقة الأولى (First Year)</option>
+            <option value="y2" data-i18n="opt_y2">الفرقة الثانية (Second Year)</option>
           </select>
         </label>
       </div>
@@ -468,7 +480,7 @@
     </form>
 
   </div>
-</section>
+</div>
 
 <!-- ============ PACKAGE DETAILS VIEW ============ -->
 <div id="packageDetailsView" class="hidden min-h-screen bg-[#07111D] text-slate-100 py-10 px-5 transition-all">
@@ -692,66 +704,72 @@
   </div>
 </div>
 <!-- ============ FOOTER ============ -->
-<footer id="mainFooter" class="bg-slate-900 text-white border-t border-slate-800 pt-12 pb-8 px-5">
-  <div class="w-full max-w-[1550px] mx-auto grid grid-cols-1 md:grid-cols-4 gap-8 mb-10 text-center md:text-start">
-    <div class="flex flex-col items-center md:items-start gap-2">
+<footer id="mainFooter" class="bg-slate-900 text-white border-t border-slate-800 pt-10 pb-8 px-4 sm:px-6">
+  <div class="w-full max-w-[1550px] mx-auto grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8 mb-8 text-start">
+    
+    <!-- 1. اللوجو والوصف -->
+    <div class="col-span-2 md:col-span-1 flex flex-col items-start gap-2">
       <div class="flex items-center gap-2">
         <span class="w-8 h-8 rounded-xl bg-brand text-white font-black flex items-center justify-center text-sm">خِـ</span>
-        <span class="font-black text-lg text-amber-300">KHEDR & PHYSIO</span>
+        <span class="font-black text-base md:text-lg text-amber-300" data-i18n="brand">KHEDR & PHYSIO</span>
       </div>
-      <p class="text-xs text-slate-400 font-semibold leading-6 mt-2 max-w-xs" data-i18n="foot_about">
+      <p class="text-[11px] md:text-xs text-slate-400 font-semibold leading-5 mt-1 max-w-xs" data-i18n="foot_about">
         المنصة التعليمية الأولى المتخصصة لطلاب وخريجي العلاج الطبيعي لتبسيط العلوم الحركية والإكلينيكية.
       </p>
     </div>
 
+    <!-- 2. الصفحات -->
     <div>
-      <h4 class="font-black text-xs uppercase tracking-wider text-amber-300 mb-4" data-i18n="foot_pages">الصفحات</h4>
-      <ul class="flex flex-col gap-2.5 text-xs text-slate-300 font-bold">
+      <h4 class="font-black text-xs uppercase tracking-wider text-amber-300 mb-3" data-i18n="foot_pages">الصفحات</h4>
+      <ul class="flex flex-col gap-2 text-[11px] md:text-xs text-slate-300 font-bold">
         <li><a href="#hero" class="hover:text-amber-300 transition" data-i18n="nav_home">الرئيسية</a></li>
         <li><a href="#years" class="hover:text-amber-300 transition" data-i18n="nav_years">الفرق الدراسية</a></li>
         <li><a href="#courses" class="hover:text-amber-300 transition" data-i18n="nav_courses">الكورسات والمقررات</a></li>
-        <li><a href="#authSection" onclick="setAuthTab('register')" class="hover:text-amber-300 transition" data-i18n="auth_tab_register">إنشاء حساب جديد</a></li>
-        <li><a href="#authSection" onclick="setAuthTab('login')" class="hover:text-amber-300 transition" data-i18n="auth_tab_login">تسجيل الدخول</a></li>
+        <li><button onclick="openAuthView('register')" class="hover:text-amber-300 transition text-start" data-i18n="auth_tab_register">حساب جديد</button></li>
+        <li><button onclick="openAuthView('login')" class="hover:text-amber-300 transition text-start" data-i18n="auth_tab_login">تسجيل الدخول</button></li>
       </ul>
     </div>
 
+    <!-- 3. السوشيال ميديا (مترجمة بالكامل) -->
     <div>
-      <h4 class="font-black text-xs uppercase tracking-wider text-amber-300 mb-4" data-i18n="foot_social">السوشيال ميديا</h4>
-      <ul class="flex flex-col items-center md:items-start gap-3 text-xs text-slate-300 font-bold">
-        <li><a href="https://www.facebook.com/share/1HTasZLPkw/" target="_blank" rel="noopener" class="flex items-center gap-2 hover:text-amber-300 transition"><span>فيسبوك</span></a></li>
-        <li><a href="https://www.instagram.com/khedr_official?igsh=MXVtMzllbXh5dTZobg==" target="_blank" rel="noopener" class="flex items-center gap-2 hover:text-amber-300 transition"><span>انستجرام</span></a></li>
-        <li><a href="https://www.tiktok.com/@mahmoud_khedr342?_r=1&_t=ZS-9878aAkTuUu" target="_blank" rel="noopener" class="flex items-center gap-2 hover:text-amber-300 transition"><span>تيك توك</span></a></li>
-        <li><a href="https://youtube.com/@mahmoud_khedr342?si=Pj4roTaFXme6INsV" target="_blank" rel="noopener" class="flex items-center gap-2 hover:text-amber-300 transition"><span>يوتيوب</span></a></li>
-        <li><a href="https://www.linkedin.com/in/mahmoud-khedr-9614963a7" target="_blank" rel="noopener" class="flex items-center gap-2 hover:text-amber-300 transition"><span>لينكد إن</span></a></li>
+      <h4 class="font-black text-xs uppercase tracking-wider text-amber-300 mb-3" data-i18n="foot_social">السوشيال ميديا</h4>
+      <ul class="flex flex-col gap-2 text-[11px] md:text-xs text-slate-300 font-bold">
+        <li><a href="https://www.facebook.com/share/1HTasZLPkw/" target="_blank" rel="noopener" class="hover:text-amber-300 transition" data-i18n="foot_fb">فيسبوك</a></li>
+        <li><a href="https://www.instagram.com/khedr_official?igsh=MXVtMzllbXh5dTZobg==" target="_blank" rel="noopener" class="hover:text-amber-300 transition" data-i18n="foot_ig">انستجرام</a></li>
+        <li><a href="https://www.tiktok.com/@mahmoud_khedr342?_r=1&_t=ZS-9878aAkTuUu" target="_blank" rel="noopener" class="hover:text-amber-300 transition" data-i18n="foot_tt">تيك توك</a></li>
+        <li><a href="https://youtube.com/@mahmoud_khedr342?si=Pj4roTaFXme6INsV" target="_blank" rel="noopener" class="hover:text-amber-300 transition" data-i18n="foot_yt">يوتيوب</a></li>
+        <li><a href="https://www.linkedin.com/in/mahmoud-khedr-9614963a7" target="_blank" rel="noopener" class="hover:text-amber-300 transition" data-i18n="foot_li">لينكد إن</a></li>
       </ul>
     </div>
 
-    <div class="flex flex-col items-center md:items-start gap-3">
-      <h4 class="font-black text-xs md:text-sm uppercase tracking-wider text-amber-300 mb-2" data-i18n="foot_contact">تواصل معنا</h4>
-      <a href="https://t.me/Khedr_physio" target="_blank" rel="noopener" class="group relative overflow-hidden w-full max-w-[260px] p-3 rounded-2xl bg-slate-800/80 hover:bg-[#1777A3]/40 text-white transition-all duration-300 border border-slate-700 hover:border-cyan-400/50 flex items-center justify-between shadow-lg">
-        <div class="flex items-center gap-3">
-          <div class="w-11 h-11 rounded-xl overflow-hidden border border-cyan-400/40 shrink-0 bg-[#07111D] p-0.5">
+    <!-- 4. تواصل معنا -->
+    <div class="col-span-2 md:col-span-1 flex flex-col items-start gap-2.5">
+      <h4 class="font-black text-xs uppercase tracking-wider text-amber-300 mb-1" data-i18n="foot_contact">تواصل معنا</h4>
+      <a href="https://t.me/Khedr_physio" target="_blank" rel="noopener" class="group relative overflow-hidden w-full max-w-[240px] p-2.5 rounded-2xl bg-slate-800/80 hover:bg-[#1777A3]/40 text-white transition duration-300 border border-slate-700 hover:border-cyan-400/50 flex items-center justify-between shadow-lg">
+        <div class="flex items-center gap-2.5">
+          <div class="w-9 h-9 rounded-xl overflow-hidden border border-cyan-400/40 shrink-0 bg-[#07111D] p-0.5">
             <img src="image/support.png.jpeg" alt="تيم الدعم الفني" class="w-full h-full object-cover rounded-lg" onerror="this.src='support.png.jpeg'" />
           </div>
-          <div class="text-right">
-            <span class="block text-xs md:text-sm font-black text-slate-100">تيم الدعم الفني</span>
+          <div>
+            <span class="block text-xs font-black text-slate-100" data-i18n="foot_support_team">تيم الدعم الفني</span>
             <span class="block text-[10px] text-cyan-400 font-bold dir-ltr">@Khedr_physio</span>
           </div>
         </div>
-        <div class="w-7 h-7 rounded-lg bg-[#229ED9] flex items-center justify-center text-white shrink-0 shadow">
-          <svg width="14" height="14" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12s5.37 12 12 12 12-5.37 12-12S18.63 0 12 0zm5.56 8.16l-1.97 9.28c-.15.67-.54.83-1.1.5l-3.02-2.23-1.46 1.4c-.16.16-.3.3-.61.3l.22-3.08 5.6-5.06c.24-.22-.05-.34-.37-.14l-6.92 4.36-2.99-.93c-.65-.2-.66-.65.14-.97l11.7-4.51c.54-.2 1.02.13.84.88z"/></svg>
+        <div class="w-6 h-6 rounded-lg bg-[#229ED9] flex items-center justify-center text-white shrink-0 shadow">
+          <svg width="12" height="12" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12s5.37 12 12 12 12-5.37 12-12S18.63 0 12 0zm5.56 8.16l-1.97 9.28c-.15.67-.54.83-1.1.5l-3.02-2.23-1.46 1.4c-.16.16-.3.3-.61.3l.22-3.08 5.6-5.06c.24-.22-.05-.34-.37-.14l-6.92 4.36-2.99-.93c-.65-.2-.66-.65.14-.97l11.7-4.51c.54-.2 1.02.13.84.88z"/></svg>
         </div>
       </a>
     </div>
 
   </div>
 
-  <div class="w-full max-w-[1550px] mx-auto border-t border-slate-800 pt-6 flex flex-col md:flex-row items-center justify-between gap-3 text-xs text-slate-500 font-semibold text-center">
+  <!-- الشريط السفلي للحقوق -->
+  <div class="w-full max-w-[1550px] mx-auto border-t border-slate-800 pt-5 flex flex-col sm:flex-row items-center justify-between gap-3 text-[11px] text-slate-500 font-semibold text-center">
     <div data-i18n="foot_rights">جميع الحقوق محفوظة © 2026 KHEDR & PHYSIO</div>
-<div class="font-mono text-xs font-bold text-slate-400 select-none">
+    <div class="font-mono text-xs font-bold text-slate-400 select-none">
       &lt;Developed & Designed by="<a href="https://wa.me/201101579399?text=%D9%85%D8%B1%D8%AD%D8%A8%D8%A7%D9%8B%20%D8%A8%D8%B4%D9%85%D9%87%D9%86%D8%AF%D8%B3%20%D8%A3%D8%AD%D9%85%D8%AF%D8%8C%20%D8%A3%D8%B1%D8%BA%D8%A8%20%D9%81%D9%8A%20%D8%A7%D9%84%D8%A7%D8%B3%D8%AA%D9%81%D8%B3%D8%A7%D8%B1%20%D8%B9%D9%86%20%D8%AA%D8%B7%D9%88%D9%8A%D8%B1%20%D9%85%D9%88%D9%82%D8%B9%20%D8%AA%D8%B9%D9%84%D9%8A%D9%85%D9%8A" target="_blank" rel="noopener" class="text-rose-400 hover:text-amber-300 font-black underline underline-offset-4 decoration-rose-500/50 hover:decoration-amber-400 transition" title="تواصل مع المطور عبر واتساب">Ahmed Mohamed</a>" andPowered=true /&gt;
     </div>
-    </div>
+  </div>
 </footer>
 
 <!-- ============ FLOATING TELEGRAM BUTTON ============ -->
@@ -760,7 +778,6 @@
     <div id="supportTooltip" class="relative hidden sm:flex items-center gap-2 bg-[#0F1D2D] border border-cyan-500/30 text-white text-xs font-bold py-2 ps-3.5 pe-8 rounded-2xl shadow-2xl">
       <span class="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
       <span data-i18n="support_text">تيم الدعم الفني متاح للمساعدة</span>
-      <!-- زر إغلاق الدعم مع عزل الحدث تماماً -->
       <button type="button" onclick="event.stopPropagation(); event.preventDefault(); toggleSupportComplete(false);" class="absolute end-2 top-1/2 -translate-y-1/2 w-5 h-5 rounded-full bg-slate-800 hover:bg-rose-900 text-slate-300 hover:text-white flex items-center justify-center text-[10px] transition cursor-pointer z-50" title="إخفاء الدعم">
         ✕
       </button>
@@ -777,22 +794,6 @@
   </div>
 
   <button id="supportReopenBtn" onclick="event.stopPropagation(); toggleSupportComplete(true);" class="hidden w-11 h-11 rounded-full bg-[#0F1D2D] border border-cyan-400/60 text-cyan-300 shadow-xl flex items-center justify-center text-base hover:scale-110 transition cursor-pointer z-50" title="إظهار الدعم الفني">
-    💬
-  </button>
-</div>
-
-    <a href="https://t.me/Khedr_physio" target="_blank" rel="noopener" class="relative group w-16 h-16 rounded-full shadow-[0_10px_25px_rgba(34,158,217,0.5)] flex items-center justify-center transform hover:scale-110 active:scale-95 transition border-2 border-cyan-400/50 bg-[#07111D]" title="تواصل مع تيم الدعم الفني">
-      <span class="absolute -inset-1 rounded-full bg-cyan-400 opacity-40 group-hover:opacity-75 animate-ping duration-1000"></span>
-      <img src="image/support.png.jpeg" alt="الدعم الفني" class="w-full h-full object-cover rounded-full relative z-10 p-0.5" onerror="this.src='support.png.jpeg'" />
-      <div class="absolute -bottom-1 -end-1 w-6 h-6 rounded-full bg-[#229ED9] border-2 border-[#07111D] flex items-center justify-center text-white z-20 shadow-md">
-        <svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12s5.37 12 12 12 12-5.37 12-12S18.63 0 12 0zm5.56 8.16l-1.97 9.28c-.15.67-.54.83-1.1.5l-3.02-2.23-1.46 1.4c-.16.16-.3.3-.61.3l.22-3.08 5.6-5.06c.24-.22-.05-.34-.37-.14l-6.92 4.36-2.99-.93c-.65-.2-.66-.65.14-.97l11.7-4.51c.54-.2 1.02.13.84.88z"/></svg>
-      </div>
-      <span class="absolute top-0 end-0 w-3.5 h-3.5 rounded-full bg-emerald-500 border-2 border-[#07111D] z-20"></span>
-    </a>
-  </div>
-
-  <!-- زر صغير يظهر فقط عند إخفاء الدعم ليعيده بضغطة واحدة -->
-  <button id="supportReopenBtn" onclick="toggleSupportComplete(true)" class="hidden w-10 h-10 rounded-full bg-[#0F1D2D] border border-cyan-400/60 text-cyan-300 shadow-xl flex items-center justify-center text-sm hover:scale-110 transition cursor-pointer" title="إظهار الدعم الفني">
     💬
   </button>
 </div>
@@ -850,10 +851,27 @@ const translations = {
     inst_bio: "شارح ومدرس للمواد الطبية والأكاديمية بكلية العلاج الطبيعي بخبرة سنتين في التدريس الشامل، يركز على تقديم شرح مبسط، منظم، وعملي يساعد الطلاب على فهم الأساسيات والتطبيق والتجهيز بثقة للامتحانات.",
     auth_tab_login: "تسجيل الدخول",
     auth_tab_register: "حساب جديد",
+    auth_name: "الاسم بالكامل (ثلاثي كما بالبطاقة)",
+    auth_phone: "رقم الهاتف (واتساب)",
+    auth_year: "الفرقة الدراسية",
+    auth_email: "البريد الإلكتروني",
+    auth_password: "كلمة المرور (6 حروف أو أرقام على الأقل)",
+    auth_login_btn: "تسجيل الدخول",
+    auth_register_btn: "إنشاء الحساب وبدء التعلم 🚀",
+    auth_back_home: "اضغط على اللوجو للعودة للرئيسية",
+    opt_y1: "الفرقة الأولى (First Year)",
+    opt_y2: "الفرقة الثانية (Second Year)",
+    support_text: "تيم الدعم الفني متاح للمساعدة",
     foot_about: "المنصة التعليمية الأولى المتخصصة لطلاب وخريجي العلاج الطبيعي لتبسيط العلوم الحركية والإكلينيكية.",
     foot_pages: "الصفحات",
     foot_social: "السوشيال ميديا",
     foot_contact: "تواصل معنا",
+    foot_fb: "فيسبوك",
+    foot_ig: "انستجرام",
+    foot_tt: "تيك توك",
+    foot_yt: "يوتيوب",
+    foot_li: "لينكد إن",
+    foot_support_team: "تيم الدعم الفني",
     foot_rights: "جميع الحقوق محفوظة © 2026 KHEDR & PHYSIO"
   },
   en: {
@@ -906,15 +924,47 @@ const translations = {
     inst_bio: "Physiotherapy student and medical instructor with 2 years of comprehensive teaching experience, focusing on structured, simplified clinical education.",
     auth_tab_login: "Log In",
     auth_tab_register: "New Account",
+    auth_name: "Full Name (as in National ID)",
+    auth_phone: "Phone Number (WhatsApp)",
+    auth_year: "Academic Year",
+    auth_email: "Email Address",
+    auth_password: "Password (at least 6 characters)",
+    auth_login_btn: "Log In",
+    auth_register_btn: "Create Account & Start Learning 🚀",
+    auth_back_home: "Click Logo to Return Home",
+    opt_y1: "First Year",
+    opt_y2: "Second Year",
+    support_text: "Technical Support Team Available",
     foot_about: "The premier educational platform for physical therapy students and graduates.",
     foot_pages: "Pages",
     foot_social: "Social Media",
     foot_contact: "Contact Us",
+    foot_fb: "Facebook",
+    foot_ig: "Instagram",
+    foot_tt: "TikTok",
+    foot_yt: "YouTube",
+    foot_li: "LinkedIn",
+    foot_support_team: "Support Team",
     foot_rights: "All Rights Reserved © 2026 KHEDR & PHYSIO"
   }
 };
 
-let currentLang = "ar";
+window.openAuthView = function(tab = 'login') {
+  const authSec = document.getElementById("authSection");
+  if (authSec) {
+    authSec.classList.remove("hidden");
+    setAuthTab(tab);
+    document.body.style.overflow = "hidden"; // منع التمرير في الصفحة الخلفية
+  }
+};
+
+window.closeAuthView = function() {
+  const authSec = document.getElementById("authSection");
+  if (authSec) {
+    authSec.classList.add("hidden");
+    document.body.style.overflow = "auto";
+  }
+};
 
 function applyLanguage(lang) {
   currentLang = lang;
@@ -922,7 +972,7 @@ function applyLanguage(lang) {
   document.documentElement.lang = lang;
   document.documentElement.dir = lang === "ar" ? "rtl" : "ltr";
 
-  // 1. ترجمة كل العناصر التي تحمل data-i18n
+  // 1. ترجمة العناصر ذات الوسم data-i18n
   document.querySelectorAll("[data-i18n]").forEach((el) => {
     const key = el.getAttribute("data-i18n");
     if (dict && dict[key] !== undefined) {
@@ -930,7 +980,16 @@ function applyLanguage(lang) {
     }
   });
 
-  // 2. ترجمة أزرار الفلاتر العلوية
+  // 2. تحديث الحقول النصية (Placeholders)
+  if (lang === "en") {
+    const regName = document.getElementById("regName");
+    if (regName) regName.placeholder = "e.g. Mahmoud Ahmed Khedr";
+  } else {
+    const regName = document.getElementById("regName");
+    if (regName) regName.placeholder = "مثال: محمود أحمد خضر";
+  }
+
+  // 3. ترجمة أزرار الفلاتر
   const fltAll = document.getElementById("flt-all");
   const fltY1 = document.getElementById("flt-y1");
   const fltY2 = document.getElementById("flt-y2");
@@ -941,7 +1000,7 @@ function applyLanguage(lang) {
   if (fltY2) fltY2.textContent = dict.flt_y2 || "Year 2";
   if (fltPkg) fltPkg.textContent = dict.flt_pkg || "Bundles";
 
-  // 3. تحديث مسميات الأزرار والـ CTA
+  // 4. تحديث زر الـ CTA
   const yearsCta = document.getElementById("yearsCtaBtn");
   if (yearsCta) {
     if (window.isUserLoggedIn) {
@@ -954,10 +1013,9 @@ function applyLanguage(lang) {
   const langLabel = document.getElementById("langLabel");
   if (langLabel) langLabel.textContent = lang === "ar" ? "EN" : "AR";
 
-  // 4. إعادة بناء كتالوج الكورسات فوراً باللغة المختارة
+  // 5. إعادة رسم الكتالوج فوراً
   renderCatalog();
 }
-
 function toggleLanguage() {
   applyLanguage(currentLang === "ar" ? "en" : "ar");
 }
