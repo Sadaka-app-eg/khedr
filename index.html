@@ -1670,12 +1670,14 @@ enrolledCourses.forEach(cId => {
       } catch (e) {
         console.error("خطأ أثناء جلب بيانات الطالب:", e);
       }
-    } else {
+} else {
       window.isUserLoggedIn = false;
       window.currentUserData = null;
       if (guestNav) guestNav.classList.remove("hidden");
       if (userNav) userNav.classList.add("hidden");
       if (authSection) authSection.classList.remove("hidden");
+      if (heroGuestCta) heroGuestCta.classList.remove("hidden");
+      if (heroUserCta) heroUserCta.classList.add("hidden");
     }
   });
 
