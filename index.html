@@ -119,33 +119,15 @@
   <div class="w-full max-w-[1600px] mx-auto px-4 md:px-8 h-16 flex items-center justify-between">
 
 <!-- اليمين: زر القائمة للموبايل + منطقة تسجيل الدخول ولوحة الطالب -->
-    <div class="flex items-center gap-2 sm:gap-3">
-      <button id="drawerBtn" class="md:hidden w-10 h-10 flex items-center justify-center text-amber-400 hover:text-white transition">
-        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+<div class="flex items-center gap-3">
+      <button id="drawerBtn" onclick="toggleDrawer()" class="w-11 h-11 rounded-2xl bg-[#0F1D2D] border border-slate-700 hover:border-brand text-amber-400 flex items-center justify-center shadow-lg transition-all duration-300 active:scale-95 group">
+        <svg id="drawerIcon" class="w-6 h-6 transition-transform duration-500 group-hover:rotate-180" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+          <ellipse cx="12" cy="12" rx="10" ry="4.2" transform="rotate(0 12 12)"></ellipse>
+          <ellipse cx="12" cy="12" rx="10" ry="4.2" transform="rotate(60 12 12)"></ellipse>
+          <ellipse cx="12" cy="12" rx="10" ry="4.2" transform="rotate(120 12 12)"></ellipse>
+          <circle cx="12" cy="12" r="2.2" fill="currentColor"></circle>
+        </svg>
       </button>
-
-      <!-- يظهر للزائر -->
-      <div id="guestNav" class="flex items-center gap-2">
-        <button onclick="openAuthView('login')" class="text-xs font-bold text-slate-300 hover:text-white px-2 py-1.5 transition cursor-pointer" data-i18n="auth_tab_login">تسجيل الدخول</button>
-        <button onclick="openAuthView('register')" class="text-xs font-black px-3.5 py-1.5 rounded-xl bg-brand text-white shadow-md hover:bg-rose-900 transition cursor-pointer" data-i18n="auth_tab_register">حساب جديد</button>
-      </div>
-
-      <!-- يظهر للطالب المسجل -->
-      <div id="userNav" class="hidden items-center gap-2 sm:gap-3">
-<button type="button" onclick="openDashboardInternal()" class="text-xs font-black px-3.5 py-1.5 rounded-xl bg-gradient-to-r from-amber-400 to-amber-500 text-slate-950 hover:brightness-110 shadow-lg transition flex items-center gap-1.5 cursor-pointer">
-  <span>🎓</span> <span>لوحة الطالب</span>
-</button>
-
-        <a id="adminDashboardLink" href="teacher-dashboard.html" class="hidden text-xs font-black px-3 py-1.5 rounded-xl bg-amber-400 text-slate-900 hover:bg-amber-300 transition shadow">
-          ⚙️ الإدارة
-        </a>
-
-        <span class="text-xs font-bold text-emerald-400 hidden lg:inline">مرحباً، <span id="navUserName" class="text-white"></span> 👋</span>
-
-        <button id="navLogoutBtn" class="text-[11px] font-bold px-3 py-1.5 rounded-xl bg-rose-950/60 text-rose-300 hover:bg-rose-900 border border-rose-800/40 transition">
-          خروج
-        </button>
-      </div>
     </div>
 
     <!-- المنتصف: اللوجو -->
@@ -170,17 +152,43 @@
 
   </div>
 
-  <!-- Mobile Drawer Menu -->
-  <div id="drawer" class="hidden md:hidden border-t border-slate-800 px-5 py-4 flex flex-col gap-3 text-sm font-bold bg-[#07111D] text-slate-200">
-    <a href="#hero" onclick="toggleDrawer()" data-i18n="nav_home">الرئيسية</a>
-    <a href="#years" onclick="toggleDrawer()" data-i18n="nav_years">الفرق الدراسية</a>
-    <a href="#courses" onclick="toggleDrawer()" data-i18n="nav_courses">الكورسات والباقات</a>
-    <a href="#features" onclick="toggleDrawer()" data-i18n="nav_features">مميزات المنصة</a>
-    <a href="#honors" onclick="toggleDrawer()" data-i18n="nav_honors">لوحة الشرف</a>
-    <a href="#instructor" onclick="toggleDrawer()" data-i18n="nav_instructor">عن الشارح</a>
-    <div class="pt-3 border-t border-slate-800 flex gap-2">
-      <a href="#authSection" onclick="toggleDrawer(); setAuthTab('login')" class="w-1/2 text-center py-2 rounded-xl border border-slate-700 text-xs">تسجيل الدخول</a>
-      <a href="#authSection" onclick="toggleDrawer(); setAuthTab('register')" class="w-1/2 text-center py-2 rounded-xl bg-brand text-white text-xs">حساب جديد</a>
+<!-- القائمة المنسدلة التفاعلية (كمبيوتر وموبايل) -->
+  <div id="drawer" class="hidden w-full max-w-[1650px] mx-auto px-4 md:px-8 pt-3 pb-2 transition-all duration-300">
+    <div class="rounded-3xl bg-[#8E0E38] p-3 md:p-4 shadow-2xl border border-white/10 space-y-2.5">
+      
+      <!-- 1. أزرار الزائر -->
+      <div id="drawerGuestActions" class="flex flex-col gap-2.5">
+        <button onclick="toggleDrawer(); openAuthView('register');" class="w-full py-3.5 rounded-2xl bg-[#5E0824] hover:bg-[#4A051B] text-white font-black text-xs md:text-sm shadow-md transition transform active:scale-95 text-center">
+          حساب جديد
+        </button>
+        <button onclick="toggleDrawer(); openAuthView('login');" class="w-full py-3.5 rounded-2xl bg-[#5E0824] hover:bg-[#4A051B] text-white font-black text-xs md:text-sm shadow-md transition transform active:scale-95 text-center">
+          تسجيل الدخول
+        </button>
+      </div>
+
+      <!-- 2. أزرار الطالب المسجل -->
+      <div id="drawerStudentActions" class="hidden flex-col gap-2.5">
+        <button onclick="toggleDrawer(); openDashboardInternal();" class="w-full py-3.5 rounded-2xl bg-[#5E0824] hover:bg-[#4A051B] text-amber-300 font-black text-xs md:text-sm shadow-md transition transform active:scale-95 flex items-center justify-center gap-2">
+          <span>🎓</span> <span>لوحة تحكم الطالب</span>
+        </button>
+        <button onclick="handleLogoutClick();" class="w-full py-3 rounded-2xl bg-black/20 hover:bg-black/40 text-rose-200 font-bold text-xs transition text-center">
+          تسجيل الخروج
+        </button>
+      </div>
+
+      <!-- 3. أزرار المشرف (Admin) -->
+      <div id="drawerAdminActions" class="hidden flex-col gap-2.5">
+        <a href="teacher-dashboard.html" class="w-full py-3.5 rounded-2xl bg-amber-400 hover:bg-amber-300 text-slate-950 font-black text-xs md:text-sm shadow-md transition transform active:scale-95 flex items-center justify-center gap-2">
+          <span>⚙️</span> <span>لوحة تحكم المشرف والطلاب</span>
+        </a>
+        <button onclick="toggleDrawer(); openDashboardInternal();" class="w-full py-3.5 rounded-2xl bg-[#5E0824] hover:bg-[#4A051B] text-white font-black text-xs md:text-sm shadow-md transition text-center">
+          معاينة لوحة الطالب 🎓
+        </button>
+        <button onclick="handleLogoutClick();" class="w-full py-3 rounded-2xl bg-black/20 hover:bg-black/40 text-rose-200 font-bold text-xs transition text-center">
+          تسجيل الخروج
+        </button>
+      </div>
+
     </div>
   </div>
 </header>
@@ -408,9 +416,14 @@
 </section>
 
 <!-- ============ AUTHENTICATION INDEPENDENT VIEW ============ -->
-<div id="authSection" class="hidden fixed inset-0 z-[100] bg-[#07111D]/98 backdrop-blur-xl min-h-screen overflow-y-auto flex flex-col items-center justify-center p-4 sm:p-6 transition-all duration-300">
+<div id="authSection" class="hidden fixed inset-0 z-[999] bg-[#07111D] min-h-screen w-screen overflow-y-auto flex flex-col items-center justify-center p-4 sm:p-6">  
+<!-- لوجو خضر فقط بدون نصوص -->
+  <div class="mb-6 flex items-center justify-center cursor-pointer group" onclick="closeAuthView()" title="العودة للصفحة الرئيسية">
+    <div class="p-3 bg-[#0F1D2D] rounded-2xl border border-slate-800 group-hover:border-brand transition shadow-xl">
+      <img src="logo.png" alt="لوجو خضر" class="h-12 w-auto object-contain transition-transform group-hover:scale-105" onerror="this.src='logo.png'" />
+    </div>
+  </div>
   
-  <!-- رأس الشاشة المنفصلة: لوجو المنصة للعودة للرئيسية -->
   <div class="mb-6 flex flex-col items-center gap-2 cursor-pointer group" onclick="closeAuthView()" title="اضغط للعودة للصفحة الرئيسية">
     <div class="flex items-center gap-3 bg-[#0F1D2D] px-5 py-2.5 rounded-2xl border border-slate-800 group-hover:border-brand transition shadow-xl">
       <img src="logo.png" alt="KHEDR PHYSIO" class="h-10 w-auto object-contain" onerror="this.src='logo.png'" />
@@ -1100,10 +1113,27 @@ function toggleTheme() {
   document.body.classList.toggle("light");
 }
 
-function toggleDrawer() {
+// دالة فتح وإغلاق القائمة مع تدوير الأيقونة
+window.toggleDrawer = function() {
   const drawer = document.getElementById("drawer");
-  if (drawer) drawer.classList.toggle("hidden");
-}
+  const icon = document.getElementById("drawerIcon");
+  if (!drawer) return;
+
+  const isHidden = drawer.classList.contains("hidden");
+  drawer.classList.toggle("hidden", !isHidden);
+  
+  if (icon) {
+    icon.style.transform = isHidden ? "rotate(180deg) scale(1.1)" : "rotate(0deg) scale(1)";
+  }
+};
+
+window.handleLogoutClick = async function() {
+  if (window.authInstance) {
+    await window.authInstance.signOut();
+    localStorage.removeItem("khedr_user_active");
+    location.reload();
+  }
+};
 
 function setAuthTab(tab) {
   const isLogin = tab === "login";
@@ -2010,51 +2040,54 @@ if (localStorage.getItem("khedr_user_active") === "true") {
   }
 
   onAuthStateChanged(auth, async (user) => {
-    const guestNav = document.getElementById("guestNav");
-    const userNav = document.getElementById("userNav");
-    const navUserName = document.getElementById("navUserName");
+
+
+const guestActions = document.getElementById("drawerGuestActions");
+    const studentActions = document.getElementById("drawerStudentActions");
+    const adminActions = document.getElementById("drawerAdminActions");
     const authSection = document.getElementById("authSection");
 
-const heroGuestCta = document.getElementById("heroGuestCta");
+    const heroGuestCta = document.getElementById("heroGuestCta");
     const heroUserCta = document.getElementById("heroUserCta");
     const heroUserName = document.getElementById("heroUserName");
+
+    const ADMIN_EMAILS = [
+      "ahmedmohamedhosny100@gmail.com",
+      "admin@khedr.com",
+      "khedr@physio.com"
+    ];
 
     if (user) {
       window.isUserLoggedIn = true;
       localStorage.setItem("khedr_user_active", "true");
-      if (guestNav) guestNav.classList.add("hidden");
       if (authSection) authSection.classList.add("hidden");
-      
+
       const displayName = user.displayName || user.email.split('@')[0];
 
-      if (userNav) userNav.classList.remove("hidden");
-      if (navUserName) navUserName.textContent = displayName;
-
-      // تبديل زر الهيرو إلى رسالة ترحيبية
+      // تبديل زر الهيرو للترحيب بالطالب
       if (heroGuestCta) heroGuestCta.classList.add("hidden");
       if (heroUserCta) heroUserCta.classList.remove("hidden");
       if (heroUserName) heroUserName.textContent = displayName;
-// تعديل زر سكشن السنوات الدراسية للطالب المسجل
+
+      // تعديل زر المسارات الجامعية
       const yearsCta = document.getElementById("yearsCtaBtn");
       if (yearsCta) {
         yearsCta.href = "#courses";
         yearsCta.textContent = currentLang === "en" ? "Explore Courses 📚" : "تصفح المقررات الدراسية 📚";
       }
-      // قائمة المشرفين المصرح لهم بظهور زر الإدارة
-      const adminLink = document.getElementById("adminDashboardLink");
-      const ADMIN_EMAILS = [
-        "ahmedmohamedhosny100@gmail.com", // إيميلك المسجل في الصورة
-        "admin@khedr.com",
-        "khedr@physio.com"
-      ];
+
+      // تحديد محتوى القائمة: مشرف أم طالب
       const userEmail = (user.email || "").toLowerCase().trim();
-      
-if (adminLink) {
-        if (ADMIN_EMAILS.includes(userEmail)) {
-          adminLink.classList.remove("hidden");
-        } else {
-          adminLink.classList.add("hidden");
-        }
+      const isAdmin = ADMIN_EMAILS.some(admin => admin.toLowerCase().trim() === userEmail);
+
+      if (guestActions) guestActions.classList.add("hidden");
+
+      if (isAdmin) {
+        if (adminActions) { adminActions.classList.remove("hidden"); adminActions.classList.add("flex"); }
+        if (studentActions) studentActions.classList.add("hidden");
+      } else {
+        if (studentActions) { studentActions.classList.remove("hidden"); studentActions.classList.add("flex"); }
+        if (adminActions) adminActions.classList.add("hidden");
       }
 
 try {
@@ -2110,12 +2143,11 @@ try {
     } else {
       window.isUserLoggedIn = false;
       window.currentUserData = null;
-      if (guestNav) guestNav.classList.remove("hidden");
-      if (userNav) userNav.classList.add("hidden");
-      if (authSection) authSection.classList.remove("hidden");
+   if (guestActions) { guestActions.classList.remove("hidden"); guestActions.classList.add("flex"); }
+      if (studentActions) studentActions.classList.add("hidden");
+      if (adminActions) adminActions.classList.add("hidden");
       if (heroGuestCta) heroGuestCta.classList.remove("hidden");
       if (heroUserCta) heroUserCta.classList.add("hidden");
-
       const yearsCta = document.getElementById("yearsCtaBtn");
       if (yearsCta) {
         yearsCta.href = "#authSection";
