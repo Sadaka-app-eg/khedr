@@ -1406,48 +1406,128 @@ function closeCourseView() {
   window.scrollTo({ top: 0, behavior: "smooth" });
 }
 
-function renderCourseCurriculum() {
+// ============ بناء فهرس المحاضرات التفاعلي (Accordion System) ============
+window.renderDynamicLessonsAccordion = function(lessonsList) {
+  const container = document.getElementById("lessonsList");
+  if (!container) return;
+
   const crs = window.currentItemData;
-  if (!crs || !crs.lessons) return;
+  const isEnrolled = crs && crs.isEnrolled;
 
-  const btn = document.getElementById("crsActionBtn");
-  const banner = document.getElementById("enrollmentStatusBanner");
-
-  if (crs.isEnrolled) {
-    btn.textContent = "أنت مشترك بالفعل 🔓 (المحتوى مفتوح)";
-    btn.className = "w-full bg-emerald-500 text-white font-black text-xs md:text-sm px-6 py-3 rounded-xl shadow-xl cursor-default";
-    banner.innerHTML = `<span class="inline-flex items-center gap-2 text-xs font-bold text-emerald-300 bg-emerald-950/60 px-3 py-1.5 rounded-xl border border-emerald-500/30">
-      <span>🎉</span> تم الاشتراك بنجاح! جميع المحاضرات وبنوك الأسئلة والـ PDFs مفتوحة لك.
-    </span>`;
-  } else {
-    btn.textContent = "الاشتراك في هذا المقرر الآن 🚀";
-    btn.className = "w-full bg-white text-[#7A0B30] font-black text-xs md:text-sm px-6 py-3 rounded-xl shadow-xl hover:bg-rose-50 transition transform hover:scale-105";
-    banner.innerHTML = `<span class="inline-flex items-center gap-2 text-xs font-bold text-amber-300 bg-black/40 px-3 py-1.5 rounded-xl border border-amber-300/30">
-      <span>🔒</span> يتوفر كليب معاينة مجاني (المقدمة) — اشترك لفتح باقي المحاضرات
-    </span>`;
+  if (!lessonsList || lessonsList.length === 0) {
+    container.innerHTML = `
+      <div class="p-8 text-center bg-[#0F1D2D] rounded-2xl border border-slate-800 text-slate-400 text-xs">
+        لم يقم المشرف بنشر محاضرات لهذا المقرر حتى الآن.
+      </div>
+    `;
+    return;
   }
 
-  const listEl = document.getElementById("lessonsList");
-  listEl.innerHTML = crs.lessons.map(lesson => {
-    const canAccess = lesson.isFree || crs.isEnrolled;
+  container.innerHTML = lessonsList.map((lec, index) => {
+    const canAccess = lec.isFree || isEnrolled;
+    const isLocked = !canAccess;
+
     return `
-      <div onclick="selectLesson('${lesson.id}')" class="rounded-2xl border p-4 transition cursor-pointer flex items-center justify-between ${
-        canAccess ? "bg-[#0F1D2D] border-slate-700 hover:border-amber-400" : "bg-slate-900/60 border-slate-800 opacity-60 hover:opacity-80"
-      }">
-        <div class="flex items-center gap-3">
-          <span class="text-lg">${canAccess ? (lesson.isFree ? "▶️" : "🔓") : "🔒"}</span>
-          <div>
-            <h4 class="text-xs font-black text-slate-100">${lesson.title}</h4>
-            <span class="text-[10px] text-slate-400 block mt-0.5">${lesson.duration} ${lesson.isFree ? "• معاينة مجانية" : ""}</span>
+      <!-- كارت المحاضرة الرئيسي (Accordion) -->
+      <div class="rounded-2xl border border-slate-800 bg-[#0F1D2D] overflow-hidden transition-all duration-300 shadow-md">
+        
+        <!-- عنوان المحاضرة الرئيسي -->
+        <button type="button" onclick="toggleLectureAccordion('lec_body_${index}')" class="w-full p-4 flex items-center justify-between text-start hover:bg-slate-800/40 transition">
+          <div class="flex items-center gap-3">
+            <span class="w-8 h-8 rounded-xl flex items-center justify-center font-black text-xs ${isLocked ? 'bg-slate-800 text-slate-500' : 'bg-brand text-white'}">
+              ${isLocked ? '🔒' : index + 1}
+            </span>
+            <div>
+              <h4 class="text-xs sm:text-sm font-black text-white">${lec.title}</h4>
+              <span class="text-[10px] text-slate-400 block mt-0.5">
+                ${lec.isFree ? '🔓 معاينة مجانية' : (isLocked ? '🔒 يتطلب اشتراك' : 'محتوى متاح')}
+              </span>
+            </div>
           </div>
+          <span class="text-xs text-slate-400 transition-transform duration-200" id="icon_lec_body_${index}">▼</span>
+        </button>
+
+        <!-- التفرعات المنسدلة (فيديو / PDF / كويز) -->
+        <div id="lec_body_${index}" class="${index === 0 ? '' : 'hidden'} border-t border-slate-800/80 bg-[#07111D]/80 p-3 space-y-2">
+          
+          ${isLocked ? `
+            <div class="p-3 text-center text-[11px] text-amber-300 font-bold bg-amber-950/30 rounded-xl border border-amber-800/30">
+              🔒 المحاضرة مغلقة. اشترك في المادة لفتح الفيديو والملفات والكويزات.
+            </div>
+          ` : `
+            <!-- 1. تفرع الفيديو مع التحكم بالسرعات -->
+            ${lec.videoUrl ? `
+              <div class="p-3 rounded-xl bg-[#0F1D2D] border border-slate-800 flex items-center justify-between">
+                <div class="flex items-center gap-2.5">
+                  <span class="text-lg text-rose-400">🎥</span>
+                  <div>
+                    <span class="block text-xs font-black text-white">فيديو الشرح التفاعلي</span>
+                    <span class="block text-[10px] text-slate-400">مشاهدة بدقة عالية مع الحماية</span>
+                  </div>
+                </div>
+                <button onclick="playLessonVideo('${lec.videoUrl}', '${lec.title}')" class="px-3 py-1.5 rounded-lg bg-brand hover:bg-rose-900 text-white text-[11px] font-black transition shadow">
+                  تشغيل الفيديو ▶
+                </button>
+              </div>
+            ` : ''}
+
+            <!-- 2. تفرع ملف الـ PDF -->
+            ${lec.pdfUrl ? `
+              <div class="p-3 rounded-xl bg-[#0F1D2D] border border-slate-800 flex items-center justify-between">
+                <div class="flex items-center gap-2.5">
+                  <span class="text-lg text-amber-400">📑</span>
+                  <div>
+                    <span class="block text-xs font-black text-white">المذكرات والتفريغات (PDF)</span>
+                    <span class="block text-[10px] text-slate-400">ملخص وملاحظات المحاضرة</span>
+                  </div>
+                </div>
+                <div class="flex items-center gap-2">
+                  <button onclick="openPdfViewer('${lec.pdfUrl}')" class="px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 text-[11px] font-bold transition">
+                    معاينة 👁️
+                  </button>
+                  ${lec.allowPdfDownload ? `
+                    <a href="${lec.pdfUrl}" target="_blank" download class="px-3 py-1.5 rounded-lg bg-cyan-950 text-cyan-300 hover:bg-cyan-900 border border-cyan-800/40 text-[11px] font-bold transition">
+                      تحميل 📥
+                    </a>
+                  ` : ''}
+                </div>
+              </div>
+            ` : ''}
+
+            <!-- 3. تفرع الكويز التفاعلي -->
+            ${lec.quiz && lec.quiz.length > 0 ? `
+              <div class="p-3 rounded-xl bg-[#0F1D2D] border border-slate-800 flex items-center justify-between">
+                <div class="flex items-center gap-2.5">
+                  <span class="text-lg text-emerald-400">📝</span>
+                  <div>
+                    <span class="block text-xs font-black text-white">اختبار تقييمي للمحاضرة</span>
+                    <span class="block text-[10px] text-slate-400">${lec.quiz.length} أسئلة MCQ مع التفسير</span>
+                  </div>
+                </div>
+                <button onclick='startInteractiveQuiz(${JSON.stringify(lec.quiz)}, "${lec.id || index}")' class="px-3 py-1.5 rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white text-[11px] font-black transition shadow">
+                  بدء الاختبار ⏱️
+                </button>
+              </div>
+            ` : ''}
+          `}
+
         </div>
-        <span class="text-[10px] font-black px-2 py-1 rounded ${canAccess ? "bg-emerald-500/20 text-emerald-400" : "bg-slate-800 text-slate-500"}">
-          ${canAccess ? "متاح" : "مغلق"}
-        </span>
       </div>
     `;
   }).join("");
-}
+};
+
+// دالة فتح وغلق التفرعات
+window.toggleLectureAccordion = function(id) {
+  const body = document.getElementById(id);
+  const icon = document.getElementById("icon_" + id);
+  if (body) {
+    body.classList.toggle("hidden");
+    if (icon) {
+      icon.style.transform = body.classList.contains("hidden") ? "rotate(0deg)" : "rotate(180deg)";
+    }
+  }
+};
 
 function selectLesson(lessonId) {
   const crs = window.currentItemData;
@@ -1622,6 +1702,101 @@ document.addEventListener("DOMContentLoaded", () => {
 
 <!-- ============ FIREBASE MODULE ============ -->
 <script type="module">
+
+  import { updateDoc, arrayUnion, setDoc } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-firestore.js";
+
+  // تشغيل الفيديو مع شريط التحكم بالسرعة
+  window.playLessonVideo = function(videoUrl, title) {
+    const iframe = document.getElementById("videoIframe");
+    const placeholder = document.getElementById("videoPlaceholder");
+    
+    if (!iframe || !videoUrl) return;
+
+    iframe.src = videoUrl;
+    iframe.classList.remove("hidden");
+    if (placeholder) placeholder.classList.add("hidden");
+
+    document.getElementById("currentLessonTitle").textContent = title;
+    
+    // تشغيل العلامة المائية المتحركة لحماية المحتوى
+    if (typeof startWatermark === "function") startWatermark();
+    window.scrollTo({ top: 180, behavior: "smooth" });
+  };
+
+  // فتح عارض الـ PDF
+  window.openPdfViewer = function(pdfUrl) {
+    const pdfContainer = document.getElementById("pdfViewerContainer");
+    const pdfIframe = document.getElementById("pdfIframe");
+    if (pdfContainer && pdfIframe) {
+      pdfIframe.src = pdfUrl + "#toolbar=0";
+      pdfContainer.classList.remove("hidden");
+      pdfContainer.scrollIntoView({ behavior: "smooth", block: "center" });
+    }
+  };
+
+  // تشغيل الكويز وحفظ الدرجة في وثيقة الطالب
+  window.startInteractiveQuiz = function(quizQuestions, lectureId) {
+    const quizSection = document.getElementById("quizSection");
+    const quizList = document.getElementById("quizQuestionsList");
+    const scoreBadge = document.getElementById("quizScoreBadge");
+    const submitBtn = document.getElementById("submitQuizBtn");
+
+    if (!quizSection || !quizList) return;
+
+    if (scoreBadge) scoreBadge.classList.add("hidden");
+    if (submitBtn) submitBtn.disabled = false;
+
+    quizList.innerHTML = quizQuestions.map((q, idx) => `
+      <div class="p-4 rounded-2xl bg-[#07111D] border border-slate-800 space-y-3">
+        <h4 class="text-xs font-black text-white leading-5">${idx + 1}. ${q.question}</h4>
+        <div class="space-y-2">
+          ${q.options.map((opt, optIdx) => `
+            <label class="flex items-center gap-2 p-2.5 rounded-xl bg-[#0F1D2D] hover:bg-slate-800 text-xs text-slate-300 cursor-pointer border border-transparent has-[:checked]:border-amber-400 has-[:checked]:text-amber-300 transition">
+              <input type="radio" name="q_${idx}" value="${optIdx}" required class="accent-rose-600" />
+              <span>${opt}</span>
+            </label>
+          `).join("")}
+        </div>
+      </div>
+    `).join("");
+
+    quizSection.classList.remove("hidden");
+    quizSection.scrollIntoView({ behavior: "smooth", block: "center" });
+
+    // تصحيح الكويز وحفظ النتيجة تلقائياً للطالب
+    document.getElementById("studentQuizForm").onsubmit = async function(e) {
+      e.preventDefault();
+      let score = 0;
+      quizQuestions.forEach((q, idx) => {
+        const sel = document.querySelector(`input[name="q_${idx}"]:checked`);
+        if (sel && parseInt(sel.value, 10) === q.correctIndex) {
+          score++;
+        }
+      });
+
+      scoreBadge.textContent = `نتيجتك: ${score} من ${quizQuestions.length}`;
+      scoreBadge.classList.remove("hidden");
+      submitBtn.disabled = true;
+
+      // حفظ النتيجة في قاعدة بيانات الطالب
+      const user = auth.currentUser;
+      if (user) {
+        try {
+          await updateDoc(doc(db, "students", user.uid), {
+            [`quizScores.${lectureId}`]: {
+              score: score,
+              total: quizQuestions.length,
+              completedAt: new Date().toISOString()
+            }
+          });
+        } catch (err) {
+          console.error("Error saving quiz score:", err);
+        }
+      }
+
+      alert(`🎉 أحسنت! نتيجتك هي: ${score} من ${quizQuestions.length} وتم تسجيلها في سجلك الأكاديمي.`);
+    };
+  };
 
 import { 
     auth, 
@@ -1942,9 +2117,10 @@ window.loadFirestoreLectures = async function(courseId) {
     const q = query(collection(db, "lectures"), where("courseId", "==", courseId));
     const snap = await getDocs(q);
 
-    // إذا لم ينشر المشرف محاضرات بعد، نعتمد على الدروس الافتراضية
     if (snap.empty) {
-      renderCourseCurriculum();
+      // إذا لم يرفع المشرف دروساً بعد
+      const defaultLessons = window.catalogData[courseId]?.lessons || [];
+      window.renderDynamicLessonsAccordion(defaultLessons);
       return;
     }
 
@@ -1953,15 +2129,13 @@ window.loadFirestoreLectures = async function(courseId) {
       liveLessons.push({ id: docSnap.id, ...docSnap.data() });
     });
 
-    if (window.catalogData[courseId]) {
-      window.catalogData[courseId].lessons = liveLessons;
-      window.currentItemData = window.catalogData[courseId];
-    }
+    // ترتيب المحاضرات حسب حقل order
+    liveLessons.sort((a, b) => (a.order || 0) - (b.order || 0));
 
-    renderCourseCurriculum();
+    window.renderDynamicLessonsAccordion(liveLessons);
   } catch (err) {
     console.error("Error fetching live lectures:", err);
-    renderCourseCurriculum();
+    window.renderDynamicLessonsAccordion([]);
   }
 };
 

@@ -120,36 +120,37 @@
     </button>
   </aside>
 
-  <!-- ============ MAIN CONTENT ============ -->
-  <main class="px-5 md:px-8 py-8 max-w-5xl w-full mx-auto pb-24 lg:pb-8">
+<!-- ============ MAIN CONTENT ============ -->
+  <main class="px-5 md:px-8 py-8 max-w-6xl w-full mx-auto pb-24 lg:pb-8">
 
-   <!-- شريط الرأس الترحيبي -->
+    <!-- شريط الرأس الترحيبي -->
     <div class="flex items-center justify-between mb-8 pb-4 border-b border-[#1E2E42]">
       <div>
         <h1 class="text-xl sm:text-2xl font-black text-white" id="greeting">مرحبًا يا دكتور 👋</h1>
-        <p class="text-xs text-slate-400 font-semibold mt-1" id="academicSub">الفرقة الدراسية ومتابعة التقدم الأكاديمي</p>
+        <p class="text-xs text-slate-400 font-semibold mt-1" id="academicSub">متابعة تقدمك الدراسي والمقررات المفعلة</p>
       </div>
       <div class="flex items-center gap-3">
-        <a href="https://t.me/Khedr_physio" target="_blank" rel="noopener" class="hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-cyan-950/60 border border-cyan-500/30 text-cyan-300 text-xs font-bold hover:bg-cyan-900/40 transition">
+        <button onclick="openAskModal()" class="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-cyan-950/60 border border-cyan-500/30 text-cyan-300 text-xs font-bold hover:bg-cyan-900/40 transition">
           <span>💬</span> اسأل د. خضر
-        </a>
-        <div id="userAvatar" class="w-11 h-11 rounded-2xl bg-brand flex items-center justify-center text-white font-black text-base shadow-lg border border-white/10"></div>
+        </button>
+        <div id="userAvatar" class="w-10 h-10 rounded-2xl bg-brand flex items-center justify-center text-white font-black text-base shadow-lg border border-white/10"></div>
       </div>
     </div>
 
     <!-- 1. تبويب الرئيسية (Overview Panel) -->
     <div id="panel-overview" class="tab-panel space-y-8">
-      <!-- استكمال المذاكرة -->
-      <section class="rounded-3xl hero-banner-bg p-6 sm:p-8 text-white relative overflow-hidden shadow-2xl border border-white/10">
-        <span class="text-[10px] font-black px-3 py-1 rounded-full bg-amber-400 text-slate-900 shadow">آخر محاضرة تم فتحها</span>
-        <h2 id="continueCourseTitle" class="text-lg sm:text-2xl font-black mt-3">Anatomy 1 — كورس التشريح العام</h2>
-        <p id="continueLessonTitle" class="text-xs opacity-85 mt-1 text-rose-100">01. Anatomical Terminology & Position</p>
+      
+      <!-- شريط استكمال المذاكرة الذكي -->
+      <section id="resumeCard" class="rounded-3xl hero-banner-bg p-6 sm:p-8 text-white relative overflow-hidden shadow-2xl border border-white/10">
+        <span class="text-[10px] font-black px-3 py-1 rounded-full bg-amber-400 text-slate-900 shadow">آخر مقرر تم فتحه</span>
+        <h2 id="continueCourseTitle" class="text-lg sm:text-2xl font-black mt-3">جارٍ التحميل...</h2>
+        <p id="continueLessonTitle" class="text-xs opacity-85 mt-1 text-rose-100"></p>
 
         <div class="mt-5 flex items-center gap-3">
           <div class="flex-1 h-2.5 rounded-full bg-black/40 overflow-hidden border border-white/10">
-            <div id="continueProgressBar" class="h-full rounded-full bg-amber-400 transition-all duration-700" style="width: 40%"></div>
+            <div id="continueProgressBar" class="h-full rounded-full bg-amber-400 transition-all duration-700" style="width: 0%"></div>
           </div>
-          <span id="continueProgressLabel" class="text-xs font-black num-font text-amber-300">40%</span>
+          <span id="continueProgressLabel" class="text-xs font-black num-font text-amber-300">0%</span>
         </div>
 
         <button onclick="switchTab('courses')" class="mt-5 inline-block text-xs font-black bg-white text-[#7A0B30] px-6 py-2.5 rounded-xl shadow-xl hover:bg-rose-50 transition transform hover:scale-105">
@@ -157,7 +158,7 @@
         </button>
       </section>
 
-      <!-- إحصائيات سريعة -->
+      <!-- شريط الإحصائيات -->
       <section class="grid grid-cols-2 sm:grid-cols-4 gap-4">
         <div class="bg-[#0F1D2D] border border-[#1E2E42] rounded-2xl p-4 text-center shadow-md">
           <span class="text-2xl">📚</span>
@@ -171,135 +172,99 @@
         </div>
         <div class="bg-[#0F1D2D] border border-[#1E2E42] rounded-2xl p-4 text-center shadow-md">
           <span class="text-2xl">🩺</span>
-          <span class="block text-xl font-black text-cyan-400 mt-1 num-font">100%</span>
-          <span class="text-[10px] font-bold text-slate-400">جاهزية الـ OSCE</span>
+          <span class="block text-xl font-black text-cyan-400 mt-1 num-font" id="statOsce">0</span>
+          <span class="text-[10px] font-bold text-slate-400">محطات OSCE متاحة</span>
         </div>
         <div class="bg-[#0F1D2D] border border-[#1E2E42] rounded-2xl p-4 text-center shadow-md">
-          <span class="text-2xl">⚡</span>
-          <span class="block text-xl font-black text-emerald-400 mt-1 num-font" id="statHours">14.5</span>
-          <span class="text-[10px] font-bold text-slate-400">ساعات المذاكرة</span>
+          <span class="text-2xl">📑</span>
+          <span class="block text-xl font-black text-emerald-400 mt-1 num-font" id="statPdfs">0</span>
+          <span class="text-[10px] font-bold text-slate-400">ملفات وتفريغات</span>
         </div>
       </section>
-    </div>
-<!-- ============ CLINICAL STUDY TOOLS & LIVE HUB ============ -->
+
+      <!-- ودجت المذاكرة واللايف المخصص للمواد المشترك بها -->
       <section class="grid lg:grid-cols-3 gap-6">
-        
-        <!-- 1. مؤقت التركيز الذكي (Pomodoro Timer) -->
-        <div class="rounded-3xl border border-[#1E2E42] bg-[#0F1D2D] p-6 flex flex-col justify-between shadow-xl relative overflow-hidden">
+        <!-- 1. مؤقت بومودورو -->
+        <div class="rounded-3xl border border-[#1E2E42] bg-[#0F1D2D] p-6 flex flex-col justify-between shadow-xl">
           <div class="flex items-center justify-between">
-            <span class="text-xs font-black text-amber-400 flex items-center gap-1.5">
-              <span>⏱️</span> مؤقت التركيز (Pomodoro)
-            </span>
-            <span id="timerStatus" class="text-[10px] font-bold px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-300">جاهز للمذاكرة</span>
+            <span class="text-xs font-black text-amber-400 flex items-center gap-1.5"><span>⏱️</span> مؤقت التركيز</span>
+            <span id="timerStatus" class="text-[10px] font-bold px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-300">جاهز</span>
           </div>
-
-          <div class="text-center py-6">
-            <span id="timerDisplay" class="text-5xl font-black text-white font-mono tracking-widest">25:00</span>
-            <p class="text-[11px] text-slate-400 mt-2">جلسة تركيز 25 دقيقة تليها استراحة 5 دقائق</p>
+          <div class="text-center py-5">
+            <span id="timerDisplay" class="text-4xl sm:text-5xl font-black text-white font-mono tracking-widest">25:00</span>
           </div>
-
           <div class="flex gap-2">
-            <button id="startTimerBtn" onclick="toggleTimer()" class="flex-1 py-2.5 rounded-xl bg-brand text-white font-black text-xs hover:bg-rose-900 transition">
-              بدء التركيز ▶
-            </button>
-            <button onclick="resetTimer()" class="px-4 py-2.5 rounded-xl bg-[#07111D] border border-slate-700 text-slate-300 font-bold text-xs hover:bg-slate-800 transition">
-              إعادة ضبط
-            </button>
+            <button id="startTimerBtn" onclick="toggleTimer()" class="flex-1 py-2 rounded-xl bg-brand text-white font-black text-xs hover:bg-rose-900 transition">بدء التركيز ▶</button>
+            <button onclick="resetTimer()" class="px-3.5 py-2 rounded-xl bg-[#07111D] border border-slate-700 text-slate-300 font-bold text-xs hover:bg-slate-800 transition">إعادة</button>
           </div>
         </div>
 
-        <!-- 2. جدول المراجعات والـ Live القادمة -->
+        <!-- 2. اللايفات والمواعيد القادمة الخاصة بمواد الطالب فقط -->
         <div class="rounded-3xl border border-[#1E2E42] bg-[#0F1D2D] p-6 flex flex-col justify-between shadow-xl">
           <div>
-            <div class="flex items-center justify-between mb-4">
-              <span class="text-xs font-black text-cyan-400 flex items-center gap-1.5">
-                <span>🔴</span> المواعيد والـ Live القادم
-              </span>
-              <span class="w-2.5 h-2.5 rounded-full bg-rose-500 animate-ping"></span>
+            <div class="flex items-center justify-between mb-3">
+              <span class="text-xs font-black text-cyan-400 flex items-center gap-1.5"><span>🔴</span> مواعيد الـ Live لموادك</span>
             </div>
-
-            <div class="space-y-3">
-              <div class="p-3 rounded-2xl bg-[#07111D] border border-slate-800 flex items-center justify-between">
-                <div>
-                  <h4 class="text-xs font-black text-white">ورشة حل كيسات العملي (OSCE)</h4>
-                  <span class="text-[10px] text-slate-400 block mt-0.5">الجمعة القادمة • 8:00 مساءً</span>
-                </div>
-                <span class="text-[10px] font-black px-2.5 py-1 rounded-lg bg-cyan-950 text-cyan-300 border border-cyan-800/40">قريباً</span>
-              </div>
-
-              <div class="p-3 rounded-2xl bg-[#07111D] border border-slate-800 flex items-center justify-between">
-                <div>
-                  <h4 class="text-xs font-black text-white">مراجعة لايف: Biomechanics</h4>
-                  <span class="text-[10px] text-slate-400 block mt-0.5">الأحد القادم • 7:00 مساءً</span>
-                </div>
-                <span class="text-[10px] font-black px-2.5 py-1 rounded-lg bg-amber-950 text-amber-300 border border-amber-800/40">مباشر</span>
-              </div>
+            <div class="space-y-2.5" id="liveEventsList">
+              <!-- يُملأ ديناميكياً من Firestore بناءً على كورسات الطالب -->
             </div>
           </div>
-
-          <a href="https://t.me/Khedr_physio" target="_blank" rel="noopener" class="mt-4 text-center text-xs font-bold text-slate-400 hover:text-white transition">
-            الانضمام لقناة التنبيهات المباشرة ←
+          <a href="https://t.me/Khedr_physio" target="_blank" rel="noopener" class="mt-3 text-center text-[11px] font-bold text-slate-400 hover:text-white transition">
+            قناة التنبيهات المباشرة ←
           </a>
         </div>
 
-        <!-- 3. الملاحظات السريرية السريعة (Auto-saved Note) -->
+        <!-- 3. المسودة السريعة -->
         <div class="rounded-3xl border border-[#1E2E42] bg-[#0F1D2D] p-6 flex flex-col justify-between shadow-xl">
           <div>
             <div class="flex items-center justify-between mb-2">
-              <span class="text-xs font-black text-amber-300 flex items-center gap-1.5">
-                <span>📝</span> مسودة الملاحظات السريعة
-              </span>
+              <span class="text-xs font-black text-amber-300 flex items-center gap-1.5"><span>📝</span> مسودة الملاحظات</span>
               <span id="saveIndicator" class="text-[10px] text-emerald-400 font-bold opacity-0 transition-opacity">تم الحفظ ✓</span>
             </div>
-            <p class="text-[10px] text-slate-400 mb-3">تدوين سريع للنقاط الهامة (يُحفظ تلقائياً بجهازك)</p>
-            <textarea id="quickNotesArea" oninput="saveQuickNotes()" rows="4" placeholder="اكتب ملاحظاتك ونقاط المراجعة المهمة هنا..." class="w-full rounded-2xl p-3 bg-[#07111D] border border-slate-700 text-xs text-slate-200 focus:border-brand resize-none leading-5"></textarea>
+            <textarea id="quickNotesArea" oninput="saveQuickNotes()" rows="3" placeholder="سجل نقاطك المهمة هنا..." class="w-full rounded-xl p-2.5 bg-[#07111D] border border-slate-700 text-xs text-slate-200 focus:border-brand resize-none leading-5"></textarea>
           </div>
-
-          <button onclick="clearQuickNotes()" class="mt-2 text-start text-[10px] font-bold text-rose-400 hover:underline">
-            مسح المسودة
-          </button>
+          <button onclick="clearQuickNotes()" class="mt-2 text-start text-[10px] font-bold text-rose-400 hover:underline">مسح المسودة</button>
         </div>
-
       </section>
+
+    </div>
+
     <!-- 2. تبويب كورساتي (Courses Panel) -->
     <div id="panel-courses" class="tab-panel hidden space-y-6">
       <h3 class="text-sm font-black text-amber-300">📚 المقررات والمواد المشترك بها</h3>
-      <div id="studentEnrolledCoursesGrid" class="grid sm:grid-cols-2 gap-4">
-        <!-- يتم ملؤها ديناميكياً ببيانات كورسات الطالب المشترك بها فقط -->
-      </div>
+      <div id="studentEnrolledCoursesGrid" class="grid sm:grid-cols-2 gap-4"></div>
     </div>
 
     <!-- 3. تبويب محاكي الـ OSCE (OSCE Simulator Panel) -->
     <div id="panel-osce" class="tab-panel hidden space-y-6">
       <div class="flex items-center justify-between">
-        <h3 class="text-sm font-black text-amber-300">🩺 محطات الفحص السريري والـ Special Tests</h3>
+        <h3 class="text-sm font-black text-amber-300">🩺 محطات الفحص السريري (الخاصة بموادك المفعلة)</h3>
         <span class="text-[10px] font-bold px-3 py-1 rounded-full bg-cyan-950 text-cyan-400 border border-cyan-800/40">تجهيز الامتحان العملي</span>
       </div>
-      <div class="space-y-4" id="osceStationsList">
-        <!-- محطات الفحص العملي -->
-      </div>
+      <div class="space-y-4" id="osceStationsList"></div>
     </div>
 
     <!-- 4. تبويب بنك الأسئلة (MCQ Bank Panel) -->
     <div id="panel-mcq" class="tab-panel hidden space-y-6">
-      <h3 class="text-sm font-black text-amber-300">📝 بنك الأسئلة والتقييمات الذاتية</h3>
+      <h3 class="text-sm font-black text-amber-300">📝 كويزات وتقييمات المقررات المشترك بها</h3>
       <div class="space-y-4" id="mcqTestsList"></div>
     </div>
 
     <!-- 5. تبويب المذكرات (PDF Vault Panel) -->
     <div id="panel-vault" class="tab-panel hidden space-y-6">
-      <h3 class="text-sm font-black text-amber-300">📑 مكتبة التفريغات والملخصات المعتمدة</h3>
+      <h3 class="text-sm font-black text-amber-300">📑 مكتبة التفريغات والملخصات المعتمدة لموادك</h3>
       <div class="grid sm:grid-cols-2 gap-4" id="pdfVaultGrid"></div>
     </div>
 
     <!-- 6. تبويب المساعد والمصطلحات (Glossary Panel) -->
     <div id="panel-glossary" class="tab-panel hidden space-y-6">
       <div class="bg-[#0F1D2D] p-5 rounded-2xl border border-[#1E2E42] space-y-3">
-        <h3 class="text-sm font-black text-amber-300">🔍 محرك البحث في المصطلحات واختصارات العلاج الطبيعي</h3>
-        <input id="glossarySearchInput" oninput="filterGlossary()" type="text" placeholder="ابحث عن مصطلح (مثال: ROM, MMT, Lordosis, TENS...)" class="w-full h-11 rounded-xl px-4 bg-[#07111D] border border-slate-700 text-xs text-white focus:border-brand" />
+        <h3 class="text-sm font-black text-amber-300">🔍 محرك البحث في مصطلحات مقرراتك</h3>
+        <input id="glossarySearchInput" oninput="filterGlossary()" type="text" placeholder="ابحث عن مصطلح طبي..." class="w-full h-11 rounded-xl px-4 bg-[#07111D] border border-slate-700 text-xs text-white focus:border-brand" />
       </div>
       <div class="grid sm:grid-cols-2 gap-4" id="glossaryResults"></div>
     </div>
+
   </main>
 </div>
 
@@ -330,34 +295,61 @@
 <script type="module">
   import { auth, db, onAuthStateChanged, signOut, doc, getDoc } from "./firebase-config.js";
 
-  // قاعدة بيانات المقررات لمطابقتها مع اشتراكات الطالب
-  const allCoursesData = {
-    c_anat1: { title: "Anatomy 1 — كورس التشريح العام", year: "الفرقة الأولى", icon: "🩺", desc: "General Anatomy, Bones, Joints & Limb Anatomy" },
-    c_phys1: { title: "Physiology 1 — وظائف الأعضاء", year: "الفرقة الأولى", icon: "🫀", desc: "Cell physiology, Homeostasis, Blood & CVS" },
-    c_hist1: { title: "Histology 1 — علم الأنسجة", year: "الفرقة الأولى", icon: "🔬", desc: "Epithelial, Connective & Muscular Tissues" },
-    c_bioph1: { title: "Biophysics 1 — الفيزياء الحيوية", year: "الفرقة الأولى", icon: "⚡", desc: "Biomechanics, Pressure, Sound & Electricity" },
-    c_medterm: { title: "Medical Terminology — المصطلحات الطبية", year: "عام لجميع الفرق", icon: "📖", desc: "Prefixes, Roots, Suffixes & Medical Vocab" },
-    c_anat3: { title: "Anatomy 3 — التشريح المتقدم", year: "الفرقة الثانية", icon: "🧠", desc: "Head, Neck, Trunk & Neuroanatomy" },
-    c_biomech2: { title: "Biomechanics 2 — الميكانيكا الحيوية", year: "الفرقة الثانية", icon: "🏃", desc: "Gait analysis, Spine & Joint kinematics" },
-    c_hydro: { title: "Hydrotherapy — العلاج المائي", year: "الفرقة الثانية", icon: "🌊", desc: "Hydrodynamics, Buoyancy & Aquatic exercises" },
-    c_electro: { title: "Electrotherapy — العلاج الكهربائي", year: "الفرقة الثانية", icon: "🔋", desc: "TENS, NMES, Ultrasound & Safety" },
-    c_tests: { title: "Tests & Measurements — التقييم والقياسات", year: "الفرقة الثانية", icon: "📐", desc: "ROM, Goniometry & Manual Muscle Testing" },
-    c_neuro: { title: "Neurophysiology — الفسيولوجيا العصبية", year: "الفرقة الثانية", icon: "⚡", desc: "Neuron Transmission, Reflexes & Motor Control" }
+  // تعريف بيانات الكورسات لتطابق الـ ID
+  const allCoursesMeta = {
+    c_medterm: { title: "Medical Terminology — المصطلحات الطبية", icon: "📖", desc: "Prefixes, Roots, Suffixes & Clinical Terminology" },
+    c_anat1: { title: "Anatomy 1 — كورس التشريح العام", icon: "🩺", desc: "General Anatomy, Bones, Joints & Limb Anatomy" },
+    c_phys1: { title: "Physiology 1 — وظائف الأعضاء", icon: "🫀", desc: "Cell physiology, Homeostasis, Blood & CVS" },
+    c_hist1: { title: "Histology 1 — علم الأنسجة", icon: "🔬", desc: "Epithelial, Connective & Muscular Tissues" },
+    c_bioph1: { title: "Biophysics 1 — الفيزياء الحيوية", icon: "⚡", desc: "Biomechanics, Pressure, Sound & Electricity" },
+    c_anat3: { title: "Anatomy 3 — التشريح المتقدم", icon: "🧠", desc: "Head, Neck, Trunk & Neuroanatomy" },
+    c_biomech2: { title: "Biomechanics 2 — الميكانيكا الحيوية", icon: "🏃", desc: "Gait analysis, Spine & Joint kinematics" },
+    c_hydro: { title: "Hydrotherapy — العلاج المائي", icon: "🌊", desc: "Hydrodynamics, Buoyancy & Aquatic exercises" },
+    c_electro: { title: "Electrotherapy — العلاج الكهربائي", icon: "🔋", desc: "TENS, NMES, Ultrasound & Safety" },
+    c_tests: { title: "Tests & Measurements — التقييم والقياسات", icon: "📐", desc: "ROM, Goniometry & Manual Muscle Testing" },
+    c_neuro: { title: "Neurophysiology — الفسيولوجيا العصبية", icon: "⚡", desc: "Neuron Transmission, Reflexes & Motor Control" }
   };
 
-  // بيانات قاموس المصطلحات الطبية
-  const medicalGlossary = [
-    { term: "ROM", meaning: "Range of Motion", desc: "المدى الحركي للمفصل ويقاس بجهاز الـ Goniometer." },
-    { term: "MMT", meaning: "Manual Muscle Testing", desc: "التقييم اليدوي لقوة العضلة بدرجات من 0 إلى 5 (Oxford Scale)." },
-    { term: "Lordosis", meaning: "قَعَس فقري", desc: "زيادة التقوس الأمامي الطبيعي للفقرات العنقية أو القطنية." },
-    { term: "Kyphosis", meaning: "حَدَب فقري", desc: "انحناء وتقوس خارجي مفرط في منطقة الفقرات الصدرية." },
-    { term: "TENS", meaning: "Transcutaneous Electrical Nerve Stimulation", desc: "تيار كهربي علاجي مسكن للألم يعمل عبر بوابة التحكم في الألم." },
-    { term: "Isometric Contraction", meaning: "انقباض ثباتي", desc: "انقباض العضلة وتوليد قوة دون تغيير في طولها أو حركة المفصل." },
-    { term: "Isotonic Contraction", meaning: "انقباض حركي", desc: "انقباض العضلة مع تغير طولها (Concentric تقصير / Eccentric تطويل)." },
-    { term: "Gait Cycle", meaning: "دورة المشي", desc: "التسلسل الحركي من ملامسة الكعب للأرض حتى ملامسته مجدداً (Stance + Swing)." }
-  ];
+  // قاعدة بيانات المصطلحات مصنفة بالكورس (تظهر حسب مواد الطالب فقط)
+  const glossaryDB = {
+    c_medterm: [
+      { term: "Prefix", meaning: "بادئة الكلمة", desc: "مقطع يوضع في بداية الكلمة الطبية لتحديد المكان أو العدد." },
+      { term: "Suffix", meaning: "لاحقة الكلمة", desc: "مقطع يوضع في نهاية الكلمة لتحديد الحالة أو الإجراء الطبي." }
+    ],
+    c_anat1: [
+      { term: "Anatomical Position", meaning: "الوضع التشريحي المرجعي", desc: "وقوف معتدل، الوجه للأمام، والذراعين للجانب مع راحة اليد للأمام." },
+      { term: "Sagittal Plane", meaning: "المستوى السهمي", desc: "يقسم الجسم إلى نصفين أيمن وأيسر وتحدث فيه حركات الثني والمد (Flexion/Extension)." }
+    ],
+    c_tests: [
+      { term: "ROM", meaning: "Range of Motion", desc: "المدى الحركي للمفصل ويقاس بجهاز الـ Goniometer." },
+      { term: "MMT", meaning: "Manual Muscle Testing", desc: "التقييم اليدوي لقوة العضلة بدرجات من 0 إلى 5 (Oxford Scale)." }
+    ],
+    c_biomech2: [
+      { term: "Gait Cycle", meaning: "دورة المشي", desc: "التسلسل الحركي من ملامسة الكعب للأرض حتى ملامسته مجدداً." },
+      { term: "Lordosis", meaning: "قَعَس فقري", desc: "زيادة التقوس الأمامي الطبيعي للفقرات العنقية أو القطنية." },
+      { term: "Kyphosis", meaning: "حَدَب فقري", desc: "انحناء وتقوس خارجي مفرط في منطقة الفقرات الصدرية." }
+    ],
+    c_electro: [
+      { term: "TENS", meaning: "Transcutaneous Electrical Nerve Stimulation", desc: "تيار كهربي علاجي مسكن للألم يعمل عبر بوابة التحكم في الألم." }
+    ]
+  };
 
-  // دالة التنقل بين التبويبات بدون وميض
+  // محطات الـ OSCE السريرية مصنفة بالكورس
+  const osceDB = {
+    c_anat1: [
+      { title: "محطة: تحديد عظام ومعالم الطرف العلوي (Upper Limb Bony Landmarks)", time: "4 دقائق", steps: ["تحديد عظم الـ Clavicle والـ Scapula", "فحص الـ Greater Tubercle لعظم العضد", "تحديد الـ Medial & Lateral Epicondyles"] }
+    ],
+    c_biomech2: [
+      { title: "محطة: فحص أربطة الركبة (Lachman & Anterior Drawer Test)", time: "5 دقائق", steps: ["شرح الإجراء للمريض وأخذ الموافقة", "وضع المريض في وضع الاستلقاء مع ثني الركبة 20-30 درجة", "تثبيت عظم الفخذ وسحب القصبة للأمام لتقييم الـ ACL وملاحظة الـ End-feel"] }
+    ],
+    c_tests: [
+      { title: "محطة: قياس المدى الحركي لمفصل الكتف (Shoulder Goniometry)", time: "4 دقائق", steps: ["تحديد المحور (Fulcrum) عند الـ Acromion", "محاذاة الذراع الثابت مع الخط الموازي للعمود الفقري", "محاذاة الذراع المتحرك وتسجيل القراءة بالدرجات (0 - 180°)"] }
+    ]
+  };
+
+  let activeStudentGlossary = [];
+
+  // دالة التنقل السلس بين التبويبات
   window.switchTab = function(tabKey) {
     document.querySelectorAll(".tab-panel").forEach(p => p.classList.add("hidden"));
     document.querySelectorAll(".side-link").forEach(l => l.classList.remove("active"));
@@ -370,9 +362,9 @@
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
-  // التحقق من حالة تسجيل الدخول
   const authGate = document.getElementById("authGate");
 
+  // التحقق الحازم من تسجيل الدخول والاشتراك
   onAuthStateChanged(auth, async (user) => {
     if (!user) {
       window.location.href = "index.html";
@@ -380,82 +372,71 @@
     }
 
     try {
-      const studentDoc = await getDoc(doc(db, "students", user.uid));
-      let studentData = {};
-      if (studentDoc.exists()) {
-        studentData = studentDoc.data();
+      const snap = await getDoc(doc(db, "students", user.uid));
+      if (!snap.exists()) {
+        alert("⚠️ لم يتم العثور على ملفك الشخصي.");
+        window.location.href = "index.html";
+        return;
       }
 
-      renderStudentDashboard(user, studentData);
+      const data = snap.data();
+      const enrolledCourses = data.enrolledCourses || [];
+
+      // 🛑 منع غير المشتركين من الدخول وتوجيههم لصفحة الكورسات
+      if (enrolledCourses.length === 0) {
+        alert("🔒 لا يمكنك الدخول للوحة الطالب حتى تقوم بتفعيل اشتراكك في مادة أو باقة واحدة على الأقل.");
+        window.location.href = "index.html#courses";
+        return;
+      }
+
+      renderStudentDashboard(user, data, enrolledCourses);
     } catch (err) {
-      console.error("Error loading student data:", err);
-      renderStudentDashboard(user, {});
+      console.error("Auth Error:", err);
+      window.location.href = "index.html";
     } finally {
       if (authGate) authGate.style.display = "none";
     }
   });
 
-  // تسجيل الخروج
-  const logoutBtn = document.getElementById("logoutBtn");
-  if (logoutBtn) {
-    logoutBtn.addEventListener("click", async () => {
-      await signOut(auth);
-      localStorage.removeItem("khedr_user_active");
-      window.location.href = "index.html";
-    });
-  }
-
-  // بناء واجهة الطالب وتغذية البيانات
-  function renderStudentDashboard(user, data) {
+  // بناء واجهة الطالب بناءً على المواد المشترك بها
+  function renderStudentDashboard(user, data, enrolledCourses) {
     const fullName = data.fullName || user.displayName || "طالب مسجل";
     const userYear = data.academicYear === "y2" ? "الفرقة الثانية" : "الفرقة الأولى";
-    const enrolledCourses = data.enrolledCourses || [];
 
-    // 1. البيانات الترحيبية
     document.getElementById("greeting").textContent = `مرحبًا يا دكتور ${fullName} 👋`;
-    document.getElementById("academicSub").textContent = `${userYear} • متابعة تقدمك الدراسي والمقررات`;
-    const avatarEl = document.getElementById("userAvatar");
-    if (avatarEl) avatarEl.textContent = fullName.trim().charAt(0);
+    document.getElementById("academicSub").textContent = `${userYear} • المقررات والأنشطة الأكاديمية المفعلة`;
+    document.getElementById("userAvatar").textContent = fullName.trim().charAt(0);
 
-    // 2. تحديث شريط الإحصائيات
-    const statEnrolled = document.getElementById("statEnrolled");
-    if (statEnrolled) statEnrolled.textContent = enrolledCourses.length;
+    // 1. تحديث شريط الإحصائيات
+    document.getElementById("statEnrolled").textContent = enrolledCourses.length;
 
-    // 3. بناء تبويب "كورساتي المشترك بها"
+    // 2. تحديث بطاقة الاستكمال بأول مادة مفعلة للطالب
+    const firstCourseId = enrolledCourses[0];
+    const firstCourse = allCoursesMeta[firstCourseId] || { title: "مقرر أكاديمي" };
+    document.getElementById("continueCourseTitle").textContent = firstCourse.title;
+    document.getElementById("continueLessonTitle").textContent = "المحاضرة 01 • متابعة التحصيل";
+    document.getElementById("continueProgressBar").style.width = "40%";
+    document.getElementById("continueProgressLabel").textContent = "40%";
+
+    // 3. بناء تبويب "كورساتي"
     renderEnrolledCourses(enrolledCourses);
 
-    // 4. بناء محاكي الـ OSCE
-    renderOSCESimulator();
+    // 4. بناء الـ Live للمواد المشترك بها فقط
+    renderLiveEvents(enrolledCourses);
 
-    // 5. بناء بنك الـ MCQ والمذكرات
+    // 5. بناء محطات الـ OSCE لمواد الطالب فقط
+    renderOSCESimulator(enrolledCourses);
+
+    // 6. بناء بنك الأسئلة والمذكرات والقاموس الطبي
     renderMCQBank(enrolledCourses);
     renderPDFVault(enrolledCourses);
-
-    // 6. بناء القاموس الطبي
-    renderGlossary(medicalGlossary);
+    buildStudentGlossary(enrolledCourses);
   }
 
-  // بناء شبكة الكورسات المفعلة
-  function renderEnrolledCourses(enrolledList) {
+  function renderEnrolledCourses(enrolledCourses) {
     const grid = document.getElementById("studentEnrolledCoursesGrid");
-    if (!grid) return;
-
-    if (enrolledList.length === 0) {
-      grid.innerHTML = `
-        <div class="col-span-2 rounded-2xl border border-slate-800 bg-[#0F1D2D] p-8 text-center space-y-4">
-          <span class="text-4xl">📚</span>
-          <h4 class="text-sm font-black text-white">لم تقم بتفعيل أي مادة حتى الآن</h4>
-          <p class="text-xs text-slate-400 max-w-md mx-auto">اشترك في باقة أو مقررات فرقتك لتظهر جميع المحاضرات والملفات هنا فوراً.</p>
-          <a href="index.html#courses" class="inline-block px-6 py-2.5 rounded-xl bg-brand text-white font-black text-xs hover:bg-rose-900 transition">
-            تصفح مقررات المنصة الآن ←
-          </a>
-        </div>
-      `;
-      return;
-    }
-
-    grid.innerHTML = enrolledList.map(cId => {
-      const crs = allCoursesData[cId] || { title: cId, year: "مقرر أكاديمي", icon: "📖", desc: "محتوى دراسي مفعل" };
+    grid.innerHTML = enrolledCourses.map(cId => {
+      const crs = allCoursesMeta[cId] || { title: cId, icon: "📖", desc: "محتوى دراسي مفعل" };
       return `
         <div class="rounded-2xl border border-slate-800 bg-[#0F1D2D] p-5 flex flex-col justify-between shadow-lg card-hover">
           <div class="space-y-2">
@@ -476,87 +457,115 @@
     }).join("");
   }
 
-  // بناء محطات الـ OSCE السريرية
-  function renderOSCESimulator() {
-    const list = document.getElementById("osceStationsList");
-    if (!list) return;
-
-    const stations = [
-      { id: "st1", title: "محطة 1: فحص أربطة الركبة (Lachman & Anterior Drawer Test)", time: "5 دقائق", steps: ["شرح الإجراء للمريض وأخذ الموافقة", "وضع المريض في وضع الاستلقاء مع ثني الركبة 20-30 درجة", "تثبيت عظم الفخذ وسحب القصبة للأمام لتقييم الـ ACL", "ملاحظة وجود الـ End-feel ومقارنتها بالطرف السليم"] },
-      { id: "st2", title: "محطة 2: قياس المدى الحركي لمفصل الكتف (Shoulder Abduction Goniometry)", time: "4 دقائق", steps: ["تحديد المحور (Fulcrum) عند الجانب الخلفي للأخروم Acromion", "محاذاة الذراع الثابت مع الخط الموازي للعمود الفقري", "محاذاة الذراع المتحرك مع المحور الطولي لعظم العضد", "تسجيل القراءة بالدرجات بدقة (0 - 180°)"] }
+  function renderLiveEvents(enrolledCourses) {
+    const list = document.getElementById("liveEventsList");
+    const allEvents = [
+      { courseId: "c_anat1", title: "مراجعة لايف: عضلات الطرف العلوي", time: "الجمعة • 8:00 مساءً" },
+      { courseId: "c_biomech2", title: "ورشة تحليل المشي (Gait Analysis)", time: "الأحد • 7:00 مساءً" },
+      { courseId: "c_medterm", title: "جلسة تطبيقية في المصطلحات الطبية", time: "الثلاثاء • 6:00 مساءً" }
     ];
+
+    const studentEvents = allEvents.filter(e => enrolledCourses.includes(e.courseId));
+
+    if (studentEvents.length === 0) {
+      list.innerHTML = `<div class="text-[11px] text-slate-400 text-center py-4">لا توجد مواعيد لايف مجدولة لموادك حالياً.</div>`;
+      return;
+    }
+
+    list.innerHTML = studentEvents.map(ev => `
+      <div class="p-2.5 rounded-xl bg-[#07111D] border border-slate-800 flex items-center justify-between">
+        <div>
+          <h4 class="text-xs font-black text-white">${ev.title}</h4>
+          <span class="text-[10px] text-slate-400 block">${ev.time}</span>
+        </div>
+        <span class="text-[10px] font-black px-2 py-0.5 rounded bg-cyan-950 text-cyan-300 border border-cyan-800/40">مباشر</span>
+      </div>
+    `).join("");
+  }
+
+  function renderOSCESimulator(enrolledCourses) {
+    const list = document.getElementById("osceStationsList");
+    let stations = [];
+
+    enrolledCourses.forEach(cId => {
+      if (osceDB[cId]) stations = stations.concat(osceDB[cId]);
+    });
+
+    document.getElementById("statOsce").textContent = stations.length;
+
+    if (stations.length === 0) {
+      list.innerHTML = `<div class="rounded-2xl border border-slate-800 bg-[#0F1D2D] p-8 text-center text-xs text-slate-400">لا تتوفر محطات OSCE للمقررات المفعلة لديك حالياً.</div>`;
+      return;
+    }
 
     list.innerHTML = stations.map(s => `
       <div class="rounded-2xl border border-slate-800 bg-[#0F1D2D] p-5 space-y-3 shadow-md">
         <div class="flex items-center justify-between">
-          <h4 class="text-xs sm:text-sm font-black text-white flex items-center gap-2">
-            <span>🩺</span> ${s.title}
-          </h4>
+          <h4 class="text-xs sm:text-sm font-black text-white flex items-center gap-2"><span>🩺</span> ${s.title}</h4>
           <span class="text-[10px] font-bold px-2 py-0.5 rounded bg-amber-400/20 text-amber-300">${s.time}</span>
         </div>
-        <div class="space-y-2 pt-2 border-t border-slate-800">
-          <span class="text-[11px] font-bold text-slate-400">قائمة فحص الخطوات الإكلينيكية (Checklist):</span>
-          <div class="space-y-1.5">
-            ${s.steps.map((st, idx) => `
-              <label class="flex items-center gap-2 text-xs text-slate-300 cursor-pointer p-1.5 rounded-lg hover:bg-slate-800/50 transition">
-                <input type="checkbox" class="accent-rose-600 rounded" />
-                <span>${idx + 1}. ${st}</span>
-              </label>
-            `).join("")}
-          </div>
+        <div class="space-y-1.5 pt-2 border-t border-slate-800">
+          <span class="text-[11px] font-bold text-slate-400">قائمة فحص الخطوات الإكلينيكية:</span>
+          ${s.steps.map((st, idx) => `
+            <label class="flex items-center gap-2 text-xs text-slate-300 cursor-pointer p-1.5 rounded-lg hover:bg-slate-800/50 transition">
+              <input type="checkbox" class="accent-rose-600 rounded" />
+              <span>${idx + 1}. ${st}</span>
+            </label>
+          `).join("")}
         </div>
       </div>
     `).join("");
   }
 
-  // بناء بنك الأسئلة
-  function renderMCQBank(enrolledList) {
+  function renderMCQBank(enrolledCourses) {
     const list = document.getElementById("mcqTestsList");
-    if (!list) return;
-
-    list.innerHTML = `
-      <div class="rounded-2xl border border-slate-800 bg-[#0F1D2D] p-5 flex items-center justify-between shadow-md">
-        <div>
-          <h4 class="text-xs sm:text-sm font-black text-white">📝 كويز شامل: مبادئ التشريح وحركات المفاصل</h4>
-          <p class="text-[11px] text-slate-400 mt-1">15 سؤال MCQ بنظام الاختيار من متعدد مع التفسير العلمي</p>
+    list.innerHTML = enrolledCourses.map(cId => {
+      const crs = allCoursesMeta[cId] || { title: cId };
+      return `
+        <div class="rounded-2xl border border-slate-800 bg-[#0F1D2D] p-4 flex items-center justify-between shadow-md">
+          <div>
+            <h4 class="text-xs sm:text-sm font-black text-white">📝 كويز شامل: ${crs.title}</h4>
+            <p class="text-[11px] text-slate-400 mt-0.5">بنك أسئلة تدريبي مع التفسير العلمي</p>
+          </div>
+          <a href="index.html" class="px-3.5 py-1.5 rounded-xl bg-brand text-white font-black text-xs hover:bg-rose-900 transition">بدء الكويز</a>
         </div>
-        <a href="index.html" class="px-4 py-2 rounded-xl bg-brand text-white font-black text-xs hover:bg-rose-900 transition shrink-0">
-          بدء الاختبار ⏱️
-        </a>
-      </div>
-    `;
+      `;
+    }).join("");
   }
 
-  // بناء مكتبة الـ PDF
-  function renderPDFVault(enrolledList) {
+  function renderPDFVault(enrolledCourses) {
     const grid = document.getElementById("pdfVaultGrid");
-    if (!grid) return;
-
-    const pdfs = [
-      { title: "ملخص وتفريغ مصطلحات وأوضاع التشريح", size: "3.2 MB", tag: "Anatomy 1" },
-      { title: "مذكرة قوانين وعزوم الميكانيكا الحيوية", size: "4.5 MB", tag: "Biomechanics" },
-      { title: "تفريغ فسيولوجيا الخلية والأغشية الحيوية", size: "2.8 MB", tag: "Physiology 1" }
-    ];
-
-    grid.innerHTML = pdfs.map(p => `
-      <div class="rounded-2xl border border-slate-800 bg-[#0F1D2D] p-4 flex items-center justify-between shadow-md">
-        <div class="space-y-1">
-          <span class="text-[10px] font-black px-2 py-0.5 rounded bg-rose-950 text-rose-300 border border-rose-800/30">${p.tag}</span>
-          <h4 class="text-xs font-black text-white">${p.title}</h4>
-          <span class="text-[10px] text-slate-400 block">${p.size} • محمي ضد الطباعة والتنزيل</span>
+    grid.innerHTML = enrolledCourses.map(cId => {
+      const crs = allCoursesMeta[cId] || { title: cId };
+      return `
+        <div class="rounded-2xl border border-slate-800 bg-[#0F1D2D] p-4 flex items-center justify-between shadow-md">
+          <div>
+            <span class="text-[10px] font-black px-2 py-0.5 rounded bg-rose-950 text-rose-300 border border-rose-800/30">PDF معتمد</span>
+            <h4 class="text-xs font-black text-white mt-1">ملخصات وتفريغات: ${crs.title}</h4>
+            <span class="text-[10px] text-slate-400 block mt-0.5">محمي ضد الطباعة والنسخ</span>
+          </div>
+          <a href="index.html" class="px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-brand text-white text-xs font-bold transition">معاينة 👁️</a>
         </div>
-        <a href="index.html" class="px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-brand text-white text-xs font-bold transition">
-          معاينة 👁️
-        </a>
-      </div>
-    `).join("");
+      `;
+    }).join("");
+    document.getElementById("statPdfs").textContent = enrolledCourses.length;
   }
 
-  // بناء المساعد الطبي والقاموس
-  function renderGlossary(list) {
+  function buildStudentGlossary(enrolledCourses) {
+    activeStudentGlossary = [];
+    enrolledCourses.forEach(cId => {
+      if (glossaryDB[cId]) activeStudentGlossary = activeStudentGlossary.concat(glossaryDB[cId]);
+    });
+    renderGlossaryUI(activeStudentGlossary);
+  }
+
+  function renderGlossaryUI(list) {
     const container = document.getElementById("glossaryResults");
     if (!container) return;
-
+    if (list.length === 0) {
+      container.innerHTML = `<div class="col-span-2 text-center text-xs text-slate-400 py-6">لا توجد مصطلحات خاصة بمقرراتك المفعلة.</div>`;
+      return;
+    }
     container.innerHTML = list.map(g => `
       <div class="rounded-2xl border border-slate-800 bg-[#0F1D2D] p-4 space-y-1.5 shadow-md">
         <div class="flex items-baseline justify-between">
@@ -568,17 +577,23 @@
     `).join("");
   }
 
-  // فلتر البحث الحي في المصطلحات الطبية
   window.filterGlossary = function() {
-    const query = document.getElementById("glossarySearchInput").value.toLowerCase().trim();
-    const filtered = medicalGlossary.filter(g => 
-      g.term.toLowerCase().includes(query) || 
-      g.meaning.toLowerCase().includes(query) || 
-      g.desc.includes(query)
-    );
-    renderGlossary(filtered);
+    const q = document.getElementById("glossarySearchInput").value.toLowerCase().trim();
+    const filtered = activeStudentGlossary.filter(g => g.term.toLowerCase().includes(q) || g.meaning.toLowerCase().includes(q) || g.desc.includes(q));
+    renderGlossaryUI(filtered);
   };
-  // فتح وإغلاق نافذة السؤال
+
+  // تسجيل الخروج
+  const logoutBtn = document.getElementById("logoutBtn");
+  if (logoutBtn) {
+    logoutBtn.addEventListener("click", async () => {
+      await signOut(auth);
+      localStorage.removeItem("khedr_user_active");
+      window.location.href = "index.html";
+    });
+  }
+
+  // نافذة سؤال د. خضر
   window.openAskModal = function() {
     document.getElementById("askDrModal").classList.remove("hidden");
   };
@@ -587,7 +602,6 @@
     document.getElementById("askDrModal").classList.add("hidden");
   };
 
-  // إرسال السؤال عبر تليجرام
   window.handleSendDoubt = function(e) {
     e.preventDefault();
     const user = auth.currentUser;
@@ -603,18 +617,7 @@
     closeAskModal();
   };
 
-  // ربط زر "اسأل د. خضر" في الهيدر بالمودال
-  const askHeaderBtn = document.querySelector("a[href*='t.me/Khedr_physio']");
-  if (askHeaderBtn) {
-    askHeaderBtn.removeAttribute("href");
-    askHeaderBtn.removeAttribute("target");
-    askHeaderBtn.onclick = function(e) {
-      e.preventDefault();
-      openAskModal();
-    };
-  }
-
-  // حماية اللوحة من كليك يمين واختصارات النسخ
+  // حماية اللوحة ضد النسخ وفحص العنصر
   document.addEventListener("contextmenu", (e) => e.preventDefault());
   document.addEventListener("keydown", (e) => {
     if (
@@ -626,7 +629,8 @@
       return false;
     }
   });
-  // ============ POMODORO TIMER LOGIC ============
+
+  // ============ POMODORO & NOTES ============
   let timerInterval = null;
   let timeLeft = 25 * 60;
   let isRunning = false;
@@ -634,11 +638,10 @@
   window.toggleTimer = function() {
     const btn = document.getElementById("startTimerBtn");
     const status = document.getElementById("timerStatus");
-
     if (isRunning) {
       clearInterval(timerInterval);
       isRunning = false;
-      btn.textContent = "استئناف التركيز ▶";
+      btn.textContent = "استئناف ▶";
       status.textContent = "متوقف مؤقتاً";
       status.className = "text-[10px] font-bold px-2 py-0.5 rounded bg-amber-500/20 text-amber-300";
     } else {
@@ -646,11 +649,12 @@
       btn.textContent = "إيقاف مؤقت ⏸";
       status.textContent = "جلسة تركيز جارية 🔥";
       status.className = "text-[10px] font-bold px-2 py-0.5 rounded bg-rose-500/20 text-rose-300";
-
       timerInterval = setInterval(() => {
         if (timeLeft > 0) {
           timeLeft--;
-          updateTimerDisplay();
+          const mins = Math.floor(timeLeft / 60);
+          const secs = timeLeft % 60;
+          document.getElementById("timerDisplay").textContent = `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
         } else {
           clearInterval(timerInterval);
           isRunning = false;
@@ -665,29 +669,14 @@
     clearInterval(timerInterval);
     isRunning = false;
     timeLeft = 25 * 60;
-    updateTimerDisplay();
-    const btn = document.getElementById("startTimerBtn");
-    const status = document.getElementById("timerStatus");
-    if (btn) btn.textContent = "بدء التركيز ▶";
-    if (status) {
-      status.textContent = "جاهز للمذاكرة";
-      status.className = "text-[10px] font-bold px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-300";
-    }
+    document.getElementById("timerDisplay").textContent = "25:00";
+    document.getElementById("startTimerBtn").textContent = "بدء التركيز ▶";
+    document.getElementById("timerStatus").textContent = "جاهز للمذاكرة";
+    document.getElementById("timerStatus").className = "text-[10px] font-bold px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-300";
   };
 
-  function updateTimerDisplay() {
-    const mins = Math.floor(timeLeft / 60);
-    const secs = timeLeft % 60;
-    const display = document.getElementById("timerDisplay");
-    if (display) {
-      display.textContent = `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
-    }
-  }
-
-  // ============ QUICK NOTES LOGIC ============
   window.saveQuickNotes = function() {
-    const note = document.getElementById("quickNotesArea").value;
-    localStorage.setItem("khedr_quick_notes", note);
+    localStorage.setItem("khedr_quick_notes", document.getElementById("quickNotesArea").value);
     const ind = document.getElementById("saveIndicator");
     if (ind) {
       ind.classList.remove("opacity-0");
@@ -696,18 +685,16 @@
   };
 
   window.clearQuickNotes = function() {
-    if (confirm("هل أنت متأكد من رغبتك في مسح الملاحظات؟")) {
+    if (confirm("هل تريد مسح المسودة؟")) {
       document.getElementById("quickNotesArea").value = "";
       localStorage.removeItem("khedr_quick_notes");
     }
   };
 
-  // استرجاع الملاحظات المحفوظة عند فتح الصفحة
   document.addEventListener("DOMContentLoaded", () => {
     const saved = localStorage.getItem("khedr_quick_notes");
-    const area = document.getElementById("quickNotesArea");
-    if (saved && area) {
-      area.value = saved;
+    if (saved && document.getElementById("quickNotesArea")) {
+      document.getElementById("quickNotesArea").value = saved;
     }
   });
 </script>
