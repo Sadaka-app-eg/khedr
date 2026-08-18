@@ -311,12 +311,12 @@
       <h2 class="text-3xl md:text-5xl font-black mt-1 text-theme-main">الكورسات والباقات المتاحة</h2>
     </div>
 
-    <div class="flex items-center gap-1.5 bg-[#0F1D2D] p-1.5 rounded-2xl border border-slate-800">
-      <button onclick="filterCourses('all')" class="filter-tab active px-4 py-2 rounded-xl text-xs font-black transition bg-brand text-white" id="flt-all">الكل</button>
-      <button onclick="filterCourses('y1')" class="filter-tab px-4 py-2 rounded-xl text-xs font-black text-slate-400 transition" id="flt-y1">سنة أولى</button>
-      <button onclick="filterCourses('y2')" class="filter-tab px-4 py-2 rounded-xl text-xs font-black text-slate-400 transition" id="flt-y2">سنة ثانية</button>
-      <button onclick="filterCourses('pkg')" class="filter-tab px-4 py-2 rounded-xl text-xs font-black text-slate-400 transition" id="flt-pkg">الباقات الموفرة</button>
-    </div>
+<div id="coursesFilterBar" class="flex items-center gap-1.5 bg-[#0F1D2D] p-1.5 rounded-2xl border border-slate-800">
+  <button onclick="filterCourses('all')" class="filter-tab active px-4 py-2 rounded-xl text-xs font-black transition bg-brand text-white" id="flt-all">الكل</button>
+  <button onclick="filterCourses('y1')" class="filter-tab px-4 py-2 rounded-xl text-xs font-black text-slate-400 transition" id="flt-y1">سنة أولى</button>
+  <button onclick="filterCourses('y2')" class="filter-tab px-4 py-2 rounded-xl text-xs font-black text-slate-400 transition" id="flt-y2">سنة ثانية</button>
+  <button onclick="filterCourses('pkg')" class="filter-tab px-4 py-2 rounded-xl text-xs font-black text-slate-400 transition" id="flt-pkg">الباقات الموفرة</button>
+</div>
   </div>
 
   <div class="relative group">
@@ -2031,9 +2031,14 @@ if (localStorage.getItem("khedr_user_active") === "true") {
   const authSection = document.getElementById("authSection");
   const heroGuestCta = document.getElementById("heroGuestCta");
   const supportWidget = document.getElementById("supportFloatingWidget");
+  const yearsSection = document.getElementById("years");
+  const filterBar = document.getElementById("coursesFilterBar");
+
   if (authSection) authSection.classList.add("hidden");
   if (heroGuestCta) heroGuestCta.classList.add("hidden");
   if (supportWidget) supportWidget.classList.add("hidden");
+  if (yearsSection) yearsSection.classList.add("hidden");
+  if (filterBar) filterBar.classList.add("hidden");
 }
 
   function showError(elId, msg) {
@@ -2120,24 +2125,17 @@ try {
             }
           }
 
-          // تخصيص واجهة الطالب: إظهار مقررات وفرقة الطالب المسجلة فقط
-          const y1Card = document.getElementById("year1Card");
-          const y2Card = document.getElementById("year2Card");
-          const fltY1Btn = document.getElementById("flt-y1");
-          const fltY2Btn = document.getElementById("flt-y2");
+// 1. إخفاء سكشن السنوات الدراسية وشريط الفلاتر نهائياً للطالب المسجل
+          const yearsSec = document.getElementById("years");
+          const filterBar = document.getElementById("coursesFilterBar");
+          if (yearsSec) yearsSec.classList.add("hidden");
+          if (filterBar) filterBar.classList.add("hidden");
 
-          if (userYear === "y1") {
-            if (y2Card) y2Card.classList.add("hidden");
-            if (y1Card) y1Card.classList.remove("hidden");
-            if (fltY2Btn) fltY2Btn.classList.add("hidden");
-            filterCourses("y1"); // تفعيل فلتر سنة أولى مباشرة
-          } else if (userYear === "y2") {
-            if (y1Card) y1Card.classList.add("hidden");
-            if (y2Card) y2Card.classList.remove("hidden");
-            if (fltY1Btn) fltY1Btn.classList.add("hidden");
-            filterCourses("y2"); // تفعيل فلتر سنة ثانية مباشرة
+          // 2. إظهار مقررات الفرقة المسجل بها الطالب تلقائياً (y1 أو y2)
+          if (userYear === "y2") {
+            filterCourses("y2");
           } else {
-            renderCatalog();
+            filterCourses("y1");
           }
 
           if (window.currentItemData && enrolledCourses.includes(window.currentItemData.id)) {
@@ -2150,6 +2148,12 @@ try {
       }
     } else {
 
+      // إظهار سكشن السنوات والفلاتر للزوار
+      const yearsSec = document.getElementById("years");
+      const filterBar = document.getElementById("coursesFilterBar");
+      if (yearsSec) yearsSec.classList.remove("hidden");
+      if (filterBar) filterBar.classList.remove("hidden");
+filterCourses("all"); // لإعادة عرض كل المقررات للزائر
       // إظهار زر الدعم الفني للزائر غير المسجل
       const supportWidget = document.getElementById("supportFloatingWidget");
       if (supportWidget) supportWidget.classList.remove("hidden");
