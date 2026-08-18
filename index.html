@@ -1914,6 +1914,13 @@ document.addEventListener("DOMContentLoaded", () => {
   }, { threshold: 0.15 });
 
   document.querySelectorAll(".fade-up").forEach((el) => observer.observe(el));
+
+  // فتح الكورس تلقائياً إذا كان قادماً من لوحة الطالب
+  const urlParams = new URLSearchParams(window.location.search);
+  const openCrsId = urlParams.get('openCourse');
+  if (openCrsId && window.catalogData && window.catalogData[openCrsId]) {
+    setTimeout(() => { openCourseView(openCrsId); }, 400);
+  }
 });
 
 </script>
