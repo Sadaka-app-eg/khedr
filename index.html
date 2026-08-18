@@ -152,54 +152,53 @@
         <div class="theme-toggle-thumb"></div>
       </div>
 
-      <button id="langBtn" class="text-xs font-bold px-2.5 h-7 rounded-full border border-slate-700 text-slate-200 flex items-center gap-1 hover:border-brand transition">
+<button id="langBtn" class="text-xs font-bold px-2.5 h-7 rounded-full border border-slate-700 text-slate-200 flex items-center gap-1 hover:border-brand transition">
         <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.7 2.5 15.3 0 18M12 3c-2.5 2.7-2.5 15.3 0 18"/></svg>
         <span id="langLabel">EN</span>
+      </button>
+</div>
+  </div>
+</header>
+
+<!-- القائمة المنسدلة التفاعلية تحت الهيدر مباشرة -->
+<div id="drawer" class="hidden relative z-40 w-full max-w-[1650px] mx-auto px-4 md:px-8 pt-3 pb-2 transition-all duration-300">
+  <div class="rounded-3xl bg-[#8E0E38] p-3 md:p-4 shadow-2xl border border-white/10 space-y-2.5">
+    
+    <!-- 1. أزرار الزائر -->
+    <div id="drawerGuestActions" class="flex flex-col gap-2.5">
+      <button onclick="toggleDrawer(); openAuthView('register');" class="w-full py-3.5 rounded-2xl bg-[#5E0824] hover:bg-[#4A051B] text-white font-black text-xs md:text-sm shadow-md transition transform active:scale-95 text-center cursor-pointer">
+        حساب جديد
+      </button>
+      <button onclick="toggleDrawer(); openAuthView('login');" class="w-full py-3.5 rounded-2xl bg-[#5E0824] hover:bg-[#4A051B] text-white font-black text-xs md:text-sm shadow-md transition transform active:scale-95 text-center cursor-pointer">
+        تسجيل الدخول
+      </button>
+    </div>
+
+    <!-- 2. أزرار الطالب المسجل -->
+    <div id="drawerStudentActions" class="hidden flex-col gap-2.5">
+      <button onclick="toggleDrawer(); openDashboardInternal();" class="w-full py-3.5 rounded-2xl bg-[#5E0824] hover:bg-[#4A051B] text-amber-300 font-black text-xs md:text-sm shadow-md transition transform active:scale-95 flex items-center justify-center gap-2 cursor-pointer">
+        <span>🎓</span> <span>لوحة تحكم الطالب</span>
+      </button>
+      <button onclick="handleLogoutClick();" class="w-full py-3 rounded-2xl bg-black/20 hover:bg-black/40 text-rose-200 font-bold text-xs transition text-center cursor-pointer">
+        تسجيل الخروج
+      </button>
+    </div>
+
+    <!-- 3. أزرار المشرف (Admin) -->
+    <div id="drawerAdminActions" class="hidden flex-col gap-2.5">
+      <a href="teacher-dashboard.html" class="w-full py-3.5 rounded-2xl bg-amber-400 hover:bg-amber-300 text-slate-950 font-black text-xs md:text-sm shadow-md transition transform active:scale-95 flex items-center justify-center gap-2">
+        <span>⚙️</span> <span>لوحة تحكم المشرف والطلاب</span>
+      </a>
+      <button onclick="toggleDrawer(); openDashboardInternal();" class="w-full py-3.5 rounded-2xl bg-[#5E0824] hover:bg-[#4A051B] text-white font-black text-xs md:text-sm shadow-md transition text-center cursor-pointer">
+        معاينة لوحة الطالب 🎓
+      </button>
+      <button onclick="handleLogoutClick();" class="w-full py-3 rounded-2xl bg-black/20 hover:bg-black/40 text-rose-200 font-bold text-xs transition text-center cursor-pointer">
+        تسجيل الخروج
       </button>
     </div>
 
   </div>
-
-<!-- القائمة المنسدلة التفاعلية (كمبيوتر وموبايل) -->
-  <div id="drawer" class="hidden w-full max-w-[1650px] mx-auto px-4 md:px-8 pt-3 pb-2 transition-all duration-300">
-    <div class="rounded-3xl bg-[#8E0E38] p-3 md:p-4 shadow-2xl border border-white/10 space-y-2.5">
-      
-      <!-- 1. أزرار الزائر -->
-      <div id="drawerGuestActions" class="flex flex-col gap-2.5">
-        <button onclick="toggleDrawer(); openAuthView('register');" class="w-full py-3.5 rounded-2xl bg-[#5E0824] hover:bg-[#4A051B] text-white font-black text-xs md:text-sm shadow-md transition transform active:scale-95 text-center">
-          حساب جديد
-        </button>
-        <button onclick="toggleDrawer(); openAuthView('login');" class="w-full py-3.5 rounded-2xl bg-[#5E0824] hover:bg-[#4A051B] text-white font-black text-xs md:text-sm shadow-md transition transform active:scale-95 text-center">
-          تسجيل الدخول
-        </button>
-      </div>
-
-      <!-- 2. أزرار الطالب المسجل -->
-      <div id="drawerStudentActions" class="hidden flex-col gap-2.5">
-        <button onclick="toggleDrawer(); openDashboardInternal();" class="w-full py-3.5 rounded-2xl bg-[#5E0824] hover:bg-[#4A051B] text-amber-300 font-black text-xs md:text-sm shadow-md transition transform active:scale-95 flex items-center justify-center gap-2">
-          <span>🎓</span> <span>لوحة تحكم الطالب</span>
-        </button>
-        <button onclick="handleLogoutClick();" class="w-full py-3 rounded-2xl bg-black/20 hover:bg-black/40 text-rose-200 font-bold text-xs transition text-center">
-          تسجيل الخروج
-        </button>
-      </div>
-
-      <!-- 3. أزرار المشرف (Admin) -->
-      <div id="drawerAdminActions" class="hidden flex-col gap-2.5">
-        <a href="teacher-dashboard.html" class="w-full py-3.5 rounded-2xl bg-amber-400 hover:bg-amber-300 text-slate-950 font-black text-xs md:text-sm shadow-md transition transform active:scale-95 flex items-center justify-center gap-2">
-          <span>⚙️</span> <span>لوحة تحكم المشرف والطلاب</span>
-        </a>
-        <button onclick="toggleDrawer(); openDashboardInternal();" class="w-full py-3.5 rounded-2xl bg-[#5E0824] hover:bg-[#4A051B] text-white font-black text-xs md:text-sm shadow-md transition text-center">
-          معاينة لوحة الطالب 🎓
-        </button>
-        <button onclick="handleLogoutClick();" class="w-full py-3 rounded-2xl bg-black/20 hover:bg-black/40 text-rose-200 font-bold text-xs transition text-center">
-          تسجيل الخروج
-        </button>
-      </div>
-
-    </div>
-  </div>
-</header>
+</div>
 
 <!-- ============ HERO SECTION ============ -->
 <section id="hero" class="w-full max-w-[1650px] mx-auto px-3 sm:px-6 md:px-8 pt-3 pb-8">
@@ -432,15 +431,7 @@
     </div>
   </div>
   
-  <div class="mb-6 flex flex-col items-center gap-2 cursor-pointer group" onclick="closeAuthView()" title="اضغط للعودة للصفحة الرئيسية">
-    <div class="flex items-center gap-3 bg-[#0F1D2D] px-5 py-2.5 rounded-2xl border border-slate-800 group-hover:border-brand transition shadow-xl">
-      <img src="logo.png" alt="KHEDR PHYSIO" class="h-10 w-auto object-contain" onerror="this.src='logo.png'" />
-      <span class="font-black text-sm text-white" data-i18n="brand">KHEDR & PHYSIO</span>
-    </div>
-    <span class="text-[11px] font-bold text-slate-400 group-hover:text-amber-300 transition flex items-center gap-1">
-      <span>←</span> <span data-i18n="auth_back_home">اضغط على اللوجو للعودة للرئيسية</span>
-    </span>
-  </div>
+
 
   <div class="w-full max-w-md rounded-3xl border border-slate-800 bg-[#0F1D2D] p-6 sm:p-8 shadow-2xl">
 
@@ -1898,9 +1889,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const themeBtn = document.getElementById("themeBtn");
   if (themeBtn) themeBtn.addEventListener("click", toggleTheme);
 
-  const drawerBtn = document.getElementById("drawerBtn");
-  if (drawerBtn) drawerBtn.addEventListener("click", toggleDrawer);
-
+ 
   const observer = new IntersectionObserver((entries) => {
     entries.forEach((entry) => {
       if (entry.isIntersecting) {
