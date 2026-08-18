@@ -132,9 +132,9 @@
 
       <!-- يظهر للطالب المسجل -->
       <div id="userNav" class="hidden items-center gap-2 sm:gap-3">
-        <a href="dashboard.html" class="text-xs font-black px-3.5 py-1.5 rounded-xl bg-gradient-to-r from-amber-400 to-amber-500 text-slate-950 hover:brightness-110 shadow-lg transition flex items-center gap-1.5">
-          <span>🎓</span> <span>لوحة الطالب</span>
-        </a>
+<button type="button" onclick="openDashboardInternal()" class="text-xs font-black px-3.5 py-1.5 rounded-xl bg-gradient-to-r from-amber-400 to-amber-500 text-slate-950 hover:brightness-110 shadow-lg transition flex items-center gap-1.5 cursor-pointer">
+  <span>🎓</span> <span>لوحة الطالب</span>
+</button>
 
         <a id="adminDashboardLink" href="teacher-dashboard.html" class="hidden text-xs font-black px-3 py-1.5 rounded-xl bg-amber-400 text-slate-900 hover:bg-amber-300 transition shadow">
           ⚙️ الإدارة
@@ -218,9 +218,9 @@
             <span>منورنا يا دكتور <span id="heroUserName" class="text-white"></span></span>
           </div>
           <div>
-            <a href="dashboard.html" class="inline-block bg-amber-400 hover:bg-amber-300 text-slate-950 font-black text-xs md:text-sm px-7 py-3 rounded-2xl shadow-xl transition transform hover:scale-105">
-              الدخول للوحة الطالب ومتابعة المقررات 🎓 ←
-            </a>
+<button type="button" onclick="openDashboardInternal()" class="inline-block bg-amber-400 hover:bg-amber-300 text-slate-950 font-black text-xs md:text-sm px-7 py-3 rounded-2xl shadow-xl transition transform hover:scale-105 cursor-pointer">
+  الدخول للوحة الطالب ومتابعة المقررات 🎓 ←
+</button>
           </div>
         </div>
       </div>
@@ -953,7 +953,78 @@ const translations = {
     foot_rights: "All Rights Reserved © 2026 KHEDR & PHYSIO"
   }
 };
+// فتح لوحة الطالب داخل نفس الصفحة
+window.openDashboardInternal = function() {
+  if (!window.isUserLoggedIn) {
+    openAuthView('login');
+    return;
+  }
+  const enrolled = window.currentUserData?.enrolledCourses || [];
+  if (enrolled.length === 0) {
+    alert("🔒 لا يمكنك الدخول للوحة الطالب حتى تقوم بتفعيل اشتراكك في مقرر واحد على الأقل.");
+    const coursesSec = document.getElementById("courses");
+    if (coursesSec) coursesSec.scrollIntoView({ behavior: "smooth" });
+    return;
+  }
 
+  // إخفاء أقسام الموقع وإظهار اللوحة
+  ["hero", "years", "courses", "features", "honors", "reviews", "instructor", "authSection", "mainFooter", "supportFloatingWidget"].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.classList.add("hidden");
+  });
+
+  const dashView = document.getElementById("internalDashboardView");
+  if (dashView) {
+    dashView.classList.remove("hidden");
+    renderInternalDashboardUI();
+  }
+  window.scrollTo({ top: 0, behavior: "smooth" });
+};
+
+// إغلاق لوحة الطالب والعودة للموقع
+window.closeDashboardInternal = function() {
+  const dashView = document.getElementById("internalDashboardView");
+  if (dashView) dashView.classList.add("hidden");
+
+  ["hero", "years", "courses", "features", "honors", "reviews", "instructor", "mainFooter", "supportFloatingWidget"].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.classList.remove("hidden");
+  });
+  window.scrollTo({ top: 0, behavior: "smooth" });
+};
+
+function renderInternalDashboardUI() {
+  const user = window.currentUserData;
+  const authUser = window.authInstance?.currentUser;
+  const name = user?.fullName || authUser?.displayName || "طالب مسجل";
+  const enrolled = user?.enrolledCourses || [];
+
+  const greeting = document.getElementById("dashGreeting");
+  if (greeting) greeting.textContent = `مرحبًا يا دكتور ${name} 👋`;
+
+  const countEl = document.getElementById("dashCourseCount");
+  if (countEl) countEl.textContent = `${enrolled.length} مقررات مفعلة 🔓`;
+
+  const grid = document.getElementById("dashEnrolledGrid");
+  if (grid) {
+    grid.innerHTML = enrolled.map(cId => {
+      const crs = window.catalogData[cId] || { title: cId, desc: "مقرر مفعل" };
+      const title = typeof crs.title === "object" ? crs.title[currentLang] : crs.title;
+      return `
+        <div class="p-5 rounded-2xl border border-slate-800 bg-[#0F1D2D] flex flex-col justify-between shadow-md card-hover">
+          <div class="space-y-2">
+            <span class="text-2xl">🩺</span>
+            <h4 class="text-xs sm:text-sm font-black text-white">${title}</h4>
+            <p class="text-[11px] text-slate-400 line-clamp-2">${typeof crs.desc === "object" ? crs.desc[currentLang] : crs.desc}</p>
+          </div>
+          <button onclick="closeDashboardInternal(); openCourseView('${cId}');" class="mt-4 w-full py-2 rounded-xl bg-brand text-white font-black text-xs hover:bg-rose-900 transition">
+            دخول المحاضرات والملفات ←
+          </button>
+        </div>
+      `;
+    }).join("");
+  }
+}
 window.openAuthView = function(tab = 'login') {
   const authSec = document.getElementById("authSection");
   if (authSec) {
@@ -2102,7 +2173,10 @@ try {
           document.getElementById("loginEmail").value.trim(), 
           document.getElementById("loginPassword").value
         );
-window.location.href = "dashboard.html";        
+closeAuthView();
+openDashboardInternal();
+
+
       } catch (err) {
         showError("loginError", "بيانات الدخول غير صحيحة");
       } finally {
@@ -2299,6 +2373,37 @@ window.renderLessonQuiz = function(quizArray) {
     </button>
     <img id="lightboxImg" src="" alt="بوستر الكورس" class="max-w-full max-h-[80vh] rounded-3xl object-contain shadow-2xl border border-white/20" />
     <span class="text-xs text-slate-300 font-bold mt-3 bg-black/60 px-4 py-1.5 rounded-full border border-white/10">🔍 اضغط في أي مكان خارج الصورة للإغلاق</span>
+  </div>
+</div>
+<!-- ============ لوحة الطالب المدمجة داخل نفس الصفحة ============ -->
+<div id="internalDashboardView" class="hidden min-h-screen bg-[#07111D] text-slate-100 py-6 px-4 md:px-8 transition-all">
+  <div class="max-w-6xl mx-auto space-y-6">
+    
+    <!-- زر العودة للرئيسية -->
+    <div class="flex items-center justify-between pb-4 border-b border-slate-800">
+      <button onclick="closeDashboardInternal()" class="inline-flex items-center gap-2 text-xs font-black px-4 py-2 rounded-xl bg-[#0F1D2D] border border-slate-800 text-slate-200 hover:border-brand transition">
+        <span>← العودة للصفحة الرئيسية</span>
+      </button>
+      <span class="text-xs font-bold text-amber-400">لوحة المذاكرة التفاعلية 🎓</span>
+    </div>
+
+    <!-- ترويسة الطالب -->
+    <div class="flex items-center justify-between bg-[#0F1D2D] p-5 rounded-2xl border border-slate-800">
+      <div>
+        <h1 class="text-lg sm:text-xl font-black text-white" id="dashGreeting">مرحبًا يا دكتور 👋</h1>
+        <p class="text-xs text-slate-400 mt-0.5" id="dashSub">متابعة مقرراتك وأنشطتك الأكاديمية</p>
+      </div>
+      <div class="flex items-center gap-3">
+        <span class="text-xs font-bold px-3 py-1 rounded-xl bg-emerald-500/20 text-emerald-300 border border-emerald-500/30" id="dashCourseCount">0 مقررات مفعلة</span>
+      </div>
+    </div>
+
+    <!-- شبكة المقررات المفعلة للطالب -->
+    <div class="space-y-3">
+      <h3 class="text-sm font-black text-slate-200">📚 مقرراتك الدراسية المشترك بها:</h3>
+      <div id="dashEnrolledGrid" class="grid sm:grid-cols-2 md:grid-cols-3 gap-4"></div>
+    </div>
+
   </div>
 </div>
 </body>
