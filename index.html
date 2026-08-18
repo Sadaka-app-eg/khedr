@@ -160,40 +160,40 @@
   </div>
 </header>
 
-<!-- القائمة المنسدلة التفاعلية تحت الهيدر مباشرة -->
-<div id="drawer" class="hidden relative z-40 w-full max-w-[1650px] mx-auto px-4 md:px-8 pt-3 pb-2 transition-all duration-300">
-  <div class="rounded-3xl bg-[#8E0E38] p-3 md:p-4 shadow-2xl border border-white/10 space-y-2.5">
+<!-- القائمة المنسدلة العائمة المصغرة -->
+<div id="drawer" class="hidden absolute top-16 start-4 md:start-8 z-50 w-56 transition-all duration-200 origin-top">
+  <div class="rounded-2xl bg-[#0F1D2D]/95 backdrop-blur-xl p-2.5 shadow-[0_15px_35px_rgba(0,0,0,0.6)] border border-slate-700/70 space-y-1.5 animate-in fade-in zoom-in-95">
     
     <!-- 1. أزرار الزائر -->
-    <div id="drawerGuestActions" class="flex flex-col gap-2.5">
-      <button onclick="toggleDrawer(); openAuthView('register');" class="w-full py-3.5 rounded-2xl bg-[#5E0824] hover:bg-[#4A051B] text-white font-black text-xs md:text-sm shadow-md transition transform active:scale-95 text-center cursor-pointer">
-        حساب جديد
+    <div id="drawerGuestActions" class="flex flex-col gap-1.5">
+      <button onclick="toggleDrawer(); openAuthView('register');" class="w-full py-2.5 px-3 rounded-xl bg-brand hover:bg-rose-900 text-white font-black text-xs shadow-md transition active:scale-95 text-start flex items-center gap-2 cursor-pointer">
+        <span>✨</span> <span>حساب جديد</span>
       </button>
-      <button onclick="toggleDrawer(); openAuthView('login');" class="w-full py-3.5 rounded-2xl bg-[#5E0824] hover:bg-[#4A051B] text-white font-black text-xs md:text-sm shadow-md transition transform active:scale-95 text-center cursor-pointer">
-        تسجيل الدخول
+      <button onclick="toggleDrawer(); openAuthView('login');" class="w-full py-2.5 px-3 rounded-xl bg-[#07111D] hover:bg-slate-800 text-slate-200 font-bold text-xs border border-slate-700/60 transition active:scale-95 text-start flex items-center gap-2 cursor-pointer">
+        <span>🔑</span> <span>تسجيل الدخول</span>
       </button>
     </div>
 
     <!-- 2. أزرار الطالب المسجل -->
-    <div id="drawerStudentActions" class="hidden flex-col gap-2.5">
-      <button onclick="toggleDrawer(); openDashboardInternal();" class="w-full py-3.5 rounded-2xl bg-[#5E0824] hover:bg-[#4A051B] text-amber-300 font-black text-xs md:text-sm shadow-md transition transform active:scale-95 flex items-center justify-center gap-2 cursor-pointer">
+    <div id="drawerStudentActions" class="hidden flex-col gap-1.5">
+      <a href="dashboard.html" class="w-full py-2.5 px-3 rounded-xl bg-brand hover:bg-rose-900 text-white font-black text-xs shadow-md transition active:scale-95 flex items-center gap-2">
         <span>🎓</span> <span>لوحة تحكم الطالب</span>
-      </button>
-      <button onclick="handleLogoutClick();" class="w-full py-3 rounded-2xl bg-black/20 hover:bg-black/40 text-rose-200 font-bold text-xs transition text-center cursor-pointer">
-        تسجيل الخروج
+      </a>
+      <button onclick="handleLogoutClick();" class="w-full py-2 px-3 rounded-xl bg-rose-950/40 hover:bg-rose-900/60 text-rose-300 font-bold text-xs border border-rose-900/30 transition text-start flex items-center gap-2 cursor-pointer">
+        <span>🚪</span> <span>تسجيل الخروج</span>
       </button>
     </div>
 
     <!-- 3. أزرار المشرف (Admin) -->
-    <div id="drawerAdminActions" class="hidden flex-col gap-2.5">
-      <a href="teacher-dashboard.html" class="w-full py-3.5 rounded-2xl bg-amber-400 hover:bg-amber-300 text-slate-950 font-black text-xs md:text-sm shadow-md transition transform active:scale-95 flex items-center justify-center gap-2">
-        <span>⚙️</span> <span>لوحة تحكم المشرف والطلاب</span>
+    <div id="drawerAdminActions" class="hidden flex-col gap-1.5">
+      <a href="teacher-dashboard.html" class="w-full py-2.5 px-3 rounded-xl bg-amber-400 hover:bg-amber-300 text-slate-950 font-black text-xs shadow-md transition active:scale-95 flex items-center gap-2">
+        <span>⚙️</span> <span>لوحة تحكم المشرف</span>
       </a>
-      <button onclick="toggleDrawer(); openDashboardInternal();" class="w-full py-3.5 rounded-2xl bg-[#5E0824] hover:bg-[#4A051B] text-white font-black text-xs md:text-sm shadow-md transition text-center cursor-pointer">
-        معاينة لوحة الطالب 🎓
-      </button>
-      <button onclick="handleLogoutClick();" class="w-full py-3 rounded-2xl bg-black/20 hover:bg-black/40 text-rose-200 font-bold text-xs transition text-center cursor-pointer">
-        تسجيل الخروج
+      <a href="dashboard.html" class="w-full py-2 px-3 rounded-xl bg-[#07111D] hover:bg-slate-800 text-slate-200 font-bold text-xs border border-slate-700 transition flex items-center gap-2">
+        <span>🎓</span> <span>لوحة الطالب</span>
+      </a>
+      <button onclick="handleLogoutClick();" class="w-full py-2 px-3 rounded-xl bg-rose-950/40 hover:bg-rose-900/60 text-rose-300 font-bold text-xs border border-rose-900/30 transition text-start flex items-center gap-2 cursor-pointer">
+        <span>🚪</span> <span>تسجيل الخروج</span>
       </button>
     </div>
 
@@ -499,9 +499,9 @@
 <div id="packageDetailsView" class="hidden min-h-screen bg-[#07111D] text-slate-100 py-10 px-5 transition-all">
   <div class="max-w-5xl mx-auto">
     
-    <button onclick="closePackageDetails()" class="mb-6 inline-flex items-center gap-2 text-xs font-black px-4 py-2 rounded-xl bg-[#0F1D2D] border border-slate-800 shadow-sm hover:border-brand transition">
-      <span>← العودة للرئيسية</span>
-    </button>
+<button type="button" onclick="closePackageDetails()" class="mb-6 inline-flex items-center justify-center p-2 rounded-2xl bg-[#0F1D2D] border border-slate-800 hover:border-brand transition shadow-lg group cursor-pointer" title="العودة للصفحة الرئيسية">
+  <img src="logo.png" alt="العودة للرئيسية" class="h-9 w-auto object-contain transition-transform group-hover:scale-105" onerror="this.src='logo.png'" />
+</button>
 
     <div class="rounded-3xl bg-gradient-to-l from-[#5E0824] via-[#7A0B30] to-[#4A051B] p-8 md:p-12 text-white shadow-xl relative overflow-hidden mb-8">
       <span id="pkgBadge" class="inline-block text-[11px] font-black px-3 py-1 rounded-full bg-amber-400 text-slate-900 mb-3">باقة مميزة</span>
@@ -554,9 +554,9 @@
 <div id="courseView" class="hidden min-h-screen bg-[#07111D] text-slate-100 py-10 px-4 md:px-8 transition-all">
   <div class="max-w-6xl mx-auto">
     
-    <button onclick="closeCourseView()" class="mb-6 inline-flex items-center gap-2 text-xs font-black px-4 py-2.5 rounded-xl bg-[#0F1D2D] border border-slate-800 text-slate-200 hover:border-brand transition">
-      <span>← العودة للصفحة الرئيسية</span>
-    </button>
+<button type="button" onclick="closeCourseView()" class="mb-6 inline-flex items-center justify-center p-2 rounded-2xl bg-[#0F1D2D] border border-slate-800 hover:border-brand transition shadow-lg group cursor-pointer" title="العودة للصفحة الرئيسية">
+  <img src="logo.png" alt="العودة للرئيسية" class="h-9 w-auto object-contain transition-transform group-hover:scale-105" onerror="this.src='logo.png'" />
+</button>
 
     <div class="rounded-3xl bg-gradient-to-l from-[#5E0824] via-[#7A0B30] to-[#4A051B] p-6 md:p-10 text-white shadow-2xl relative overflow-hidden mb-8 border border-white/10">
       <div class="flex flex-col md:flex-row md:items-center justify-between gap-6">
@@ -1585,18 +1585,49 @@ function openCourseView(courseId) {
   const titleEl = document.getElementById("crsTitle");
   const descEl = document.getElementById("crsDesc");
   const priceEl = document.getElementById("crsPrice");
+  const bannerEl = document.getElementById("enrollmentStatusBanner");
+  const actionBtn = document.getElementById("crsActionBtn");
 
   if (catEl) catEl.textContent = typeof crs.category === "object" ? crs.category[currentLang] : crs.category;
   if (titleEl) titleEl.textContent = typeof crs.title === "object" ? crs.title[currentLang] : crs.title;
   if (descEl) descEl.textContent = typeof crs.desc === "object" ? crs.desc[currentLang] : crs.desc;
   if (priceEl) priceEl.textContent = `${crs.price} ج.م`;
 
+  // تحديث حالة الاشتراك في البانر والزر للمشتركين
+  if (crs.isEnrolled) {
+    if (bannerEl) {
+      bannerEl.innerHTML = `
+        <span class="inline-flex items-center gap-2 text-xs font-black text-emerald-300 bg-emerald-950/60 px-3.5 py-1.5 rounded-xl border border-emerald-500/40">
+          <span>✓</span> تم تفعيل اشتراكك بالكامل — جميع المحاضرات والملفات متاحة
+        </span>
+      `;
+    }
+    if (actionBtn) {
+      actionBtn.textContent = "أنت مشترك في هذا المقرر ✓";
+      actionBtn.className = "w-full bg-emerald-600 text-white font-black text-xs md:text-sm px-6 py-3 rounded-2xl shadow-xl cursor-default";
+      actionBtn.onclick = null;
+    }
+  } else {
+    if (bannerEl) {
+      bannerEl.innerHTML = `
+        <span class="inline-flex items-center gap-2 text-xs font-bold text-amber-300 bg-black/30 px-3 py-1.5 rounded-xl border border-amber-300/30">
+          <span>🔓</span> يتوفر كليب معاينة مجاني (المقدمة) — باقي المحاضرات مغلقة
+        </span>
+      `;
+    }
+    if (actionBtn) {
+      actionBtn.textContent = "الاشتراك في هذا المقرر الآن 🚀";
+      actionBtn.className = "w-full bg-white text-[#7A0B30] font-black text-xs md:text-sm px-6 py-3 rounded-2xl shadow-xl hover:bg-rose-50 transition transform active:scale-95";
+      actionBtn.onclick = toggleCourseEnrollment;
+    }
+  }
+
   // عرض المحاضرات الافتراضية
   if (crs.lessons) {
     window.renderDynamicLessonsAccordion(crs.lessons);
   }
 
-  // إخفاء الواجهة الرئيسية وعرض واجهة الكورس
+  // إخفاء الأقسام وعرض واجهة الكورس
   ["hero", "years", "courses", "features", "honors", "reviews", "instructor", "authSection", "mainFooter", "supportFloatingWidget"].forEach(id => {
     const el = document.getElementById(id);
     if (el) el.classList.add("hidden");
@@ -1607,7 +1638,7 @@ function openCourseView(courseId) {
   
   window.scrollTo({ top: 0, behavior: "smooth" });
 
-  // جلب المحاضرات من Firestore
+  // جلب المحاضرات المنشورة من Firestore
   if (typeof window.loadFirestoreLectures === "function") {
     window.loadFirestoreLectures(courseId);
   }
@@ -1654,8 +1685,8 @@ window.renderDynamicLessonsAccordion = function(lessonsList) {
         
         <!-- عنوان المحاضرة الرئيسي -->
         <button type="button" onclick="toggleLectureAccordion('lec_body_${index}')" class="w-full p-4 flex items-center justify-between text-start hover:bg-slate-800/40 transition">
-          <div class="flex items-center gap-3">
-            <span class="w-8 h-8 rounded-xl flex items-center justify-center font-black text-xs ${isLocked ? 'bg-slate-800 text-slate-500' : 'bg-brand text-white'}">
+<div class="relative flex items-center gap-3">
+              <span class="w-8 h-8 rounded-xl flex items-center justify-center font-black text-xs ${isLocked ? 'bg-slate-800 text-slate-500' : 'bg-brand text-white'}">
               ${isLocked ? '🔒' : index + 1}
             </span>
             <div>
@@ -2439,6 +2470,16 @@ window.renderLessonQuiz = function(quizArray) {
     alert(`🎉 أحسنت! نتيجتك في الاختبار هي: ${score} / ${quizArray.length}`);
   };
 };
+// إغلاق القائمة تلقائياً عند النقر في أي مكان خارجها
+document.addEventListener("click", (e) => {
+  const drawer = document.getElementById("drawer");
+  const drawerBtn = document.getElementById("drawerBtn");
+  if (drawer && !drawer.classList.contains("hidden")) {
+    if (!drawer.contains(e.target) && !drawerBtn.contains(e.target)) {
+      toggleDrawer();
+    }
+  }
+});
 </script>
 <!-- نافذة تكبير بوستر الكورس (Image Lightbox Modal) -->
 <div id="imageLightboxModal" class="hidden fixed inset-0 z-[200] flex items-center justify-center bg-black/90 backdrop-blur-md p-4 select-none">
@@ -2457,9 +2498,9 @@ window.renderLessonQuiz = function(quizArray) {
     
     <!-- زر العودة للرئيسية -->
     <div class="flex items-center justify-between pb-4 border-b border-slate-800">
-      <button onclick="closeDashboardInternal()" class="inline-flex items-center gap-2 text-xs font-black px-4 py-2 rounded-xl bg-[#0F1D2D] border border-slate-800 text-slate-200 hover:border-brand transition">
-        <span>← العودة للصفحة الرئيسية</span>
-      </button>
+<button type="button" onclick="closeDashboardInternal()" class="inline-flex items-center justify-center p-2 rounded-2xl bg-[#0F1D2D] border border-slate-800 hover:border-brand transition shadow-lg group cursor-pointer" title="العودة للصفحة الرئيسية">
+  <img src="logo.png" alt="العودة للرئيسية" class="h-8 w-auto object-contain transition-transform group-hover:scale-105" onerror="this.src='logo.png'" />
+</button>
       <span class="text-xs font-bold text-amber-400">لوحة المذاكرة التفاعلية 🎓</span>
     </div>
 
