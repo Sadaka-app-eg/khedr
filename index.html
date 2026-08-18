@@ -243,8 +243,8 @@
       <p class="text-sm md:text-lg font-semibold text-theme-sub leading-7" data-i18n="years_sub">
         احجز اشتراكك دلوقتي وابدأ مذاكرة مقررات الفرقة الأولى والثانية على موبايلك، التابلت أو اللابتوب الخاص بيك.
       </p>
-      <div class="pt-3">
-        <a href="#authSection" class="inline-block bg-brand hover:bg-rose-900 text-white font-black text-sm md:text-base px-9 py-4 rounded-2xl shadow-xl transition">
+<div class="pt-3">
+        <a id="yearsCtaBtn" href="#authSection" class="inline-block bg-brand hover:bg-rose-900 text-white font-black text-sm md:text-base px-9 py-4 rounded-2xl shadow-xl transition" data-i18n="btn_years_cta">
           انشئ حسابك الآن
         </a>
       </div>
@@ -775,24 +775,33 @@
 const translations = {
   ar: {
     brand: "KHEDR & PHYSIO",
-    nav_login: "تسجيل الدخول",
+    nav_home: "الرئيسية",
+    nav_years: "الفرق الدراسية",
+    nav_courses: "الكورسات والباقات",
+    nav_features: "مميزات المنصة",
+    nav_honors: "لوحة الشرف",
+    nav_instructor: "عن الشارح",
     hero_eyebrow: "محمود خضر — محاضر ومدرس للمواد الطبية بكلية العلاج الطبيعي",   
     hero_title: "رحلتك بتبدأ مع <span class='text-amber-300'>خِـضـر</span><br/>خُد أول خطوة.. وأنت واثق",
     hero_sub: "تجربة تعليمية متكاملة تستحق تبدأ بيها لأن كل تفصيلة مصممة علشانك",
     hero_cta1: "سجل وخد أول خطوة",
     hero_footer_note: "منصة خِضر: أفضل منصة تعليمية مخصصة لطلاب علاج طبيعي",
     years_eyebrow: "المسارات الجامعية",
-    years_title: "السنوات والمراحل الدراسية",
-    years_sub: "احجز اشتراكك دلوقتي وابدأ مذاكرة مواد العلاج الطبيعي على موبايلك، التابلت أو اللابتوب الخاص بيك.",
+    years_title: "السنوات الدراسية",
+    years_sub: "احجز اشتراكك دلوقتي وابدأ مذاكرة مقررات الفرقة الأولى والثانية على موبايلك، التابلت أو اللابتوب الخاص بيك.",
     year1_title: "الفرقة الأولى",
-    year1_desc: "Anatomy, Physiology, Histology, Intro to Biomechanics, Ethics.",
+    year1_desc: "Anatomy, Physiology, Histology, Intro to Biomechanics, Biophysics.",
     year2_title: "الفرقة الثانية",
     year2_desc: "Biomechanics, Electrotherapy, Hydrotherapy, Kinesiology, Pathology.",
-    btn_enter_year: "دخول مقررات الفرقة ←",
-    courses_eyebrow: "باقات المنصة والمواد",
-    courses_title: "اختر الباقة المناسبة لفرقتك",
-    egp: "ج.م",
-    btn_details: "عرض التفاصيل",
+    btn_enter_year1: "دخول مقررات الفرقة الأولى ←",
+    btn_enter_year2: "دخول مقررات الفرقة الثانية ←",
+    btn_years_cta: "انشئ حسابك الآن",
+    courses_eyebrow: "مكتبة المقررات والترم الأول",
+    courses_title: "الكورسات والباقات المتاحة",
+    flt_all: "الكل",
+    flt_y1: "سنة أولى",
+    flt_y2: "سنة ثانية",
+    flt_pkg: "الباقات الموفرة",
     feat_eyebrow: "لماذا منصتنا؟",
     feat_title: "إيه اللي هتلاقيه على المنصة؟",
     f1_title: "شرح مبسط ومركز",
@@ -814,11 +823,6 @@ const translations = {
     inst_bio: "شارح ومدرس للمواد الطبية والأكاديمية بكلية العلاج الطبيعي بخبرة سنتين في التدريس الشامل، يركز على تقديم شرح مبسط، منظم، وعملي يساعد الطلاب على فهم الأساسيات والتطبيق والتجهيز بثقة للامتحانات.",
     auth_tab_login: "تسجيل الدخول",
     auth_tab_register: "حساب جديد",
-    auth_name: "الاسم بالكامل",
-    auth_email: "البريد الإلكتروني",
-    auth_password: "كلمة المرور",
-    auth_login_btn: "تسجيل الدخول",
-    auth_register_btn: "إنشاء الحساب",
     foot_about: "المنصة التعليمية الأولى المتخصصة لطلاب وخريجي العلاج الطبيعي لتبسيط العلوم الحركية والإكلينيكية.",
     foot_pages: "الصفحات",
     foot_social: "السوشيال ميديا",
@@ -827,7 +831,12 @@ const translations = {
   },
   en: {
     brand: "KHEDR & PHYSIO",
-    nav_login: "Log In",
+    nav_home: "Home",
+    nav_years: "Academic Years",
+    nav_courses: "Courses & Packages",
+    nav_features: "Features",
+    nav_honors: "Honor Board",
+    nav_instructor: "Instructor",
     hero_eyebrow: "Mahmoud Khedr — Physiotherapy Instructor",
     hero_title: "Your Journey Starts with <span class='text-amber-300'>KHEDR</span><br/>Take the First Step with Confidence",
     hero_sub: "A complete educational experience designed specifically for physical therapy students.",
@@ -837,40 +846,39 @@ const translations = {
     years_title: "Academic Years & Levels",
     years_sub: "Enroll now and start studying physical therapy subjects on your mobile, tablet, or laptop.",
     year1_title: "First Year",
-    year1_desc: "Anatomy, Physiology, Histology, Intro to Biomechanics, Ethics.",
+    year1_desc: "Anatomy, Physiology, Histology, Intro to Biomechanics, Biophysics.",
     year2_title: "Second Year",
     year2_desc: "Biomechanics, Electrotherapy, Hydrotherapy, Kinesiology, Pathology.",
-    btn_enter_year: "View Year Courses →",
-    courses_eyebrow: "Platform Packages",
-    courses_title: "Choose The Right Package For Your Batch",
-    egp: "EGP",
-    btn_details: "View Details",
-    feat_eyebrow: "Why Us?",
-    feat_title: "What You Get On The Platform",
+    btn_enter_year1: "Enter Year 1 Courses →",
+    btn_enter_year2: "Enter Year 2 Courses →",
+    btn_years_cta: "Create Your Account",
+    courses_eyebrow: "Courses & First Term Library",
+    courses_title: "Available Courses & Packages",
+    flt_all: "All",
+    flt_y1: "Year 1",
+    flt_y2: "Year 2",
+    flt_pkg: "Bundles",
+    feat_eyebrow: "Why Our Platform?",
+    feat_title: "What You'll Find on the Platform",
     f1_title: "Simplified Clinical Learning",
-    f1_desc: "Medical theories explained for clinical understanding rather than rote memorization.",
+    f1_desc: "Medical theories explained with clinical understanding away from academic complexity.",
     f2_title: "Realistic Exam Simulations",
     f2_desc: "Interactive MCQ and OSCE exams mimicking real university exam environments.",
     f3_title: "Continuous Progress Tracking",
-    f3_desc: "Weekly progress reviews and personalized recommendations based on weak areas.",
+    f3_desc: "Weekly progress reviews with personalized recommendations for your weak areas.",
     honor_title: "Top Khedr Alumni",
-    honor_sub: "Students who achieved top honors in physical therapy faculties after years of training",
+    honor_sub: "Students who achieved top honors in physical therapy faculties after years of dedication",
     h1: "Excellence Students",
-    h2: "Top of Batch Graduates",
+    h2: "Top of Batch",
     h3: "Batches 2021 - 2026",
     h4: "OSCE Pass Rate",
-    rev_title: "Student Reviews",
+    rev_title: "What Students Say",
     r1_text: "\"After joining Dr. Khedr's platform, Biomechanics became crystal clear from lecture one.\"",
     inst_eyebrow: "About The Tutor & Founder",
     inst_name: "Mahmoud Khedr",
-    inst_bio: "Physiotherapy student and medical education instructor with 2 years of experience teaching medical college subjects.",
+    inst_bio: "Physiotherapy student and medical instructor with 2 years of comprehensive teaching experience, focusing on structured, simplified clinical education.",
     auth_tab_login: "Log In",
     auth_tab_register: "New Account",
-    auth_name: "Full Name",
-    auth_email: "Email Address",
-    auth_password: "Password",
-    auth_login_btn: "Log In",
-    auth_register_btn: "Create Account",
     foot_about: "The premier educational platform for physical therapy students and graduates.",
     foot_pages: "Pages",
     foot_social: "Social Media",
@@ -1160,10 +1168,36 @@ let currentFilter = "all";
 window.currentItemData = null;
 let currentOpenedPkgId = "pkg_y1s1";
 
+// دوال تكبير الصورة
+window.openImageLightbox = function(imgSrc) {
+  const modal = document.getElementById("imageLightboxModal");
+  const img = document.getElementById("lightboxImg");
+  if (modal && img) {
+    img.src = imgSrc;
+    modal.classList.remove("hidden");
+  }
+};
+
+window.closeImageLightbox = function() {
+  const modal = document.getElementById("imageLightboxModal");
+  if (modal) modal.classList.add("hidden");
+};
+
+// إغلاق النافذة عند الضغط في الخلفية
+document.addEventListener("DOMContentLoaded", () => {
+  const modal = document.getElementById("imageLightboxModal");
+  if (modal) {
+    modal.addEventListener("click", (e) => {
+      if (e.target === modal) closeImageLightbox();
+    });
+  }
+});
+
 function renderCatalog() {
   const container = document.getElementById("coursesSlider");
   if (!container) return;
 
+  const isEn = currentLang === "en";
   const items = Object.values(window.catalogData).filter(item => {
     if (currentFilter === "all") return true;
     if (currentFilter === "pkg") return item.type === "package";
@@ -1173,7 +1207,7 @@ function renderCatalog() {
   });
 
   if (items.length === 0) {
-    container.innerHTML = `<div class="w-full text-center py-12 text-slate-400 font-bold">لا توجد كورسات متاحة في هذا القسم حالياً.</div>`;
+    container.innerHTML = `<div class="w-full text-center py-12 text-slate-400 font-bold">${isEn ? 'No courses available in this section.' : 'لا توجد كورسات متاحة في هذا القسم حالياً.'}</div>`;
     return;
   }
 
@@ -1185,8 +1219,14 @@ function renderCatalog() {
     return `
       <article class="min-w-[300px] sm:min-w-[340px] md:min-w-[370px] max-w-[370px] shrink-0 snap-start card-hover rounded-3xl overflow-hidden border ${isPkg ? "border-brand shadow-rose-950/20" : "border-slate-800"} bg-[#0F1D2D] p-3.5 shadow-2xl flex flex-col justify-between relative transition-all duration-300">
         
-        <div class="rounded-2xl overflow-hidden relative aspect-[4/3] w-full bg-[#07111D] border border-slate-700/50 flex items-center justify-center">
+        <!-- صورة الكورس مع إمكانية التكبير عند الضغط -->
+        <div onclick="openImageLightbox('${item.img}')" class="rounded-2xl overflow-hidden relative aspect-[4/3] w-full bg-[#07111D] border border-slate-700/50 flex items-center justify-center cursor-zoom-in group" title="${isEn ? 'Click to view full image' : 'اضغط لتكبير الصورة وقراءتها كاملاً'}">
           ${badgeText}
+          <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition flex items-center justify-center z-10">
+            <span class="bg-black/70 text-white text-[11px] font-black px-3 py-1.5 rounded-xl border border-white/20 flex items-center gap-1.5">
+              <span>🔍</span> ${isEn ? 'View Poster' : 'تكبير البوستر'}
+            </span>
+          </div>
           <img src="${item.img}" alt="${item.title}" class="w-full h-full object-cover object-top rounded-xl transition duration-300 transform group-hover:scale-105" onerror="this.style.display='none'; this.nextElementSibling.classList.remove('hidden');" />          
           <div class="hidden flex flex-col items-center justify-center text-center p-4 text-rose-300">
             <span class="text-3xl mb-1">${isPkg ? '📦' : '🩺'}</span>
@@ -1212,24 +1252,24 @@ function renderCatalog() {
             <div class="mt-2.5 pt-2.5 border-t border-slate-800/80 text-[11px] text-slate-300 space-y-1">
               <p class="font-semibold text-slate-400 line-clamp-2">${isPkg ? item.sub : item.desc}</p>
               <button onclick="${isPkg ? `openPackageDetails('${item.id}')` : `openCourseView('${item.id}')`}" class="text-rose-400 font-bold hover:underline">
-                عرض باقي التفاصيل ←
+                ${isEn ? 'View Full Details →' : 'عرض باقي التفاصيل ←'}
               </button>
             </div>
           </div>
 
           <div class="space-y-2 pt-1">
             <button onclick="${isPkg ? `openPackageDetails('${item.id}')` : `openCourseView('${item.id}')`}" class="w-full py-2.5 rounded-xl border border-cyan-500/40 text-cyan-300 font-black text-xs hover:bg-cyan-500/10 transition duration-200">
-              الدخول للمحتوى
+              ${isEn ? 'Access Content' : 'الدخول للمحتوى'}
             </button>
             
             ${item.isEnrolled ? `
               <div class="w-full py-2.5 rounded-xl bg-emerald-600/90 text-white font-black text-xs text-center shadow-lg border border-emerald-400/40 flex items-center justify-center gap-1.5 cursor-default">
                 <span>✓</span>
-                <span>مشترك في الكورس</span>
+                <span>${isEn ? 'Enrolled' : 'مشترك في الكورس'}</span>
               </div>
             ` : `
               <button onclick="${isPkg ? `openPackageDetails('${item.id}')` : `openCourseView('${item.id}')`}" class="w-full py-2.5 rounded-xl bg-brand hover:bg-rose-900 text-white font-black text-xs shadow-lg transition duration-200">
-                الاشتراك الآن 🚀
+                ${isEn ? 'Subscribe Now 🚀' : 'الاشتراك الآن 🚀'}
               </button>
             `}
           </div>
@@ -1622,7 +1662,12 @@ const heroGuestCta = document.getElementById("heroGuestCta");
       if (heroGuestCta) heroGuestCta.classList.add("hidden");
       if (heroUserCta) heroUserCta.classList.remove("hidden");
       if (heroUserName) heroUserName.textContent = displayName;
-
+// تعديل زر سكشن السنوات الدراسية للطالب المسجل
+      const yearsCta = document.getElementById("yearsCtaBtn");
+      if (yearsCta) {
+        yearsCta.href = "#courses";
+        yearsCta.textContent = currentLang === "en" ? "Explore Courses 📚" : "تصفح المقررات الدراسية 📚";
+      }
       // قائمة المشرفين المصرح لهم بظهور زر الإدارة
       const adminLink = document.getElementById("adminDashboardLink");
       const ADMIN_EMAILS = [
@@ -1678,6 +1723,12 @@ enrolledCourses.forEach(cId => {
       if (authSection) authSection.classList.remove("hidden");
       if (heroGuestCta) heroGuestCta.classList.remove("hidden");
       if (heroUserCta) heroUserCta.classList.add("hidden");
+
+      const yearsCta = document.getElementById("yearsCtaBtn");
+      if (yearsCta) {
+        yearsCta.href = "#authSection";
+        yearsCta.textContent = currentLang === "en" ? "Create Your Account" : "انشئ حسابك الآن";
+      }
     }
   });
 
@@ -1917,5 +1968,16 @@ window.renderLessonQuiz = function(quizArray) {
   };
 };
 </script>
+<!-- نافذة تكبير بوستر الكورس (Image Lightbox Modal) -->
+<div id="imageLightboxModal" class="hidden fixed inset-0 z-[200] flex items-center justify-center bg-black/90 backdrop-blur-md p-4 select-none">
+  <div class="relative max-w-4xl max-h-[90vh] flex flex-col items-center">
+    <!-- زر إغلاق الصورة -->
+    <button type="button" onclick="closeImageLightbox()" class="absolute -top-12 end-0 text-white bg-slate-800/80 hover:bg-rose-600 rounded-full w-10 h-10 flex items-center justify-center text-lg font-bold transition shadow-lg z-50">
+      ✕
+    </button>
+    <img id="lightboxImg" src="" alt="بوستر الكورس" class="max-w-full max-h-[80vh] rounded-3xl object-contain shadow-2xl border border-white/20" />
+    <span class="text-xs text-slate-300 font-bold mt-3 bg-black/60 px-4 py-1.5 rounded-full border border-white/10">🔍 اضغط في أي مكان خارج الصورة للإغلاق</span>
+  </div>
+</div>
 </body>
 </html>
