@@ -12,37 +12,45 @@
 <script src="https://cdn.tailwindcss.com"></script>
 
 <style>
-  :root{
+  :root {
     --brand-primary: #8E0E38;
-    --brand-dark:    #630825;
+    --brand-dark:    #5E0824;
     --brand-accent:  #FFB800;
-    --ink:           #1C1917;
-    --mist:          #F8FAFC;
-    --mist-line:     #E2E8F0;
-    --dark-bg:       #0F172A;
-    --dark-card:     #1E293B;
+    --dark-bg:       #07111D;
+    --dark-card:     #0F1D2D;
+    --dark-line:     #1E2E42;
   }
-  html[lang="ar"] body, html[lang="ar"] * { font-family:'Tajawal','IBM Plex Sans Arabic',sans-serif; }
-  .num-font { font-family:'Plus Jakarta Sans',sans-serif; }
+  html[lang="ar"] body, html[lang="ar"] * { font-family: 'Tajawal', 'IBM Plex Sans Arabic', sans-serif; }
+  .num-font { font-family: 'Plus Jakarta Sans', sans-serif; }
 
-  body{ background:var(--mist); color:var(--ink); }
-  body.dark{ background:var(--dark-bg); color:#F1F5F9; }
+  body { background-color: var(--dark-bg); color: #EAF3F3; transition: background-color 0.3s ease, color 0.3s ease; }
+  body.light { background-color: #F8FAFC; color: #0E2A38; }
 
-  .bg-brand{ background-color:var(--brand-primary); }
-  .text-brand{ color:var(--brand-primary); }
-  .border-brand{ border-color:var(--brand-primary); }
+  .bg-card-theme { background-color: var(--dark-card); border-color: var(--dark-line); }
+  body.light .bg-card-theme { background-color: #FFFFFF !important; border-color: #E2E8F0 !important; }
 
-  .side-link{ color:var(--ink); opacity:.65; transition:.2s; }
-  .side-link:hover{ opacity:1; background:rgba(142,14,56,.06); }
-  .side-link.active{ opacity:1; background:rgba(142,14,56,.1); color:var(--brand-primary); font-weight:800; }
-  body.dark .side-link{ color:#F1F5F9; }
+  .hero-banner-bg {
+    background: linear-gradient(135deg, #2D0310 0%, #4A051B 45%, #6B0828 100%);
+  }
 
-  .skel{ background:linear-gradient(90deg,#e2e8f0 25%,#f1f5f9 37%,#e2e8f0 63%); background-size:400% 100%; animation:shimmer 1.4s ease infinite; }
-  body.dark .skel{ background:linear-gradient(90deg,#1E293B 25%,#334155 37%,#1E293B 63%); background-size:400% 100%; }
-  @keyframes shimmer{ 0%{background-position:100% 0;} 100%{background-position:0 0;} }
+  .side-link { color: #94A3B8; transition: all 0.2s ease; }
+  .side-link:hover { color: #FFFFFF; background-color: rgba(255, 255, 255, 0.05); }
+  .side-link.active {
+    background-color: var(--brand-primary);
+    color: #FFFFFF;
+    font-weight: 800;
+    box-shadow: 0 4px 15px rgba(142, 14, 56, 0.35);
+  }
 
-  ::selection{ background:var(--brand-primary); color:#fff; }
-  [dir="rtl"] .rtl-flip{ transform:scaleX(-1); }
+  .skel {
+    background: linear-gradient(90deg, #0F1D2D 25%, #1E2E42 37%, #0F1D2D 63%);
+    background-size: 400% 100%;
+    animation: shimmer 1.4s ease infinite;
+  }
+  @keyframes shimmer { 0% { background-position: 100% 0; } 100% { background-position: 0 0; } }
+
+  .card-hover { transition: transform 0.2s ease, box-shadow 0.2s ease; }
+  .card-hover:hover { transform: translateY(-3px); box-shadow: 0 10px 25px -5px rgba(142, 14, 56, 0.25); }
 </style>
 </head>
 
@@ -58,37 +66,56 @@
 
 <div class="lg:grid lg:grid-cols-[260px,1fr]">
 
-  <!-- ============ SIDEBAR ============ -->
-  <aside class="hidden lg:flex flex-col gap-1 h-screen sticky top-0 border-e p-5 bg-white dark:bg-[#1E293B]" style="border-color:var(--mist-line)">
-    <a href="index.html" class="flex items-center gap-2.5 px-2 py-3 mb-4">
-      <span class="w-9 h-9 rounded-xl flex items-center justify-center bg-brand text-white font-black text-xs">خِـ</span>
+<!-- ============ SIDEBAR ============ -->
+  <aside class="hidden lg:flex flex-col gap-1 h-screen sticky top-0 border-e border-[#1E2E42] p-5 bg-[#0F1D2D]/95 backdrop-blur-md">
+    
+    <!-- لوجو المنصة والرجوع للموقع -->
+    <a href="index.html" class="flex items-center gap-3 px-2 py-3 mb-6 group">
+      <div class="w-10 h-10 rounded-xl flex items-center justify-center bg-brand text-white font-black text-sm shadow-md group-hover:scale-105 transition">
+        خِـ
+      </div>
       <div>
-        <span class="font-extrabold text-sm block">خِـــضـر</span>
-        <span class="text-[9px] font-bold text-slate-400 -mt-1 block">PHYSIO ACADEMY</span>
+        <span class="font-extrabold text-sm text-white block">خِـــضـر & PHYSIO</span>
+        <span class="text-[10px] font-bold text-amber-400 -mt-0.5 block">لوحة الطالب الذكية</span>
       </div>
     </a>
 
-    <nav class="flex flex-col gap-1 text-sm">
-      <a href="#" class="side-link active flex items-center gap-3 px-3.5 h-11 rounded-xl">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M4 11.5 12 4l8 7.5M6 10v9a1 1 0 0 0 1 1h3v-6h4v6h3a1 1 0 0 0 1-1v-9" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>
-        <span>الرئيسية</span>
-      </a>
-      <a href="#" class="side-link flex items-center gap-3 px-3.5 h-11 rounded-xl">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M4 5.5A1.5 1.5 0 0 1 5.5 4H12v16H5.5A1.5 1.5 0 0 1 4 18.5v-13ZM12 4h6.5A1.5 1.5 0 0 1 20 5.5v13a1.5 1.5 0 0 1-1.5 1.5H12" stroke="currentColor" stroke-width="1.7"/></svg>
-        <span>كورساتي</span>
-      </a>
-      <a href="#" class="side-link flex items-center gap-3 px-3.5 h-11 rounded-xl">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M9 11.5 11 13.5 15.5 9" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.7"/></svg>
-        <span>امتحانات الـ OSCE & MCQ</span>
-      </a>
-      <a href="#" class="side-link flex items-center gap-3 px-3.5 h-11 rounded-xl">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M4 5h16v11H8l-4 4V5Z" stroke="currentColor" stroke-width="1.7"/></svg>
-        <span>المذكرات والتفريغات</span>
-      </a>
+    <!-- التبويبات الخمسة -->
+    <nav class="flex flex-col gap-1.5 text-xs font-bold">
+      <button onclick="switchTab('overview')" id="tab-overview" class="side-link active flex items-center gap-3 px-3.5 h-11 rounded-xl w-full text-start">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+        <span>الرئيسية والإحصائيات</span>
+      </button>
+
+      <button onclick="switchTab('courses')" id="tab-courses" class="side-link flex items-center gap-3 px-3.5 h-11 rounded-xl w-full text-start">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1-2.5-2.5Z"/><path d="M6 6h10M6 10h10"/></svg>
+        <span>كورساتي المشترك بها</span>
+      </button>
+
+      <button onclick="switchTab('osce')" id="tab-osce" class="side-link flex items-center gap-3 px-3.5 h-11 rounded-xl w-full text-start">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+        <span>محاكي OSCE & Special Tests</span>
+      </button>
+
+      <button onclick="switchTab('mcq')" id="tab-mcq" class="side-link flex items-center gap-3 px-3.5 h-11 rounded-xl w-full text-start">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></svg>
+        <span>بنك الأسئلة والتقييمات</span>
+      </button>
+
+      <button onclick="switchTab('vault')" id="tab-vault" class="side-link flex items-center gap-3 px-3.5 h-11 rounded-xl w-full text-start">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+        <span>المذكرات والتفريغات (PDF)</span>
+      </button>
+
+      <button onclick="switchTab('glossary')" id="tab-glossary" class="side-link flex items-center gap-3 px-3.5 h-11 rounded-xl w-full text-start">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        <span>المساعد الطبي والمصطلحات</span>
+      </button>
     </nav>
 
-    <button id="logoutBtn" class="mt-auto flex items-center gap-3 px-3.5 h-11 rounded-xl text-sm font-bold text-rose-600 hover:bg-rose-50 dark:hover:bg-rose-950/30">
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M9 21H5a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h4M16 17l5-5-5-5M21 12H9" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>
+    <!-- زر تسجيل الخروج -->
+    <button id="logoutBtn" class="mt-auto flex items-center gap-3 px-3.5 h-11 rounded-xl text-xs font-bold text-rose-400 hover:bg-rose-950/40 border border-rose-900/30 transition">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
       <span>تسجيل الخروج</span>
     </button>
   </aside>
@@ -96,51 +123,104 @@
   <!-- ============ MAIN CONTENT ============ -->
   <main class="px-5 md:px-8 py-8 max-w-5xl w-full mx-auto pb-24 lg:pb-8">
 
-    <!-- Top bar -->
-    <div class="flex items-center justify-between mb-8">
+   <!-- شريط الرأس الترحيبي -->
+    <div class="flex items-center justify-between mb-8 pb-4 border-b border-[#1E2E42]">
       <div>
-        <h1 class="text-2xl font-black" id="greeting">مرحبًا 👋</h1>
-        <p class="text-xs opacity-60 font-semibold mt-1">رحلتك وتطورك الأكاديمي في العلاج الطبيعي</p>
+        <h1 class="text-xl sm:text-2xl font-black text-white" id="greeting">مرحبًا يا دكتور 👋</h1>
+        <p class="text-xs text-slate-400 font-semibold mt-1" id="academicSub">الفرقة الدراسية ومتابعة التقدم الأكاديمي</p>
       </div>
-      <div id="userAvatar" class="w-11 h-11 rounded-full bg-brand flex items-center justify-center text-white font-bold skel shadow-md"></div>
+      <div class="flex items-center gap-3">
+        <a href="https://t.me/Khedr_physio" target="_blank" rel="noopener" class="hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-cyan-950/60 border border-cyan-500/30 text-cyan-300 text-xs font-bold hover:bg-cyan-900/40 transition">
+          <span>💬</span> اسأل د. خضر
+        </a>
+        <div id="userAvatar" class="w-11 h-11 rounded-2xl bg-brand flex items-center justify-center text-white font-black text-base shadow-lg border border-white/10"></div>
+      </div>
     </div>
 
-    <!-- Continue learning -->
-    <section class="rounded-3xl bg-brand p-6 md:p-8 text-white relative overflow-hidden mb-8 shadow-xl">
-      <span class="text-[11px] font-black px-3 py-1 rounded-full bg-white/20">المحاضرة الحالية</span>
-      <h2 id="continueCourseTitle" class="text-lg md:text-xl font-black mt-3 skel h-6 w-56 rounded"></h2>
-      <p id="continueLessonTitle" class="text-xs opacity-80 mt-1 skel h-4 w-40 rounded"></p>
+    <!-- 1. تبويب الرئيسية (Overview Panel) -->
+    <div id="panel-overview" class="tab-panel space-y-8">
+      <!-- استكمال المذاكرة -->
+      <section class="rounded-3xl hero-banner-bg p-6 sm:p-8 text-white relative overflow-hidden shadow-2xl border border-white/10">
+        <span class="text-[10px] font-black px-3 py-1 rounded-full bg-amber-400 text-slate-900 shadow">آخر محاضرة تم فتحها</span>
+        <h2 id="continueCourseTitle" class="text-lg sm:text-2xl font-black mt-3">Anatomy 1 — كورس التشريح العام</h2>
+        <p id="continueLessonTitle" class="text-xs opacity-85 mt-1 text-rose-100">01. Anatomical Terminology & Position</p>
 
-      <div class="mt-5 flex items-center gap-3">
-        <div class="flex-1 h-2 rounded-full bg-white/20 overflow-hidden">
-          <div id="continueProgressBar" class="h-full rounded-full bg-amber-400 transition-all duration-700" style="width:0%"></div>
+        <div class="mt-5 flex items-center gap-3">
+          <div class="flex-1 h-2.5 rounded-full bg-black/40 overflow-hidden border border-white/10">
+            <div id="continueProgressBar" class="h-full rounded-full bg-amber-400 transition-all duration-700" style="width: 40%"></div>
+          </div>
+          <span id="continueProgressLabel" class="text-xs font-black num-font text-amber-300">40%</span>
         </div>
-        <span id="continueProgressLabel" class="text-xs font-black num-font">0%</span>
-      </div>
 
-      <button class="mt-6 text-xs font-black bg-white text-brand px-6 py-2.5 rounded-xl shadow-lg hover:bg-rose-50 transition">
-        متابعة الشرح الآن
-      </button>
-    </section>
+        <button onclick="switchTab('courses')" class="mt-5 inline-block text-xs font-black bg-white text-[#7A0B30] px-6 py-2.5 rounded-xl shadow-xl hover:bg-rose-50 transition transform hover:scale-105">
+          استكمال الشرح الآن 🚀
+        </button>
+      </section>
 
-    <!-- Progress Cards -->
-    <section class="mb-8">
-      <h3 class="text-xs font-black opacity-60 mb-3 uppercase tracking-wider">مهام الأسبوع والامتحانات</h3>
-      <div id="todayList" class="grid sm:grid-cols-3 gap-4">
-        <div class="skel h-24 rounded-2xl"></div>
-        <div class="skel h-24 rounded-2xl"></div>
-        <div class="skel h-24 rounded-2xl"></div>
-      </div>
-    </section>
+      <!-- إحصائيات سريعة -->
+      <section class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+        <div class="bg-[#0F1D2D] border border-[#1E2E42] rounded-2xl p-4 text-center shadow-md">
+          <span class="text-2xl">📚</span>
+          <span class="block text-xl font-black text-white mt-1 num-font" id="statEnrolled">0</span>
+          <span class="text-[10px] font-bold text-slate-400">مقررات مفعلة</span>
+        </div>
+        <div class="bg-[#0F1D2D] border border-[#1E2E42] rounded-2xl p-4 text-center shadow-md">
+          <span class="text-2xl">📝</span>
+          <span class="block text-xl font-black text-amber-400 mt-1 num-font" id="statQuizzes">0</span>
+          <span class="text-[10px] font-bold text-slate-400">كويزات منجزة</span>
+        </div>
+        <div class="bg-[#0F1D2D] border border-[#1E2E42] rounded-2xl p-4 text-center shadow-md">
+          <span class="text-2xl">🩺</span>
+          <span class="block text-xl font-black text-cyan-400 mt-1 num-font">100%</span>
+          <span class="text-[10px] font-bold text-slate-400">جاهزية الـ OSCE</span>
+        </div>
+        <div class="bg-[#0F1D2D] border border-[#1E2E42] rounded-2xl p-4 text-center shadow-md">
+          <span class="text-2xl">⚡</span>
+          <span class="block text-xl font-black text-emerald-400 mt-1 num-font" id="statHours">14.5</span>
+          <span class="text-[10px] font-bold text-slate-400">ساعات المذاكرة</span>
+        </div>
+      </section>
+    </div>
 
-    <!-- Study Chart -->
-    <section class="mb-8">
-      <h3 class="text-xs font-black opacity-60 mb-3 uppercase tracking-wider">ساعات التحصيل الأكاديمي</h3>
-      <div class="rounded-3xl border p-6 bg-white dark:bg-[#1E293B]" style="border-color:var(--mist-line)">
-        <div class="flex items-end justify-between gap-2 h-36" id="weekChart"></div>
-        <div class="flex justify-between mt-3 text-[11px] font-bold opacity-45" id="weekLabels"></div>
+    <!-- 2. تبويب كورساتي (Courses Panel) -->
+    <div id="panel-courses" class="tab-panel hidden space-y-6">
+      <h3 class="text-sm font-black text-amber-300">📚 المقررات والمواد المشترك بها</h3>
+      <div id="studentEnrolledCoursesGrid" class="grid sm:grid-cols-2 gap-4">
+        <!-- يتم ملؤها ديناميكياً ببيانات كورسات الطالب المشترك بها فقط -->
       </div>
-    </section>
+    </div>
+
+    <!-- 3. تبويب محاكي الـ OSCE (OSCE Simulator Panel) -->
+    <div id="panel-osce" class="tab-panel hidden space-y-6">
+      <div class="flex items-center justify-between">
+        <h3 class="text-sm font-black text-amber-300">🩺 محطات الفحص السريري والـ Special Tests</h3>
+        <span class="text-[10px] font-bold px-3 py-1 rounded-full bg-cyan-950 text-cyan-400 border border-cyan-800/40">تجهيز الامتحان العملي</span>
+      </div>
+      <div class="space-y-4" id="osceStationsList">
+        <!-- محطات الفحص العملي -->
+      </div>
+    </div>
+
+    <!-- 4. تبويب بنك الأسئلة (MCQ Bank Panel) -->
+    <div id="panel-mcq" class="tab-panel hidden space-y-6">
+      <h3 class="text-sm font-black text-amber-300">📝 بنك الأسئلة والتقييمات الذاتية</h3>
+      <div class="space-y-4" id="mcqTestsList"></div>
+    </div>
+
+    <!-- 5. تبويب المذكرات (PDF Vault Panel) -->
+    <div id="panel-vault" class="tab-panel hidden space-y-6">
+      <h3 class="text-sm font-black text-amber-300">📑 مكتبة التفريغات والملخصات المعتمدة</h3>
+      <div class="grid sm:grid-cols-2 gap-4" id="pdfVaultGrid"></div>
+    </div>
+
+    <!-- 6. تبويب المساعد والمصطلحات (Glossary Panel) -->
+    <div id="panel-glossary" class="tab-panel hidden space-y-6">
+      <div class="bg-[#0F1D2D] p-5 rounded-2xl border border-[#1E2E42] space-y-3">
+        <h3 class="text-sm font-black text-amber-300">🔍 محرك البحث في المصطلحات واختصارات العلاج الطبيعي</h3>
+        <input id="glossarySearchInput" oninput="filterGlossary()" type="text" placeholder="ابحث عن مصطلح (مثال: ROM, MMT, Lordosis, TENS...)" class="w-full h-11 rounded-xl px-4 bg-[#07111D] border border-slate-700 text-xs text-white focus:border-brand" />
+      </div>
+      <div class="grid sm:grid-cols-2 gap-4" id="glossaryResults"></div>
+    </div>
   </main>
 </div>
 
