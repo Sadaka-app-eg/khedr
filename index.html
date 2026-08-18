@@ -252,8 +252,8 @@
 
     <div class="lg:col-span-7 grid sm:grid-cols-2 gap-6">
       
-      <!-- الفرقة الأولى -->
-      <div class="fade-up card-hover rounded-3xl p-8 border border-slate-800 bg-card-theme flex flex-col justify-between shadow-xl">
+<!-- الفرقة الأولى -->
+      <div id="year1Card" class="fade-up card-hover rounded-3xl p-8 border border-slate-800 bg-card-theme flex flex-col justify-between shadow-xl">
         <div>
           <div class="w-14 h-14 rounded-2xl flex items-center justify-center font-black text-2xl mb-4 bg-brand text-white shadow-lg">1</div>
           <h3 class="text-xl font-black text-theme-main" data-i18n="year1_title">الفرقة الأولى</h3>
@@ -264,8 +264,9 @@
         </button>
       </div>
 
-      <!-- الفرقة الثانية -->
-      <div class="fade-up card-hover rounded-3xl p-8 border border-slate-800 bg-card-theme flex flex-col justify-between shadow-xl">
+<!-- الفرقة الثانية -->
+      <div id="year2Card" class="fade-up card-hover rounded-3xl p-8 border border-slate-800 bg-card-theme flex flex-col justify-between shadow-xl">
+       
         <div>
           <div class="w-14 h-14 rounded-2xl flex items-center justify-center font-black text-2xl mb-4 bg-brand text-white shadow-lg">2</div>
           <h3 class="text-xl font-black text-theme-main" data-i18n="year2_title">الفرقة الثانية</h3>
@@ -753,18 +754,32 @@
     </div>
 </footer>
 
-<!-- ============ FLOATING TELEGRAM BUTTON (إخفاء وإظهار كامل) ============ -->
+<!-- ============ FLOATING TELEGRAM BUTTON ============ -->
 <div id="supportFloatingWidget" class="fixed bottom-6 start-6 z-50 flex items-center gap-3 select-none">
-  <!-- التلميح وزر التليجرام -->
   <div id="supportMainBox" class="flex items-center gap-3">
     <div id="supportTooltip" class="relative hidden sm:flex items-center gap-2 bg-[#0F1D2D] border border-cyan-500/30 text-white text-xs font-bold py-2 ps-3.5 pe-8 rounded-2xl shadow-2xl">
       <span class="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
       <span data-i18n="support_text">تيم الدعم الفني متاح للمساعدة</span>
-      <!-- زر الـ X لإخفاء ويدجت الدعم بالكامل -->
-      <button type="button" onclick="toggleSupportComplete(false)" class="absolute end-2 top-1/2 -translate-y-1/2 w-5 h-5 rounded-full bg-slate-800 hover:bg-rose-900 text-slate-300 hover:text-white flex items-center justify-center text-[10px] transition cursor-pointer" title="إخفاء الدعم">
+      <!-- زر إغلاق الدعم مع عزل الحدث تماماً -->
+      <button type="button" onclick="event.stopPropagation(); event.preventDefault(); toggleSupportComplete(false);" class="absolute end-2 top-1/2 -translate-y-1/2 w-5 h-5 rounded-full bg-slate-800 hover:bg-rose-900 text-slate-300 hover:text-white flex items-center justify-center text-[10px] transition cursor-pointer z-50" title="إخفاء الدعم">
         ✕
       </button>
     </div>
+
+    <a href="https://t.me/Khedr_physio" target="_blank" rel="noopener" class="relative group w-16 h-16 rounded-full shadow-[0_10px_25px_rgba(34,158,217,0.5)] flex items-center justify-center transform hover:scale-110 active:scale-95 transition border-2 border-cyan-400/50 bg-[#07111D]" title="تواصل مع تيم الدعم الفني">
+      <span class="absolute -inset-1 rounded-full bg-cyan-400 opacity-40 group-hover:opacity-75 animate-ping duration-1000"></span>
+      <img src="image/support.png.jpeg" alt="الدعم الفني" class="w-full h-full object-cover rounded-full relative z-10 p-0.5" onerror="this.src='support.png.jpeg'" />
+      <div class="absolute -bottom-1 -end-1 w-6 h-6 rounded-full bg-[#229ED9] border-2 border-[#07111D] flex items-center justify-center text-white z-20 shadow-md">
+        <svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12s5.37 12 12 12 12-5.37 12-12S18.63 0 12 0zm5.56 8.16l-1.97 9.28c-.15.67-.54.83-1.1.5l-3.02-2.23-1.46 1.4c-.16.16-.3.3-.61.3l.22-3.08 5.6-5.06c.24-.22-.05-.34-.37-.14l-6.92 4.36-2.99-.93c-.65-.2-.66-.65.14-.97l11.7-4.51c.54-.2 1.02.13.84.88z"/></svg>
+      </div>
+      <span class="absolute top-0 end-0 w-3.5 h-3.5 rounded-full bg-emerald-500 border-2 border-[#07111D] z-20"></span>
+    </a>
+  </div>
+
+  <button id="supportReopenBtn" onclick="event.stopPropagation(); toggleSupportComplete(true);" class="hidden w-11 h-11 rounded-full bg-[#0F1D2D] border border-cyan-400/60 text-cyan-300 shadow-xl flex items-center justify-center text-base hover:scale-110 transition cursor-pointer z-50" title="إظهار الدعم الفني">
+    💬
+  </button>
+</div>
 
     <a href="https://t.me/Khedr_physio" target="_blank" rel="noopener" class="relative group w-16 h-16 rounded-full shadow-[0_10px_25px_rgba(34,158,217,0.5)] flex items-center justify-center transform hover:scale-110 active:scale-95 transition border-2 border-cyan-400/50 bg-[#07111D]" title="تواصل مع تيم الدعم الفني">
       <span class="absolute -inset-1 rounded-full bg-cyan-400 opacity-40 group-hover:opacity-75 animate-ping duration-1000"></span>
@@ -1032,9 +1047,9 @@ window.catalogData = {
     category: "الفرقة الثانية • ترم أول كامل",
     title: "باقة الفرقة الثانية (الترم الأول كامل - 6 مواد)",
     sub: "تشمل Anatomy 3, Biomechanics 2, Hydrotherapy, Electrotherapy, Tests & Measurements, Neurophysiology.",
-    badge: "وفر 800 ج 🔥",
-    price: "2,199 ج.م",
-    oldPrice: "2,999.00 ج.م",
+    badge: "وفر 895 ج 🔥",
+    price: "2,499 ج.م",
+    oldPrice: "3,394.00 ج.م",
     img: "image/pkg_y2s1.png",
     courses: [
       { name: "Anatomy 3 (تشريح تخصصي)", desc: "Head, Neck, Trunk & Nervous System", id: "c_anat3" },
@@ -1053,8 +1068,8 @@ window.catalogData = {
     category: "الفرقة الأولى • ترم أول",
     title: "Anatomy 1 — كورس التشريح العام",
     desc: "دراسة شاملة لـ Anatomical position, Planes, Bones, Joints, Muscles, Upper & Lower limbs.",
-    price: "450 ج.م",
-    oldPrice: "599.00 ج.م",
+    price: "599 ج.م",
+   
     img: "image/anatomy1.png",
     lessons: [
       { id: "a1_1", title: "01. Anatomical Terminology & Position", duration: "25 دقيقة", isFree: true, desc: "المقدمة والأوضاع التشريحية الأساسية مجاناً." },
@@ -1071,7 +1086,7 @@ window.catalogData = {
     category: "الفرقة الأولى • ترم أول",
     title: "Physiology 1 — وظائف الأعضاء",
     desc: "تغطية Cell physiology, Homeostasis, Blood, CVS, Respiratory system.",
-    price: "450 ج.م",
+    price: "499 ج.م",
     oldPrice: "599.00 ج.م",
     img: "image/physiology1.png",
     lessons: [
@@ -1087,7 +1102,7 @@ window.catalogData = {
     category: "الفرقة الأولى • ترم أول",
     title: "Histology 1 — علم الأنسجة",
     desc: "دراسة Cell structure, Epithelial tissue, Connective tissue, Muscle tissue.",
-    price: "400 ج.م",
+    price: "399 ج.م",
     oldPrice: "550.00 ج.م",
     img: "image/histology1.png",
     lessons: [
@@ -1102,7 +1117,7 @@ window.catalogData = {
     category: "الفرقة الأولى • ترم أول",
     title: "Biophysics 1 — الفيزياء الحيوية",
     desc: "تطبيقات Mechanics, Pressure, Heat, Light, Sound في العلاج الطبيعي.",
-    price: "400 ج.م",
+    price: "399 ج.م",
     oldPrice: "550.00 ج.م",
     img: "image/biophysics1.png",
     lessons: [
@@ -1117,7 +1132,7 @@ window.catalogData = {
     category: "الفرقة الثانية • ترم أول",
     title: "Anatomy 3 — التشريح المتقدم",
     desc: "تشريح Head & neck, Trunk, Nervous system, Major nerves & vessels.",
-    price: "499 ج.م",
+    price: "599 ج.م",
     oldPrice: "650.00 ج.م",
     img: "image/anatomy3.png",
     lessons: [
@@ -1132,7 +1147,7 @@ window.catalogData = {
     category: "الفرقة الثانية • ترم أول",
     title: "Biomechanics 2 — الميكانيكا الحيوية 2",
     desc: "تحليل مفاصل Shoulder, Elbow, Wrist, Hip, Knee, Ankle, Spine, Gait.",
-    price: "550 ج.م",
+    price: "599 ج.م",
     oldPrice: "750.00 ج.م",
     img: "image/biomechanics2.png",
     lessons: [
@@ -1147,7 +1162,7 @@ window.catalogData = {
     category: "الفرقة الثانية • ترم أول",
     title: "Hydrotherapy — العلاج المائي",
     desc: "دراسة Buoyancy, Hydrostatic pressure, Hydrodynamics, Exercises.",
-    price: "450 ج.م",
+    price: "499 ج.م",
     oldPrice: "600.00 ج.م",
     img: "image/hydrotherapy.png",
     lessons: [
@@ -1162,8 +1177,8 @@ window.catalogData = {
     category: "الفرقة الثانية • ترم أول",
     title: "Electrotherapy — العلاج الكهربائي",
     desc: "أجهزة TENS, NMES, Ultrasound, Parameters & Safety.",
-    price: "500 ج.م",
-    oldPrice: "700.00 ج.م",
+    price: "399 ج.م",
+    oldPrice: "500.00 ج.م",
     img: "image/electrotherapy.png",
     lessons: [
       { id: "el_1", title: "01. Principles of Electricity & Patient Safety", duration: "30 دقيقة", isFree: true, desc: "أساسيات التيارات والأمان الكهربائي مجاناً." }
@@ -1177,7 +1192,7 @@ window.catalogData = {
     category: "الفرقة الثانية • ترم أول",
     title: "Tests & Measurements — التقييم والقياسات",
     desc: "تطبيقات ROM, Goniometry, MMT, Anthropometry, Functional tests.",
-    price: "499 ج.م",
+    price: "599 ج.م",
     oldPrice: "650.00 ج.م",
     img: "image/tests_measurements.png",
     lessons: [
@@ -1266,15 +1281,10 @@ function renderCatalog() {
     return `
       <article class="min-w-[300px] sm:min-w-[340px] md:min-w-[370px] max-w-[370px] shrink-0 snap-start card-hover rounded-3xl overflow-hidden border ${isPkg ? "border-brand shadow-rose-950/20" : "border-slate-800"} bg-[#0F1D2D] p-3.5 shadow-2xl flex flex-col justify-between relative transition-all duration-300">
         
-        <!-- صورة الكورس مع تكبير عند الضغط -->
-        <div onclick="openImageLightbox('${item.img}')" class="rounded-2xl overflow-hidden relative aspect-[4/3] w-full bg-[#07111D] border border-slate-700/50 flex items-center justify-center cursor-zoom-in group">
+<!-- صورة الكورس بدون أي نصوص أو طبقات عند التمرير -->
+        <div onclick="openImageLightbox('${item.img}')" class="rounded-2xl overflow-hidden relative aspect-[4/3] w-full bg-[#07111D] border border-slate-700/50 flex items-center justify-center cursor-pointer">
           ${item.badge ? `<span class="absolute top-2.5 start-2.5 z-10 text-[10px] font-black bg-amber-400 text-slate-900 px-2.5 py-1 rounded-md shadow-md">${item.badge}</span>` : ""}
-          <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition flex items-center justify-center z-10">
-            <span class="bg-black/80 text-white text-[11px] font-black px-3 py-1.5 rounded-xl border border-white/20">
-              🔍 ${isEn ? 'View Poster' : 'تكبير الصورة'}
-            </span>
-          </div>
-          <img src="${item.img}" alt="${item.title}" class="w-full h-full object-cover object-top rounded-xl" onerror="this.style.display='none'; this.nextElementSibling.classList.remove('hidden');" />          
+          <img src="${item.img}" alt="${item.title}" class="w-full h-full object-cover object-top rounded-xl hover:scale-105 transition duration-300" onerror="this.style.display='none'; this.nextElementSibling.classList.remove('hidden');" />          
           <div class="hidden flex flex-col items-center justify-center text-center p-4 text-rose-300">
             <span class="text-3xl mb-1">${isPkg ? '📦' : '🩺'}</span>
             <span class="font-bold text-xs">${item.title}</span>
@@ -1745,11 +1755,12 @@ if (adminLink) {
         }
       }
 
-      try {
+try {
         const studentDoc = await getDoc(doc(db, "students", user.uid));
         if (studentDoc.exists()) {
           window.currentUserData = studentDoc.data();
           const enrolledCourses = window.currentUserData.enrolledCourses || [];
+          const userYear = window.currentUserData.academicYear || "y1"; // y1 أو y2
           
           enrolledCourses.forEach(cId => {
             if (window.catalogData && window.catalogData[cId]) {
@@ -1757,7 +1768,7 @@ if (adminLink) {
             }
           });
 
-          // فحص منطقي: لو الطالب مفعل له مواد الفرقة الأولى كاملة، تظهر باقة سنة أولى كمشترك
+          // تفعيل الباقات تلقائياً عند الاشتراك
           if (window.catalogData && window.catalogData["pkg_y1s1"]) {
             const y1Subjects = ["c_anat1", "c_phys1", "c_hist1", "c_bioph1"];
             const hasAllY1 = y1Subjects.every(sub => enrolledCourses.includes(sub));
@@ -1766,7 +1777,26 @@ if (adminLink) {
             }
           }
 
-          renderCatalog();
+          // تخصيص واجهة الطالب: إظهار مقررات وفرقة الطالب المسجلة فقط
+          const y1Card = document.getElementById("year1Card");
+          const y2Card = document.getElementById("year2Card");
+          const fltY1Btn = document.getElementById("flt-y1");
+          const fltY2Btn = document.getElementById("flt-y2");
+
+          if (userYear === "y1") {
+            if (y2Card) y2Card.classList.add("hidden");
+            if (y1Card) y1Card.classList.remove("hidden");
+            if (fltY2Btn) fltY2Btn.classList.add("hidden");
+            filterCourses("y1"); // تفعيل فلتر سنة أولى مباشرة
+          } else if (userYear === "y2") {
+            if (y1Card) y1Card.classList.add("hidden");
+            if (y2Card) y2Card.classList.remove("hidden");
+            if (fltY1Btn) fltY1Btn.classList.add("hidden");
+            filterCourses("y2"); // تفعيل فلتر سنة ثانية مباشرة
+          } else {
+            renderCatalog();
+          }
+
           if (window.currentItemData && enrolledCourses.includes(window.currentItemData.id)) {
             window.currentItemData.isEnrolled = true;
             renderCourseCurriculum();
