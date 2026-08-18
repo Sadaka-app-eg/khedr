@@ -232,11 +232,7 @@
             <span>👋</span>
             <span>منورنا يا دكتور <span id="heroUserName" class="text-white"></span></span>
           </div>
-          <div>
-<button type="button" onclick="openDashboardInternal()" class="inline-block bg-amber-400 hover:bg-amber-300 text-slate-950 font-black text-xs md:text-sm px-7 py-3 rounded-2xl shadow-xl transition transform hover:scale-105 cursor-pointer">
-  الدخول للوحة الطالب ومتابعة المقررات 🎓 ←
-</button>
-          </div>
+
         </div>
       </div>
 
@@ -423,8 +419,8 @@
 </section>
 
 <!-- ============ AUTHENTICATION INDEPENDENT VIEW ============ -->
-<div id="authSection" class="hidden fixed inset-0 z-[999] bg-[#07111D] min-h-screen w-screen overflow-y-auto flex flex-col items-center justify-center p-4 sm:p-6">  
-<!-- لوجو خضر فقط بدون نصوص -->
+<div id="authSection" class="hidden fixed inset-0 z-[999] bg-black/70 backdrop-blur-sm min-h-screen w-screen overflow-y-auto flex flex-col items-center justify-center p-4 sm:p-6" onclick="if(event.target === this) closeAuthView();">
+  <!-- لوجو خضر فقط بدون نصوص -->
   <div class="mb-6 flex items-center justify-center cursor-pointer group" onclick="closeAuthView()" title="العودة للصفحة الرئيسية">
     <div class="p-3 bg-[#0F1D2D] rounded-2xl border border-slate-800 group-hover:border-brand transition shadow-xl">
       <img src="logo.png" alt="لوجو خضر" class="h-12 w-auto object-contain transition-transform group-hover:scale-105" onerror="this.src='logo.png'" />
@@ -1585,23 +1581,36 @@ function openCourseView(courseId) {
   const crs = window.catalogData[courseId] || window.catalogData["c_anat1"];
   window.currentItemData = crs;
 
-  document.getElementById("crsCategory").textContent = crs.category;
-  document.getElementById("crsTitle").textContent = crs.title;
-  document.getElementById("crsDesc").textContent = crs.desc;
-  document.getElementById("crsPrice").textContent = crs.price;
+  const catEl = document.getElementById("crsCategory");
+  const titleEl = document.getElementById("crsTitle");
+  const descEl = document.getElementById("crsDesc");
+  const priceEl = document.getElementById("crsPrice");
 
-  renderCourseCurriculum();
+  if (catEl) catEl.textContent = typeof crs.category === "object" ? crs.category[currentLang] : crs.category;
+  if (titleEl) titleEl.textContent = typeof crs.title === "object" ? crs.title[currentLang] : crs.title;
+  if (descEl) descEl.textContent = typeof crs.desc === "object" ? crs.desc[currentLang] : crs.desc;
+  if (priceEl) priceEl.textContent = `${crs.price} ج.م`;
 
+  // عرض المحاضرات الافتراضية
+  if (crs.lessons) {
+    window.renderDynamicLessonsAccordion(crs.lessons);
+  }
+
+  // إخفاء الواجهة الرئيسية وعرض واجهة الكورس
   ["hero", "years", "courses", "features", "honors", "reviews", "instructor", "authSection", "mainFooter", "supportFloatingWidget"].forEach(id => {
     const el = document.getElementById(id);
     if (el) el.classList.add("hidden");
   });
 
-  document.getElementById("courseView").classList.remove("hidden");
+  const courseView = document.getElementById("courseView");
+  if (courseView) courseView.classList.remove("hidden");
+  
   window.scrollTo({ top: 0, behavior: "smooth" });
+
+  // جلب المحاضرات من Firestore
   if (typeof window.loadFirestoreLectures === "function") {
-  window.loadFirestoreLectures(courseId);
-}
+    window.loadFirestoreLectures(courseId);
+  }
 }
 
 function closeCourseView() {
@@ -2140,7 +2149,6 @@ try {
 
           if (window.currentItemData && enrolledCourses.includes(window.currentItemData.id)) {
             window.currentItemData.isEnrolled = true;
-            renderCourseCurriculum();
           }
         }
       } catch (e) {
@@ -2222,7 +2230,6 @@ filterCourses("all"); // لإعادة عرض كل المقررات للزائر
           document.getElementById("loginPassword").value
         );
 closeAuthView();
-openDashboardInternal();
 
 
       } catch (err) {
