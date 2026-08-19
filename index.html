@@ -211,7 +211,7 @@
     <!-- نصوص الهيرو والترحيب (تبقى في الواجهة z-10) -->
     <div class="w-full md:w-7/12 text-center md:text-right text-white space-y-5 md:space-y-6 z-10 relative">
       <span class="inline-block text-xs sm:text-sm md:text-base font-black text-rose-300 tracking-wide" data-i18n="hero_eyebrow">
-        محمود خضر — محاضر ومدرس للمواد الطبية بكلية العلاج الطبيعي
+        محمود خضر — شارح ومدرس للمواد الطبية والأكاديمية بكلية العلاج الطبيعي بخبرة سنتين في التدريس الشامل
       </span>
 
       <h1 class="text-3xl sm:text-5xl lg:text-6xl font-black leading-[1.25] tracking-tight" data-i18n="hero_title">
@@ -1416,12 +1416,20 @@ function renderCatalog() {
   const lang = currentLang; // "ar" أو "en"
   const isEn = lang === "en";
 
-  const items = Object.values(window.catalogData).filter(item => {
+  // 1. فلترة العناصر حسب القسم المختار
+  let items = Object.values(window.catalogData).filter(item => {
     if (currentFilter === "all") return true;
     if (currentFilter === "pkg") return item.type === "package";
     if (currentFilter === "y1") return item.year === "y1" || item.year === "all";
     if (currentFilter === "y2") return item.year === "y2" || item.year === "all";
     return true;
+  });
+
+  // 2. الفرز الذكي: رفع الكورسات المشترك بها الطالب لتظهر أولاً في البداية تلقائياً
+  items.sort((a, b) => {
+    const aEnrolled = a.isEnrolled ? 1 : 0;
+    const bEnrolled = b.isEnrolled ? 1 : 0;
+    return bEnrolled - aEnrolled; // المشترك فيه (1) يسبق غير المشترك (0)
   });
 
   if (items.length === 0) {
@@ -1650,6 +1658,13 @@ function openCourseView(courseId) {
   const crs = window.catalogData[courseId] || window.catalogData["c_anat1"];
   window.currentItemData = crs;
 
+  // تصفير المشغل والفيديو القديم فوراً لمنع تسريب أي فيديو
+  const iframe = document.getElementById("videoIframe");
+  const placeholder = document.getElementById("videoPlaceholder");
+  if (iframe) { iframe.src = ""; iframe.classList.add("hidden"); }
+  if (placeholder) { placeholder.classList.remove("hidden"); }
+  
+
   const catEl = document.getElementById("crsCategory");
   const titleEl = document.getElementById("crsTitle");
   const descEl = document.getElementById("crsDesc");
@@ -1818,10 +1833,36 @@ window.renderDynamicLessonsAccordion = function(lessonsList) {
     `;
   }).join("");
 
-  // تشغيل أول درس متاح تلقائياً في مشغل الفيديو
+// تصفير وقفل المشغل فوراً إذا لم يكن هناك درس مجاني أو لم يكن الطالب مشتركاً
+  const iframe = document.getElementById("videoIframe");
+  const placeholder = document.getElementById("videoPlaceholder");
+  const pdfContainer = document.getElementById("pdfViewerContainer");
+  const pdfIframe = document.getElementById("pdfIframe");
+  const quizSection = document.getElementById("quizSection");
+
+  if (pdfIframe) pdfIframe.src = "";
+  if (pdfContainer) pdfContainer.classList.add("hidden");
+  if (quizSection) quizSection.classList.add("hidden");
+
   const firstAvailable = lessonsList.find(l => (l.isFree === true || l.isFree === "true") || isEnrolled);
+
   if (firstAvailable && firstAvailable.videoUrl) {
     playLessonVideo(firstAvailable.videoUrl, firstAvailable.title, firstAvailable.desc);
+  } else {
+    // قفل وتفريغ المشغل تماماً
+    if (iframe) {
+      iframe.src = "";
+      iframe.classList.add("hidden");
+    }
+    if (placeholder) {
+      placeholder.classList.remove("hidden");
+      placeholder.querySelector("h3").textContent = "🔒 المحاضرات مغلقة للمشتركين";
+      placeholder.querySelector("p").textContent = "اشترك في المقرر الآن لفتح جميع الفيديوهات والتفريغات.";
+    }
+    const curTitle = document.getElementById("currentLessonTitle");
+    const curDesc = document.getElementById("currentLessonDesc");
+    if (curTitle) curTitle.textContent = "🔒 المحتوى مقفل";
+    if (curDesc) curDesc.textContent = "اضغط على 'الاشتراك في هذا المقرر الآن' لتفعيل المشاهدة والملفات.";
   }
 };
 
