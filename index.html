@@ -110,6 +110,11 @@
   
   body.light .auth-tab { color: #475569 !important; }
   body.light .auth-tab.active { background-color: #FFFFFF !important; color: var(--brand-primary) !important; box-shadow: 0 4px 12px rgba(0,0,0,0.08); }
+
+  #videoPlayerContainer:fullscreen #videoWatermark {
+  font-size: 1.25rem;
+  z-index: 9999;
+}
 </style>
 </head>
 
@@ -591,19 +596,25 @@
       
       <!-- المنطقة الرئيسية: مشغل الفيديو وملفات الـ PDF (8 أعمدة) -->
       <div class="lg:col-span-8 space-y-5">
-        <div id="videoPlayerContainer" class="rounded-3xl overflow-hidden bg-[#0F1D2D] border border-slate-800 aspect-video relative flex items-center justify-center shadow-lg select-none">
-          <!-- العلامة المائية المتحركة لحماية الشاشة من التسجيل -->
-          <div id="videoWatermark" class="hidden absolute z-30 pointer-events-none text-slate-300/40 font-bold text-xs md:text-sm tracking-wide transition-all duration-1000 select-none">
-            <span id="wmStudentData"></span>
-          </div>
+<div id="videoPlayerContainer" class="rounded-3xl overflow-hidden bg-[#0F1D2D] border border-slate-800 aspect-video relative flex items-center justify-center shadow-lg select-none">
+  <!-- العلامة المائية -->
+  <div id="videoWatermark" class="hidden absolute z-30 pointer-events-none text-slate-300/40 font-bold text-xs md:text-sm tracking-wide transition-all duration-1000 select-none">
+    <span id="wmStudentData"></span>
+  </div>
 
-          <div id="videoPlaceholder" class="text-center p-6 space-y-3 z-10">
-            <div class="w-16 h-16 rounded-full bg-brand/30 text-rose-400 flex items-center justify-center text-3xl mx-auto border border-brand/50">▶</div>
-            <h3 class="font-black text-sm md:text-base text-white">اضغط على "المقدمة" لمشاهدة المعاينة المجانية</h3>
-            <p class="text-xs text-slate-400">يمكنك مشاهدة شرح مقدمة المقرر مجاناً قبل الاشتراك</p>
-          </div>
-          <iframe id="videoIframe" class="hidden w-full h-full border-0 relative z-0" src="" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-        </div>
+  <!-- زر التكبير المخصص الذي يُبقي العلامة المائية فوق الشاشة -->
+  <button type="button" onclick="toggleCustomFullscreen()" class="absolute bottom-3 end-3 z-40 bg-black/60 hover:bg-black/90 text-white p-2 rounded-xl border border-white/20 text-xs font-bold transition flex items-center gap-1 cursor-pointer">
+    <span id="fsIcon">⛶</span>
+    <span class="hidden sm:inline text-[10px]">ملء الشاشة</span>
+  </button>
+
+  <div id="videoPlaceholder" class="text-center p-6 space-y-3 z-10">
+    <div class="w-16 h-16 rounded-full bg-brand/30 text-rose-400 flex items-center justify-center text-3xl mx-auto border border-brand/50">▶</div>
+    <h3 class="font-black text-sm md:text-base text-white">اضغط على "المقدمة" لمشاهدة المعاينة المجانية</h3>
+    <p class="text-xs text-slate-400">يمكنك مشاهدة شرح مقدمة المقرر مجاناً قبل الاشتراك</p>
+  </div>
+  <iframe id="videoIframe" class="hidden w-full h-full border-0 relative z-0" src="" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+</div>
 
         <!-- تفاصيل المحاضرة الحالية -->
         <div class="rounded-2xl bg-[#0F1D2D] border border-slate-800 p-5 space-y-2">
@@ -2058,17 +2069,52 @@ document.addEventListener("DOMContentLoaded", () => {
 <script type="module">
 
 import { updateDoc, arrayUnion } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-firestore.js";
-// دالة مساعدة لتحويل روابط اليوتيوب العادية لروابط Embed صالحة للـ iframe
-  function formatEmbedUrl(url) {
-    if (!url) return "";
-    let formatted = url.trim();
-    if (formatted.includes("youtube.com/watch?v=")) {
-      formatted = formatted.replace("watch?v=", "embed/");
-    } else if (formatted.includes("youtu.be/")) {
-      formatted = formatted.replace("youtu.be/", "www.youtube.com/embed/");
-    }
-    return formatted;
+// منع زر التكبير الافتراضي لليوتيوب حتى يستخدم الطالب زر المنصة المحمي
+function formatEmbedUrl(url) {
+  if (!url) return "";
+  let formatted = url.trim();
+  if (formatted.includes("youtube.com/watch?v=")) {
+    formatted = formatted.replace("watch?v=", "embed/");
+  } else if (formatted.includes("youtu.be/")) {
+    formatted = formatted.replace("youtu.be/", "www.youtube.com/embed/");
   }
+  
+  // إضافة معامل fs=0 لمنع تكبير اليوتيوب المنفصل
+  const separator = formatted.includes("?") ? "&" : "?";
+  return `${formatted}${separator}fs=0&rel=0`;
+}
+
+// دالة تكبير الحاوية كاملة مع بقاء العلامة المائية فوقها
+window.toggleCustomFullscreen = function() {
+  const container = document.getElementById("videoPlayerContainer");
+  const fsIcon = document.getElementById("fsIcon");
+  
+  if (!document.fullscreenElement) {
+    if (container.requestFullscreen) {
+      container.requestFullscreen();
+    } else if (container.webkitRequestFullscreen) {
+      container.webkitRequestFullscreen();
+    } else if (container.msRequestFullscreen) {
+      container.msRequestFullscreen();
+    }
+    if (fsIcon) fsIcon.textContent = "🗗";
+  } else {
+    if (document.exitFullscreen) {
+      document.exitFullscreen();
+    } else if (document.webkitExitFullscreen) {
+      document.webkitExitFullscreen();
+    }
+    if (fsIcon) fsIcon.textContent = "⛶";
+  }
+};
+
+// الاستماع لتغيير وضع ملء الشاشة لتحديث الأيقونة
+document.addEventListener("fullscreenchange", () => {
+  const fsIcon = document.getElementById("fsIcon");
+  if (!document.fullscreenElement && fsIcon) {
+    fsIcon.textContent = "⛶";
+  }
+});
 
   // تشغيل الفيديو وتحديث بيانات الشرح
   window.playLessonVideo = function(videoUrl, title, desc) {
