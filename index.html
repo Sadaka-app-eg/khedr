@@ -150,60 +150,60 @@
         <span id="langLabel">EN</span>
       </button>
 
-      <!-- حاوية زر القائمة المنسدلة -->
-      <div class="relative">
-        <button id="drawerBtn" onclick="toggleDrawer()" class="w-11 h-11 rounded-2xl bg-[#0F1D2D] border border-slate-700 hover:border-brand text-amber-400 flex items-center justify-center shadow-lg transition active:scale-95 cursor-pointer" title="القائمة">
-          <svg id="iconBars" class="w-6 h-6 transition-all duration-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
-            <line x1="4" y1="6" x2="20" y2="6"></line>
-            <line x1="4" y1="12" x2="20" y2="12"></line>
-            <line x1="4" y1="18" x2="20" y2="18"></line>
-          </svg>
-          <svg id="iconAtom" class="hidden w-6 h-6 transition-all duration-500 animate-spin" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
-            <ellipse cx="12" cy="12" rx="10" ry="4.2" transform="rotate(0 12 12)"></ellipse>
-            <ellipse cx="12" cy="12" rx="10" ry="4.2" transform="rotate(60 12 12)"></ellipse>
-            <ellipse cx="12" cy="12" rx="10" ry="4.2" transform="rotate(120 12 12)"></ellipse>
-            <circle cx="12" cy="12" r="2.2" fill="currentColor"></circle>
-          </svg>
-        </button>
+<!-- حاوية زر القائمة المنسدلة -->
+<div class="relative">
+  <button id="drawerBtn" onclick="toggleDrawer()" class="w-11 h-11 rounded-2xl bg-[#0F1D2D] border border-slate-700 hover:border-brand text-amber-400 flex items-center justify-center shadow-lg transition active:scale-95 cursor-pointer" title="القائمة">
+    <svg id="iconBars" class="w-6 h-6 transition-all duration-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
+      <line x1="4" y1="6" x2="20" y2="6"></line>
+      <line x1="4" y1="12" x2="20" y2="12"></line>
+      <line x1="4" y1="18" x2="20" y2="18"></line>
+    </svg>
+    <svg id="iconAtom" class="hidden w-6 h-6 transition-all duration-500 animate-spin" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+      <ellipse cx="12" cy="12" rx="10" ry="4.2" transform="rotate(0 12 12)"></ellipse>
+      <ellipse cx="12" cy="12" rx="10" ry="4.2" transform="rotate(60 12 12)"></ellipse>
+      <ellipse cx="12" cy="12" rx="10" ry="4.2" transform="rotate(120 12 12)"></ellipse>
+      <circle cx="12" cy="12" r="2.2" fill="currentColor"></circle>
+    </svg>
+  </button>
 
-        <!-- المينيو المنبثقة الصغيرة في الشمال تحت الزر مباشرة -->
-        <div id="drawer" class="hidden absolute top-14 left-0 z-50 w-56 p-2.5 rounded-2xl bg-[#0F1D2D]/95 backdrop-blur-xl border border-slate-700 shadow-2xl space-y-1.5">
-          
-          <!-- أزرار الزائر -->
-          <div id="drawerGuestActions" class="flex flex-col gap-1.5">
-            <button onclick="toggleDrawer(); openAuthView('register');" class="w-full py-2.5 px-3 rounded-xl bg-brand hover:bg-rose-900 text-white font-black text-xs transition active:scale-95 text-start flex items-center gap-2 cursor-pointer">
-              <span>✨</span> <span>حساب جديد</span>
-            </button>
-            <button onclick="toggleDrawer(); openAuthView('login');" class="w-full py-2.5 px-3 rounded-xl bg-[#07111D] hover:bg-slate-800 text-slate-200 font-bold text-xs border border-slate-700/60 transition active:scale-95 text-start flex items-center gap-2 cursor-pointer">
-              <span>🔑</span> <span>تسجيل الدخول</span>
-            </button>
-          </div>
+  <!-- المينيو المنبثقة: تم تغيير left-0 إلى end-0 لتبقى دائماً داخل الشاشة -->
+  <div id="drawer" class="hidden absolute top-14 end-0 z-50 w-56 p-2.5 rounded-2xl bg-[#0F1D2D]/95 backdrop-blur-xl border border-slate-700 shadow-2xl space-y-1.5 text-start">
+    
+    <!-- أزرار الزائر -->
+    <div id="drawerGuestActions" class="flex flex-col gap-1.5">
+      <button onclick="toggleDrawer(); openAuthView('register');" class="w-full py-2.5 px-3 rounded-xl bg-brand hover:bg-rose-900 text-white font-black text-xs transition active:scale-95 text-start flex items-center gap-2 cursor-pointer">
+        <span>✨</span> <span data-i18n="auth_tab_register">حساب جديد</span>
+      </button>
+      <button onclick="toggleDrawer(); openAuthView('login');" class="w-full py-2.5 px-3 rounded-xl bg-[#07111D] hover:bg-slate-800 text-slate-200 font-bold text-xs border border-slate-700/60 transition active:scale-95 text-start flex items-center gap-2 cursor-pointer">
+        <span>🔑</span> <span data-i18n="auth_tab_login">تسجيل الدخول</span>
+      </button>
+    </div>
 
-          <!-- أزرار الطالب -->
-          <div id="drawerStudentActions" class="hidden flex-col gap-1.5">
-            <a href="dashboard.html" class="w-full py-2.5 px-3 rounded-xl bg-brand hover:bg-rose-900 text-white font-black text-xs transition flex items-center gap-2">
-              <span>🎓</span> <span>لوحة تحكم الطالب</span>
-            </a>
-            <button onclick="handleLogoutClick();" class="w-full py-2 px-3 rounded-xl bg-rose-950/40 hover:bg-rose-900/60 text-rose-300 font-bold text-xs border border-rose-900/30 transition text-start flex items-center gap-2 cursor-pointer">
-              <span>🚪</span> <span>تسجيل الخروج</span>
-            </button>
-          </div>
+    <!-- أزرار الطالب -->
+    <div id="drawerStudentActions" class="hidden flex-col gap-1.5">
+      <a href="dashboard.html" class="w-full py-2.5 px-3 rounded-xl bg-brand hover:bg-rose-900 text-white font-black text-xs transition flex items-center gap-2 text-start">
+        <span>🎓</span> <span data-i18n="menu_student_dash">لوحة تحكم الطالب</span>
+      </a>
+      <button onclick="handleLogoutClick();" class="w-full py-2 px-3 rounded-xl bg-rose-950/40 hover:bg-rose-900/60 text-rose-300 font-bold text-xs border border-rose-900/30 transition text-start flex items-center gap-2 cursor-pointer">
+        <span>🚪</span> <span data-i18n="menu_logout">تسجيل الخروج</span>
+      </button>
+    </div>
 
-          <!-- أزرار المشرف -->
-          <div id="drawerAdminActions" class="hidden flex-col gap-1.5">
-            <a href="teacher-dashboard.html" class="w-full py-2.5 px-3 rounded-xl bg-amber-400 hover:bg-amber-300 text-slate-950 font-black text-xs transition flex items-center gap-2">
-              <span>⚙️</span> <span>لوحة المشرف</span>
-            </a>
-            <a href="dashboard.html" class="w-full py-2 px-3 rounded-xl bg-[#07111D] hover:bg-slate-800 text-slate-200 font-bold text-xs border border-slate-700 transition flex items-center gap-2">
-              <span>🎓</span> <span>لوحة الطالب</span>
-            </a>
-            <button onclick="handleLogoutClick();" class="w-full py-2 px-3 rounded-xl bg-rose-950/40 hover:bg-rose-900/60 text-rose-300 font-bold text-xs border border-rose-900/30 transition text-start flex items-center gap-2 cursor-pointer">
-              <span>🚪</span> <span>تسجيل الخروج</span>
-            </button>
-          </div>
+    <!-- أزرار المشرف -->
+    <div id="drawerAdminActions" class="hidden flex-col gap-1.5">
+      <a href="teacher-dashboard.html" class="w-full py-2.5 px-3 rounded-xl bg-amber-400 hover:bg-amber-300 text-slate-950 font-black text-xs transition flex items-center gap-2 text-start">
+        <span>⚙️</span> <span data-i18n="menu_admin_dash">لوحة المشرف</span>
+      </a>
+      <a href="dashboard.html" class="w-full py-2 px-3 rounded-xl bg-[#07111D] hover:bg-slate-800 text-slate-200 font-bold text-xs border border-slate-700 transition flex items-center gap-2 text-start">
+        <span>🎓</span> <span data-i18n="menu_student_dash">لوحة الطالب</span>
+      </a>
+      <button onclick="handleLogoutClick();" class="w-full py-2 px-3 rounded-xl bg-rose-950/40 hover:bg-rose-900/60 text-rose-300 font-bold text-xs border border-rose-900/30 transition text-start flex items-center gap-2 cursor-pointer">
+        <span>🚪</span> <span data-i18n="menu_logout">تسجيل الخروج</span>
+      </button>
+    </div>
 
-        </div>
-      </div>
+  </div>
+</div>
 
     </div>
   </div>
@@ -901,6 +901,9 @@ const translations = {
     foot_yt: "يوتيوب",
     foot_li: "لينكد إن",
     foot_support_team: "تيم الدعم الفني",
+    menu_student_dash: "لوحة تحكم الطالب",
+    menu_admin_dash: "لوحة المشرف",
+    menu_logout: "تسجيل الخروج",
     foot_rights: "جميع الحقوق محفوظة © 2026 KHEDR & PHYSIO"
   },
   en: {
@@ -974,6 +977,9 @@ const translations = {
     foot_yt: "YouTube",
     foot_li: "LinkedIn",
     foot_support_team: "Support Team",
+    menu_student_dash: "Student Dashboard",
+    menu_admin_dash: "Admin Dashboard",
+    menu_logout: "Log Out",
     foot_rights: "All Rights Reserved © 2026 KHEDR & PHYSIO"
   }
 };
