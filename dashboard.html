@@ -287,8 +287,8 @@
 </nav>
 
 <script type="module">
-  import { auth, db, onAuthStateChanged, signOut, doc, getDoc } from "./firebase-config.js";
-
+import { auth, db, onAuthStateChanged, signOut, doc, getDoc } from "./firebase-config.js";
+  import { collection, getDocs, query, where } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-firestore.js";
   // تعريف بيانات الكورسات لتطابق الـ ID
   const allCoursesMeta = {
     c_medterm: { title: "Medical Terminology — المصطلحات الطبية", icon: "📖", desc: "Prefixes, Roots, Suffixes & Clinical Terminology" },
@@ -304,42 +304,20 @@
     c_neuro: { title: "Neurophysiology — الفسيولوجيا العصبية", icon: "⚡", desc: "Neuron Transmission, Reflexes & Motor Control" }
   };
 
-  // قاعدة بيانات المصطلحات مصنفة بالكورس (تظهر حسب مواد الطالب فقط)
-  const glossaryDB = {
-    c_medterm: [
-      { term: "Prefix", meaning: "بادئة الكلمة", desc: "مقطع يوضع في بداية الكلمة الطبية لتحديد المكان أو العدد." },
-      { term: "Suffix", meaning: "لاحقة الكلمة", desc: "مقطع يوضع في نهاية الكلمة لتحديد الحالة أو الإجراء الطبي." }
-    ],
-    c_anat1: [
-      { term: "Anatomical Position", meaning: "الوضع التشريحي المرجعي", desc: "وقوف معتدل، الوجه للأمام، والذراعين للجانب مع راحة اليد للأمام." },
-      { term: "Sagittal Plane", meaning: "المستوى السهمي", desc: "يقسم الجسم إلى نصفين أيمن وأيسر وتحدث فيه حركات الثني والمد (Flexion/Extension)." }
-    ],
-    c_tests: [
-      { term: "ROM", meaning: "Range of Motion", desc: "المدى الحركي للمفصل ويقاس بجهاز الـ Goniometer." },
-      { term: "MMT", meaning: "Manual Muscle Testing", desc: "التقييم اليدوي لقوة العضلة بدرجات من 0 إلى 5 (Oxford Scale)." }
-    ],
-    c_biomech2: [
-      { term: "Gait Cycle", meaning: "دورة المشي", desc: "التسلسل الحركي من ملامسة الكعب للأرض حتى ملامسته مجدداً." },
-      { term: "Lordosis", meaning: "قَعَس فقري", desc: "زيادة التقوس الأمامي الطبيعي للفقرات العنقية أو القطنية." },
-      { term: "Kyphosis", meaning: "حَدَب فقري", desc: "انحناء وتقوس خارجي مفرط في منطقة الفقرات الصدرية." }
-    ],
-    c_electro: [
-      { term: "TENS", meaning: "Transcutaneous Electrical Nerve Stimulation", desc: "تيار كهربي علاجي مسكن للألم يعمل عبر بوابة التحكم في الألم." }
-    ]
-  };
 
-  // محطات الـ OSCE السريرية مصنفة بالكورس
-  const osceDB = {
-    c_anat1: [
-      { title: "محطة: تحديد عظام ومعالم الطرف العلوي (Upper Limb Bony Landmarks)", time: "4 دقائق", steps: ["تحديد عظم الـ Clavicle والـ Scapula", "فحص الـ Greater Tubercle لعظم العضد", "تحديد الـ Medial & Lateral Epicondyles"] }
-    ],
-    c_biomech2: [
-      { title: "محطة: فحص أربطة الركبة (Lachman & Anterior Drawer Test)", time: "5 دقائق", steps: ["شرح الإجراء للمريض وأخذ الموافقة", "وضع المريض في وضع الاستلقاء مع ثني الركبة 20-30 درجة", "تثبيت عظم الفخذ وسحب القصبة للأمام لتقييم الـ ACL وملاحظة الـ End-feel"] }
-    ],
-    c_tests: [
-      { title: "محطة: قياس المدى الحركي لمفصل الكتف (Shoulder Goniometry)", time: "4 دقائق", steps: ["تحديد المحور (Fulcrum) عند الـ Acromion", "محاذاة الذراع الثابت مع الخط الموازي للعمود الفقري", "محاذاة الذراع المتحرك وتسجيل القراءة بالدرجات (0 - 180°)"] }
-    ]
-  };
+
+    // محطات الـ OSCE السريرية مصنفة بالكورس
+    const osceDB = {
+      c_anat1: [
+        { title: "محطة: تحديد عظام ومعالم الطرف العلوي (Upper Limb Bony Landmarks)", time: "4 دقائق", steps: ["تحديد عظم الـ Clavicle والـ Scapula", "فحص الـ Greater Tubercle لعظم العضد", "تحديد الـ Medial & Lateral Epicondyles"] }
+      ],
+      c_biomech2: [
+        { title: "محطة: فحص أربطة الركبة (Lachman & Anterior Drawer Test)", time: "5 دقائق", steps: ["شرح الإجراء للمريض وأخذ الموافقة", "وضع المريض في وضع الاستلقاء مع ثني الركبة 20-30 درجة", "تثبيت عظم الفخذ وسحب القصبة للأمام لتقييم الـ ACL وملاحظة الـ End-feel"] }
+      ],
+      c_tests: [
+        { title: "محطة: قياس المدى الحركي لمفصل الكتف (Shoulder Goniometry)", time: "4 دقائق", steps: ["تحديد المحور (Fulcrum) عند الـ Acromion", "محاذاة الذراع الثابت مع الخط الموازي للعمود الفقري", "محاذاة الذراع المتحرك وتسجيل القراءة بالدرجات (0 - 180°)"] }
+      ]
+    };
 
   let activeStudentGlossary = [];
 
@@ -451,30 +429,37 @@ function renderEnrolledCourses(enrolledCourses) {
     }).join("");
   }
 
-  function renderLiveEvents(enrolledCourses) {
+async function renderLiveEvents(enrolledCourses) {
     const list = document.getElementById("liveEventsList");
-    const allEvents = [
-      { courseId: "c_anat1", title: "مراجعة لايف: عضلات الطرف العلوي", time: "الجمعة • 8:00 مساءً" },
-      { courseId: "c_biomech2", title: "ورشة تحليل المشي (Gait Analysis)", time: "الأحد • 7:00 مساءً" },
-      { courseId: "c_medterm", title: "جلسة تطبيقية في المصطلحات الطبية", time: "الثلاثاء • 6:00 مساءً" }
-    ];
+    if (!list) return;
 
-    const studentEvents = allEvents.filter(e => enrolledCourses.includes(e.courseId));
+    list.innerHTML = `<div class="text-[11px] text-slate-500 text-center py-2">جارٍ جلب المواعيد...</div>`;
 
-    if (studentEvents.length === 0) {
-      list.innerHTML = `<div class="text-[11px] text-slate-400 text-center py-4">لا توجد مواعيد لايف مجدولة لموادك حالياً.</div>`;
-      return;
+    try {
+      const snap = await getDocs(collection(db, "live_sessions"));
+      if (snap.empty) {
+        list.innerHTML = `<div class="text-[11px] text-slate-400 text-center py-4">لا توجد ورش أو مواعيد Live مجدولة حالياً.</div>`;
+        return;
+      }
+
+      list.innerHTML = snap.docs.map(docSnap => {
+        const ev = docSnap.data();
+        return `
+          <div class="p-2.5 rounded-xl bg-[#07111D] border border-slate-800 flex items-center justify-between">
+            <div>
+              <h4 class="text-xs font-black text-white">${ev.title}</h4>
+              <span class="text-[10px] text-slate-400 block">${ev.dayTime}</span>
+            </div>
+            <a href="${ev.link || 'https://t.me/Khedr_physio'}" target="_blank" rel="noopener" class="text-[10px] font-black px-2 py-0.5 rounded bg-cyan-950 text-cyan-300 border border-cyan-800/40 hover:bg-cyan-900 transition">
+              دخول 🔴
+            </a>
+          </div>
+        `;
+      }).join("");
+    } catch (err) {
+      console.error("Error loading live events:", err);
+      list.innerHTML = `<div class="text-[11px] text-slate-500 text-center py-2">لا توجد مواعيد متاحة.</div>`;
     }
-
-    list.innerHTML = studentEvents.map(ev => `
-      <div class="p-2.5 rounded-xl bg-[#07111D] border border-slate-800 flex items-center justify-between">
-        <div>
-          <h4 class="text-xs font-black text-white">${ev.title}</h4>
-          <span class="text-[10px] text-slate-400 block">${ev.time}</span>
-        </div>
-        <span class="text-[10px] font-black px-2 py-0.5 rounded bg-cyan-950 text-cyan-300 border border-cyan-800/40">مباشر</span>
-      </div>
-    `).join("");
   }
 
   function renderOSCESimulator(enrolledCourses) {
@@ -546,22 +531,47 @@ function renderMCQBank(enrolledCourses) {
     }).join("");
     document.getElementById("statPdfs").textContent = enrolledCourses.length;
   }
+async function buildStudentGlossary(enrolledCourses) {
+    const container = document.getElementById("glossaryResults");
+    if (!container) return;
 
-  function buildStudentGlossary(enrolledCourses) {
-    activeStudentGlossary = [];
-    enrolledCourses.forEach(cId => {
-      if (glossaryDB[cId]) activeStudentGlossary = activeStudentGlossary.concat(glossaryDB[cId]);
-    });
-    renderGlossaryUI(activeStudentGlossary);
+    container.innerHTML = `<div class="col-span-2 text-center text-xs text-slate-400 py-6">جارٍ تحميل القاموس الطبي...</div>`;
+
+    try {
+      const snap = await getDocs(collection(db, "medical_terms"));
+      if (snap.empty) {
+        container.innerHTML = `<div class="col-span-2 text-center text-xs text-slate-400 py-6">لم يقم المحاضر بنشر مصطلحات في القاموس بعد.</div>`;
+        activeStudentGlossary = [];
+        return;
+      }
+
+      activeStudentGlossary = snap.docs.map(d => d.data());
+      renderGlossaryUI(activeStudentGlossary);
+    } catch (err) {
+      console.error("Error loading terms:", err);
+      container.innerHTML = `<div class="col-span-2 text-center text-xs text-slate-400 py-6">تعذر جلب المصطلحات.</div>`;
+    }
   }
 
   function renderGlossaryUI(list) {
     const container = document.getElementById("glossaryResults");
     if (!container) return;
+
     if (list.length === 0) {
-      container.innerHTML = `<div class="col-span-2 text-center text-xs text-slate-400 py-6">لا توجد مصطلحات خاصة بمقرراتك المفعلة.</div>`;
+      container.innerHTML = `<div class="col-span-2 text-center text-xs text-slate-400 py-6">لا توجد مصطلحات مطابقة للبحث.</div>`;
       return;
     }
+
+    container.innerHTML = list.map(g => `
+      <div class="rounded-2xl border border-slate-800 bg-[#0F1D2D] p-4 space-y-1.5 shadow-md">
+        <div class="flex items-baseline justify-between">
+          <h4 class="text-xs font-black text-amber-300 font-mono">${g.term || ""}</h4>
+          <span class="text-[10px] text-rose-300 font-bold px-2 py-0.5 rounded bg-slate-800">${g.category || "مصطلح"}</span>
+        </div>
+        <p class="text-[11px] text-slate-300 leading-5">${g.definition || g.desc || ""}</p>
+      </div>
+    `).join("");
+  }
     container.innerHTML = list.map(g => `
       <div class="rounded-2xl border border-slate-800 bg-[#0F1D2D] p-4 space-y-1.5 shadow-md">
         <div class="flex items-baseline justify-between">
@@ -573,9 +583,15 @@ function renderMCQBank(enrolledCourses) {
     `).join("");
   }
 
-  window.filterGlossary = function() {
-    const q = document.getElementById("glossarySearchInput").value.toLowerCase().trim();
-    const filtered = activeStudentGlossary.filter(g => g.term.toLowerCase().includes(q) || g.meaning.toLowerCase().includes(q) || g.desc.includes(q));
+window.filterGlossary = function() {
+    const input = document.getElementById("glossarySearchInput");
+    if (!input) return;
+    const q = input.value.toLowerCase().trim();
+    const filtered = activeStudentGlossary.filter(g => 
+      (g.term && g.term.toLowerCase().includes(q)) || 
+      (g.category && g.category.toLowerCase().includes(q)) || 
+      (g.definition && g.definition.toLowerCase().includes(q))
+    );
     renderGlossaryUI(filtered);
   };
 

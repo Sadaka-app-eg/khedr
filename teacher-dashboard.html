@@ -186,6 +186,16 @@
         </select>
       </div>
     </div>
+    <!-- نموذج إضافة مصطلح طبي جديد -->
+<div class="p-6 rounded-3xl bg-[#0F1D2D] border border-slate-800 space-y-4">
+  <h3 class="text-sm font-black text-amber-300">📖 إضافة مصطلح طبي جديد لقاموس المنصة</h3>
+  <form id="addTermForm" class="grid grid-cols-1 md:grid-cols-3 gap-3">
+    <input id="termName" type="text" placeholder="اسم المصطلح (مثلاً: Lordosis)" required class="h-10 rounded-xl px-3 bg-[#07111D] border border-slate-700 text-xs text-white" />
+    <input id="termCategory" type="text" placeholder="التصنيف (مثلاً: قعس فقري / بادئة)" required class="h-10 rounded-xl px-3 bg-[#07111D] border border-slate-700 text-xs text-white" />
+    <input id="termDef" type="text" placeholder="الشرح والتعريف الطبي" required class="h-10 rounded-xl px-3 bg-[#07111D] border border-slate-700 text-xs text-white md:col-span-2" />
+    <button type="submit" class="h-10 rounded-xl bg-brand text-white font-black text-xs hover:bg-rose-900 transition">نشر في القاموس ✨</button>
+  </form>
+</div>
 
 <!-- نموذج إضافة محاضرة جديدة -->
     <form id="addLectureForm" class="space-y-6 bg-[#07111D] border border-slate-800 p-6 rounded-2xl">
@@ -607,7 +617,22 @@ import { auth, db, onAuthStateChanged, signOut, doc } from "./firebase-config.js
     `;
     container.appendChild(qDiv);
   };
+// كود الحفظ في Firestore للمشرف
+document.getElementById("addTermForm")?.addEventListener("submit", async (e) => {
+  e.preventDefault();
+  const term = document.getElementById("termName").value.trim();
+  const cat = document.getElementById("termCategory").value.trim();
+  const def = document.getElementById("termDef").value.trim();
 
+  await addDoc(collection(db, "medical_terms"), {
+    term,
+    category: cat,
+    definition: def,
+    createdAt: serverTimestamp()
+  });
+  alert("✅ تم نشر المصطلح بنجاح وسيظهر للطلاب فوراً!");
+  e.target.reset();
+});
   // نشر المحاضرة
   const addLectureForm = document.getElementById("addLectureForm");
   if (addLectureForm) {
