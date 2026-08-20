@@ -283,11 +283,14 @@
         <div id="quizQuestionsContainer" class="space-y-4"></div>
       </div>
 
-      <div class="pt-4 flex justify-end">
-        <button type="submit" id="saveLectureBtn" class="px-8 py-3 rounded-xl bg-brand hover:bg-rose-900 text-white font-black text-xs md:text-sm shadow-xl transition active:scale-95">
-          نشر المحاضرة للمقرر 🚀
-        </button>
-      </div>
+<div class="pt-4 flex justify-end gap-2">
+  <button type="button" id="cancelEditBtn" onclick="cancelLectureEdit()" class="hidden px-5 py-3 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 font-black text-xs transition">
+    إلغاء التعديل ✕
+  </button>
+  <button type="submit" id="saveLectureBtn" class="px-8 py-3 rounded-xl bg-brand hover:bg-rose-900 text-white font-black text-xs md:text-sm shadow-xl transition active:scale-95">
+    نشر المحاضرة للمقرر 🚀
+  </button>
+</div>
     </form>
 
     <!-- قائمة المحاضرات المنشورة -->
@@ -328,12 +331,7 @@ import { auth, db, onAuthStateChanged, signOut, doc } from "./firebase-config.js
 import { collection, getDocs, addDoc, deleteDoc, updateDoc, query, where, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-firestore.js";
 
 
-  // 🔴 ضع هنا إيميلك المسجل به في المنصة
-  const ADMIN_EMAILS = [
-    "ahmedmohamedhosny100@gmail.com",
-    "admin@khedr.com", // استبدله بإيميلك الفعلي
-    "khedr@physio.com"
-  ];
+
 
   // قائمة جميع الكورسات المتاحة في المنصة للتفعيل
   const allCourses = [
@@ -495,12 +493,14 @@ async function loadAllStudents() {
     document.getElementById("courseModal").classList.remove("hidden");
   };
 
-  function renderModalCourses() {
-    if (!currentEditingStudent) return;
-    const enrolled = currentEditingStudent.enrolledCourses || [];
+function renderModalCourses() {
+  if (!currentEditingStudent) return;
+  const enrolled = currentEditingStudent.enrolledCourses || [];
 
-    document.getElementById("modalCoursesList").innerHTML = allCourses.map(crs => {
-      const isEnrolled = enrolled.includes(crs.id);
+  document.getElementById("modalCoursesList").innerHTML = allCourses.map(crs => {
+    const bundle = packageBundles[crs.id];
+    const isEnrolled = bundle ? bundle.every(id => enrolled.includes(id)) : enrolled.includes(crs.id);
+
       return `
         <div class="p-3 rounded-2xl border border-slate-800 bg-[#07111D] flex items-center justify-between">
           <span class="text-xs font-bold text-slate-200">${crs.title}</span>
@@ -516,29 +516,43 @@ async function loadAllStudents() {
     }).join("");
   }
 
-  window.toggleEnroll = async function(courseId) {
-    if (!currentEditingStudent) return;
-    let enrolled = currentEditingStudent.enrolledCourses || [];
+const packageBundles = {
+  pkg_y1s1: ["c_anat1", "c_phys1", "c_hist1", "c_bioph1"],
+  pkg_y2s1: ["c_anat3", "c_biomech2", "c_hydro", "c_electro", "c_tests", "c_neuro"]
+};
 
+window.toggleEnroll = async function(courseId) {
+  if (!currentEditingStudent) return;
+  let enrolled = currentEditingStudent.enrolledCourses || [];
+
+  const bundle = packageBundles[courseId];
+  if (bundle) {
+    // لو الباقة: فعّل/ألغِ كل المواد اللي جواها مرة واحدة
+    const allEnrolled = bundle.every(id => enrolled.includes(id));
+    if (allEnrolled) {
+      enrolled = enrolled.filter(id => !bundle.includes(id));
+    } else {
+      bundle.forEach(id => { if (!enrolled.includes(id)) enrolled.push(id); });
+    }
+  } else {
     if (enrolled.includes(courseId)) {
       enrolled = enrolled.filter(id => id !== courseId);
     } else {
       enrolled.push(courseId);
     }
+  }
 
-    try {
-      await updateDoc(doc(db, "students", currentEditingStudent.id), {
-        enrolledCourses: enrolled
-      });
-      currentEditingStudent.enrolledCourses = enrolled;
-      renderModalCourses();
-      renderStudents();
-      updateStats();
-    } catch (e) {
-      console.error(e);
-      alert("حدث خطأ أثناء حفظ التعديل في السيرفر.");
-    }
-  };
+  try {
+    await updateDoc(doc(db, "students", currentEditingStudent.id), { enrolledCourses: enrolled });
+    currentEditingStudent.enrolledCourses = enrolled;
+    renderModalCourses();
+    renderStudents();
+    updateStats();
+  } catch (e) {
+    console.error(e);
+    alert("حدث خطأ أثناء حفظ التعديل في السيرفر.");
+  }
+};
 
   window.closeModal = function() {
     document.getElementById("courseModal").classList.add("hidden");
@@ -698,22 +712,35 @@ document.getElementById("addTermForm")?.addEventListener("submit", async (e) => 
           if (qText) quiz.push({ question: qText, options: opts, correctIndex: correct });
         });
 
-        await addDoc(collection(db, "lectures"), {
-          courseId: currentSelectedCourse,
-title: `${document.getElementById("lecNumber").value}: ${document.getElementById("lecCustomName").value.trim()}`,
-order: parseInt(document.getElementById("lecNumber").selectedIndex, 10), // للترتيب التلقائي          
-          desc: document.getElementById("lecDesc").value.trim(),
-          isFree: document.getElementById("lecIsFree").value === "true",
-          videoUrl: videoUrl,
-          pdfUrl: pdfUrl,
-          quiz: quiz,
-          createdAt: new Date()
-        });
+const lectureData = {
+  courseId: currentSelectedCourse,
+  title: `${document.getElementById("lecNumber").value}: ${document.getElementById("lecCustomName").value.trim()}`,
+  order: parseInt(document.getElementById("lecNumber").selectedIndex, 10),
+  desc: document.getElementById("lecDesc").value.trim(),
+  isFree: document.getElementById("lecIsFree").value === "true",
+  videoUrl: videoUrl,
+  pdfUrl: pdfUrl,
+  quiz: quiz
+};
 
-        alert("🎉 تم نشر المحاضرة بنجاح وحفظها سحابياً!");
-        addLectureForm.reset();
-        document.getElementById("quizQuestionsContainer").innerHTML = "";
-        loadPublishedLectures();
+const editingId = saveBtn.dataset.editingId;
+
+if (editingId) {
+  // وضع التعديل: حدّث المحاضرة الموجودة بدل إنشاء وحدة جديدة
+  await updateDoc(doc(db, "lectures", editingId), lectureData);
+  alert("✅ تم حفظ التعديلات على المحاضرة بنجاح!");
+  delete saveBtn.dataset.editingId;
+} else {
+  // وضع الإضافة: محاضرة جديدة
+  lectureData.createdAt = new Date();
+  await addDoc(collection(db, "lectures"), lectureData);
+  alert("🎉 تم نشر المحاضرة بنجاح وحفظها سحابياً!");
+}
+
+addLectureForm.reset();
+saveBtn.textContent = "نشر المحاضرة للمقرر 🚀";
+document.getElementById("quizQuestionsContainer").innerHTML = "";
+loadPublishedLectures();
       } catch (err) {
         console.error(err);
         alert("حدث خطأ أثناء نشر المحاضرة.");
@@ -752,9 +779,9 @@ return `
               </div>
               <span class="text-[10px] text-slate-400 block">${lec.duration} • ${lec.quiz ? lec.quiz.length : 0} أسئلة MCQ</span>
             </div>
-<button onclick="editLecture('${docSnap.id}', '${lec.title.replace(/'/g, "\\'")}', '${lec.duration || ''}', ${lec.isFree}, '${(lec.desc || '').replace(/'/g, "\\'")}', '${lec.videoUrl || ''}', '${lec.pdfUrl || ''}')" class="px-3 py-1.5 rounded-lg bg-amber-500/20 hover:bg-amber-500/40 border border-amber-500/40 text-amber-300 text-xs font-bold transition">
-    تعديل ✏️
-  </button>
+<button onclick='editLecture("${docSnap.id}", ${JSON.stringify(lec.title)}, ${JSON.stringify(lec.duration || "")}, ${lec.isFree}, ${JSON.stringify(lec.desc || "")}, ${JSON.stringify(lec.videoUrl || "")}, ${JSON.stringify(lec.pdfUrl || "")}, ${JSON.stringify(lec.quiz || [])})' ...>
+  تعديل ✏️
+</button>
             <div class="flex items-center gap-2">
               ${lec.videoUrl ? `<a href="${lec.videoUrl}" target="_blank" class="px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-cyan-300 text-xs font-bold transition">🎬 مشاهدة الفيديو</a>` : ''}
               ${lec.pdfUrl ? `<a href="${lec.pdfUrl}" target="_blank" class="px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-amber-300 text-xs font-bold transition">📄 فتح الـ PDF</a>` : ''}
@@ -817,11 +844,10 @@ return `
   };
 
   // 2. تفعيل التعديل على أي محاضرة منشورة
-window.editLecture = function(lecId, fullTitle, duration, isFree, desc, videoUrl, pdfUrl) {
-    // فصل رقم المحاضرة عن الاسم المخصص (مثلا: "المحاضرة الخامسة: اسم الدرس")
+window.editLecture = function(lecId, fullTitle, duration, isFree, desc, videoUrl, pdfUrl, quiz) {
     let parts = fullTitle.split(":");
     let lecNum = parts[0] ? parts[0].trim() : "المحاضرة الأولى";
-    let lecName = parts[1] ? parts[1].trim() : fullTitle;
+    let lecName = parts.slice(1).join(":").trim() || fullTitle;
 
     const numSelect = document.getElementById("lecNumber");
     if (numSelect) numSelect.value = lecNum;
@@ -831,13 +857,38 @@ window.editLecture = function(lecId, fullTitle, duration, isFree, desc, videoUrl
     document.getElementById("lecDesc").value = desc || "";
     document.getElementById("videoUrlManual").value = videoUrl || "";
     document.getElementById("pdfUrlManual").value = pdfUrl || "";
+document.getElementById("cancelEditBtn").classList.remove("hidden");
+
+    // إعادة بناء أسئلة الـ MCQ القديمة في الفورم بدل ما تضيع
+    const quizContainer = document.getElementById("quizQuestionsContainer");
+    quizContainer.innerHTML = "";
+    if (Array.isArray(quiz) && quiz.length > 0) {
+      quiz.forEach(q => {
+        addQuizQuestionInput(); // بيضيف بلوك سؤال فاضي
+        const lastBlock = quizContainer.lastElementChild;
+        lastBlock.querySelector(".quiz-q-text").value = q.question || "";
+        lastBlock.querySelector(".quiz-opt-0").value = q.options?.[0] || "";
+        lastBlock.querySelector(".quiz-opt-1").value = q.options?.[1] || "";
+        lastBlock.querySelector(".quiz-opt-2").value = q.options?.[2] || "";
+        lastBlock.querySelector(".quiz-opt-3").value = q.options?.[3] || "";
+        lastBlock.querySelector(".quiz-correct").value = q.correctIndex ?? 0;
+      });
+    }
 
     const saveBtn = document.getElementById("saveLectureBtn");
     saveBtn.textContent = "حفظ التعديلات على المحاضرة 💾";
     saveBtn.dataset.editingId = lecId;
 
     document.getElementById("addLectureForm").scrollIntoView({ behavior: "smooth" });
-  };
+};
+window.cancelLectureEdit = function() {
+  const saveBtn = document.getElementById("saveLectureBtn");
+  delete saveBtn.dataset.editingId;
+  saveBtn.textContent = "نشر المحاضرة للمقرر 🚀";
+  document.getElementById("addLectureForm").reset();
+  document.getElementById("quizQuestionsContainer").innerHTML = "";
+  document.getElementById("cancelEditBtn").classList.add("hidden");
+};
 </script>
 </body>
 </html>
