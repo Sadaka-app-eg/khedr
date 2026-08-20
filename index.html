@@ -120,10 +120,16 @@
   body.light .auth-tab { color: #475569 !important; }
   body.light .auth-tab.active { background-color: #FFFFFF !important; color: var(--brand-primary) !important; box-shadow: 0 4px 12px rgba(0,0,0,0.08); }
 
-  #videoPlayerContainer:fullscreen #videoWatermark {
-  font-size: 1.25rem;
-  z-index: 9999;
-}
+div[id^="videoContainer_"]:fullscreen {
+    width: 100vw !important;
+    height: 100vh !important;
+    max-width: none !important;
+    border-radius: 0 !important;
+  }
+  div[id^="videoContainer_"]:fullscreen div[id^="watermark_"] {
+    font-size: 1.35rem !important;
+    z-index: 99999 !important;
+  }
 </style>
 </head>
 
@@ -1898,20 +1904,32 @@ function stopInlineWatermark(index) {
   }
 }
 
-// دالة التكبير المخصصة للحاوية
+// دالة التكبير المخصصة للحاوية المدمجة
 window.toggleCustomFullscreen = function(containerId) {
   const container = document.getElementById(containerId);
   if (!container) return;
 
-  if (!document.fullscreenElement) {
+  const isFs = document.fullscreenElement || document.webkitFullscreenElement || document.mozFullScreenElement || document.msFullscreenElement;
+
+  if (!isFs) {
     if (container.requestFullscreen) {
       container.requestFullscreen();
     } else if (container.webkitRequestFullscreen) {
       container.webkitRequestFullscreen();
+    } else if (container.mozRequestFullScreen) {
+      container.mozRequestFullScreen();
+    } else if (container.msRequestFullscreen) {
+      container.msRequestFullscreen();
     }
   } else {
     if (document.exitFullscreen) {
       document.exitFullscreen();
+    } else if (document.webkitExitFullscreen) {
+      document.webkitExitFullscreen();
+    } else if (document.mozCancelFullScreen) {
+      document.mozCancelFullScreen();
+    } else if (document.msExitFullscreen) {
+      document.msExitFullscreen();
     }
   }
 };
@@ -2041,38 +2059,6 @@ import { updateDoc, arrayUnion } from "https://www.gstatic.com/firebasejs/10.13.
 
 
 
-
-// دالة تكبير الحاوية كاملة مع بقاء العلامة المائية فوقها
-window.toggleCustomFullscreen = function() {
-  const container = document.getElementById("videoPlayerContainer");
-  const fsIcon = document.getElementById("fsIcon");
-  
-  if (!document.fullscreenElement) {
-    if (container.requestFullscreen) {
-      container.requestFullscreen();
-    } else if (container.webkitRequestFullscreen) {
-      container.webkitRequestFullscreen();
-    } else if (container.msRequestFullscreen) {
-      container.msRequestFullscreen();
-    }
-    if (fsIcon) fsIcon.textContent = "🗗";
-  } else {
-    if (document.exitFullscreen) {
-      document.exitFullscreen();
-    } else if (document.webkitExitFullscreen) {
-      document.webkitExitFullscreen();
-    }
-    if (fsIcon) fsIcon.textContent = "⛶";
-  }
-};
-
-// الاستماع لتغيير وضع ملء الشاشة لتحديث الأيقونة
-document.addEventListener("fullscreenchange", () => {
-  const fsIcon = document.getElementById("fsIcon");
-  if (!document.fullscreenElement && fsIcon) {
-    fsIcon.textContent = "⛶";
-  }
-});
 
 
   // فتح عارض الـ PDF
