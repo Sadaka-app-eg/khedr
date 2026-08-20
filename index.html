@@ -84,19 +84,23 @@
     padding: 0 5px;
   }
   body.light .theme-toggle-pill { background-color: #2D3748; }
-  .theme-toggle-thumb {
+.theme-toggle-thumb {
     width: 22px;
     height: 22px;
     border-radius: 50%;
     background-color: #FFFFFF;
     position: absolute;
     top: 3px;
-    right: 3px;
+    inset-inline-start: 3px;
     transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     box-shadow: 0 2px 5px rgba(0,0,0,0.2);
   }
-  body.light .theme-toggle-thumb { transform: translateX(26px); }
-  [dir="rtl"] body.light .theme-toggle-thumb { transform: translateX(-26px); }
+  body.light .theme-toggle-thumb {
+    transform: translateX(26px);
+  }
+  html[dir="rtl"] body.light .theme-toggle-thumb {
+    transform: translateX(-26px);
+  }
 
   .card-hover { transition: transform .25s ease, box-shadow .25s ease; }
   .card-hover:hover { transform: translateY(-5px); box-shadow: 0 16px 35px -10px rgba(142, 14, 56, 0.3); }
