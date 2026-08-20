@@ -1,6 +1,13 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-app.js";
-import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, updateProfile, signOut, onAuthStateChanged, sendPasswordResetEmail } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-auth.js";
-
+import { 
+  getAuth, 
+  signInWithEmailAndPassword, 
+  createUserWithEmailAndPassword, 
+  updateProfile, 
+  signOut, 
+  onAuthStateChanged, 
+  sendPasswordResetEmail 
+} from "https://www.gstatic.com/firebasejs/10.13.0/firebase-auth.js";
 import { 
   getFirestore, 
   doc, 
@@ -9,7 +16,6 @@ import {
   serverTimestamp 
 } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-firestore.js";
 
-// إعدادات مشروع منصة خضر الفعلية
 const firebaseConfig = {
   apiKey: "AIzaSyDw8IM1VLZ9wzirGRJi6tGzh9rYNs59ypk",
   authDomain: "khedr-physio.firebaseapp.com",
