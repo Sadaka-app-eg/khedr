@@ -277,9 +277,9 @@
         احجز اشتراكك دلوقتي وابدأ مذاكرة مقررات الفرقة الأولى والثانية على موبايلك، التابلت أو اللابتوب الخاص بيك.
       </p>
 <div class="pt-3">
-        <a id="yearsCtaBtn" href="#authSection" class="inline-block bg-brand hover:bg-rose-900 text-white font-black text-sm md:text-base px-9 py-4 rounded-2xl shadow-xl transition" data-i18n="btn_years_cta">
-          انشئ حسابك الآن
-        </a>
+<button id="yearsCtaBtn" type="button" onclick="handleYearsCtaClick()" class="inline-block bg-brand hover:bg-rose-900 text-white font-black text-sm md:text-base px-9 py-4 rounded-2xl shadow-xl transition cursor-pointer" data-i18n="btn_years_cta">
+  انشئ حسابك الآن
+</button>
       </div>
     </div>
 
@@ -2522,6 +2522,17 @@ document.addEventListener("click", (e) => {
     }
   }
 });
+// دالة زر المسارات الجامعية الذكية
+window.handleYearsCtaClick = function() {
+  if (window.isUserLoggedIn) {
+    // إذا كان مسجلاً يوجهه لقسم الكورسات
+    const coursesSec = document.getElementById("courses");
+    if (coursesSec) coursesSec.scrollIntoView({ behavior: "smooth" });
+  } else {
+    // إذا كان زائراً يفتح له نافذة إنشاء الحساب فوراً
+    openAuthView('register');
+  }
+};
 </script>
 <!-- نافذة تكبير بوستر الكورس (Image Lightbox Modal) -->
 <div id="imageLightboxModal" class="hidden fixed inset-0 z-[200] flex items-center justify-center bg-black/90 backdrop-blur-md p-4 select-none">
