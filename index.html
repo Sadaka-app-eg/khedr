@@ -561,101 +561,84 @@
 </div>
 
 <!-- ============ COURSE DETAILS & LESSONS VIEW ============ -->
-<div id="courseView" class="hidden min-h-screen bg-[#07111D] text-slate-100 py-10 px-4 md:px-8 transition-all">
-  <div class="max-w-6xl mx-auto">
+<div id="courseView" class="hidden min-h-screen bg-[#07111D] text-slate-100 py-6 px-4 md:px-8 transition-all">
+  <div class="max-w-5xl mx-auto space-y-6">
     
-<button type="button" onclick="closeCourseView()" class="mb-6 inline-flex items-center justify-center p-2 rounded-2xl bg-[#0F1D2D] border border-slate-800 hover:border-brand transition shadow-lg group cursor-pointer" title="العودة للصفحة الرئيسية">
-  <img src="logo.png" alt="العودة للرئيسية" class="h-9 w-auto object-contain transition-transform group-hover:scale-105" onerror="this.src='logo.png'" />
-</button>
-
-    <div class="rounded-3xl bg-gradient-to-l from-[#5E0824] via-[#7A0B30] to-[#4A051B] p-6 md:p-10 text-white shadow-2xl relative overflow-hidden mb-8 border border-white/10">
-      <div class="flex flex-col md:flex-row md:items-center justify-between gap-6">
-        <div class="space-y-3 max-w-2xl">
-          <span id="crsCategory" class="inline-block text-[11px] font-black px-3 py-1 rounded-full bg-amber-400 text-slate-900">مقرر أكاديمي</span>
-          <h1 id="crsTitle" class="text-2xl md:text-4xl font-black">اسم الكورس</h1>
-          <p id="crsDesc" class="text-xs md:text-sm opacity-85 leading-6 text-rose-100">وصف الكورس والمهارات والمفاهيم الأكاديمية التي سيتم تغطيتها.</p>
-          
-          <div id="enrollmentStatusBanner" class="pt-2">
-            <span class="inline-flex items-center gap-2 text-xs font-bold text-amber-300 bg-black/30 px-3 py-1.5 rounded-xl border border-amber-300/30">
-              <span>🔓</span> يتوفر كليب معاينة مجاني (المقدمة) — باقي المحاضرات مغلقة
-            </span>
-          </div>
-        </div>
-
-<div class="bg-black/40 backdrop-blur-md p-5 sm:p-6 rounded-3xl border border-white/15 text-center shrink-0 flex flex-col items-center justify-center gap-3 min-w-[200px] shadow-xl">
-          <span class="text-xs font-bold text-rose-200">سعر الاشتراك بالمقرر</span>
-          <span id="crsPrice" class="text-3xl sm:text-4xl font-black text-amber-300 num-font tracking-wide">0 ج.م</span>
-          <button id="crsActionBtn" onclick="toggleCourseEnrollment()" class="w-full bg-white text-[#7A0B30] font-black text-xs md:text-sm px-6 py-3 rounded-2xl shadow-xl hover:bg-rose-50 transition transform active:scale-95">
-            الاشتراك في هذا المقرر الآن 🚀
-          </button>
-        </div>
+    <!-- زر الرجوع للرئيسية مع اسم المادة -->
+    <div class="flex items-center justify-between pb-3 border-b border-slate-800">
+      <button type="button" onclick="closeCourseView()" class="inline-flex items-center justify-center p-2.5 rounded-2xl bg-[#0F1D2D] border border-slate-800 hover:border-brand transition shadow-lg group cursor-pointer" title="العودة للصفحة الرئيسية">
+        <img src="logo.png" alt="العودة للرئيسية" class="h-8 w-auto object-contain transition-transform group-hover:scale-105" onerror="this.src='logo.png'" />
+      </button>
+      <div class="text-start">
+        <span id="crsCategory" class="text-[10px] font-black px-2.5 py-1 rounded-full bg-amber-400/20 text-amber-300 border border-amber-400/30">مقرر أكاديمي</span>
+        <h2 id="crsTitle" class="text-base sm:text-lg font-black text-white mt-1">اسم الكورس</h2>
       </div>
     </div>
 
-   <div class="grid lg:grid-cols-12 gap-8">
-      
-      <!-- المنطقة الرئيسية: مشغل الفيديو وملفات الـ PDF (8 أعمدة) -->
-      <div class="lg:col-span-8 space-y-5">
-<div id="videoPlayerContainer" class="rounded-3xl overflow-hidden bg-[#0F1D2D] border border-slate-800 aspect-video relative flex items-center justify-center shadow-lg select-none">
-  <!-- العلامة المائية -->
-  <div id="videoWatermark" class="hidden absolute z-30 pointer-events-none text-slate-300/40 font-bold text-xs md:text-sm tracking-wide transition-all duration-1000 select-none">
-    <span id="wmStudentData"></span>
-  </div>
+    <!-- 1. بانر الاشتراك (يظهر للزوار فقط ويختفي تلقائياً للمشتركين) -->
+    <div id="courseGuestBanner" class="rounded-3xl bg-gradient-to-l from-[#5E0824] via-[#7A0B30] to-[#4A051B] p-6 sm:p-8 text-white shadow-xl flex flex-col sm:flex-row items-center justify-between gap-6 border border-white/10">
+      <div class="space-y-2 text-center sm:text-start">
+        <span class="text-xs font-bold text-rose-200">سعر الاشتراك بالمقرر والترم بالكامل:</span>
+        <div id="crsPrice" class="text-3xl sm:text-4xl font-black text-amber-300 num-font tracking-wide">0 ج.م</div>
+        <p id="crsDesc" class="text-xs opacity-85 max-w-xl leading-5 text-rose-100"></p>
+      </div>
+      <button id="crsActionBtn" onclick="toggleCourseEnrollment()" class="w-full sm:w-auto bg-white text-[#7A0B30] font-black text-xs md:text-sm px-8 py-3.5 rounded-2xl shadow-xl hover:bg-rose-50 transition transform active:scale-95 cursor-pointer">
+        الاشتراك في هذا المقرر الآن 🚀
+      </button>
+    </div>
 
-  <!-- زر التكبير المخصص الذي يُبقي العلامة المائية فوق الشاشة -->
-  <button type="button" onclick="toggleCustomFullscreen()" class="absolute bottom-3 end-3 z-40 bg-black/60 hover:bg-black/90 text-white p-2 rounded-xl border border-white/20 text-xs font-bold transition flex items-center gap-1 cursor-pointer">
-    <span id="fsIcon">⛶</span>
-    <span class="hidden sm:inline text-[10px]">ملء الشاشة</span>
-  </button>
+    <!-- 2. منطقة عرض الشرح والفهرس الشامل (مالئة للشاشة) -->
+    <div class="space-y-6">
 
-  <div id="videoPlaceholder" class="text-center p-6 space-y-3 z-10">
-    <div class="w-16 h-16 rounded-full bg-brand/30 text-rose-400 flex items-center justify-center text-3xl mx-auto border border-brand/50">▶</div>
-    <h3 class="font-black text-sm md:text-base text-white">اضغط على "المقدمة" لمشاهدة المعاينة المجانية</h3>
-    <p class="text-xs text-slate-400">يمكنك مشاهدة شرح مقدمة المقرر مجاناً قبل الاشتراك</p>
-  </div>
-  <iframe id="videoIframe" class="hidden w-full h-full border-0 relative z-0" src="" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-</div>
-
-        <!-- تفاصيل المحاضرة الحالية -->
-        <div class="rounded-2xl bg-[#0F1D2D] border border-slate-800 p-5 space-y-2">
-          <h3 id="currentLessonTitle" class="font-black text-sm md:text-base text-amber-300">اختر محاضرة من الفهرس</h3>
-          <p id="currentLessonDesc" class="text-xs text-slate-400 leading-5">اضغط على أي درس في القائمة الجانبية لعرضه أو فتحه.</p>
-        </div>
-
-        <!-- حاوية الـ PDF المحمية -->
-        <div id="pdfViewerContainer" class="hidden rounded-3xl overflow-hidden bg-[#0F1D2D] border border-slate-800 p-2">
-          <iframe id="pdfIframe" class="w-full h-[550px] rounded-2xl border-0" src=""></iframe>
-        </div>
-
-        <!-- نافذة اختبار الـ MCQ التفاعلي للدرس -->
-        <div id="quizSection" class="hidden rounded-3xl bg-[#0F1D2D] border border-slate-800 p-6 space-y-5">
-          <div class="flex items-center justify-between border-b border-slate-800 pb-3">
-            <div>
-              <h3 class="text-sm md:text-base font-black text-amber-300 flex items-center gap-2">
-                <span>📝</span> اختبار تقييمي على المحاضرة
-              </h3>
-              <p class="text-xs text-slate-400">أجب عن الأسئلة التالية لاختبار فهمك واستيعابك للدرس</p>
-            </div>
-            <span id="quizScoreBadge" class="hidden text-xs font-black px-3 py-1 rounded-xl bg-emerald-950 text-emerald-400 border border-emerald-800/40"></span>
+      <!-- مشغل الفيديو المحمي (يكون مخفياً في البداية ولا يشتغل إلا عند طلب الطالب) -->
+      <div id="videoContainerWrapper" class="hidden space-y-3">
+        <div id="videoPlayerContainer" class="rounded-3xl overflow-hidden bg-[#0F1D2D] border border-slate-800 aspect-video relative flex items-center justify-center shadow-2xl select-none">
+          <div id="videoWatermark" class="hidden absolute z-30 pointer-events-none text-slate-300/40 font-bold text-xs md:text-sm tracking-wide transition-all duration-1000 select-none">
+            <span id="wmStudentData"></span>
           </div>
-
-          <form id="studentQuizForm" class="space-y-4">
-            <div id="quizQuestionsList" class="space-y-4"></div>
-            <button type="submit" id="submitQuizBtn" class="w-full py-3 rounded-xl bg-brand hover:bg-rose-900 text-white font-black text-xs md:text-sm shadow-xl transition">
-              تسليم الإجابات واعتماد النتيجة ✨
-            </button>
-          </form>
+          <button type="button" onclick="toggleCustomFullscreen()" class="absolute bottom-3 end-3 z-40 bg-black/60 hover:bg-black/90 text-white p-2 rounded-xl border border-white/20 text-xs font-bold transition flex items-center gap-1 cursor-pointer">
+            <span id="fsIcon">⛶</span>
+            <span class="hidden sm:inline text-[10px]">ملء الشاشة</span>
+          </button>
+          <iframe id="videoIframe" class="w-full h-full border-0" src="" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </div>
+        <div class="flex items-center justify-between p-3.5 rounded-2xl bg-[#0F1D2D] border border-slate-800">
+          <div>
+            <h3 id="currentLessonTitle" class="font-black text-sm text-amber-300">جارٍ التشغيل...</h3>
+            <p id="currentLessonDesc" class="text-xs text-slate-400 mt-0.5"></p>
+          </div>
+          <button onclick="closeVideoPlayer()" class="text-xs text-rose-400 hover:text-white px-3 py-1.5 rounded-xl bg-slate-800 transition">إغلاق الفيديو ✕</button>
         </div>
       </div>
 
-      <!-- الفهرس والمحتويات (4 أعمدة) -->
-      <div class="lg:col-span-4 space-y-4">
-        <div class="flex items-center justify-between">
-          <h3 class="font-black text-sm text-slate-200">فهرس المحاضرات والسكاشن</h3>
-          <span id="unlockedCountBadge" class="text-[10px] font-bold px-2 py-0.5 rounded bg-slate-800 text-rose-400">1 مفتوح</span>
+      <!-- عارض الـ PDF المحمي -->
+      <div id="pdfViewerContainer" class="hidden rounded-3xl overflow-hidden bg-[#0F1D2D] border border-slate-800 p-3 space-y-2">
+        <div class="flex justify-between items-center px-2">
+          <span class="text-xs font-black text-amber-300">📑 معاينة المذكرات والتفريغات</span>
+          <button onclick="document.getElementById('pdfViewerContainer').classList.add('hidden')" class="text-xs text-rose-400 hover:text-white px-3 py-1 rounded-lg bg-slate-800 transition">إغلاق ✕</button>
         </div>
+        <iframe id="pdfIframe" class="w-full h-[600px] rounded-2xl border-0" src=""></iframe>
+      </div>
 
-        <div id="lessonsList" class="space-y-3 max-h-[600px] overflow-y-auto pe-1"></div>
+      <!-- نافذة اختبار الـ MCQ -->
+      <div id="quizSection" class="hidden rounded-3xl bg-[#0F1D2D] border border-slate-800 p-6 space-y-4">
+        <div class="flex items-center justify-between border-b border-slate-800 pb-3">
+          <h3 class="text-sm font-black text-amber-300 flex items-center gap-2"><span>📝</span> اختبار تقييمي على المحاضرة</h3>
+          <span id="quizScoreBadge" class="hidden text-xs font-black px-3 py-1 rounded-xl bg-emerald-950 text-emerald-400 border border-emerald-800/40"></span>
+        </div>
+        <form id="studentQuizForm" class="space-y-4">
+          <div id="quizQuestionsList" class="space-y-4"></div>
+          <button type="submit" id="submitQuizBtn" class="w-full py-3 rounded-xl bg-brand hover:bg-rose-900 text-white font-black text-xs shadow-xl transition">تسليم الإجابات واعتماد النتيجة ✨</button>
+        </form>
+      </div>
+
+      <!-- فهرس المحاضرات والسكاشن الممتد (عرض كامل وواضح) -->
+      <div class="space-y-4">
+        <div class="flex items-center justify-between">
+          <h3 class="font-black text-sm sm:text-base text-slate-200">فهرس المحاضرات والسكاشن المتاحة</h3>
+          <span id="unlockedCountBadge" class="text-xs font-bold px-3 py-1 rounded-full bg-[#0F1D2D] border border-slate-800 text-rose-400"></span>
+        </div>
+        <div id="lessonsList" class="space-y-3"></div>
       </div>
 
     </div>
@@ -983,78 +966,11 @@ const translations = {
     foot_rights: "All Rights Reserved © 2026 KHEDR & PHYSIO"
   }
 };
-// فتح لوحة الطالب داخل نفس الصفحة
-window.openDashboardInternal = function() {
-  if (!window.isUserLoggedIn) {
-    openAuthView('login');
-    return;
-  }
-  const enrolled = window.currentUserData?.enrolledCourses || [];
-  if (enrolled.length === 0) {
-    alert("🔒 لا يمكنك الدخول للوحة الطالب حتى تقوم بتفعيل اشتراكك في مقرر واحد على الأقل.");
-    const coursesSec = document.getElementById("courses");
-    if (coursesSec) coursesSec.scrollIntoView({ behavior: "smooth" });
-    return;
-  }
 
-  // إخفاء أقسام الموقع وإظهار اللوحة
-  ["hero", "years", "courses", "features", "honors", "reviews", "instructor", "authSection", "mainFooter", "supportFloatingWidget"].forEach(id => {
-    const el = document.getElementById(id);
-    if (el) el.classList.add("hidden");
-  });
 
-  const dashView = document.getElementById("internalDashboardView");
-  if (dashView) {
-    dashView.classList.remove("hidden");
-    renderInternalDashboardUI();
-  }
-  window.scrollTo({ top: 0, behavior: "smooth" });
-};
 
-// إغلاق لوحة الطالب والعودة للموقع
-window.closeDashboardInternal = function() {
-  const dashView = document.getElementById("internalDashboardView");
-  if (dashView) dashView.classList.add("hidden");
 
-  ["hero", "years", "courses", "features", "honors", "reviews", "instructor", "mainFooter", "supportFloatingWidget"].forEach(id => {
-    const el = document.getElementById(id);
-    if (el) el.classList.remove("hidden");
-  });
-  window.scrollTo({ top: 0, behavior: "smooth" });
-};
 
-function renderInternalDashboardUI() {
-  const user = window.currentUserData;
-  const authUser = window.authInstance?.currentUser;
-  const name = user?.fullName || authUser?.displayName || "طالب مسجل";
-  const enrolled = user?.enrolledCourses || [];
-
-  const greeting = document.getElementById("dashGreeting");
-  if (greeting) greeting.textContent = `مرحبًا يا دكتور ${name} 👋`;
-
-  const countEl = document.getElementById("dashCourseCount");
-  if (countEl) countEl.textContent = `${enrolled.length} مقررات مفعلة 🔓`;
-
-  const grid = document.getElementById("dashEnrolledGrid");
-  if (grid) {
-    grid.innerHTML = enrolled.map(cId => {
-      const crs = window.catalogData[cId] || { title: cId, desc: "مقرر مفعل" };
-      const title = typeof crs.title === "object" ? crs.title[currentLang] : crs.title;
-      return `
-        <div class="p-5 rounded-2xl border border-slate-800 bg-[#0F1D2D] flex flex-col justify-between shadow-md card-hover">
-          <div class="space-y-2">
-            <span class="text-2xl">🩺</span>
-            <h4 class="text-xs sm:text-sm font-black text-white">${title}</h4>
-            <p class="text-[11px] text-slate-400 line-clamp-2">${typeof crs.desc === "object" ? crs.desc[currentLang] : crs.desc}</p>
-          </div>
-          <button onclick="closeDashboardInternal(); openCourseView('${cId}');" class="mt-4 w-full py-2 rounded-xl bg-brand text-white font-black text-xs hover:bg-rose-900 transition">
-            دخول المحاضرات والملفات ←
-          </button>
-        </div>
-      `;
-    }).join("");
-  }
-}
 window.openAuthView = function(tab = 'login') {
   const authSec = document.getElementById("authSection");
   if (authSec) {
@@ -1203,9 +1119,7 @@ window.catalogData = {
     price: "399",
     oldPrice: "550.00",
     img: "image/med_term.png",
-    lessons: [
-      { id: "mt_1", title: { ar: "01. مقدمة تركيب المصطلحات الطبية", en: "01. Introduction to Medical Language" }, duration: { ar: "30 دقيقة", en: "30 Mins" }, isFree: true, desc: { ar: "مقدمة تركيب وفهم الكلمات والمصطلحات الطبية مجاناً.", en: "Free overview on word structure, roots, and prefixes." } }
-    ]
+    lessons: []
   },
   pkg_y1s1: {
     id: "pkg_y1s1",
@@ -1256,9 +1170,7 @@ window.catalogData = {
     price: "599",
     oldPrice: "750.00",
     img: "image/anatomy1.png",
-    lessons: [
-      { id: "a1_1", title: { ar: "01. الأوضاع والمصطلحات التشريحية", en: "01. Anatomical Terminology & Position" }, duration: { ar: "25 دقيقة", en: "25 Mins" }, isFree: true, desc: { ar: "المقدمة والأوضاع التشريحية الأساسية مجاناً.", en: "Free access to fundamental body positions and terms." } }
-    ]
+    lessons: []
   },
   c_phys1: {
     id: "c_phys1",
@@ -1271,9 +1183,7 @@ window.catalogData = {
     price: "499",
     oldPrice: "599.00",
     img: "image/physiology1.png",
-    lessons: [
-      { id: "p1_1", title: { ar: "01. فسيولوجيا الخلية والنقل الغشائي", en: "01. Cell Physiology & Membrane Transport" }, duration: { ar: "30 دقيقة", en: "30 Mins" }, isFree: true, desc: { ar: "فسيولوجيا الخلية والنقل عبر الغشاء مجاناً.", en: "Free trial lecture on cell transport and homeostasis." } }
-    ]
+    lessons: []
   },
   c_hist1: {
     id: "c_hist1",
@@ -1286,9 +1196,7 @@ window.catalogData = {
     price: "399",
     oldPrice: "550.00",
     img: "image/histology1.png",
-    lessons: [
-      { id: "h1_1", title: { ar: "01. تركيب الخلية والأنسجة الطلائية", en: "01. Cell Structure & Epithelium" }, duration: { ar: "25 دقيقة", en: "25 Mins" }, isFree: true, desc: { ar: "مقدمة علم الأنسجة مجاناً.", en: "Free intro to histology." } }
-    ]
+    lessons: []
   },
   c_bioph1: {
     id: "c_bioph1",
@@ -1301,9 +1209,7 @@ window.catalogData = {
     price: "399",
     oldPrice: "550.00",
     img: "image/biophysics1.png",
-    lessons: [
-      { id: "bp1_1", title: { ar: "01. المبادئ الفيزيائية العامة", en: "01. Basic Physical Principles" }, duration: { ar: "20 دقيقة", en: "20 Mins" }, isFree: true, desc: { ar: "المفاهيم الفيزيائية العامة مجاناً.", en: "Free overview on biophysical concepts." } }
-    ]
+    lessons: []
   },
   c_anat3: {
     id: "c_anat3",
@@ -1316,9 +1222,7 @@ window.catalogData = {
     price: "599",
     oldPrice: "650.00",
     img: "image/anatomy3.png",
-    lessons: [
-      { id: "a3_1", title: { ar: "01. تشريح الرأس والعنق", en: "01. Head & Neck Regional Anatomy" }, duration: { ar: "35 دقيقة", en: "35 Mins" }, isFree: true, desc: { ar: "تشريح عضلات وأعصاب الرأس مجاناً.", en: "Free lesson on head and neck muscles." } }
-    ]
+    lessons: []
   },
   c_biomech2: {
     id: "c_biomech2",
@@ -1331,9 +1235,7 @@ window.catalogData = {
     price: "599",
     oldPrice: "750.00",
     img: "image/biomechanics2.png",
-    lessons: [
-      { id: "bm2_1", title: { ar: "01. ميكانيكا مفصل الكتف", en: "01. Shoulder Complex Biomechanics" }, duration: { ar: "40 دقيقة", en: "40 Mins" }, isFree: true, desc: { ar: "حركية مفصل الكتف وقوى العضلات مجاناً.", en: "Free overview on shoulder joint kinematics." } }
-    ]
+    lessons: []
   },
   c_hydro: {
     id: "c_hydro",
@@ -1346,9 +1248,7 @@ window.catalogData = {
     price: "499",
     oldPrice: "600.00",
     img: "image/hydrotherapy.png",
-    lessons: [
-      { id: "hy_1", title: { ar: "01. الخواص الفيزيائية للماء", en: "01. Physical Properties of Water" }, duration: { ar: "30 دقيقة", en: "30 Mins" }, isFree: true, desc: { ar: "خواص الماء وقوة الطفو مجاناً.", en: "Free lesson on water properties." } }
-    ]
+    lessons: []
   },
   c_electro: {
     id: "c_electro",
@@ -1361,9 +1261,7 @@ window.catalogData = {
     price: "399",
     oldPrice: "500.00",
     img: "image/electrotherapy.png",
-    lessons: [
-      { id: "el_1", title: { ar: "01. مبادئ التيارات الكهربية والأمان", en: "01. Principles of Currents & Safety" }, duration: { ar: "30 دقيقة", en: "30 Mins" }, isFree: true, desc: { ar: "أساسيات التيارات والأمان الكهربائي مجاناً.", en: "Free electrical safety principles." } }
-    ]
+    lessons: []
   },
   c_tests: {
     id: "c_tests",
@@ -1376,9 +1274,7 @@ window.catalogData = {
     price: "599",
     oldPrice: "650.00",
     img: "image/tests_measurements.png",
-    lessons: [
-      { id: "tm_1", title: { ar: "01. مبادئ الفحص الإكلينيكي", en: "01. Clinical Assessment Principles" }, duration: { ar: "30 دقيقة", en: "30 Mins" }, isFree: true, desc: { ar: "مبادئ الفحص الإكلينيكي مجاناً.", en: "Free overview on clinical tests." } }
-    ]
+    lessons: []
   },
   c_neuro: {
     id: "c_neuro",
@@ -1391,9 +1287,7 @@ window.catalogData = {
     price: "499",
     oldPrice: "650.00",
     img: "image/neurophysiology.png",
-    lessons: [
-      { id: "np_1", title: { ar: "01. الخلية العصبية والنقل المشبكي", en: "01. Neuron & Synaptic Transmission" }, duration: { ar: "35 دقيقة", en: "35 Mins" }, isFree: true, desc: { ar: "الخلية العصبية ونواقل الإشارات مجاناً.", en: "Free intro to neurophysiology." } }
-    ]
+    lessons: []
   }
 };
 
@@ -1564,11 +1458,15 @@ function openPackageDetails(pkgKey) {
   if (!data) return;
   currentOpenedPkgId = pkgKey;
 
-  document.getElementById("pkgTitle").textContent = data.title;
-  document.getElementById("pkgBadge").textContent = data.badge;
-  document.getElementById("pkgSub").textContent = data.sub;
-  document.getElementById("pkgPrice").textContent = data.price;
-  document.getElementById("pkgOldPrice").textContent = data.oldPrice;
+  const titleText = typeof data.title === "object" ? data.title[currentLang] : data.title;
+  const subText = typeof data.sub === "object" ? data.sub[currentLang] : data.sub;
+  const badgeText = typeof data.badge === "object" ? data.badge[currentLang] : data.badge;
+
+  document.getElementById("pkgTitle").textContent = titleText;
+  document.getElementById("pkgBadge").textContent = badgeText;
+  document.getElementById("pkgSub").textContent = subText;
+  document.getElementById("pkgPrice").textContent = `${data.price} ج.م`;
+  document.getElementById("pkgOldPrice").textContent = `${data.oldPrice} ج.م`;
   document.getElementById("pkgSave").textContent = "خصم مخصص للترم الأول";
 
   const listEl = document.getElementById("pkgCoursesList");
@@ -1584,13 +1482,33 @@ function openPackageDetails(pkgKey) {
     </div>
   `).join("");
 
-  ["hero", "years", "courses", "features", "honors", "reviews", "instructor", "authSection", "mainFooter", "supportFloatingWidget"].forEach(id => {
+  ["mainNavbar", "drawer", "hero", "years", "courses", "features", "honors", "reviews", "instructor", "authSection", "mainFooter", "supportFloatingWidget"].forEach(id => {
     const el = document.getElementById(id);
     if (el) el.classList.add("hidden");
   });
 
   const view = document.getElementById("packageDetailsView");
-  view.classList.remove("hidden");
+  if (view) view.classList.remove("hidden");
+  window.scrollTo({ top: 0, behavior: "smooth" });
+}
+
+function closePackageDetails() {
+  document.getElementById("packageDetailsView").classList.add("hidden");
+  
+  ["mainNavbar", "hero", "courses", "features", "honors", "reviews", "instructor", "mainFooter"].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.classList.remove("hidden");
+  });
+
+  if (!window.isUserLoggedIn) {
+    const years = document.getElementById("years");
+    const filter = document.getElementById("coursesFilterBar");
+    const support = document.getElementById("supportFloatingWidget");
+    if (years) years.classList.remove("hidden");
+    if (filter) filter.classList.remove("hidden");
+    if (support) support.classList.remove("hidden");
+  }
+
   window.scrollTo({ top: 0, behavior: "smooth" });
 }
 // إغلاق تفاصيل الباقة وإظهار الهيدر مجدداً
@@ -1613,42 +1531,7 @@ function closePackageDetails() {
 
   window.scrollTo({ top: 0, behavior: "smooth" });
 }
-// فتح تفاصيل الباقة وإخفاء الهيدر
-function openPackageDetails(pkgKey) {
-  const data = window.catalogData[pkgKey];
-  if (!data) return;
-  currentOpenedPkgId = pkgKey;
 
-  document.getElementById("pkgTitle").textContent = data.title;
-  document.getElementById("pkgBadge").textContent = data.badge;
-  document.getElementById("pkgSub").textContent = data.sub;
-  document.getElementById("pkgPrice").textContent = data.price;
-  document.getElementById("pkgOldPrice").textContent = data.oldPrice;
-  document.getElementById("pkgSave").textContent = "خصم مخصص للترم الأول";
-
-  const listEl = document.getElementById("pkgCoursesList");
-  listEl.innerHTML = data.courses.map(c => `
-    <div class="rounded-2xl border border-slate-800 bg-[#0F1D2D] p-4 flex items-center justify-between shadow-sm">
-      <div>
-        <h4 class="text-xs md:text-sm font-black text-slate-100">${c.name}</h4>
-        <p class="text-[11px] opacity-60 mt-1 text-slate-400">${c.desc}</p>
-      </div>
-      <button onclick="closePackageDetails(); openCourseView('${c.id}')" class="text-[10px] font-black px-3 py-1.5 rounded-lg bg-brand text-white hover:bg-rose-900 shrink-0">
-        معاينة المادة
-      </button>
-    </div>
-  `).join("");
-
-  // إخفاء أقسام الموقع + إخفاء شريط الهيدر العلوي
-  ["mainNavbar", "drawer", "hero", "years", "courses", "features", "honors", "reviews", "instructor", "authSection", "mainFooter", "supportFloatingWidget"].forEach(id => {
-    const el = document.getElementById(id);
-    if (el) el.classList.add("hidden");
-  });
-
-  const view = document.getElementById("packageDetailsView");
-  if (view) view.classList.remove("hidden");
-  window.scrollTo({ top: 0, behavior: "smooth" });
-}
 // إغلاق صفحة الكورس وإظهار الهيدر مجدداً
 function closeCourseView() {
   document.getElementById("courseView").classList.add("hidden");
@@ -1670,63 +1553,46 @@ function closeCourseView() {
 
   window.scrollTo({ top: 0, behavior: "smooth" });
 }
-// فتح صفحة الكورس وإخفاء الهيدر
+// فتح صفحة الكورس
 function openCourseView(courseId) {
   const crs = window.catalogData[courseId] || window.catalogData["c_anat1"];
   window.currentItemData = crs;
-
-  // تصفير المشغل والفيديو القديم فوراً لمنع تسريب أي فيديو
-  const iframe = document.getElementById("videoIframe");
-  const placeholder = document.getElementById("videoPlaceholder");
-  if (iframe) { iframe.src = ""; iframe.classList.add("hidden"); }
-  if (placeholder) { placeholder.classList.remove("hidden"); }
-  
 
   const catEl = document.getElementById("crsCategory");
   const titleEl = document.getElementById("crsTitle");
   const descEl = document.getElementById("crsDesc");
   const priceEl = document.getElementById("crsPrice");
-  const bannerEl = document.getElementById("enrollmentStatusBanner");
-  const actionBtn = document.getElementById("crsActionBtn");
+  const guestBanner = document.getElementById("courseGuestBanner");
 
   if (catEl) catEl.textContent = typeof crs.category === "object" ? crs.category[currentLang] : crs.category;
   if (titleEl) titleEl.textContent = typeof crs.title === "object" ? crs.title[currentLang] : crs.title;
   if (descEl) descEl.textContent = typeof crs.desc === "object" ? crs.desc[currentLang] : crs.desc;
   if (priceEl) priceEl.textContent = `${crs.price} ج.م`;
 
-  if (crs.isEnrolled) {
-    if (bannerEl) {
-      bannerEl.innerHTML = `
-        <span class="inline-flex items-center gap-2 text-xs font-black text-emerald-300 bg-emerald-950/60 px-3.5 py-1.5 rounded-xl border border-emerald-500/40">
-          <span>✓</span> تم تفعيل اشتراكك بالكامل — جميع المحاضرات والملفات متاحة
-        </span>
-      `;
-    }
-    if (actionBtn) {
-      actionBtn.textContent = "أنت مشترك في هذا المقرر ✓";
-      actionBtn.className = "w-full bg-emerald-600 text-white font-black text-xs md:text-sm px-6 py-3 rounded-2xl shadow-xl cursor-default";
-      actionBtn.onclick = null;
-    }
-  } else {
-    if (bannerEl) {
-      bannerEl.innerHTML = `
-        <span class="inline-flex items-center gap-2 text-xs font-bold text-amber-300 bg-black/30 px-3 py-1.5 rounded-xl border border-amber-300/30">
-          <span>🔓</span> يتوفر كليب معاينة مجاني (المقدمة) — باقي المحاضرات مغلقة
-        </span>
-      `;
-    }
-    if (actionBtn) {
-      actionBtn.textContent = "الاشتراك في هذا المقرر الآن 🚀";
-      actionBtn.className = "w-full bg-white text-[#7A0B30] font-black text-xs md:text-sm px-6 py-3 rounded-2xl shadow-xl hover:bg-rose-50 transition transform active:scale-95";
-      actionBtn.onclick = toggleCourseEnrollment;
+  // إخفاء بانر الشراء تماماً إذا كان الطالب مشتركاً
+  if (guestBanner) {
+    if (crs.isEnrolled) {
+      guestBanner.classList.add("hidden");
+    } else {
+      guestBanner.classList.remove("hidden");
     }
   }
 
+  // تصفير وإخفاء مشغلات الفيديو والـ PDF والكويز لتبدأ الصفحة نظيفة
+  closeVideoPlayer();
+  const pdfContainer = document.getElementById("pdfViewerContainer");
+  const pdfIframe = document.getElementById("pdfIframe");
+  const quizSection = document.getElementById("quizSection");
+  if (pdfIframe) pdfIframe.src = "";
+  if (pdfContainer) pdfContainer.classList.add("hidden");
+  if (quizSection) quizSection.classList.add("hidden");
+
+  // رسم المحاضرات الافتراضية
   if (crs.lessons) {
     window.renderDynamicLessonsAccordion(crs.lessons);
   }
 
-  // إخفاء أقسام الموقع + إخفاء شريط الهيدر العلوي والقائمة
+  // إخفاء باقي أقسام الموقع
   ["mainNavbar", "drawer", "hero", "years", "courses", "features", "honors", "reviews", "instructor", "authSection", "mainFooter", "supportFloatingWidget"].forEach(id => {
     const el = document.getElementById(id);
     if (el) el.classList.add("hidden");
@@ -1734,7 +1600,6 @@ function openCourseView(courseId) {
 
   const courseView = document.getElementById("courseView");
   if (courseView) courseView.classList.remove("hidden");
-  
   window.scrollTo({ top: 0, behavior: "smooth" });
 
   if (typeof window.loadFirestoreLectures === "function") {
@@ -1742,8 +1607,16 @@ function openCourseView(courseId) {
   }
 }
 
+// دالة إغلاق مشغل الفيديو
+window.closeVideoPlayer = function() {
+  const wrapper = document.getElementById("videoContainerWrapper");
+  const iframe = document.getElementById("videoIframe");
+  if (iframe) iframe.src = "";
+  if (wrapper) wrapper.classList.add("hidden");
+  if (typeof stopWatermark === "function") stopWatermark();
+};
 
-
+// رسم قائمة المحاضرات التفاعلية وحل مشكلة [object Object]
 window.renderDynamicLessonsAccordion = function(lessonsList) {
   const container = document.getElementById("lessonsList");
   if (!container) return;
@@ -1761,126 +1634,116 @@ window.renderDynamicLessonsAccordion = function(lessonsList) {
   }
 
   container.innerHTML = lessonsList.map((lec, index) => {
-    // التأكد من حالة المجانية سواء كانت Boolean أو String
     const isFree = lec.isFree === true || lec.isFree === "true";
     const canAccess = isFree || isEnrolled;
     const isLocked = !canAccess;
 
+    // استخراج نص العنوان الصحيح وتفادي [object Object]
+    let lecTitle = lec.title;
+    if (typeof lecTitle === "object" && lecTitle !== null) {
+      lecTitle = lecTitle[currentLang] || lecTitle.ar || lecTitle.en || "محاضرة";
+    }
+    let lecDesc = lec.desc || "";
+    if (typeof lecDesc === "object" && lecDesc !== null) {
+      lecDesc = lecDesc[currentLang] || lecDesc.ar || lecDesc.en || "";
+    }
+
     return `
-      <!-- كارت المحاضرة الرئيسي (Accordion) -->
       <div class="rounded-2xl border border-slate-800 bg-[#0F1D2D] overflow-hidden transition-all duration-300 shadow-md">
         
-        <!-- عنوان المحاضرة الرئيسي -->
+        <!-- عنوان المحاضرة -->
         <button type="button" onclick="toggleLectureAccordion('lec_body_${index}')" class="w-full p-4 flex items-center justify-between text-start hover:bg-slate-800/40 transition">
-<div class="relative flex items-center gap-3">
-              <span class="w-8 h-8 rounded-xl flex items-center justify-center font-black text-xs ${isLocked ? 'bg-slate-800 text-slate-500' : 'bg-brand text-white'}">
+          <div class="relative flex items-center gap-3">
+            <span class="w-8 h-8 rounded-xl flex items-center justify-center font-black text-xs ${isLocked ? 'bg-slate-800 text-slate-500' : 'bg-brand text-white'}">
               ${isLocked ? '🔒' : index + 1}
             </span>
             <div>
-              <h4 class="text-xs sm:text-sm font-black text-white">${lec.title}</h4>
+              <h4 class="text-xs sm:text-sm font-black text-white">${lecTitle}</h4>
               <span class="text-[10px] text-slate-400 block mt-0.5">
-                ${isFree ? '🔓 معاينة مجانية' : (isLocked ? '🔒 يتطلب اشتراك' : 'محتوى متاح')}
+                ${isFree ? '🔓 معاينة مجانية' : (isLocked ? '🔒 يتطلب اشتراك' : 'محتوى متاح بالكامل')}
               </span>
             </div>
           </div>
           <span class="text-xs text-slate-400 transition-transform duration-200" id="icon_lec_body_${index}">▼</span>
         </button>
 
-        <!-- التفرعات المنسدلة (فيديو / PDF / كويز) -->
-        <div id="lec_body_${index}" class="${index === 0 ? '' : 'hidden'} border-t border-slate-800/80 bg-[#07111D]/80 p-3 space-y-2">
-          
+        <!-- التفرعات المنسدلة: أزرار واضحة لاختيار الفيديو، الـ PDF، أو الكويز -->
+        <div id="lec_body_${index}" class="border-t border-slate-800/80 bg-[#07111D]/80 p-3 space-y-2">
           ${isLocked ? `
             <div class="p-3 text-center text-[11px] text-amber-300 font-bold bg-amber-950/30 rounded-xl border border-amber-800/30">
               🔒 المحاضرة مغلقة. اشترك في المادة لفتح الفيديو والملفات والكويزات.
             </div>
           ` : `
-            <!-- 1. تفرع الفيديو -->
+            <!-- 1. تشغيل الفيديو عند ضغط الطالب فقط -->
             ${lec.videoUrl ? `
               <div class="p-3 rounded-xl bg-[#0F1D2D] border border-slate-800 flex items-center justify-between">
                 <div class="flex items-center gap-2.5">
                   <span class="text-lg text-rose-400">🎥</span>
                   <div>
-                    <span class="block text-xs font-black text-white">فيديو الشرح التفاعلي</span>
-                    <span class="block text-[10px] text-slate-400">مشاهدة بدقة عالية مع الحماية</span>
+                    <span class="block text-xs font-black text-white">فيديو الشرح</span>
+                    <span class="block text-[10px] text-slate-400">مشاهدة بجودة عالية</span>
                   </div>
                 </div>
-                <button onclick="playLessonVideo('${lec.videoUrl}', '${lec.title.replace(/'/g, "\\'")}', '${(lec.desc || '').replace(/'/g, "\\'")}')" class="px-3.5 py-1.5 rounded-lg bg-brand hover:bg-rose-900 text-white text-[11px] font-black transition shadow cursor-pointer">
+                <button onclick="playLessonVideo('${lec.videoUrl}', '${lecTitle.replace(/'/g, "\\'")}', '${lecDesc.replace(/'/g, "\\'")}')" class="px-3.5 py-1.5 rounded-lg bg-brand hover:bg-rose-900 text-white text-[11px] font-black transition shadow cursor-pointer">
                   تشغيل الفيديو ▶
                 </button>
               </div>
             ` : ''}
 
-            <!-- 2. تفرع ملف الـ PDF -->
+            <!-- 2. فتح ملف الـ PDF -->
             ${lec.pdfUrl ? `
               <div class="p-3 rounded-xl bg-[#0F1D2D] border border-slate-800 flex items-center justify-between">
                 <div class="flex items-center gap-2.5">
                   <span class="text-lg text-amber-400">📑</span>
                   <div>
                     <span class="block text-xs font-black text-white">المذكرات والتفريغات (PDF)</span>
-                    <span class="block text-[10px] text-slate-400">ملخص وملاحظات المحاضرة</span>
+                    <span class="block text-[10px] text-slate-400">ملخص المحاضرة</span>
                   </div>
                 </div>
-                <div class="flex items-center gap-2">
-                  <button onclick="openPdfViewer('${lec.pdfUrl}')" class="px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 text-[11px] font-bold transition cursor-pointer">
-                    معاينة 👁️
-                  </button>
-                </div>
+                <button onclick="openPdfViewer('${lec.pdfUrl}')" class="px-3.5 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 text-[11px] font-bold transition cursor-pointer">
+                  معاينة 👁️
+                </button>
               </div>
             ` : ''}
 
-            <!-- 3. تفرع الكويز التفاعلي -->
+            <!-- 3. تشغيل الكويز -->
             ${lec.quiz && lec.quiz.length > 0 ? `
               <div class="p-3 rounded-xl bg-[#0F1D2D] border border-slate-800 flex items-center justify-between">
                 <div class="flex items-center gap-2.5">
                   <span class="text-lg text-emerald-400">📝</span>
                   <div>
-                    <span class="block text-xs font-black text-white">اختبار تقييمي للمحاضرة</span>
-                    <span class="block text-[10px] text-slate-400">${lec.quiz.length} أسئلة MCQ مع التفسير</span>
+                    <span class="block text-xs font-black text-white">اختبار تقييمي</span>
+                    <span class="block text-[10px] text-slate-400">${lec.quiz.length} أسئلة MCQ</span>
                   </div>
                 </div>
-                <button onclick='startInteractiveQuiz(${JSON.stringify(lec.quiz)}, "${lec.id || index}")' class="px-3 py-1.5 rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white text-[11px] font-black transition shadow cursor-pointer">
+                <button onclick='startInteractiveQuiz(${JSON.stringify(lec.quiz)}, "${lec.id || index}")' class="px-3.5 py-1.5 rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white text-[11px] font-black transition shadow cursor-pointer">
                   بدء الاختبار ⏱️
                 </button>
               </div>
             ` : ''}
           `}
-
         </div>
       </div>
     `;
   }).join("");
+};
 
-// تصفير وقفل المشغل فوراً إذا لم يكن هناك درس مجاني أو لم يكن الطالب مشتركاً
+// تحديث دالة playLessonVideo لإظهار المشغل والنزول إليه
+window.playLessonVideo = function(videoUrl, title, desc) {
+  const wrapper = document.getElementById("videoContainerWrapper");
   const iframe = document.getElementById("videoIframe");
-  const placeholder = document.getElementById("videoPlaceholder");
-  const pdfContainer = document.getElementById("pdfViewerContainer");
-  const pdfIframe = document.getElementById("pdfIframe");
-  const quizSection = document.getElementById("quizSection");
+  
+  if (!wrapper || !iframe || !videoUrl) return;
 
-  if (pdfIframe) pdfIframe.src = "";
-  if (pdfContainer) pdfContainer.classList.add("hidden");
-  if (quizSection) quizSection.classList.add("hidden");
+  iframe.src = formatEmbedUrl(videoUrl);
+  wrapper.classList.remove("hidden");
 
-  const firstAvailable = lessonsList.find(l => (l.isFree === true || l.isFree === "true") || isEnrolled);
+  if (title) document.getElementById("currentLessonTitle").textContent = title;
+  if (desc) document.getElementById("currentLessonDesc").textContent = desc;
 
-  if (firstAvailable && firstAvailable.videoUrl) {
-    playLessonVideo(firstAvailable.videoUrl, firstAvailable.title, firstAvailable.desc);
-  } else {
-    // قفل وتفريغ المشغل تماماً
-    if (iframe) {
-      iframe.src = "";
-      iframe.classList.add("hidden");
-    }
-    if (placeholder) {
-      placeholder.classList.remove("hidden");
-      placeholder.querySelector("h3").textContent = "🔒 المحاضرات مغلقة للمشتركين";
-      placeholder.querySelector("p").textContent = "اشترك في المقرر الآن لفتح جميع الفيديوهات والتفريغات.";
-    }
-    const curTitle = document.getElementById("currentLessonTitle");
-    const curDesc = document.getElementById("currentLessonDesc");
-    if (curTitle) curTitle.textContent = "🔒 المحتوى مقفل";
-    if (curDesc) curDesc.textContent = "اضغط على 'الاشتراك في هذا المقرر الآن' لتفعيل المشاهدة والملفات.";
-  }
+  wrapper.scrollIntoView({ behavior: "smooth", block: "center" });
+
+  if (typeof startWatermark === "function") startWatermark();
 };
 
 // دالة فتح وغلق التفرعات
@@ -1895,77 +1758,7 @@ window.toggleLectureAccordion = function(id) {
   }
 };
 
-function selectLesson(lessonId) {
-  const crs = window.currentItemData;
-  if (!crs || !crs.lessons) return;
-  const lesson = crs.lessons.find(l => l.id === lessonId);
-  if (!lesson) return;
 
-  const iframe = document.getElementById("videoIframe");
-  const placeholder = document.getElementById("videoPlaceholder");
-  const pdfContainer = document.getElementById("pdfViewerContainer");
-  const pdfIframe = document.getElementById("pdfIframe");
-
-  // 1. التحقق من تسجيل الدخول
-  if (!window.isUserLoggedIn) {
-    alert("🔒 يرجى تسجيل الدخول أو إنشاء حساب جديد أولاً لمشاهدة المحاضرات.");
-    closeCourseView();
-    const authSection = document.getElementById("authSection");
-    if (authSection) {
-      authSection.classList.remove("hidden");
-      authSection.scrollIntoView({ behavior: "smooth", block: "center" });
-      setAuthTab("login");
-    }
-    return;
-  }
-
-  // 2. التحقق من الاشتراك
-  const canAccess = lesson.isFree || crs.isEnrolled;
-
-  if (!canAccess) {
-    // تفريغ المشغل تماماً لمنع استخراج أي رابط
-    if (iframe) { iframe.src = ""; iframe.classList.add("hidden"); }
-    if (pdfIframe) { pdfIframe.src = ""; }
-    if (pdfContainer) pdfContainer.classList.add("hidden");
-    if (placeholder) {
-      placeholder.classList.remove("hidden");
-      placeholder.querySelector("h3").textContent = "🔒 المحتوى مقفول للمشتركين فقط";
-      placeholder.querySelector("p").textContent = "اضغط على زر 'الاشتراك في الكورس الآن' بالأعلى لتفعيل كامل المحاضرات.";
-    }
-    alert("🔒 هذه المحاضرة مقفلة، يرجى تفعيل الاشتراك لمشاهدة الفيديو والملفات.");
-    return;
-  }
-
-  // 3. حقن البيانات والروابط فقط بعد التأكد من الصلاحية
-  document.getElementById("currentLessonTitle").textContent = lesson.title;
-  document.getElementById("currentLessonDesc").textContent = lesson.desc;
-
-  // حقن الفيديو إذا وجد رابط
-  if (lesson.videoUrl) {
-    iframe.src = lesson.videoUrl;
-    iframe.classList.remove("hidden");
-    placeholder.classList.add("hidden");
-  } else {
-    iframe.src = "";
-    iframe.classList.add("hidden");
-    placeholder.classList.remove("hidden");
-    placeholder.querySelector("h3").textContent = `🎥 ${lesson.title}`;
-    placeholder.querySelector("p").textContent = "المحاضرة قيد التجهيز وستتاح قريباً.";
-  }
-
-  // حقن ملف الـ PDF الآمن إذا وجد
-  if (lesson.pdfUrl) {
-    pdfIframe.src = lesson.pdfUrl + "#toolbar=0";
-    pdfContainer.classList.remove("hidden");
-  } else {
-    if (pdfIframe) pdfIframe.src = "";
-    if (pdfContainer) pdfContainer.classList.add("hidden");
-  }
-
-  if (typeof window.renderLessonQuiz === "function") {
-  window.renderLessonQuiz(lesson.quiz);
-}
-}
 
 
 
@@ -2663,36 +2456,6 @@ document.addEventListener("click", (e) => {
     <span class="text-xs text-slate-300 font-bold mt-3 bg-black/60 px-4 py-1.5 rounded-full border border-white/10">🔍 اضغط في أي مكان خارج الصورة للإغلاق</span>
   </div>
 </div>
-<!-- ============ لوحة الطالب المدمجة داخل نفس الصفحة ============ -->
-<div id="internalDashboardView" class="hidden min-h-screen bg-[#07111D] text-slate-100 py-6 px-4 md:px-8 transition-all">
-  <div class="max-w-6xl mx-auto space-y-6">
-    
-    <!-- زر العودة للرئيسية -->
-    <div class="flex items-center justify-between pb-4 border-b border-slate-800">
-<button type="button" onclick="closeDashboardInternal()" class="inline-flex items-center justify-center p-2 rounded-2xl bg-[#0F1D2D] border border-slate-800 hover:border-brand transition shadow-lg group cursor-pointer" title="العودة للصفحة الرئيسية">
-  <img src="logo.png" alt="العودة للرئيسية" class="h-8 w-auto object-contain transition-transform group-hover:scale-105" onerror="this.src='logo.png'" />
-</button>
-      <span class="text-xs font-bold text-amber-400">لوحة المذاكرة التفاعلية 🎓</span>
-    </div>
 
-    <!-- ترويسة الطالب -->
-    <div class="flex items-center justify-between bg-[#0F1D2D] p-5 rounded-2xl border border-slate-800">
-      <div>
-        <h1 class="text-lg sm:text-xl font-black text-white" id="dashGreeting">مرحبًا يا دكتور 👋</h1>
-        <p class="text-xs text-slate-400 mt-0.5" id="dashSub">متابعة مقرراتك وأنشطتك الأكاديمية</p>
-      </div>
-      <div class="flex items-center gap-3">
-        <span class="text-xs font-bold px-3 py-1 rounded-xl bg-emerald-500/20 text-emerald-300 border border-emerald-500/30" id="dashCourseCount">0 مقررات مفعلة</span>
-      </div>
-    </div>
-
-    <!-- شبكة المقررات المفعلة للطالب -->
-    <div class="space-y-3">
-      <h3 class="text-sm font-black text-slate-200">📚 مقرراتك الدراسية المشترك بها:</h3>
-      <div id="dashEnrolledGrid" class="grid sm:grid-cols-2 md:grid-cols-3 gap-4"></div>
-    </div>
-
-  </div>
-</div>
 </body>
 </html>

@@ -325,7 +325,9 @@
 <!-- ============ FIREBASE LOGIC FOR ADMIN ============ -->
 <script type="module">
 import { auth, db, onAuthStateChanged, signOut, doc } from "./firebase-config.js";
-  import { collection, getDocs, addDoc, deleteDoc, updateDoc, query, where } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-firestore.js";
+import { collection, getDocs, addDoc, deleteDoc, updateDoc, query, where, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-firestore.js";
+
+
   // 🔴 ضع هنا إيميلك المسجل به في المنصة
   const ADMIN_EMAILS = [
     "ahmedmohamedhosny100@gmail.com",
@@ -382,13 +384,20 @@ import { auth, db, onAuthStateChanged, signOut, doc } from "./firebase-config.js
       window.location.href = "index.html";
     });
   }
-
-  async function loadAllStudents() {
+async function loadAllStudents() {
     try {
       const snap = await getDocs(collection(db, "students"));
       studentsList = [];
       snap.forEach(docSnap => {
-        studentsList.push({ id: docSnap.id, ...docSnap.data() });
+        const data = docSnap.data();
+        const email = (data.email || "").toLowerCase().trim();
+        
+        // استبعاد أي إيميل مسجل كمشرف من قائمة الطلاب
+        const isSupervisor = ADMIN_EMAILS.some(admin => admin.toLowerCase().trim() === email);
+        
+        if (!isSupervisor) {
+          studentsList.push({ id: docSnap.id, ...data });
+        }
       });
       updateStats();
       renderStudents();
