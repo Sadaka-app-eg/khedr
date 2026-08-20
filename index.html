@@ -1689,7 +1689,6 @@ window.closeVideoPlayer = function() {
   if (typeof stopWatermark === "function") stopWatermark();
 };
 
-// رسم قائمة المحاضرات التفاعلية وحل مشكلة [object Object]
 window.renderDynamicLessonsAccordion = function(lessonsList) {
   const container = document.getElementById("lessonsList");
   if (!container) return;
@@ -1711,7 +1710,6 @@ window.renderDynamicLessonsAccordion = function(lessonsList) {
     const canAccess = isFree || isEnrolled;
     const isLocked = !canAccess;
 
-    // استخراج نص العنوان الصحيح وتفادي [object Object]
     let lecTitle = lec.title;
     if (typeof lecTitle === "object" && lecTitle !== null) {
       lecTitle = lecTitle[currentLang] || lecTitle.ar || lecTitle.en || "محاضرة";
@@ -1740,26 +1738,54 @@ window.renderDynamicLessonsAccordion = function(lessonsList) {
           <span class="text-xs text-slate-400 transition-transform duration-200" id="icon_lec_body_${index}">▼</span>
         </button>
 
-        <!-- التفرعات المنسدلة: أزرار واضحة لاختيار الفيديو، الـ PDF، أو الكويز -->
-        <div id="lec_body_${index}" class="border-t border-slate-800/80 bg-[#07111D]/80 p-3 space-y-2">
+        <!-- التفرعات المنسدلة -->
+        <div id="lec_body_${index}" class="border-t border-slate-800/80 bg-[#07111D]/80 p-3 space-y-3">
           ${isLocked ? `
             <div class="p-3 text-center text-[11px] text-amber-300 font-bold bg-amber-950/30 rounded-xl border border-amber-800/30">
               🔒 المحاضرة مغلقة. اشترك في المادة لفتح الفيديو والملفات والكويزات.
             </div>
           ` : `
-            <!-- 1. تشغيل الفيديو عند ضغط الطالب فقط -->
+            <!-- 1. صف تشغيل الفيديو والمشغل الداخلي المدمج -->
             ${lec.videoUrl ? `
-              <div class="p-3 rounded-xl bg-[#0F1D2D] border border-slate-800 flex items-center justify-between">
-                <div class="flex items-center gap-2.5">
-                  <span class="text-lg text-rose-400">🎥</span>
-                  <div>
-                    <span class="block text-xs font-black text-white">فيديو الشرح</span>
-                    <span class="block text-[10px] text-slate-400">مشاهدة بجودة عالية</span>
+              <div class="p-3.5 rounded-2xl bg-[#0F1D2D] border border-slate-800 space-y-3">
+                <div class="flex items-center justify-between">
+                  <div class="flex items-center gap-2.5">
+                    <span class="text-lg text-rose-400">🎥</span>
+                    <div>
+                      <span class="block text-xs font-black text-white">فيديو الشرح</span>
+                      <span class="block text-[10px] text-slate-400">مشاهدة بجودة عالية</span>
+                    </div>
+                  </div>
+                  <button id="btn_play_${index}" onclick="playInlineVideo('${index}', '${lec.videoUrl.replace(/'/g, "\\'")}')" class="px-4 py-2 rounded-xl bg-brand hover:bg-rose-900 text-white text-xs font-black transition shadow cursor-pointer">
+                    تشغيل الفيديو ▶
+                  </button>
+                </div>
+
+                <!-- حاوية الفيديو المدمجة الملمومة تحت الزر مباشرة -->
+                <div id="inline_player_${index}" class="hidden pt-2 space-y-2 border-t border-slate-800/80">
+                  <div id="videoContainer_${index}" class="w-full max-w-2xl mx-auto rounded-2xl overflow-hidden bg-black border border-slate-700 aspect-video relative flex items-center justify-center shadow-xl">
+                    
+                    <!-- العلامة المائية للطالب -->
+                    <div id="watermark_${index}" class="hidden absolute z-30 pointer-events-none text-slate-300/40 font-bold text-xs md:text-sm tracking-wide transition-all duration-1000 select-none">
+                      <span class="wm-text"></span>
+                    </div>
+
+                    <!-- زر التكبير الذكي -->
+                    <button type="button" onclick="toggleCustomFullscreen('videoContainer_${index}')" class="absolute bottom-3 end-3 z-40 bg-black/70 hover:bg-black/90 text-white p-2 rounded-xl border border-white/20 text-xs font-bold transition flex items-center gap-1 cursor-pointer">
+                      <span>⛶</span>
+                      <span class="text-[10px]">ملء الشاشة</span>
+                    </button>
+
+                    <iframe id="iframe_${index}" class="w-full h-full border-0" src="" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                  </div>
+
+                  <!-- زر إغلاق الفيديو بجانبه -->
+                  <div class="flex justify-end max-w-2xl mx-auto">
+                    <button onclick="closeInlineVideo('${index}')" class="text-[11px] font-bold text-rose-400 hover:text-white px-3 py-1.5 rounded-xl bg-slate-800 border border-slate-700 transition">
+                      إغلاق الفيديو ✕
+                    </button>
                   </div>
                 </div>
-                <button onclick="playLessonVideo('${lec.videoUrl}', '${lecTitle.replace(/'/g, "\\'")}', '${lecDesc.replace(/'/g, "\\'")}')" class="px-3.5 py-1.5 rounded-lg bg-brand hover:bg-rose-900 text-white text-[11px] font-black transition shadow cursor-pointer">
-                  تشغيل الفيديو ▶
-                </button>
               </div>
             ` : ''}
 
@@ -1801,7 +1827,89 @@ window.renderDynamicLessonsAccordion = function(lessonsList) {
   }).join("");
 };
 
+let currentActiveInlinePlayer = null;
 
+// تشغيل الفيديو داخل نفس الكارت تحت الزر
+window.playInlineVideo = function(index, videoUrl) {
+  // إغلاق أي مشغل آخر مفتوح
+  if (currentActiveInlinePlayer !== null && currentActiveInlinePlayer !== index) {
+    window.closeInlineVideo(currentActiveInlinePlayer);
+  }
+
+  const playerBox = document.getElementById(`inline_player_${index}`);
+  const iframe = document.getElementById(`iframe_${index}`);
+  
+  if (!playerBox || !iframe || !videoUrl) return;
+
+  iframe.src = formatEmbedUrl(videoUrl);
+  playerBox.classList.remove("hidden");
+  currentActiveInlinePlayer = index;
+
+  // تشغيل العلامة المائية للمشغل الحالي
+  startInlineWatermark(index);
+};
+
+// إغلاق الفيديو المدمج
+window.closeInlineVideo = function(index) {
+  const playerBox = document.getElementById(`inline_player_${index}`);
+  const iframe = document.getElementById(`iframe_${index}`);
+  
+  if (iframe) iframe.src = "";
+  if (playerBox) playerBox.classList.add("hidden");
+  stopInlineWatermark(index);
+  if (currentActiveInlinePlayer === index) currentActiveInlinePlayer = null;
+};
+
+// تشغيل العلامة المائية داخل المشغل المحدد
+let inlineWmInterval = null;
+function startInlineWatermark(index) {
+  const wm = document.getElementById(`watermark_${index}`);
+  if (!wm) return;
+
+  const user = window.currentUserData;
+  const authUser = window.authInstance?.currentUser;
+  const name = user?.fullName || authUser?.displayName || "طالب مسجل";
+  const phone = user?.phone || user?.email || "";
+
+  const textSpan = wm.querySelector(".wm-text");
+  if (textSpan) textSpan.textContent = `KHEDR & PHYSIO • ${name} • ${phone}`;
+  wm.classList.remove("hidden");
+
+  if (inlineWmInterval) clearInterval(inlineWmInterval);
+  inlineWmInterval = setInterval(() => {
+    const topPos = Math.floor(Math.random() * 70) + 15;
+    const leftPos = Math.floor(Math.random() * 60) + 15;
+    wm.style.top = `${topPos}%`;
+    wm.style.left = `${leftPos}%`;
+  }, 4000);
+}
+
+function stopInlineWatermark(index) {
+  const wm = document.getElementById(`watermark_${index}`);
+  if (wm) wm.classList.add("hidden");
+  if (inlineWmInterval) {
+    clearInterval(inlineWmInterval);
+    inlineWmInterval = null;
+  }
+}
+
+// دالة التكبير المخصصة للحاوية
+window.toggleCustomFullscreen = function(containerId) {
+  const container = document.getElementById(containerId);
+  if (!container) return;
+
+  if (!document.fullscreenElement) {
+    if (container.requestFullscreen) {
+      container.requestFullscreen();
+    } else if (container.webkitRequestFullscreen) {
+      container.webkitRequestFullscreen();
+    }
+  } else {
+    if (document.exitFullscreen) {
+      document.exitFullscreen();
+    }
+  }
+};
 
 // دالة فتح وغلق التفرعات
 window.toggleLectureAccordion = function(id) {
