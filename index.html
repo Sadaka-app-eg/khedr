@@ -1576,26 +1576,7 @@ function closePackageDetails() {
 
   window.scrollTo({ top: 0, behavior: "smooth" });
 }
-// إغلاق تفاصيل الباقة وإظهار الهيدر مجدداً
-function closePackageDetails() {
-  document.getElementById("packageDetailsView").classList.add("hidden");
-  
-  ["mainNavbar", "hero", "courses", "features", "honors", "reviews", "instructor", "mainFooter"].forEach(id => {
-    const el = document.getElementById(id);
-    if (el) el.classList.remove("hidden");
-  });
 
-  if (!window.isUserLoggedIn) {
-    const years = document.getElementById("years");
-    const filter = document.getElementById("coursesFilterBar");
-    const support = document.getElementById("supportFloatingWidget");
-    if (years) years.classList.remove("hidden");
-    if (filter) filter.classList.remove("hidden");
-    if (support) support.classList.remove("hidden");
-  }
-
-  window.scrollTo({ top: 0, behavior: "smooth" });
-}
 
 // إغلاق صفحة الكورس وإظهار الهيدر مجدداً
 function closeCourseView() {
@@ -1826,6 +1807,30 @@ window.renderDynamicLessonsAccordion = function(lessonsList) {
     `;
   }).join("");
 };
+// دالة تحويل روابط اليوتيوب والفيديو
+function formatEmbedUrl(url) {
+  if (!url) return "";
+  let formatted = url.trim();
+
+  if (!formatted.startsWith("http://") && !formatted.startsWith("https://")) {
+    formatted = "https://" + formatted;
+  }
+
+  if (formatted.includes("youtube.com/watch?v=")) {
+    formatted = formatted.replace("watch?v=", "embed/");
+  } else if (formatted.includes("youtu.be/")) {
+    formatted = formatted.replace("youtu.be/", "www.youtube.com/embed/");
+  } else if (formatted.includes("youtube.com/shorts/")) {
+    formatted = formatted.replace("shorts/", "embed/");
+  }
+
+  if (formatted.includes("youtube.com/embed/")) {
+    const separator = formatted.includes("?") ? "&" : "?";
+    return `${formatted}${separator}autoplay=1&fs=0&rel=0`;
+  }
+
+  return formatted;
+}
 
 let currentActiveInlinePlayer = null;
 
@@ -2033,62 +2038,9 @@ document.addEventListener("DOMContentLoaded", () => {
 <script type="module">
 
 import { updateDoc, arrayUnion } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-firestore.js";
-// منع زر التكبير الافتراضي لليوتيوب حتى يستخدم الطالب زر المنصة المحمي
-// دالة ذكية ومضمونة لتحويل أي رابط فيديو إلى صيغة تشغيل صالحة
-function formatEmbedUrl(url) {
-  if (!url) return "";
-  let formatted = url.trim();
 
-  // التأكد من وجود البروتوكول https://
-  if (!formatted.startsWith("http://") && !formatted.startsWith("https://")) {
-    formatted = "https://" + formatted;
-  }
 
-  // معالجة روابط يوتيوب بمختلف أشكالها
-  if (formatted.includes("youtube.com/watch?v=")) {
-    formatted = formatted.replace("watch?v=", "embed/");
-  } else if (formatted.includes("youtu.be/")) {
-    formatted = formatted.replace("youtu.be/", "www.youtube.com/embed/");
-  } else if (formatted.includes("youtube.com/shorts/")) {
-    formatted = formatted.replace("shorts/", "embed/");
-  }
 
-  // إضافة معلمات التشغيل ومنع التكبير المنفصل لليوتيوب
-  if (formatted.includes("youtube.com/embed/")) {
-    const separator = formatted.includes("?") ? "&" : "?";
-    return `${formatted}${separator}autoplay=1&fs=0&rel=0`;
-  }
-
-  return formatted;
-}
-
-// دالة تشغيل الفيديو وإظهار المشغل فوراً
-window.playLessonVideo = function(videoUrl, title, desc) {
-  const wrapper = document.getElementById("videoContainerWrapper");
-  const iframe = document.getElementById("videoIframe");
-  
-  if (!wrapper || !iframe || !videoUrl) {
-    alert("⚠️ لا يوجد رابط فيديو متاح لهذه المحاضرة.");
-    return;
-  }
-
-  // 1. حقن الرابط المجهز
-  iframe.src = formatEmbedUrl(videoUrl);
-
-  // 2. إزالة أي إخفاء عن الحاوية ومشغل الـ iframe
-  wrapper.classList.remove("hidden");
-  iframe.classList.remove("hidden");
-
-  // 3. تحديث النصوص
-  if (title) document.getElementById("currentLessonTitle").textContent = title;
-  if (desc) document.getElementById("currentLessonDesc").textContent = desc;
-
-  // 4. النزول بسلاسة إلى الفيديو
-  wrapper.scrollIntoView({ behavior: "smooth", block: "center" });
-
-  // 5. تشغيل العلامة المائية
-  if (typeof startWatermark === "function") startWatermark();
-};
 
 // دالة تكبير الحاوية كاملة مع بقاء العلامة المائية فوقها
 window.toggleCustomFullscreen = function() {
@@ -2425,7 +2377,39 @@ closeAuthView();
       }
     });
   }
+// تشغيل نموذج استعادة كلمة المرور
+  const forgotPasswordForm = document.getElementById("forgotPasswordForm");
+  if (forgotPasswordForm) {
+    forgotPasswordForm.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const btn = document.getElementById("forgotSubmitBtn");
+      const errEl = document.getElementById("forgotError");
+      const successEl = document.getElementById("forgotSuccess");
+      const email = document.getElementById("forgotEmail").value.trim();
 
+      errEl.classList.add("hidden");
+      successEl.classList.add("hidden");
+      btn.disabled = true;
+      btn.textContent = "⏳ جارٍ الإرسال...";
+
+      try {
+        await sendPasswordResetEmail(auth, email);
+        successEl.textContent = "✅ تم إرسال رابط إعادة التعيين إلى بريدك الإلكتروني بنجاح!";
+        successEl.classList.remove("hidden");
+        forgotPasswordForm.reset();
+      } catch (err) {
+        let msg = "⚠️ حدث خطأ أثناء إرسال الرابط، حاول مرة أخرى.";
+        if (err.code === "auth/user-not-found") msg = "⚠️ لا يوجد حساب مسجل بهذا البريد الإلكتروني.";
+        else if (err.code === "auth/invalid-email") msg = "⚠️ البريد الإلكتروني غير صالح.";
+        else if (err.code === "auth/too-many-requests") msg = "⚠️ محاولات كثيرة، حاول بعد قليل.";
+        errEl.textContent = msg;
+        errEl.classList.remove("hidden");
+      } finally {
+        btn.disabled = false;
+        btn.textContent = "إرسال رابط إعادة التعيين 📩";
+      }
+    });
+  }
 const registerForm = document.getElementById("registerForm");
   if (registerForm) {
     // منع كتابة أي حروف والسماح بالأرقام فقط داخل حقل الهاتف
