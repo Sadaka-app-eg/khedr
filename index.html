@@ -1601,6 +1601,10 @@ function closePackageDetails() {
 function closeCourseView() {
   document.getElementById("courseView").classList.add("hidden");
   
+  // إعادة إظهار الخط الأصفر
+  const scrollBar = document.getElementById("scrollProgress");
+  if (scrollBar) scrollBar.classList.remove("hidden");
+
   // إعادة إظهار النافبار وباقي عناصر الرئيسية
   ["mainNavbar", "hero", "courses", "features", "honors", "reviews", "instructor", "mainFooter"].forEach(id => {
     const el = document.getElementById(id);
@@ -1623,6 +1627,11 @@ function openCourseView(courseId) {
   const crs = window.catalogData[courseId] || window.catalogData["c_anat1"];
   window.currentItemData = crs;
 
+  // التحقق الحازم من الاشتراك (سواء من الكتالوج أو من بيانات الطالب المحفوظة)
+  const enrolledList = window.currentUserData?.enrolledCourses || [];
+  const isUserEnrolled = crs.isEnrolled || enrolledList.includes(courseId);
+  crs.isEnrolled = isUserEnrolled;
+
   const catEl = document.getElementById("crsCategory");
   const titleEl = document.getElementById("crsTitle");
   const descEl = document.getElementById("crsDesc");
@@ -1634,16 +1643,16 @@ function openCourseView(courseId) {
   if (descEl) descEl.textContent = typeof crs.desc === "object" ? crs.desc[currentLang] : crs.desc;
   if (priceEl) priceEl.textContent = `${crs.price} ج.م`;
 
-  // إخفاء بانر الشراء تماماً إذا كان الطالب مشتركاً
+  // 1. إخفاء بانر السعر تماماً للمشترك
   if (guestBanner) {
-    if (crs.isEnrolled) {
+    if (isUserEnrolled) {
       guestBanner.classList.add("hidden");
     } else {
       guestBanner.classList.remove("hidden");
     }
   }
 
-  // تصفير وإخفاء مشغلات الفيديو والـ PDF والكويز لتبدأ الصفحة نظيفة
+  // 2. إخفاء وتصفير مشغلات الفيديو والـ PDF والكويز
   closeVideoPlayer();
   const pdfContainer = document.getElementById("pdfViewerContainer");
   const pdfIframe = document.getElementById("pdfIframe");
@@ -1652,12 +1661,10 @@ function openCourseView(courseId) {
   if (pdfContainer) pdfContainer.classList.add("hidden");
   if (quizSection) quizSection.classList.add("hidden");
 
-  // رسم المحاضرات الافتراضية
-  if (crs.lessons) {
-    window.renderDynamicLessonsAccordion(crs.lessons);
-  }
+  // 3. إخفاء الخط الأصفر العلوي وباقي أقسام الموقع
+  const scrollBar = document.getElementById("scrollProgress");
+  if (scrollBar) scrollBar.classList.add("hidden");
 
-  // إخفاء باقي أقسام الموقع
   ["mainNavbar", "drawer", "hero", "years", "courses", "features", "honors", "reviews", "instructor", "authSection", "mainFooter", "supportFloatingWidget"].forEach(id => {
     const el = document.getElementById(id);
     if (el) el.classList.add("hidden");
@@ -1667,6 +1674,7 @@ function openCourseView(courseId) {
   if (courseView) courseView.classList.remove("hidden");
   window.scrollTo({ top: 0, behavior: "smooth" });
 
+  // 4. جلب المحاضرات الحية من الفايربيز
   if (typeof window.loadFirestoreLectures === "function") {
     window.loadFirestoreLectures(courseId);
   }
