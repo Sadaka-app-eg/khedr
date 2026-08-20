@@ -29,7 +29,7 @@
 
   @media (min-width: 768px) {
     html {
-      font-size: 115%; /* تكبير أكبر شوية على الشاشات الكبيرة */
+      font-size: 150%; /* تكبير أكبر شوية على الشاشات الكبيرة */
     }
   }
   html[lang="ar"] body, html[lang="ar"] * { font-family: 'Tajawal', 'IBM Plex Sans Arabic', sans-serif; }
@@ -446,27 +446,51 @@
     <!-- زر إغلاق X في الزاوية -->
     <button onclick="closeAuthView()" class="absolute top-4 start-4 text-slate-400 hover:text-white w-7 h-7 rounded-full bg-slate-800 flex items-center justify-center text-xs transition cursor-pointer">✕</button>
 
-    <!-- تبويبات الدخول / التسجيل -->
-    <div class="grid grid-cols-2 gap-1.5 p-1.5 auth-nav-bg rounded-2xl mb-5">
-      <button id="tabLoginBtn" onclick="setAuthTab('login')" class="auth-tab h-10 rounded-xl text-xs md:text-sm font-black transition" data-i18n="auth_tab_login">تسجيل الدخول</button>
-      <button id="tabRegisterBtn" onclick="setAuthTab('register')" class="auth-tab h-10 rounded-xl text-xs md:text-sm font-black transition" data-i18n="auth_tab_register">حساب جديد</button>
-    </div>
+<!-- تبويبات الدخول / التسجيل -->
+<div id="authTabsNav" class="grid grid-cols-2 gap-1.5 p-1.5 auth-nav-bg rounded-2xl mb-5">
+  <button id="tabLoginBtn" onclick="setAuthTab('login')" class="auth-tab h-10 rounded-xl text-xs md:text-sm font-black transition" data-i18n="auth_tab_login">تسجيل الدخول</button>
+  <button id="tabRegisterBtn" onclick="setAuthTab('register')" class="auth-tab h-10 rounded-xl text-xs md:text-sm font-black transition" data-i18n="auth_tab_register">حساب جديد</button>
+</div>
 
-    <!-- 1. نموذج تسجيل الدخول -->
-    <form id="loginForm" class="flex flex-col gap-3.5" onsubmit="return false;">
-      <label class="flex flex-col gap-1 text-xs font-bold text-theme-main">
-        <span data-i18n="auth_email">البريد الإلكتروني</span>
-        <input id="loginEmail" type="email" required placeholder="student@example.com" class="h-10 rounded-xl px-3 border border-slate-700 bg-transparent text-xs text-theme-main focus:border-brand" />
-      </label>
-      <label class="flex flex-col gap-1 text-xs font-bold text-theme-main">
-        <span data-i18n="auth_password">كلمة المرور</span>
-        <input id="loginPassword" type="password" required placeholder="••••••••" class="h-10 rounded-xl px-3 border border-slate-700 bg-transparent text-xs text-theme-main focus:border-brand" />
-      </label>
-      <p id="loginError" class="hidden text-xs font-bold text-rose-500 text-center"></p>
-      <button id="loginSubmitBtn" type="submit" class="h-11 rounded-xl bg-brand text-white font-black text-xs md:text-sm mt-1 shadow-lg hover:bg-rose-900 transition cursor-pointer" data-i18n="auth_login_btn">
-        تسجيل الدخول
-      </button>
-    </form>
+<!-- 1. نموذج تسجيل الدخول -->
+<form id="loginForm" class="flex flex-col gap-3.5" onsubmit="return false;">
+  <label class="flex flex-col gap-1 text-xs font-bold text-theme-main">
+    <span data-i18n="auth_email">البريد الإلكتروني</span>
+    <input id="loginEmail" type="email" required placeholder="student@example.com" class="h-10 rounded-xl px-3 border border-slate-700 bg-transparent text-xs text-theme-main focus:border-brand" />
+  </label>
+  <label class="flex flex-col gap-1 text-xs font-bold text-theme-main">
+    <span data-i18n="auth_password">كلمة المرور</span>
+    <input id="loginPassword" type="password" required placeholder="••••••••" class="h-10 rounded-xl px-3 border border-slate-700 bg-transparent text-xs text-theme-main focus:border-brand" />
+  </label>
+
+  <button type="button" onclick="openForgotPasswordView()" class="text-[11px] font-bold text-rose-400 hover:text-rose-300 hover:underline text-start -mt-1 cursor-pointer" data-i18n="auth_forgot_password">
+    هل نسيت كلمة المرور؟
+  </button>
+
+  <p id="loginError" class="hidden text-xs font-bold text-rose-500 text-center"></p>
+  <button id="loginSubmitBtn" type="submit" class="h-11 rounded-xl bg-brand text-white font-black text-xs md:text-sm mt-1 shadow-lg hover:bg-rose-900 transition cursor-pointer" data-i18n="auth_login_btn">
+    تسجيل الدخول
+  </button>
+</form>
+
+<!-- 3. نموذج استعادة كلمة المرور -->
+<form id="forgotPasswordForm" class="hidden flex-col gap-3.5" onsubmit="return false;">
+  <p class="text-xs text-slate-400 leading-6">
+    اكتب بريدك الإلكتروني المسجل به على المنصة، وهنبعتلك رابط لإعادة تعيين كلمة المرور فوراً.
+  </p>
+  <label class="flex flex-col gap-1 text-xs font-bold text-theme-main">
+    <span data-i18n="auth_email">البريد الإلكتروني</span>
+    <input id="forgotEmail" type="email" required placeholder="student@example.com" class="h-10 rounded-xl px-3 border border-slate-700 bg-transparent text-xs text-theme-main focus:border-brand" />
+  </label>
+  <p id="forgotError" class="hidden text-xs font-bold text-rose-500 text-center"></p>
+  <p id="forgotSuccess" class="hidden text-xs font-bold text-emerald-400 text-center leading-5"></p>
+  <button id="forgotSubmitBtn" type="submit" class="h-11 rounded-xl bg-brand text-white font-black text-xs md:text-sm mt-1 shadow-lg hover:bg-rose-900 transition cursor-pointer">
+    إرسال رابط إعادة التعيين 📩
+  </button>
+  <button type="button" onclick="closeForgotPasswordView()" class="text-[11px] font-bold text-slate-400 hover:text-white text-center transition">
+    ← الرجوع لتسجيل الدخول
+  </button>
+</form>
 
     <!-- 2. نموذج إنشاء حساب جديد -->
     <form id="registerForm" class="hidden flex-col gap-3" onsubmit="return false;">
@@ -826,7 +850,7 @@ const translations = {
     nav_features: "مميزات المنصة",
     nav_honors: "لوحة الشرف",
     nav_instructor: "عن الشارح",
-    hero_eyebrow: "محمود خضر — محاضر ومدرس للمواد الطبية بكلية العلاج الطبيعي",   
+    hero_eyebrow: "محمود خضر — شارح ومدرس للمواد الطبية والأكاديمية بكلية العلاج الطبيعي بخبرة سنتين في التدريس الشامل",   
     hero_title: "رحلتك بتبدأ مع <span class='text-amber-300'>خِـضـر</span><br/>خُد أول خطوة.. وأنت واثق",
     hero_sub: "تجربة تعليمية متكاملة تستحق تبدأ بيها لأن كل تفصيلة مصممة علشانك",
     hero_cta1: "سجل وخد أول خطوة",
@@ -1089,7 +1113,39 @@ function setAuthTab(tab) {
   document.getElementById("registerForm").classList.toggle("flex", !isLogin);
   document.getElementById("tabLoginBtn").classList.toggle("active", isLogin);
   document.getElementById("tabRegisterBtn").classList.toggle("active", !isLogin);
+
+  // إغلاق نموذج استعادة كلمة المرور لو كان مفتوحاً
+  const forgotForm = document.getElementById("forgotPasswordForm");
+  if (forgotForm) {
+    forgotForm.classList.add("hidden");
+    forgotForm.classList.remove("flex");
+  }
+
+  const tabsNav = document.getElementById("authTabsNav");
+  if (tabsNav) tabsNav.classList.remove("hidden");
 }
+
+window.openForgotPasswordView = function() {
+  document.getElementById("loginForm").classList.add("hidden");
+  document.getElementById("registerForm").classList.add("hidden");
+  document.getElementById("registerForm").classList.remove("flex");
+
+  const forgotForm = document.getElementById("forgotPasswordForm");
+  forgotForm.classList.remove("hidden");
+  forgotForm.classList.add("flex");
+
+  // إخفاء تبويبات دخول/تسجيل مؤقتاً عشان التركيز على نموذج الاستعادة
+  const tabsNav = document.getElementById("authTabsNav");
+  if (tabsNav) tabsNav.classList.add("hidden");
+
+  // تصفير أي رسائل قديمة
+  document.getElementById("forgotError").classList.add("hidden");
+  document.getElementById("forgotSuccess").classList.add("hidden");
+};
+
+window.closeForgotPasswordView = function() {
+  setAuthTab("login");
+};
 
 function animateCount(el) {
   const target = parseInt(el.getAttribute("data-count"), 10);
@@ -2024,7 +2080,8 @@ import {
     setDoc, 
     getDoc, 
     serverTimestamp, 
-    onAuthStateChanged 
+    onAuthStateChanged,
+    sendPasswordResetEmail
   } from "./firebase-config.js";
   import { collection, getDocs, query, where } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-firestore.js";
 
@@ -2304,6 +2361,8 @@ const registerForm = document.getElementById("registerForm");
       }
     });
   }
+
+  
   // ============ ANTI-LEAK & FLOATING WATERMARK LOGIC ============
 let watermarkInterval = null;
 
