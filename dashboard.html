@@ -386,8 +386,6 @@ function renderStudentDashboard(user, data, enrolledCourses) {
     const quizScores = data.quizScores || {};
     document.getElementById("statQuizzes").textContent = Object.keys(quizScores).length;
 
-    // 2. تحديث بطاقة الاستكمال بأول مادة مفعلة للطالب
-    ...
 
     // 6. بناء بنك الأسئلة والمذكرات والقاموس الطبي
     renderMCQBank(enrolledCourses);
