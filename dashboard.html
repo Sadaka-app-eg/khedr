@@ -371,7 +371,7 @@ import { auth, db, onAuthStateChanged, signOut, doc, getDoc } from "./firebase-c
   });
 
   // بناء واجهة الطالب بناءً على المواد المشترك بها
-  function renderStudentDashboard(user, data, enrolledCourses) {
+function renderStudentDashboard(user, data, enrolledCourses) {
     const fullName = data.fullName || user.displayName || "طالب مسجل";
     const userYear = data.academicYear === "y2" ? "الفرقة الثانية" : "الفرقة الأولى";
 
@@ -382,26 +382,16 @@ import { auth, db, onAuthStateChanged, signOut, doc, getDoc } from "./firebase-c
     // 1. تحديث شريط الإحصائيات
     document.getElementById("statEnrolled").textContent = enrolledCourses.length;
 
+    // 1.1 عدد الكويزات المُنجزة فعلاً (من quizScores الحقيقية)
+    const quizScores = data.quizScores || {};
+    document.getElementById("statQuizzes").textContent = Object.keys(quizScores).length;
+
     // 2. تحديث بطاقة الاستكمال بأول مادة مفعلة للطالب
-    const firstCourseId = enrolledCourses[0];
-    const firstCourse = allCoursesMeta[firstCourseId] || { title: "مقرر أكاديمي" };
-    document.getElementById("continueCourseTitle").textContent = firstCourse.title;
-    document.getElementById("continueLessonTitle").textContent = "المحاضرة 01 • متابعة التحصيل";
-    document.getElementById("continueProgressBar").style.width = "40%";
-    document.getElementById("continueProgressLabel").textContent = "40%";
-
-    // 3. بناء تبويب "كورساتي"
-    renderEnrolledCourses(enrolledCourses);
-
-    // 4. بناء الـ Live للمواد المشترك بها فقط
-    renderLiveEvents(enrolledCourses);
-
-    // 5. بناء محطات الـ OSCE لمواد الطالب فقط
-    renderOSCESimulator(enrolledCourses);
+    ...
 
     // 6. بناء بنك الأسئلة والمذكرات والقاموس الطبي
     renderMCQBank(enrolledCourses);
-    renderPDFVault(enrolledCourses);
+    renderPDFVault(enrolledCourses); // ← هنعدلها تحت عشان تحسب الرقم الحقيقي
     buildStudentGlossary(enrolledCourses);
   }
 
@@ -510,11 +500,9 @@ function renderMCQBank(enrolledCourses) {
         </div>
       `;
     }).join("");
-    // تحديث عداد الكويزات في الإحصائيات
-    document.getElementById("statQuizzes").textContent = enrolledCourses.length;
   }
 
-  function renderPDFVault(enrolledCourses) {
+async function renderPDFVault(enrolledCourses) {
     const grid = document.getElementById("pdfVaultGrid");
     grid.innerHTML = enrolledCourses.map(cId => {
       const crs = allCoursesMeta[cId] || { title: cId };
@@ -529,7 +517,22 @@ function renderMCQBank(enrolledCourses) {
         </div>
       `;
     }).join("");
-    document.getElementById("statPdfs").textContent = enrolledCourses.length;
+
+    // حساب العدد الحقيقي لملفات الـ PDF الموجودة فعلاً في محاضرات المواد المفعّلة
+    try {
+      let totalPdfs = 0;
+      for (const cId of enrolledCourses) {
+        const q = query(collection(db, "lectures"), where("courseId", "==", cId));
+        const snap = await getDocs(q);
+        snap.forEach(docSnap => {
+          if (docSnap.data().pdfUrl) totalPdfs++;
+        });
+      }
+      document.getElementById("statPdfs").textContent = totalPdfs;
+    } catch (err) {
+      console.error("Error counting PDFs:", err);
+      document.getElementById("statPdfs").textContent = "—";
+    }
   }
 async function buildStudentGlossary(enrolledCourses) {
     const container = document.getElementById("glossaryResults");

@@ -88,14 +88,17 @@
     </div>
 
     <!-- أزرار التبويبات للتقسيم والتنظيم -->
-    <div class="flex items-center gap-2 bg-[#0F1D2D] p-1.5 rounded-2xl border border-slate-800 self-start lg:self-auto">
-      <button onclick="switchAdminTab('students')" id="adminTabStudents" class="px-4 py-2 rounded-xl text-xs font-black transition bg-brand text-white shadow">
-        👥 إدارة وتفعيل الطلاب
-      </button>
-      <button onclick="switchAdminTab('lectures')" id="adminTabLectures" class="px-4 py-2 rounded-xl text-xs font-black transition text-slate-400 hover:text-white">
-        📚 إدارة ونشر المحاضرات
-      </button>
-    </div>
+<div class="flex items-center gap-2 bg-[#0F1D2D] p-1.5 rounded-2xl border border-slate-800 self-start lg:self-auto flex-wrap">
+  <button onclick="switchAdminTab('students')" id="adminTabStudents" class="px-4 py-2 rounded-xl text-xs font-black transition bg-brand text-white shadow">
+    👥 إدارة وتفعيل الطلاب
+  </button>
+  <button onclick="switchAdminTab('lectures')" id="adminTabLectures" class="px-4 py-2 rounded-xl text-xs font-black transition text-slate-400 hover:text-white">
+    📚 إدارة ونشر المحاضرات
+  </button>
+  <button onclick="switchAdminTab('glossary')" id="adminTabGlossary" class="px-4 py-2 rounded-xl text-xs font-black transition text-slate-400 hover:text-white">
+    📖 القاموس الطبي
+  </button>
+</div>
 
     <div class="flex items-center gap-2.5">
       <div id="themeBtn" class="theme-toggle-pill" title="تبديل الوضع">
@@ -168,6 +171,9 @@
   </section>
 </div> <!-- نهاية قسم الطلاب -->
 
+
+
+
   <!-- ============ تبويب إدارة ونشر المحاضرات ============ -->
   <div id="sectionLecturesTab" class="hidden space-y-6">
 
@@ -196,7 +202,16 @@
     <button type="submit" class="h-10 rounded-xl bg-brand text-white font-black text-xs hover:bg-rose-900 transition">نشر في القاموس ✨</button>
   </form>
 </div>
-
+<!-- نموذج إضافة مصطلح طبي جديد -->
+<div class="p-6 rounded-3xl bg-[#0F1D2D] border border-slate-800 space-y-4">
+  <h3 class="text-sm font-black text-amber-300">📖 إضافة مصطلح طبي جديد لقاموس المنصة</h3>
+  <form id="addTermForm" class="grid grid-cols-1 md:grid-cols-3 gap-3">
+    <input id="termName" type="text" placeholder="اسم المصطلح (مثلاً: Lordosis)" required class="h-10 rounded-xl px-3 bg-[#07111D] border border-slate-700 text-xs text-white" />
+    <input id="termCategory" type="text" placeholder="التصنيف (مثلاً: قعس فقري / بادئة)" required class="h-10 rounded-xl px-3 bg-[#07111D] border border-slate-700 text-xs text-white" />
+    <input id="termDef" type="text" placeholder="الشرح والتعريف الطبي" required class="h-10 rounded-xl px-3 bg-[#07111D] border border-slate-700 text-xs text-white md:col-span-2" />
+    <button type="submit" class="h-10 rounded-xl bg-brand text-white font-black text-xs hover:bg-rose-900 transition">نشر في القاموس ✨</button>
+  </form>
+</div>
 <!-- نموذج إضافة محاضرة جديدة -->
     <form id="addLectureForm" class="space-y-6 bg-[#07111D] border border-slate-800 p-6 rounded-2xl">
       <h3 class="text-base font-black text-amber-400 flex items-center gap-2">
@@ -293,13 +308,47 @@
 </div>
     </form>
 
-    <!-- قائمة المحاضرات المنشورة -->
-    <div class="mt-8 space-y-4">
-      <h3 class="text-sm font-black text-slate-200">📋 المحاضرات المنشورة في هذا المقرر:</h3>
-      <div id="publishedLecturesList" class="space-y-3"></div>
-    </div>
+<!-- قائمة المحاضرات المنشورة -->
+<div class="mt-8 space-y-4">
+  <div class="flex items-center justify-between flex-wrap gap-3">
+    <h3 class="text-sm font-black text-slate-200">📋 المحاضرات المنشورة في هذا المقرر:</h3>
+    <input type="text" id="lecturesSearchInput" placeholder="🔍 بحث بعنوان المحاضرة..." class="h-10 w-full sm:w-64 rounded-xl px-3 bg-[#07111D] border border-slate-700 text-xs text-white focus:border-brand" />
+  </div>
+  <div id="lecturesSummaryBar" class="text-[11px] font-bold text-slate-400"></div>
+  <div id="publishedLecturesList" class="space-y-3"></div>
+</div>
   </section>
 </div>
+</div>
+
+<!-- ============ تبويب القاموس الطبي ============ -->
+<div id="sectionGlossaryTab" class="hidden space-y-6">
+  <section class="bg-card-theme border border-slate-800 rounded-3xl p-6 md:p-8 shadow-2xl">
+    <div class="border-b border-slate-800 pb-6 mb-6">
+      <span class="text-xs font-black text-rose-400 uppercase tracking-wider">قاموس المنصة الطبي</span>
+      <h2 class="text-xl md:text-2xl font-black text-white mt-1">📖 إدارة مصطلحات القاموس الطبي</h2>
+      <p class="text-xs text-slate-400 mt-1">المصطلحات دي بتظهر لكل الطلاب في تبويب "المساعد الطبي والمصطلحات" بغض النظر عن مقرراتهم</p>
+    </div>
+
+    <div class="p-6 rounded-3xl bg-[#0F1D2D] border border-slate-800 space-y-4">
+      <h3 class="text-sm font-black text-amber-300">➕ إضافة مصطلح طبي جديد</h3>
+      <form id="addTermForm" class="grid grid-cols-1 md:grid-cols-3 gap-3">
+        <input id="termName" type="text" placeholder="اسم المصطلح (مثلاً: Lordosis)" required class="h-10 rounded-xl px-3 bg-[#07111D] border border-slate-700 text-xs text-white" />
+        <input id="termCategory" type="text" placeholder="التصنيف (مثلاً: قعس فقري / بادئة)" required class="h-10 rounded-xl px-3 bg-[#07111D] border border-slate-700 text-xs text-white" />
+        <input id="termDef" type="text" placeholder="الشرح والتعريف الطبي" required class="h-10 rounded-xl px-3 bg-[#07111D] border border-slate-700 text-xs text-white md:col-span-2" />
+        <button type="submit" class="h-10 rounded-xl bg-brand text-white font-black text-xs hover:bg-rose-900 transition">نشر في القاموس ✨</button>
+      </form>
+    </div>
+
+    <!-- قايمة المصطلحات المنشورة + بحث -->
+    <div class="mt-8 space-y-4">
+      <div class="flex items-center justify-between flex-wrap gap-3">
+        <h3 class="text-sm font-black text-slate-200">📋 المصطلحات المنشورة (<span id="termsCountBadge">0</span>)</h3>
+        <input type="text" id="termsSearchInput" placeholder="🔍 بحث في المصطلحات..." class="h-10 w-full sm:w-64 rounded-xl px-3 bg-[#07111D] border border-slate-700 text-xs text-white focus:border-brand" />
+      </div>
+      <div id="publishedTermsList" class="space-y-3"></div>
+    </div>
+  </section>
 </div>
 <!-- نافذة المودال لإدارة كورسات الطالب (Course Activation Modal) -->
 <div id="courseModal" class="hidden fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm p-4">
@@ -585,32 +634,50 @@ window.toggleEnroll = async function(courseId) {
   }
 
   // دالة رفع الملفات إلى Cloudinary
-  async function uploadToCloudinary(file, resourceType, statusElementId) {
+  function uploadToCloudinary(file, resourceType, statusElementId) {
     const statusEl = document.getElementById(statusElementId);
-    if (statusEl) statusEl.textContent = "⏳ جارٍ الرفع إلى Cloudinary...";
+    if (statusEl) statusEl.textContent = "⏳ جارٍ الرفع... 0%";
 
     const formData = new FormData();
     formData.append("file", file);
     formData.append("upload_preset", UPLOAD_PRESET);
 
-    try {
-      const res = await fetch(`https://api.cloudinary.com/v1_1/${CLOUD_NAME}/${resourceType}/upload`, {
-        method: "POST",
-        body: formData
+    return new Promise((resolve) => {
+      const xhr = new XMLHttpRequest();
+      xhr.open("POST", `https://api.cloudinary.com/v1_1/${CLOUD_NAME}/${resourceType}/upload`);
+
+      xhr.upload.addEventListener("progress", (e) => {
+        if (e.lengthComputable && statusEl) {
+          const percent = Math.round((e.loaded / e.total) * 100);
+          statusEl.textContent = `⏳ جارٍ الرفع... ${percent}%`;
+        }
       });
-      const data = await res.json();
-      if (data.secure_url) {
-        if (statusEl) statusEl.textContent = "✅ تم الرفع بنجاح!";
-        return data.secure_url;
-      } else {
-        throw new Error(data.error?.message || "Upload failed");
-      }
-    } catch (err) {
-      console.error(err);
-      if (statusEl) statusEl.textContent = "❌ فشل الرفع";
-      alert("حدث خطأ أثناء رفع الملف إلى Cloudinary.");
-      return null;
-    }
+
+      xhr.onload = () => {
+        try {
+          const data = JSON.parse(xhr.responseText);
+          if (data.secure_url) {
+            if (statusEl) statusEl.textContent = "✅ تم الرفع بنجاح!";
+            resolve(data.secure_url);
+          } else {
+            throw new Error(data.error?.message || "Upload failed");
+          }
+        } catch (err) {
+          console.error(err);
+          if (statusEl) statusEl.textContent = "❌ فشل الرفع";
+          alert("حدث خطأ أثناء رفع الملف إلى Cloudinary.");
+          resolve(null);
+        }
+      };
+
+      xhr.onerror = () => {
+        if (statusEl) statusEl.textContent = "❌ فشل الرفع";
+        alert("حدث خطأ في الاتصال أثناء رفع الملف.");
+        resolve(null);
+      };
+
+      xhr.send(formData);
+    });
   }
 
   // إضافة سؤال MCQ في الواجهة
@@ -659,6 +726,7 @@ document.getElementById("addTermForm")?.addEventListener("submit", async (e) => 
   });
   alert("✅ تم نشر المصطلح بنجاح وسيظهر للطلاب فوراً!");
   e.target.reset();
+  loadPublishedTerms();
 });
   // نشر المحاضرة
   const addLectureForm = document.getElementById("addLectureForm");
@@ -756,6 +824,8 @@ loadPublishedLectures();
   }
 
   // جلب المحاضرات المنشورة
+  let currentCourseLectures = [];
+
   async function loadPublishedLectures() {
     const container = document.getElementById("publishedLecturesList");
     if (!container) return;
@@ -764,14 +834,35 @@ loadPublishedLectures();
     try {
       const q = query(collection(db, "lectures"), where("courseId", "==", currentSelectedCourse));
       const snap = await getDocs(q);
-      
-      if (snap.empty) {
-        container.innerHTML = `<span class="text-xs text-slate-500 font-bold">لا توجد محاضرات منشورة لهذا المقرر بعد.</span>`;
-        return;
-      }
+      currentCourseLectures = snap.docs.map(docSnap => ({ id: docSnap.id, ...docSnap.data() }));
+      currentCourseLectures.sort((a, b) => (a.order || 0) - (b.order || 0));
+      renderLecturesList(currentCourseLectures);
+    } catch (e) {
+      console.error(e);
+      container.innerHTML = `<span class="text-xs text-rose-400">حدث خطأ أثناء جلب المحاضرات.</span>`;
+    }
+  }
 
-      container.innerHTML = snap.docs.map(docSnap => {
-        const lec = docSnap.data();
+  function renderLecturesList(lectures) {
+    const container = document.getElementById("publishedLecturesList");
+    const summaryBar = document.getElementById("lecturesSummaryBar");
+    if (!container) return;
+
+    if (summaryBar) {
+      const freeCount = lectures.filter(l => l.isFree).length;
+      const totalQuiz = lectures.reduce((sum, l) => sum + (l.quiz ? l.quiz.length : 0), 0);
+      summaryBar.textContent = lectures.length > 0
+        ? `${lectures.length} محاضرة منشورة • ${freeCount} مجانية • ${totalQuiz} سؤال MCQ إجمالي`
+        : "";
+    }
+
+    if (lectures.length === 0) {
+      container.innerHTML = `<span class="text-xs text-slate-500 font-bold">لا توجد محاضرات منشورة لهذا المقرر بعد.</span>`;
+      return;
+    }
+
+    container.innerHTML = lectures.map(lec => {
+      const docId = lec.id;
 return `
           <div class="p-4 rounded-2xl border border-slate-800 bg-[#07111D] flex flex-col sm:flex-row sm:items-center justify-between gap-3 shadow-md">
             <div class="space-y-1">
@@ -781,24 +872,102 @@ return `
                   ${lec.isFree ? 'معاينة مجانية' : 'مقفولة للمشتركين'}
                 </span>
               </div>
-              <span class="text-[10px] text-slate-400 block">${lec.duration} • ${lec.quiz ? lec.quiz.length : 0} أسئلة MCQ</span>
+              <span class="text-[10px] text-slate-400 block">${lec.duration || ''} • ${lec.quiz ? lec.quiz.length : 0} أسئلة MCQ</span>
             </div>
-<button onclick='editLecture("${docSnap.id}", ${JSON.stringify(lec.title)}, ${JSON.stringify(lec.duration || "")}, ${lec.isFree}, ${JSON.stringify(lec.desc || "")}, ${JSON.stringify(lec.videoUrl || "")}, ${JSON.stringify(lec.pdfUrl || "")}, ${JSON.stringify(lec.quiz || [])})' ...>
+<button onclick='editLecture("${docId}", ${JSON.stringify(lec.title)}, ${JSON.stringify(lec.duration || "")}, ${lec.isFree}, ${JSON.stringify(lec.desc || "")}, ${JSON.stringify(lec.videoUrl || "")}, ${JSON.stringify(lec.pdfUrl || "")}, ${JSON.stringify(lec.quiz || [])})' class="px-3 py-1.5 rounded-lg bg-amber-500/20 hover:bg-amber-500/40 border border-amber-500/40 text-amber-300 text-xs font-bold transition">
   تعديل ✏️
 </button>
             <div class="flex items-center gap-2">
               ${lec.videoUrl ? `<a href="${lec.videoUrl}" target="_blank" class="px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-cyan-300 text-xs font-bold transition">🎬 مشاهدة الفيديو</a>` : ''}
               ${lec.pdfUrl ? `<a href="${lec.pdfUrl}" target="_blank" class="px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-amber-300 text-xs font-bold transition">📄 فتح الـ PDF</a>` : ''}
-              <button onclick="deleteLecture('${docSnap.id}')" class="px-3 py-1.5 rounded-lg bg-rose-950/60 hover:bg-rose-900 border border-rose-800/40 text-rose-300 text-xs font-bold transition">
+              <button onclick="deleteLecture('${docId}')" class="px-3 py-1.5 rounded-lg bg-rose-950/60 hover:bg-rose-900 border border-rose-800/40 text-rose-300 text-xs font-bold transition">
                 حذف ✕
               </button>
             </div>
           </div>
         `;
-      }).join("");
+    }).join("");
+  }
+
+  const lecturesSearchInput = document.getElementById("lecturesSearchInput");
+  if (lecturesSearchInput) {
+    lecturesSearchInput.addEventListener("input", (e) => {
+      const q = e.target.value.toLowerCase().trim();
+      const filtered = currentCourseLectures.filter(l => (l.title || "").toLowerCase().includes(q));
+      renderLecturesList(filtered);
+    });
+  }
+
+    // ============ إدارة قايمة المصطلحات المنشورة ============
+  let allPublishedTerms = [];
+
+  async function loadPublishedTerms() {
+    const container = document.getElementById("publishedTermsList");
+    if (!container) return;
+    container.innerHTML = `<span class="text-xs text-slate-500">جارٍ جلب المصطلحات...</span>`;
+
+    try {
+      const snap = await getDocs(collection(db, "medical_terms"));
+      allPublishedTerms = [];
+      snap.forEach(docSnap => {
+        allPublishedTerms.push({ id: docSnap.id, ...docSnap.data() });
+      });
+      renderTermsList(allPublishedTerms);
     } catch (e) {
       console.error(e);
+      container.innerHTML = `<span class="text-xs text-rose-400">حدث خطأ أثناء جلب المصطلحات.</span>`;
     }
+  }
+
+  function renderTermsList(list) {
+    const container = document.getElementById("publishedTermsList");
+    const countBadge = document.getElementById("termsCountBadge");
+    if (!container) return;
+
+    if (countBadge) countBadge.textContent = list.length;
+
+    if (list.length === 0) {
+      container.innerHTML = `<span class="text-xs text-slate-500 font-bold">لا توجد مصطلحات منشورة بعد.</span>`;
+      return;
+    }
+
+    container.innerHTML = list.map(t => `
+      <div class="p-4 rounded-2xl border border-slate-800 bg-[#07111D] flex items-center justify-between gap-3">
+        <div class="space-y-1">
+          <div class="flex items-center gap-2">
+            <span class="text-xs font-black text-amber-300 font-mono">${t.term || ""}</span>
+            <span class="text-[10px] font-bold px-2 py-0.5 rounded bg-slate-800 text-rose-300">${t.category || "مصطلح"}</span>
+          </div>
+          <p class="text-[11px] text-slate-400">${t.definition || ""}</p>
+        </div>
+        <button onclick="deleteTerm('${t.id}')" class="shrink-0 px-3 py-1.5 rounded-lg bg-rose-950/60 hover:bg-rose-900 border border-rose-800/40 text-rose-300 text-xs font-bold transition">
+          حذف ✕
+        </button>
+      </div>
+    `).join("");
+  }
+
+  window.deleteTerm = async function(termId) {
+    if (!confirm("هل أنت متأكد من حذف هذا المصطلح؟")) return;
+    try {
+      await deleteDoc(doc(db, "medical_terms", termId));
+      loadPublishedTerms();
+    } catch (e) {
+      alert("حدث خطأ أثناء الحذف.");
+    }
+  };
+
+  const termsSearchInput = document.getElementById("termsSearchInput");
+  if (termsSearchInput) {
+    termsSearchInput.addEventListener("input", (e) => {
+      const q = e.target.value.toLowerCase().trim();
+      const filtered = allPublishedTerms.filter(t =>
+        (t.term && t.term.toLowerCase().includes(q)) ||
+        (t.category && t.category.toLowerCase().includes(q)) ||
+        (t.definition && t.definition.toLowerCase().includes(q))
+      );
+      renderTermsList(filtered);
+    });
   }
 
   // حذف محاضرة
@@ -827,23 +996,35 @@ return `
   }
 
   // 1. التبديل بين تبويب الطلاب والمحاضرات
-  window.switchAdminTab = function(tab) {
-    const secStudents = document.getElementById("sectionStudentsTab");
-    const secLectures = document.getElementById("sectionLecturesTab");
-    const btnStudents = document.getElementById("adminTabStudents");
-    const btnLectures = document.getElementById("adminTabLectures");
+window.switchAdminTab = function(tab) {
+    const sections = {
+      students: document.getElementById("sectionStudentsTab"),
+      lectures: document.getElementById("sectionLecturesTab"),
+      glossary: document.getElementById("sectionGlossaryTab")
+    };
+    const buttons = {
+      students: document.getElementById("adminTabStudents"),
+      lectures: document.getElementById("adminTabLectures"),
+      glossary: document.getElementById("adminTabGlossary")
+    };
 
-    if (tab === 'students') {
-      secStudents.classList.remove("hidden");
-      secLectures.classList.add("hidden");
-      btnStudents.className = "px-4 py-2 rounded-xl text-xs font-black transition bg-brand text-white shadow";
-      btnLectures.className = "px-4 py-2 rounded-xl text-xs font-black transition text-slate-400 hover:text-white";
-    } else {
-      secStudents.classList.add("hidden");
-      secLectures.classList.remove("hidden");
-      btnLectures.className = "px-4 py-2 rounded-xl text-xs font-black transition bg-brand text-white shadow";
-      btnStudents.className = "px-4 py-2 rounded-xl text-xs font-black transition text-slate-400 hover:text-white";
+    const activeClass = "px-4 py-2 rounded-xl text-xs font-black transition bg-brand text-white shadow";
+    const inactiveClass = "px-4 py-2 rounded-xl text-xs font-black transition text-slate-400 hover:text-white";
+
+    Object.keys(sections).forEach(key => {
+      if (key === tab) {
+        sections[key].classList.remove("hidden");
+        buttons[key].className = activeClass;
+      } else {
+        sections[key].classList.add("hidden");
+        buttons[key].className = inactiveClass;
+      }
+    });
+
+    if (tab === 'lectures') {
       loadPublishedLectures();
+    } else if (tab === 'glossary') {
+      loadPublishedTerms();
     }
   };
 
