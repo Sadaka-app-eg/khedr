@@ -23,9 +23,14 @@
     --dark-line:     #1E2E42;
   }
 
-
   html {
-    zoom: 1.7 /* يكبر المنصة بالكامل بنسبة40% */
+    font-size: 108%; /* تكبير بسيط على الموبايل عشان القراءة تبقى مريحة */
+  }
+
+  @media (min-width: 768px) {
+    html {
+      font-size: 115%; /* تكبير أكبر شوية على الشاشات الكبيرة */
+    }
   }
   html[lang="ar"] body, html[lang="ar"] * { font-family: 'Tajawal', 'IBM Plex Sans Arabic', sans-serif; }
   html[lang="en"] body, html[lang="en"] * { font-family: 'Plus Jakarta Sans', sans-serif; }

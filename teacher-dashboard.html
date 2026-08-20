@@ -331,7 +331,11 @@ import { auth, db, onAuthStateChanged, signOut, doc } from "./firebase-config.js
 import { collection, getDocs, addDoc, deleteDoc, updateDoc, query, where, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-firestore.js";
 
 
-
+const ADMIN_EMAILS = [
+  "ahmedmohamedhosny100@gmail.com",
+  "admin@khedr.com",
+  "khedr@physio.com"
+];
 
   // قائمة جميع الكورسات المتاحة في المنصة للتفعيل
   const allCourses = [

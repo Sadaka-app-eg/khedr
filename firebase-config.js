@@ -41,10 +41,3 @@ export {
   setDoc, 
   serverTimestamp 
 };
-
-// في firebase-config.js
-export const ADMIN_EMAILS = [
-  "ahmedmohamedhosny100@gmail.com",
-  "admin@khedr.com",
-  "khedr@physio.com"
-];
