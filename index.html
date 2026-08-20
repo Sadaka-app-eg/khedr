@@ -523,7 +523,76 @@ div[id^="videoContainer_"]:fullscreen {
           </select>
         </label>
       </div>
-
+<label class="flex flex-col gap-1 text-xs font-bold text-theme-main">
+  <span>🏛️ الجامعة أو الكلية</span>
+  <input id="regUniversity" list="egyptUniversities" required placeholder="ابحث أو اختر اسم جامعتك..." class="h-10 rounded-xl px-3 border border-slate-700 bg-transparent text-xs text-theme-main focus:border-brand" autocomplete="off" />
+  <datalist id="egyptUniversities">
+    <!-- الجامعات الحكومية -->
+    <option value="جامعة القاهرة">
+    <option value="جامعة عين شمس">
+    <option value="جامعة الإسكندرية">
+    <option value="جامعة المنصورة">
+    <option value="جامعة أسيوط">
+    <option value="جامعة الزقازيق">
+    <option value="جامعة حلوان">
+    <option value="جامعة طنطا">
+    <option value="جامعة المنوفية">
+    <option value="جامعة كفر الشيخ">
+    <option value="جامعة بنها">
+    <option value="جامعة قناة السويس">
+    <option value="جامعة بورسعيد">
+    <option value="جامعة جنوب الوادي">
+    <option value="جامعة بني سويف">
+    <option value="جامعة المنيا">
+    <option value="جامعة سوهاج">
+    <option value="جامعة أسوان">
+    <option value="جامعة السويس">
+    <option value="جامعة دمنهور">
+    <option value="جامعة دمياط">
+    <option value="جامعة مدينة السادات">
+    <option value="جامعة الوادي الجديد">
+    <option value="جامعة مطروح">
+    <option value="جامعة الأقصر">
+    <option value="جامعة العريش">
+    <!-- الجامعات الخاصة والأهلية والدولية -->
+    <option value="الجامعة المصرية الصينية (ECU)">
+    <option value="جامعة 6 أكتوبر (O6U)">
+    <option value="جامعة مصر للعلوم والتكنولوجيا (MUST)">
+    <option value="جامعة الأهرام الكندية (ACU)">
+    <option value="جامعة الدلتا للعلوم والتكنولوجيا">
+    <option value="جامعة هليوبوليس">
+    <option value="جامعة دراية">
+    <option value="جامعة الجيزة الجديدة (NGU)">
+    <option value="جامعة بدر بالقاهرة (BUC)">
+    <option value="جامعة بدر بأسيوط">
+    <option value="جامعة حورس">
+    <option value="جامعة سفنكس">
+    <option value="جامعة ميريت">
+    <option value="جامعة النهضة">
+    <option value="جامعة المستقبل (FUE)">
+    <option value="جامعة فاروس بالإسكندرية (PUA)">
+    <option value="جامعة الجلالة الأهلية">
+    <option value="جامعة الملك سلمان الدولية">
+    <option value="جامعة العلمين الدولية">
+    <option value="جامعة المنصورة الجديدة">
+    <option value="جامعة بنها الأهلية">
+    <option value="جامعة حلوان الأهلية">
+    <option value="جامعة الزقازيق الأهلية">
+    <option value="جامعة المنوفية الأهلية">
+    <option value="جامعة الإسكندرية الأهلية">
+    <option value="جامعة أسيوط الأهلية">
+    <option value="جامعة بني سويف الأهلية">
+    <option value="جامعة المنيا الأهلية">
+    <option value="جامعة شرق بورسعيد الأهلية">
+    <option value="جامعة الإسماعيلية الجديدة الأهلية">
+    <option value="جامعة مصر للمعلوماتية (EUI)">
+    <option value="جامعة مايو (MUC)">
+    <option value="جامعة الصالحية الجديدة">
+    <option value="جامعة الريادة للعلوم والتكنولوجيا">
+    <option value="جامعة السلام بمصر">
+    <option value="جامعة سفنكس">
+  </datalist>
+</label>
       <label class="flex flex-col gap-1 text-xs font-bold text-theme-main">
         <span data-i18n="auth_email">البريد الإلكتروني</span>
         <input id="regEmail" type="email" required placeholder="student@example.com" class="h-10 rounded-xl px-3 border border-slate-700 bg-transparent text-xs text-theme-main focus:border-brand" />
@@ -2437,14 +2506,17 @@ const registerForm = document.getElementById("registerForm");
         const cred = await createUserWithEmailAndPassword(auth, email, password);
         await updateProfile(cred.user, { displayName: name });
 
-        await setDoc(doc(db, "students", cred.user.uid), {
-          fullName: name,
-          phone: phone,
-          academicYear: academicYear,
-          email: email,
-          enrolledCourses: [],
-          createdAt: serverTimestamp()
-        });
+const university = document.getElementById("regUniversity").value.trim();
+
+await setDoc(doc(db, "students", cred.user.uid), {
+  fullName: name,
+  phone: phone,
+  academicYear: academicYear,
+  university: university || "غير محدد", // <-- إضافة حقل الجامعة
+  email: email,
+  enrolledCourses: [],
+  createdAt: serverTimestamp()
+});
 
         alert("🎉 تم إنشاء الحساب بنجاح!");
         window.location.href = "dashboard.html";

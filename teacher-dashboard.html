@@ -154,15 +154,16 @@
   <section class="bg-card-theme border border-slate-800 rounded-3xl overflow-hidden shadow-xl">
     <div class="overflow-x-auto">
       <table class="w-full text-right text-xs">
-        <thead class="bg-[#07111D] text-slate-400 border-b border-slate-800">
-          <tr>
-            <th class="p-4">بيانات الطالب</th>
-            <th class="p-4">الفرقة</th>
-            <th class="p-4">رقم الواتساب</th>
-            <th class="p-4">الكورسات المفعلة</th>
-            <th class="p-4 text-center">إجراء وتفعيل الكورسات</th>
-          </tr>
-        </thead>
+<thead class="bg-[#07111D] text-slate-400 border-b border-slate-800">
+  <tr>
+    <th class="p-4">بيانات الطالب</th>
+    <th class="p-4">الجامعة</th>
+    <th class="p-4">الفرقة</th>
+    <th class="p-4">رقم الواتساب</th>
+    <th class="p-4">الكورسات المفعلة</th>
+    <th class="p-4 text-center">إجراء وتفعيل الكورسات</th>
+  </tr>
+</thead>
         <tbody id="studentsTableBody" class="divide-y divide-slate-800/60">
           <!-- سيتم تحميل الطلاب ديناميكياً -->
         </tbody>
@@ -457,63 +458,67 @@ async function loadAllStudents() {
     if (activeEl) activeEl.textContent = totalEnrolled;
   }
 
-  function renderStudents() {
-    const searchInput = document.getElementById("searchInput");
-    const yearFilter = document.getElementById("yearFilter");
-    const searchVal = searchInput ? searchInput.value.trim().toLowerCase() : "";
-    const yearVal = yearFilter ? yearFilter.value : "all";
+function renderStudents() {
+  const searchInput = document.getElementById("searchInput");
+  const yearFilter = document.getElementById("yearFilter");
+  const searchVal = searchInput ? searchInput.value.trim().toLowerCase() : "";
+  const yearVal = yearFilter ? yearFilter.value : "all";
 
-    const filtered = studentsList.filter(s => {
-      const matchName = (s.fullName || "").toLowerCase().includes(searchVal);
-      const matchEmail = (s.email || "").toLowerCase().includes(searchVal);
-      const matchPhone = (s.phone || "").includes(searchVal);
-      const matchYear = yearVal === "all" || s.academicYear === yearVal;
+  const filtered = studentsList.filter(s => {
+    const matchName = (s.fullName || "").toLowerCase().includes(searchVal);
+    const matchEmail = (s.email || "").toLowerCase().includes(searchVal);
+    const matchPhone = (s.phone || "").includes(searchVal);
+    const matchUni = (s.university || "").toLowerCase().includes(searchVal); // <-- إتاحة البحث باسم الجامعة
+    const matchYear = yearVal === "all" || s.academicYear === yearVal;
 
-      return (matchName || matchEmail || matchPhone) && matchYear;
-    });
+    return (matchName || matchEmail || matchPhone || matchUni) && matchYear;
+  });
 
-    const tbody = document.getElementById("studentsTableBody");
-    if (!tbody) return;
+  const tbody = document.getElementById("studentsTableBody");
+  if (!tbody) return;
 
-    if (filtered.length === 0) {
-      tbody.innerHTML = `<tr><td colspan="5" class="p-8 text-center text-slate-400 font-bold">لا يوجد طلاب مطابقين للبحث.</td></tr>`;
-      return;
-    }
-
-    tbody.innerHTML = filtered.map(s => {
-      const enrolled = s.enrolledCourses || [];
-      const yearLabel = s.academicYear === "y2" ? "الفرقة الثانية" : "الفرقة الأولى";
-
-      return `
-        <tr class="hover:bg-slate-800/30 transition border-b border-slate-800/40">
-          <td class="p-4">
-            <span class="font-black text-sm text-white block">${s.fullName || "بدون اسم"}</span>
-            <span class="text-[11px] text-slate-400 dir-ltr inline-block">${s.email || ""}</span>
-          </td>
-          <td class="p-4">
-            <span class="px-2.5 py-1 rounded-lg text-[10px] font-black ${s.academicYear === 'y2' ? 'bg-cyan-950/60 text-cyan-400 border border-cyan-800/40' : 'bg-amber-950/60 text-amber-400 border border-amber-800/40'}">
-              ${yearLabel}
-            </span>
-          </td>
-          <td class="p-4">
-            <a href="https://wa.me/2${s.phone}" target="_blank" class="text-emerald-400 font-bold hover:underline dir-ltr inline-block">
-              ${s.phone || "—"}
-            </a>
-          </td>
-          <td class="p-4">
-            <span class="px-2.5 py-1 rounded-lg bg-slate-800 text-rose-300 font-bold text-xs">
-              ${enrolled.length} مقررات مفعلة
-            </span>
-          </td>
-          <td class="p-4 text-center">
-            <button onclick="openCourseModal('${s.id}')" class="px-4 py-2 rounded-xl bg-brand hover:bg-rose-900 text-white font-bold text-xs shadow-md transition">
-              ⚙️ إدارة وتفعيل الكورسات
-            </button>
-          </td>
-        </tr>
-      `;
-    }).join("");
+  if (filtered.length === 0) {
+    tbody.innerHTML = `<tr><td colspan="6" class="p-8 text-center text-slate-400 font-bold">لا يوجد طلاب مطابقين للبحث.</td></tr>`;
+    return;
   }
+
+  tbody.innerHTML = filtered.map(s => {
+    const enrolled = s.enrolledCourses || [];
+    const yearLabel = s.academicYear === "y2" ? "الفرقة الثانية" : "الفرقة الأولى";
+
+    return `
+      <tr class="hover:bg-slate-800/30 transition border-b border-slate-800/40">
+        <td class="p-4">
+          <span class="font-black text-sm text-white block">${s.fullName || "بدون اسم"}</span>
+          <span class="text-[11px] text-slate-400 dir-ltr inline-block">${s.email || ""}</span>
+        </td>
+        <td class="p-4">
+          <span class="text-xs font-bold text-amber-300 block">🏛️ ${s.university || "غير محدد"}</span>
+        </td>
+        <td class="p-4">
+          <span class="px-2.5 py-1 rounded-lg text-[10px] font-black ${s.academicYear === 'y2' ? 'bg-cyan-950/60 text-cyan-400 border border-cyan-800/40' : 'bg-amber-950/60 text-amber-400 border border-amber-800/40'}">
+            ${yearLabel}
+          </span>
+        </td>
+        <td class="p-4">
+          <a href="https://wa.me/2${s.phone}" target="_blank" class="text-emerald-400 font-bold hover:underline dir-ltr inline-block">
+            ${s.phone || "—"}
+          </a>
+        </td>
+        <td class="p-4">
+          <span class="px-2.5 py-1 rounded-lg bg-slate-800 text-rose-300 font-bold text-xs">
+            ${enrolled.length} مقررات مفعلة
+          </span>
+        </td>
+        <td class="p-4 text-center">
+          <button onclick="openCourseModal('${s.id}')" class="px-4 py-2 rounded-xl bg-brand hover:bg-rose-900 text-white font-bold text-xs shadow-md transition">
+            ⚙️ إدارة وتفعيل الكورسات
+          </button>
+        </td>
+      </tr>
+    `;
+  }).join("");
+}
 
   // ربط الدوال بالـ window لتستجيب لضغطة الزر
   window.openCourseModal = function(studentId) {
