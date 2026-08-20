@@ -20,8 +20,22 @@ const firebaseConfig = {
   measurementId: "G-8NZLYVK1R8"
 };
 
-export const app = initializeApp(firebaseConfig);
-export const auth = getAuth(app);
-export const db = getFirestore(app);
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getFirestore(app);
 
-export { auth, db, signInWithEmailAndPassword, createUserWithEmailAndPassword, updateProfile, signOut, doc, setDoc, getDoc, serverTimestamp, onAuthStateChanged, sendPasswordResetEmail };
+export { 
+  app, 
+  auth, 
+  db, 
+  signInWithEmailAndPassword, 
+  createUserWithEmailAndPassword, 
+  updateProfile, 
+  signOut, 
+  doc, 
+  setDoc, 
+  getDoc, 
+  serverTimestamp, 
+  onAuthStateChanged, 
+  sendPasswordResetEmail 
+};
