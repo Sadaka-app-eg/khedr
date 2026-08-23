@@ -1,4 +1,3 @@
-// تشغيل واجهة المنصة مباشرة داخل الذاكرة
 fetch("app.view.html")
   .then((res) => res.text())
   .then((html) => {
