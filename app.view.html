@@ -944,7 +944,7 @@ div[id^="videoContainer_"]:fullscreen {
           <input type="text" id="spCustomTaskInput" placeholder="اكتب اسم المهمة الخاصة..." class="flex-1 min-w-0 px-3 py-2.5 rounded-xl bg-[#07111D] border border-slate-700 text-white text-xs placeholder:text-slate-500 focus:outline-none focus:border-cyan-400">
           <button type="button" onclick="spAddCustomTask()" class="px-5 py-2.5 rounded-xl bg-amber-400 hover:bg-amber-300 text-slate-950 font-black text-xs transition active:scale-95 shrink-0">إضافة</button>
         </div>
-        <div id="spCustomTasksList" class="flex flex-wrap gap-2"></div>
+<div id="spCustomTasksList" class="grid grid-cols-1 sm:grid-cols-2 gap-2.5"></div>        
       </div>
     </div>
 
@@ -2910,6 +2910,7 @@ window.redeemMaterialCodeFromModal = async function() {
 
 /* =====================================================================
    خطة المذاكرة الذكية — يتحفظ لكل طالب في studyPlans/{uid}
+   كل مهمة ليها أيام مخصصة تتنفذ فيها (سبت → جمعة)
    ===================================================================== */
 const SP_QUICK_TASKS = {
   lectures: ["مراجعة محاضرة جديدة", "حل أسئلة MCQ", "مذاكرة من الملزمة", "مشاهدة فيديو شرح"],
@@ -2917,11 +2918,28 @@ const SP_QUICK_TASKS = {
   general: ["حل امتحان تجريبي", "تلخيص نقاط مهمة", "مراجعة الأخطاء السابقة", "تنظيم الجدول الأسبوعي"]
 };
 const SP_DURATIONS = [7, 14, 30, 100];
+const SP_DAYS_FULL = ["السبت", "الأحد", "الاثنين", "الثلاثاء", "الأربعاء", "الخميس", "الجمعة"];
+const SP_DAYS_SHORT = ["سبت", "حد", "اتنين", "تلات", "أربع", "خميس", "جمعة"];
 
 window.__spSelectedTasks = new Set();
 window.__spCustomTasks = [];
+window.__spTaskDays = {};
 window.__spSelectedDuration = 7;
 window.__spCustomDurationActive = false;
+
+function spDayChipsHtml(task, sizeClass) {
+  const days = window.__spTaskDays[task] || [];
+  return `
+    <div class="grid grid-cols-7 gap-1">
+      ${SP_DAYS_SHORT.map((d, idx) => `
+        <button type="button" onclick="event.stopPropagation(); spToggleTaskDay('${task.replace(/'/g, "\\'")}', ${idx})"
+          class="${sizeClass} rounded-lg font-bold transition ${days.includes(idx) ? 'bg-emerald-500 text-slate-950' : 'bg-[#07111D] border border-slate-700 text-slate-400 hover:border-emerald-500/50'}">
+          ${d}
+        </button>
+      `).join("")}
+    </div>
+  `;
+}
 
 function spRenderQuickTasks() {
   Object.keys(SP_QUICK_TASKS).forEach(catKey => {
@@ -2930,10 +2948,13 @@ function spRenderQuickTasks() {
     container.innerHTML = SP_QUICK_TASKS[catKey].map(task => {
       const isActive = window.__spSelectedTasks.has(task);
       return `
-        <button type="button" onclick="spToggleTask('${task.replace(/'/g, "\\'")}')"
-          class="task-pill w-full py-2.5 px-3.5 rounded-xl text-xs font-bold text-start transition border ${isActive ? 'bg-cyan-400 border-cyan-400 text-slate-950' : 'bg-[#07111D] border-slate-700 text-slate-200 hover:border-cyan-400/50'}">
-          ${isActive ? '✓' : '+'} ${task}
-        </button>
+        <div class="space-y-1.5">
+          <button type="button" onclick="spToggleTask('${task.replace(/'/g, "\\'")}')"
+            class="task-pill w-full py-2.5 px-3.5 rounded-xl text-xs font-bold text-start transition border ${isActive ? 'bg-cyan-400 border-cyan-400 text-slate-950' : 'bg-[#07111D] border-slate-700 text-slate-200 hover:border-cyan-400/50'}">
+            ${isActive ? '✓' : '+'} ${task}
+          </button>
+          ${isActive ? spDayChipsHtml(task, "py-1.5 text-[10px]") : ""}
+        </div>
       `;
     }).join("");
   });
@@ -2942,10 +2963,25 @@ function spRenderQuickTasks() {
 window.spToggleTask = function(task) {
   if (window.__spSelectedTasks.has(task)) {
     window.__spSelectedTasks.delete(task);
+    delete window.__spTaskDays[task];
   } else {
     window.__spSelectedTasks.add(task);
+    window.__spTaskDays[task] = [0, 1, 2, 3, 4, 5, 6];
   }
   spRenderQuickTasks();
+};
+
+window.spToggleTaskDay = function(task, dayIndex) {
+  if (!window.__spTaskDays[task]) window.__spTaskDays[task] = [];
+  const arr = window.__spTaskDays[task];
+  const pos = arr.indexOf(dayIndex);
+  if (pos > -1) {
+    arr.splice(pos, 1);
+  } else {
+    arr.push(dayIndex);
+  }
+  spRenderQuickTasks();
+  spRenderCustomTasks();
 };
 
 window.spAddCustomTask = function() {
@@ -2954,6 +2990,7 @@ window.spAddCustomTask = function() {
   if (!val) return;
   if (!window.__spCustomTasks.includes(val)) {
     window.__spCustomTasks.push(val);
+    window.__spTaskDays[val] = [0, 1, 2, 3, 4, 5, 6];
   }
   input.value = "";
   spRenderCustomTasks();
@@ -2961,6 +2998,7 @@ window.spAddCustomTask = function() {
 
 window.spRemoveCustomTask = function(task) {
   window.__spCustomTasks = window.__spCustomTasks.filter(t => t !== task);
+  delete window.__spTaskDays[task];
   spRenderCustomTasks();
 };
 
@@ -2968,10 +3006,13 @@ function spRenderCustomTasks() {
   const container = document.getElementById("spCustomTasksList");
   if (!container) return;
   container.innerHTML = window.__spCustomTasks.map(task => `
-    <span class="inline-flex items-center gap-2 px-3 py-1.5 rounded-xl bg-amber-400/20 border border-amber-400/40 text-amber-300 text-[11px] font-bold">
-      ${task}
-      <button type="button" onclick="spRemoveCustomTask('${task.replace(/'/g, "\\'")}')" class="text-amber-300 hover:text-white">✕</button>
-    </span>
+    <div class="p-2.5 rounded-xl bg-amber-400/10 border border-amber-400/30 space-y-1.5">
+      <div class="flex items-center justify-between gap-2">
+        <span class="text-[11px] font-bold text-amber-300">${task}</span>
+        <button type="button" onclick="spRemoveCustomTask('${task.replace(/'/g, "\\'")}')" class="text-amber-300 hover:text-white text-xs shrink-0">✕</button>
+      </div>
+      ${spDayChipsHtml(task, "py-1 text-[9px]")}
+    </div>
   `).join("");
 }
 
@@ -3004,6 +3045,7 @@ window.openStudyPlan = async function() {
   }
   window.__spSelectedTasks = new Set();
   window.__spCustomTasks = [];
+  window.__spTaskDays = {};
   window.__spSelectedDuration = 7;
   window.__spCustomDurationActive = false;
 
@@ -3023,10 +3065,14 @@ window.openStudyPlan = async function() {
       const savedTasks = data.tasks || [];
       const allQuickTasks = Object.values(SP_QUICK_TASKS).flat();
       savedTasks.forEach(t => {
-        if (allQuickTasks.includes(t)) {
-          window.__spSelectedTasks.add(t);
+        const name = typeof t === "string" ? t : t.name;
+        const days = typeof t === "string" ? [0, 1, 2, 3, 4, 5, 6] : (t.days || [0, 1, 2, 3, 4, 5, 6]);
+        if (!name) return;
+        window.__spTaskDays[name] = days;
+        if (allQuickTasks.includes(name)) {
+          window.__spSelectedTasks.add(name);
         } else {
-          window.__spCustomTasks.push(t);
+          window.__spCustomTasks.push(name);
         }
       });
       if (data.durationDays) {
@@ -3055,7 +3101,7 @@ window.saveStudyPlan = async function() {
   const msgEl = document.getElementById("studyPlanMsg");
   const btn = document.getElementById("studyPlanSaveBtn");
 
-  const allTasks = [...window.__spSelectedTasks, ...window.__spCustomTasks];
+  const allTaskNames = [...window.__spSelectedTasks, ...window.__spCustomTasks];
   let duration = window.__spSelectedDuration;
   const customInput = document.getElementById("spCustomDurationInput");
   const customVal = parseInt((customInput?.value || "").trim(), 10);
@@ -3063,29 +3109,51 @@ window.saveStudyPlan = async function() {
     duration = customVal;
   }
 
-  if (allTasks.length === 0) {
+  if (allTaskNames.length === 0) {
     msgEl.textContent = "⚠️ اختار مهمة واحدة على الأقل قبل اعتماد الخطة";
     msgEl.className = "text-center text-xs font-bold text-rose-400";
     msgEl.classList.remove("hidden");
     return;
   }
 
+  if (!window.authInstance?.currentUser) {
+    msgEl.textContent = "⚠️ لازم تكون مسجل دخول عشان تقدر تحفظ الخطة";
+    msgEl.className = "text-center text-xs font-bold text-rose-400";
+    msgEl.classList.remove("hidden");
+    return;
+  }
+
+  const tasksPayload = allTaskNames.map(name => ({
+    name,
+    days: window.__spTaskDays[name] || [0, 1, 2, 3, 4, 5, 6]
+  }));
+
   btn.disabled = true;
   btn.textContent = "⏳ بيتحفظ...";
+  msgEl.classList.add("hidden");
+
   try {
     const { db, doc, setDoc, serverTimestamp } = window.__firestoreRefs;
     const user = window.authInstance.currentUser;
-    await setDoc(doc(db, "studyPlans", user.uid), {
-      tasks: allTasks,
+
+    const savePromise = setDoc(doc(db, "studyPlans", user.uid), {
+      tasks: tasksPayload,
       durationDays: duration,
       updatedAt: serverTimestamp()
     }, { merge: true });
+
+    const timeoutPromise = new Promise((_, reject) => {
+      setTimeout(() => reject(new Error("انتهت المهلة — تأكد من اتصالك بالإنترنت")), 12000);
+    });
+
+    await Promise.race([savePromise, timeoutPromise]);
 
     msgEl.textContent = "✅ تم اعتماد خطة المذاكرة بنجاح، بالتوفيق يا بطل!";
     msgEl.className = "text-center text-xs font-bold text-emerald-400";
     msgEl.classList.remove("hidden");
   } catch (e) {
-    msgEl.textContent = "❌ حصل خطأ أثناء الحفظ، حاول تاني";
+    console.error("خطأ في حفظ خطة المذاكرة:", e);
+    msgEl.textContent = "❌ " + (e.code || e.message || "حصل خطأ أثناء الحفظ، حاول تاني");
     msgEl.className = "text-center text-xs font-bold text-rose-400";
     msgEl.classList.remove("hidden");
   } finally {
@@ -3093,7 +3161,6 @@ window.saveStudyPlan = async function() {
     btn.textContent = "🚀 اعتماد وبدء خطة المذاكرة";
   }
 };
-
 /* =====================================================================
    كويز بالكود — الطالب يدخل كود يديهوله المدرس فيبدأ الكويز مباشرة
    الأكواد مخزّنة في مجموعة quizCodes، وممكن تتستخدم أكتر من مرة
