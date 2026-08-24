@@ -908,19 +908,58 @@ div[id^="videoContainer_"]:fullscreen {
   </div>
 </div>
 
-<!-- ============ MODAL جدول المذاكرة ============ -->
+<!-- ============ MODAL خطة المذاكرة الذكية ============ -->
 <div id="studyPlanModal" class="hidden fixed inset-0 z-50 flex items-center justify-center bg-black/85 backdrop-blur-md p-4">
-  <div class="bg-[#0F1D2D] border border-slate-700 rounded-3xl max-w-2xl w-full p-6 space-y-5 shadow-2xl relative max-h-[88vh] overflow-y-auto">
-    <button onclick="closeStudyPlan()" class="absolute top-5 start-5 text-slate-400 hover:text-white w-8 h-8 rounded-full bg-slate-800 flex items-center justify-center transition">✕</button>
+  <div class="bg-[#0F1D2D] border border-slate-700 rounded-3xl max-w-4xl w-full p-6 space-y-6 shadow-2xl relative max-h-[90vh] overflow-y-auto">
+    <button onclick="closeStudyPlan()" class="absolute top-5 start-5 text-slate-400 hover:text-white w-8 h-8 rounded-full bg-slate-800 flex items-center justify-center transition z-10">✕</button>
+
     <div class="text-center space-y-1 pt-2">
-      <span class="inline-block text-[11px] font-black px-3 py-1 rounded-full bg-cyan-400 text-slate-900">🗓️ خصوصي بيك</span>
-      <h3 class="text-xl font-black text-white">جدول المذاكرة الأسبوعي</h3>
-      <p class="text-xs text-slate-400 font-semibold">نظم مذاكرتك يوم بيوم — بيتحفظ تلقائياً في حسابك</p>
+      <span class="inline-block text-2xl">🌱</span>
+      <p class="text-xs sm:text-sm text-slate-300 font-bold leading-6 max-w-xl mx-auto">
+        ابدأ ببناء خطة مذاكرتك: اختر من المهام الجاهزة أو أضف مهامك الخاصة، وحدد مدة الخطة، وهيساعدك خِضر على متابعة التزامك يومًا بعد يوم.
+      </p>
     </div>
-    <div id="studyPlanDays" class="space-y-3"></div>
-    <div class="flex justify-center pt-1">
-      <button onclick="saveStudyPlan()" id="studyPlanSaveBtn" class="px-8 py-3 rounded-2xl bg-cyan-400 hover:bg-cyan-300 text-slate-950 font-black text-xs transition active:scale-95">💾 حفظ الجدول</button>
+
+    <div class="space-y-4">
+      <h4 class="text-sm font-black text-amber-300 flex items-center gap-2">📋 تخصيص وتحديد مهام خطتك</h4>
+
+      <div class="space-y-2">
+        <h5 class="text-xs font-black text-cyan-300 flex items-center gap-1.5">📚 مذاكرة المحاضرات</h5>
+        <div id="spCat_lectures" class="grid grid-cols-1 sm:grid-cols-2 gap-2.5"></div>
+      </div>
+
+      <div class="space-y-2">
+        <h5 class="text-xs font-black text-cyan-300 flex items-center gap-1.5">🩺 التطبيق العملي والإكلينيكي</h5>
+        <div id="spCat_practical" class="grid grid-cols-1 sm:grid-cols-2 gap-2.5"></div>
+      </div>
+
+      <div class="space-y-2">
+        <h5 class="text-xs font-black text-cyan-300 flex items-center gap-1.5">✅ مهام عامة ومراجعة</h5>
+        <div id="spCat_general" class="grid grid-cols-1 sm:grid-cols-2 gap-2.5"></div>
+      </div>
+
+      <div class="space-y-2 pt-1">
+        <h5 class="text-xs font-black text-white flex items-center gap-1.5">➕ مهمة خاصة مخصصة</h5>
+        <div class="flex gap-2">
+          <input type="text" id="spCustomTaskInput" placeholder="اكتب اسم المهمة الخاصة..." class="flex-1 min-w-0 px-3 py-2.5 rounded-xl bg-[#07111D] border border-slate-700 text-white text-xs placeholder:text-slate-500 focus:outline-none focus:border-cyan-400">
+          <button type="button" onclick="spAddCustomTask()" class="px-5 py-2.5 rounded-xl bg-amber-400 hover:bg-amber-300 text-slate-950 font-black text-xs transition active:scale-95 shrink-0">إضافة</button>
+        </div>
+        <div id="spCustomTasksList" class="flex flex-wrap gap-2"></div>
+      </div>
     </div>
+
+    <div class="space-y-2 pt-1 border-t border-slate-800">
+      <h4 class="text-sm font-black text-amber-300 flex items-center gap-2 pt-4">⏱️ مدة خطة المذاكرة</h4>
+      <div class="grid grid-cols-2 sm:grid-cols-4 gap-2.5" id="spDurationButtons"></div>
+      <div class="flex items-center gap-2 pt-1">
+        <span class="text-[11px] font-bold text-slate-400 shrink-0">مدة مخصصة بالأيام:</span>
+        <input type="number" min="1" id="spCustomDurationInput" oninput="window.__spCustomDurationActive = true; spRenderDurationButtons();" placeholder="مثال: 21" class="flex-1 min-w-0 px-3 py-2 rounded-xl bg-[#07111D] border border-slate-700 text-white text-xs placeholder:text-slate-500 focus:outline-none focus:border-cyan-400">
+      </div>
+    </div>
+
+    <button onclick="saveStudyPlan()" id="studyPlanSaveBtn" class="w-full py-3.5 rounded-2xl bg-brand hover:bg-rose-900 text-white font-black text-sm shadow-xl transition active:scale-95">
+      🚀 اعتماد وبدء خطة المذاكرة
+    </button>
     <p id="studyPlanMsg" class="text-center text-xs font-bold hidden"></p>
   </div>
 </div>
@@ -2870,37 +2909,141 @@ window.redeemMaterialCodeFromModal = async function() {
 };
 
 /* =====================================================================
-   جدول المذاكرة الأسبوعي — يتحفظ لكل طالب في studyPlans/{uid}
+   خطة المذاكرة الذكية — يتحفظ لكل طالب في studyPlans/{uid}
    ===================================================================== */
-const STUDY_PLAN_DAYS = ["السبت", "الأحد", "الاثنين", "الثلاثاء", "الأربعاء", "الخميس", "الجمعة"];
+const SP_QUICK_TASKS = {
+  lectures: ["مراجعة محاضرة جديدة", "حل أسئلة MCQ", "مذاكرة من الملزمة", "مشاهدة فيديو شرح"],
+  practical: ["تدريب عملي (Practical)", "حفظ مصطلحات طبية", "مراجعة Anatomy", "تجهيز لامتحان OSCE"],
+  general: ["حل امتحان تجريبي", "تلخيص نقاط مهمة", "مراجعة الأخطاء السابقة", "تنظيم الجدول الأسبوعي"]
+};
+const SP_DURATIONS = [7, 14, 30, 100];
 
-function renderStudyPlanDays(values) {
-  const container = document.getElementById("studyPlanDays");
+window.__spSelectedTasks = new Set();
+window.__spCustomTasks = [];
+window.__spSelectedDuration = 7;
+window.__spCustomDurationActive = false;
+
+function spRenderQuickTasks() {
+  Object.keys(SP_QUICK_TASKS).forEach(catKey => {
+    const container = document.getElementById(`spCat_${catKey}`);
+    if (!container) return;
+    container.innerHTML = SP_QUICK_TASKS[catKey].map(task => {
+      const isActive = window.__spSelectedTasks.has(task);
+      return `
+        <button type="button" onclick="spToggleTask('${task.replace(/'/g, "\\'")}')"
+          class="task-pill w-full py-2.5 px-3.5 rounded-xl text-xs font-bold text-start transition border ${isActive ? 'bg-cyan-400 border-cyan-400 text-slate-950' : 'bg-[#07111D] border-slate-700 text-slate-200 hover:border-cyan-400/50'}">
+          ${isActive ? '✓' : '+'} ${task}
+        </button>
+      `;
+    }).join("");
+  });
+}
+
+window.spToggleTask = function(task) {
+  if (window.__spSelectedTasks.has(task)) {
+    window.__spSelectedTasks.delete(task);
+  } else {
+    window.__spSelectedTasks.add(task);
+  }
+  spRenderQuickTasks();
+};
+
+window.spAddCustomTask = function() {
+  const input = document.getElementById("spCustomTaskInput");
+  const val = (input.value || "").trim();
+  if (!val) return;
+  if (!window.__spCustomTasks.includes(val)) {
+    window.__spCustomTasks.push(val);
+  }
+  input.value = "";
+  spRenderCustomTasks();
+};
+
+window.spRemoveCustomTask = function(task) {
+  window.__spCustomTasks = window.__spCustomTasks.filter(t => t !== task);
+  spRenderCustomTasks();
+};
+
+function spRenderCustomTasks() {
+  const container = document.getElementById("spCustomTasksList");
   if (!container) return;
-  container.innerHTML = STUDY_PLAN_DAYS.map((day, i) => `
-    <div class="p-3 rounded-2xl bg-[#07111D] border border-slate-800">
-      <label class="block text-xs font-black text-amber-300 mb-1.5">${day}</label>
-      <textarea data-day-index="${i}" rows="2" placeholder="اكتب هدفك في المذاكرة النهاردة..." class="w-full px-3 py-2 rounded-xl bg-[#0F1D2D] border border-slate-700 text-white text-xs placeholder:text-slate-500 focus:outline-none focus:border-cyan-400">${values[i] || ""}</textarea>
-    </div>
+  container.innerHTML = window.__spCustomTasks.map(task => `
+    <span class="inline-flex items-center gap-2 px-3 py-1.5 rounded-xl bg-amber-400/20 border border-amber-400/40 text-amber-300 text-[11px] font-bold">
+      ${task}
+      <button type="button" onclick="spRemoveCustomTask('${task.replace(/'/g, "\\'")}')" class="text-amber-300 hover:text-white">✕</button>
+    </span>
   `).join("");
 }
 
+function spRenderDurationButtons() {
+  const container = document.getElementById("spDurationButtons");
+  if (!container) return;
+  container.innerHTML = SP_DURATIONS.map(d => {
+    const isActive = !window.__spCustomDurationActive && window.__spSelectedDuration === d;
+    return `
+      <button type="button" onclick="spSelectDuration(${d})"
+        class="py-3 rounded-2xl text-xs font-black transition ${isActive ? 'bg-amber-400 text-slate-950 shadow-lg' : 'bg-[#07111D] border border-slate-700 text-slate-300 hover:border-amber-400/50'}">
+        ${d} ${d === 7 ? 'أيام' : (d === 14 ? 'يوم' : 'يومًا')}
+      </button>
+    `;
+  }).join("");
+}
+
+window.spSelectDuration = function(days) {
+  window.__spSelectedDuration = days;
+  window.__spCustomDurationActive = false;
+  const customInput = document.getElementById("spCustomDurationInput");
+  if (customInput) customInput.value = "";
+  spRenderDurationButtons();
+};
+
 window.openStudyPlan = async function() {
   if (!window.isUserLoggedIn || !window.authInstance?.currentUser) {
-    alert("🔒 يرجى تسجيل الدخول أولاً عشان تقدر تستخدم جدول المذاكرة.");
+    alert("🔒 يرجى تسجيل الدخول أولاً عشان تقدر تستخدم خطة المذاكرة.");
     return;
   }
-  renderStudyPlanDays([]);
+  window.__spSelectedTasks = new Set();
+  window.__spCustomTasks = [];
+  window.__spSelectedDuration = 7;
+  window.__spCustomDurationActive = false;
+
+  spRenderQuickTasks();
+  spRenderCustomTasks();
+  spRenderDurationButtons();
+
+  document.getElementById("studyPlanMsg").classList.add("hidden");
   document.getElementById("studyPlanModal").classList.remove("hidden");
+
   try {
     const { db, doc, getDoc } = window.__firestoreRefs;
     const user = window.authInstance.currentUser;
     const snap = await getDoc(doc(db, "studyPlans", user.uid));
     if (snap.exists()) {
-      renderStudyPlanDays(snap.data().days || []);
+      const data = snap.data();
+      const savedTasks = data.tasks || [];
+      const allQuickTasks = Object.values(SP_QUICK_TASKS).flat();
+      savedTasks.forEach(t => {
+        if (allQuickTasks.includes(t)) {
+          window.__spSelectedTasks.add(t);
+        } else {
+          window.__spCustomTasks.push(t);
+        }
+      });
+      if (data.durationDays) {
+        if (SP_DURATIONS.includes(data.durationDays)) {
+          window.__spSelectedDuration = data.durationDays;
+        } else {
+          window.__spCustomDurationActive = true;
+          const customInput = document.getElementById("spCustomDurationInput");
+          if (customInput) customInput.value = data.durationDays;
+        }
+      }
+      spRenderQuickTasks();
+      spRenderCustomTasks();
+      spRenderDurationButtons();
     }
   } catch (e) {
-    console.error("تعذر تحميل جدول المذاكرة:", e);
+    console.error("تعذر تحميل خطة المذاكرة:", e);
   }
 };
 
@@ -2911,19 +3054,34 @@ window.closeStudyPlan = function() {
 window.saveStudyPlan = async function() {
   const msgEl = document.getElementById("studyPlanMsg");
   const btn = document.getElementById("studyPlanSaveBtn");
-  const textareas = document.querySelectorAll("#studyPlanDays textarea[data-day-index]");
-  const days = STUDY_PLAN_DAYS.map((_, i) => {
-    const ta = document.querySelector(`#studyPlanDays textarea[data-day-index="${i}"]`);
-    return ta ? ta.value : "";
-  });
+
+  const allTasks = [...window.__spSelectedTasks, ...window.__spCustomTasks];
+  let duration = window.__spSelectedDuration;
+  const customInput = document.getElementById("spCustomDurationInput");
+  const customVal = parseInt((customInput?.value || "").trim(), 10);
+  if (customVal && customVal > 0) {
+    duration = customVal;
+  }
+
+  if (allTasks.length === 0) {
+    msgEl.textContent = "⚠️ اختار مهمة واحدة على الأقل قبل اعتماد الخطة";
+    msgEl.className = "text-center text-xs font-bold text-rose-400";
+    msgEl.classList.remove("hidden");
+    return;
+  }
 
   btn.disabled = true;
-  btn.textContent = "بيتحفظ...";
+  btn.textContent = "⏳ بيتحفظ...";
   try {
     const { db, doc, setDoc, serverTimestamp } = window.__firestoreRefs;
     const user = window.authInstance.currentUser;
-    await setDoc(doc(db, "studyPlans", user.uid), { days, updatedAt: serverTimestamp() }, { merge: true });
-    msgEl.textContent = "✅ اتحفظ جدولك بنجاح";
+    await setDoc(doc(db, "studyPlans", user.uid), {
+      tasks: allTasks,
+      durationDays: duration,
+      updatedAt: serverTimestamp()
+    }, { merge: true });
+
+    msgEl.textContent = "✅ تم اعتماد خطة المذاكرة بنجاح، بالتوفيق يا بطل!";
     msgEl.className = "text-center text-xs font-bold text-emerald-400";
     msgEl.classList.remove("hidden");
   } catch (e) {
@@ -2932,7 +3090,7 @@ window.saveStudyPlan = async function() {
     msgEl.classList.remove("hidden");
   } finally {
     btn.disabled = false;
-    btn.textContent = "💾 حفظ الجدول";
+    btn.textContent = "🚀 اعتماد وبدء خطة المذاكرة";
   }
 };
 
