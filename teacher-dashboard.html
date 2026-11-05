@@ -369,19 +369,9 @@ const ADMIN_EMAILS = [
   "khedr@physio.com"
 ];
 
-  // قائمة جميع الكورسات المتاحة في المنصة للتفعيل
+// قائمة الكورسات المتاحة في المنصة للتفعيل (Anatomy 1 فقط)
   const allCourses = [
-    { id: "c_medterm", title: "Medical Terminology (المصطلحات الطبية)" },
-    { id: "c_anat1", title: "Anatomy 1 (تشريح عام - فرقة 1)" },
-    { id: "c_phys1", title: "Physiology 1 (وظائف الأعضاء - فرقة 1)" },
-    { id: "c_hist1", title: "Histology 1 (علم الأنسجة - فرقة 1)" },
-    { id: "c_bioph1", title: "Biophysics 1 (الفيزياء الحيوية - فرقة 1)" },
-    { id: "c_anat3", title: "Anatomy 3 (تشريح تخصصي - فرقة 2)" },
-    { id: "c_biomech2", title: "Biomechanics 2 (ميكانيكا حيوية 2 - فرقة 2)" },
-    { id: "c_hydro", title: "Hydrotherapy (علاج مائي - فرقة 2)" },
-    { id: "c_electro", title: "Electrotherapy (علاج كهربائي - فرقة 2)" },
-    { id: "c_tests", title: "Tests & Measurements (تقييم وقياسات - فرقة 2)" },
-    { id: "c_neuro", title: "Neurophysiology (فسيولوجيا عصبية - فرقة 2)" }
+    { id: "c_anat1", title: "Anatomy 1 (تشريح عام - فرقة 1)" }
   ];
 
   let studentsList = [];
@@ -537,11 +527,7 @@ function renderModalCourses() {
   if (!currentEditingStudent) return;
   const enrolled = currentEditingStudent.enrolledCourses || [];
 
-const modalItems = [
-    { id: "pkg_y1s1", title: "📦 باقة الفرقة الأولى كاملة (4 مواد)" },
-    { id: "pkg_y2s1", title: "📦 باقة الفرقة الثانية كاملة (6 مواد)" },
-    ...allCourses
-  ];
+const modalItems = [...allCourses];
   document.getElementById("modalCoursesList").innerHTML = modalItems.map(crs => {
         const bundle = packageBundles[crs.id];
     const isEnrolled = bundle ? bundle.every(id => enrolled.includes(id)) : enrolled.includes(crs.id);
