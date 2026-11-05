@@ -289,35 +289,17 @@
 <script type="module">
 import { auth, db, onAuthStateChanged, signOut, doc, getDoc } from "./firebase-config.js";
   import { collection, getDocs, query, where } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-firestore.js";
-  // تعريف بيانات الكورسات لتطابق الـ ID
+// تعريف بيانات الكورسات لتطابق الـ ID (Anatomy 1 فقط)
   const allCoursesMeta = {
-    c_medterm: { title: "Medical Terminology — المصطلحات الطبية", icon: "📖", desc: "Prefixes, Roots, Suffixes & Clinical Terminology" },
-    c_anat1: { title: "Anatomy 1 — كورس التشريح العام", icon: "🩺", desc: "General Anatomy, Bones, Joints & Limb Anatomy" },
-    c_phys1: { title: "Physiology 1 — وظائف الأعضاء", icon: "🫀", desc: "Cell physiology, Homeostasis, Blood & CVS" },
-    c_hist1: { title: "Histology 1 — علم الأنسجة", icon: "🔬", desc: "Epithelial, Connective & Muscular Tissues" },
-    c_bioph1: { title: "Biophysics 1 — الفيزياء الحيوية", icon: "⚡", desc: "Biomechanics, Pressure, Sound & Electricity" },
-    c_anat3: { title: "Anatomy 3 — التشريح المتقدم", icon: "🧠", desc: "Head, Neck, Trunk & Neuroanatomy" },
-    c_biomech2: { title: "Biomechanics 2 — الميكانيكا الحيوية", icon: "🏃", desc: "Gait analysis, Spine & Joint kinematics" },
-    c_hydro: { title: "Hydrotherapy — العلاج المائي", icon: "🌊", desc: "Hydrodynamics, Buoyancy & Aquatic exercises" },
-    c_electro: { title: "Electrotherapy — العلاج الكهربائي", icon: "🔋", desc: "TENS, NMES, Ultrasound & Safety" },
-    c_tests: { title: "Tests & Measurements — التقييم والقياسات", icon: "📐", desc: "ROM, Goniometry & Manual Muscle Testing" },
-    c_neuro: { title: "Neurophysiology — الفسيولوجيا العصبية", icon: "⚡", desc: "Neuron Transmission, Reflexes & Motor Control" }
+    c_anat1: { title: "Anatomy 1 — كورس التشريح العام", icon: "🩺", desc: "General Anatomy, Bones, Joints & Limb Anatomy" }
   };
 
-
-
-    // محطات الـ OSCE السريرية مصنفة بالكورس
-    const osceDB = {
-      c_anat1: [
-        { title: "محطة: تحديد عظام ومعالم الطرف العلوي (Upper Limb Bony Landmarks)", time: "4 دقائق", steps: ["تحديد عظم الـ Clavicle والـ Scapula", "فحص الـ Greater Tubercle لعظم العضد", "تحديد الـ Medial & Lateral Epicondyles"] }
-      ],
-      c_biomech2: [
-        { title: "محطة: فحص أربطة الركبة (Lachman & Anterior Drawer Test)", time: "5 دقائق", steps: ["شرح الإجراء للمريض وأخذ الموافقة", "وضع المريض في وضع الاستلقاء مع ثني الركبة 20-30 درجة", "تثبيت عظم الفخذ وسحب القصبة للأمام لتقييم الـ ACL وملاحظة الـ End-feel"] }
-      ],
-      c_tests: [
-        { title: "محطة: قياس المدى الحركي لمفصل الكتف (Shoulder Goniometry)", time: "4 دقائق", steps: ["تحديد المحور (Fulcrum) عند الـ Acromion", "محاذاة الذراع الثابت مع الخط الموازي للعمود الفقري", "محاذاة الذراع المتحرك وتسجيل القراءة بالدرجات (0 - 180°)"] }
-      ]
-    };
+  // محطات الـ OSCE السريرية (Anatomy 1 فقط)
+  const osceDB = {
+    c_anat1: [
+      { title: "محطة: تحديد عظام ومعالم الطرف العلوي (Upper Limb Bony Landmarks)", time: "4 دقائق", steps: ["تحديد عظم الـ Clavicle والـ Scapula", "فحص الـ Greater Tubercle لعظم العضد", "تحديد الـ Medial & Lateral Epicondyles"] }
+    ]
+  };
 
   let activeStudentGlossary = [];
 
@@ -351,8 +333,8 @@ import { auth, db, onAuthStateChanged, signOut, doc, getDoc } from "./firebase-c
         return;
       }
 
-      const data = snap.data();
-      const enrolledCourses = data.enrolledCourses || [];
+const data = snap.data();
+      const enrolledCourses = (data.enrolledCourses || []).filter(id => id === "c_anat1");
 
       // 🛑 منع غير المشتركين من الدخول وتوجيههم لصفحة الكورسات
       if (enrolledCourses.length === 0) {
