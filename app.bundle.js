@@ -1348,12 +1348,8 @@ try {
           if (yearsSec) yearsSec.classList.add("hidden");
           if (filterBar) filterBar.classList.add("hidden");
 
-          // 2. إظهار مقررات الفرقة المسجل بها الطالب تلقائياً (y1 أو y2)
-          if (userYear === "y2") {
-            filterCourses("y2");
-          } else {
-            filterCourses("y1");
-          }
+// 2. إظهار كورس Anatomy 1 لجميع الطلاب المسجلين
+          filterCourses("all");
 
           if (window.currentItemData && enrolledCourses.includes(window.currentItemData.id)) {
             window.currentItemData.isEnrolled = true;
