@@ -743,12 +743,40 @@ window.renderDynamicLessonsAccordion = function(lessonsList) {
                     </button>
 
 <iframe id="iframe_${index}" class="w-full h-full border-0 pointer-events-auto" src="" controlslist="nodownload" oncontextmenu="return false;" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-               <video id="video_${index}" class="hidden w-full h-full" controls controlsList="nodownload nofullscreen noplaybackrate noremoteplayback" disablePictureInPicture disableRemotePlayback playsinline oncontextmenu="return false;"></video>
+<video id="video_${index}" class="hidden w-full h-full" controls controlsList="nodownload nofullscreen noremoteplayback" disablePictureInPicture disableRemotePlayback playsinline oncontextmenu="return false;"></video>
 </div>
 
-                  <!-- زر إغلاق الفيديو بجانبه -->
-                  <div class="flex justify-end max-w-2xl mx-auto">
-                    <button onclick="closeInlineVideo('${index}')" class="text-[11px] font-bold text-rose-400 hover:text-white px-3 py-1.5 rounded-xl bg-slate-800 border border-slate-700 transition">
+                  <!-- شريط إعدادات الفيديو (السرعة، الجودة، والإغلاق) -->
+                  <div class="flex flex-wrap items-center justify-between gap-2 max-w-2xl mx-auto p-2.5 rounded-xl bg-[#0F1D2D] border border-slate-800">
+                    <div class="flex items-center gap-3">
+                      <!-- اختيار السرعة -->
+                      <div class="flex items-center gap-1.5">
+                        <span class="text-[10px] text-amber-400 font-bold">⚡ السرعة:</span>
+                        <select onchange="changeVideoSpeed('${index}', this.value)" class="bg-[#07111D] border border-slate-700 text-white text-[11px] rounded-lg px-2 py-1 outline-none focus:border-brand cursor-pointer">
+                          <option value="0.75">0.75x</option>
+                          <option value="1" selected>1.0x (عادي)</option>
+                          <option value="1.25">1.25x</option>
+                          <option value="1.5">1.5x</option>
+                          <option value="1.75">1.75x</option>
+                          <option value="2">2.0x</option>
+                        </select>
+                      </div>
+
+                      <!-- اختيار الجودة -->
+                      <div class="flex items-center gap-1.5">
+                        <span class="text-[10px] text-cyan-400 font-bold">🎬 الجودة:</span>
+                        <select onchange="changeVideoQuality('${index}', this.value)" class="bg-[#07111D] border border-slate-700 text-white text-[11px] rounded-lg px-2 py-1 outline-none focus:border-brand cursor-pointer">
+                          <option value="auto" selected>تلقائي (Auto)</option>
+                          <option value="1080">1080p FHD</option>
+                          <option value="720">720p HD</option>
+                          <option value="480">480p SD</option>
+                          <option value="360">360p توفير البيانات</option>
+                        </select>
+                      </div>
+                    </div>
+
+                    <!-- زر الإغلاق -->
+                    <button type="button" onclick="closeInlineVideo('${index}')" class="text-[11px] font-bold text-rose-400 hover:text-white px-3 py-1 rounded-lg bg-slate-800 border border-slate-700 transition cursor-pointer">
                       إغلاق الفيديو ✕
                     </button>
                   </div>
@@ -852,6 +880,44 @@ if (isDirect && vid) {
   startInlineWatermark(index);
 };
 
+// تغيير سرعة التشغيل
+window.changeVideoSpeed = function(index, speed) {
+  const vid = document.getElementById(`video_${index}`);
+  if (vid) vid.playbackRate = parseFloat(speed);
+};
+
+// تغيير دقة الفيديو بدون إيقاف المشاهدة أو إعادة من الأول
+window.changeVideoQuality = function(index, quality) {
+  const vid = document.getElementById(`video_${index}`);
+  if (!vid || !vid.src) return;
+
+  const currentTime = vid.currentTime;
+  const isPaused = vid.paused;
+  let url = vid.src;
+
+  // دعم تغيير الدقة لسيرفر Cloudinary
+  if (url.includes("res.cloudinary.com")) {
+    url = url.replace(/\/upload\/(?:[a-zA-Z0-9_,:]+\/)?/, "/upload/");
+
+    let transform = "";
+    if (quality === "1080") transform = "q_auto,w_1920/";
+    else if (quality === "720") transform = "q_auto,w_1280/";
+    else if (quality === "480") transform = "q_auto,w_854/";
+    else if (quality === "360") transform = "q_auto,w_640/";
+
+    if (transform) {
+      url = url.replace("/upload/", `/upload/${transform}`);
+    }
+  }
+
+  vid.src = url;
+  vid.onloadedmetadata = function() {
+    vid.currentTime = currentTime;
+    if (!isPaused) vid.play().catch(() => {});
+    vid.onloadedmetadata = null;
+  };
+};
+
 // إغلاق الفيديو المدمج
 window.closeInlineVideo = function(index) {
   const playerBox = document.getElementById(`inline_player_${index}`);
@@ -859,7 +925,12 @@ window.closeInlineVideo = function(index) {
   
   if (iframe) iframe.src = "";
   const vid = document.getElementById(`video_${index}`);
-if (vid) { vid.pause(); vid.removeAttribute("src"); vid.load(); }
+  if (vid) { 
+    vid.pause(); 
+    vid.playbackRate = 1; 
+    vid.removeAttribute("src"); 
+    vid.load(); 
+  }
   if (playerBox) playerBox.classList.add("hidden");
   stopInlineWatermark(index);
   if (currentActiveInlinePlayer === index) currentActiveInlinePlayer = null;
