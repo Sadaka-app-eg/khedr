@@ -326,58 +326,6 @@ window.addEventListener('scroll', () => {
   if (bar) bar.style.width = scrolled + '%';
 });
 window.catalogData = {
-  c_medterm: {
-    id: "c_medterm",
-    type: "single",
-    year: "all",
-    code: { ar: "عام", en: "Gen" },
-    category: { ar: "متاح لجميع الفرق • أساسيات طبية", en: "All Years • Medical Basics" },
-    title: { ar: "Medical Terminology — كورس المصطلحات الطبية", en: "Medical Terminology Course" },
-    desc: { ar: "تعلم أصول المصطلحات الطبية (Prefix, Root, Suffix) مع تطبيقات سريرية.", en: "Master medical roots, prefixes, suffixes & clinical medical jargon." },
-    badge: { ar: "متاح للجميع 🎓", en: "Available for All 🎓" },
-    price: "399",
-    oldPrice: "550.00",
-    img: "image/med_term.png",
-    lessons: []
-  },
-  pkg_y1s1: {
-    id: "pkg_y1s1",
-    type: "package",
-    year: "y1",
-    category: { ar: "الفرقة الأولى • ترم أول كامل", en: "Year 1 • Full Semester 1" },
-    title: { ar: "باقة الفرقة الأولى (الترم الأول كامل - 4 مواد)", en: "Year 1 Full Bundle (4 Specialized Courses)" },
-    sub: { ar: "تشمل Anatomy 1, Physiology 1, Histology 1, Biophysics 1 بالكامل مع ورش العملي وبنك الأسئلة.", en: "Complete bundle including Anatomy, Physiology, Histology & Biophysics with OSCE workshops." },
-    badge: { ar: "وفر 400 ج 🔥", en: "Save 400 EGP 🔥" },
-    price: "1,499",
-    oldPrice: "1,899.00",
-    img: "image/pkg_y1s1.png",
-    courses: [
-      { name: "Anatomy 1 (تشريح عام وأطراف)", desc: "Terminology, Bones, Muscles & Limb Anatomy", id: "c_anat1" },
-      { name: "Physiology 1 (وظائف الأعضاء)", desc: "Cell, Homeostasis, Blood & CVS", id: "c_phys1" },
-      { name: "Histology 1 (علم الأنسجة)", desc: "Epithelial, Connective & Muscle Tissues", id: "c_hist1" },
-      { name: "Biophysics 1 (الفيزياء الحيوية)", desc: "Mechanics, Heat, Sound & Electricity", id: "c_bioph1" }
-    ]
-  },
-  pkg_y2s1: {
-    id: "pkg_y2s1",
-    type: "package",
-    year: "y2",
-    category: { ar: "الفرقة الثانية • ترم أول كامل", en: "Year 2 • Full Semester 1" },
-    title: { ar: "باقة الفرقة الثانية (الترم الأول كامل - 6 مواد)", en: "Year 2 Full Bundle (6 Specialized Courses)" },
-    sub: { ar: "تشمل Anatomy 3, Biomechanics 2, Hydrotherapy, Electrotherapy, Tests & Measurements, Neurophysiology.", en: "Includes Anatomy 3, Biomechanics 2, Hydro, Electro, Tests & Neurophysiology." },
-    badge: { ar: "وفر 895 ج 🔥", en: "Save 895 EGP 🔥" },
-    price: "2,499",
-    oldPrice: "3,394.00",
-    img: "image/pkg_y2s1.png",
-    courses: [
-      { name: "Anatomy 3 (تشريح تخصصي)", desc: "Head, Neck, Trunk & Nervous System", id: "c_anat3" },
-      { name: "Biomechanics 2 (ميكانيكا حيوية)", desc: "Upper/Lower Limb, Spine & Gait", id: "c_biomech2" },
-      { name: "Hydrotherapy (علاج مائي)", desc: "Buoyancy & Hydrodynamics", id: "c_hydro" },
-      { name: "Electrotherapy (علاج كهربائي)", desc: "TENS, NMES, Ultrasound & Safety", id: "c_electro" },
-      { name: "Tests & Measurements (تقييم وقياسات)", desc: "ROM, Goniometry & MMT", id: "c_tests" },
-      { name: "Neurophysiology (فسيولوجيا عصبية)", desc: "Synapse, Reflexes & Motor Control", id: "c_neuro" }
-    ]
-  },
   c_anat1: {
     id: "c_anat1",
     type: "single",
@@ -386,126 +334,9 @@ window.catalogData = {
     category: { ar: "الفرقة الأولى • ترم أول", en: "Year 1 • Term 1" },
     title: { ar: "Anatomy 1 — كورس التشريح العام", en: "Anatomy 1 — General Anatomy Course" },
     desc: { ar: "دراسة شاملة لـ Anatomical position, Planes, Bones, Joints, Muscles, Upper & Lower limbs.", en: "Comprehensive study of Anatomical Planes, Bones, Joints, Muscular System & Extremities." },
-    price: "599",
+    price: "499",
     oldPrice: "750.00",
     img: "image/anatomy1.png",
-    lessons: []
-  },
-  c_phys1: {
-    id: "c_phys1",
-    type: "single",
-    year: "y1",
-    code: { ar: "1ع", en: "Y1" },
-    category: { ar: "الفرقة الأولى • ترم أول", en: "Year 1 • Term 1" },
-    title: { ar: "Physiology 1 — وظائف الأعضاء", en: "Physiology 1 — General Physiology" },
-    desc: { ar: "تغطية شاملة لـ Cell physiology, Homeostasis, Blood, CVS, Respiratory system.", en: "Full coverage of Cell physiology, Homeostasis, Blood & Cardiovascular system." },
-    price: "499",
-    oldPrice: "599.00",
-    img: "image/physiology1.png",
-    lessons: []
-  },
-  c_hist1: {
-    id: "c_hist1",
-    type: "single",
-    year: "y1",
-    code: { ar: "1ع", en: "Y1" },
-    category: { ar: "الفرقة الأولى • ترم أول", en: "Year 1 • Term 1" },
-    title: { ar: "Histology 1 — علم الأنسجة", en: "Histology 1 — General Histology" },
-    desc: { ar: "دراسة Cell structure, Epithelial tissue, Connective tissue, Muscle tissue.", en: "Study of Cell structure, Epithelial tissue, Connective tissue & Muscular tissue." },
-    price: "399",
-    oldPrice: "550.00",
-    img: "image/histology1.png",
-    lessons: []
-  },
-  c_bioph1: {
-    id: "c_bioph1",
-    type: "single",
-    year: "y1",
-    code: { ar: "1ع", en: "Y1" },
-    category: { ar: "الفرقة الأولى • ترم أول", en: "Year 1 • Term 1" },
-    title: { ar: "Biophysics 1 — الفيزياء الحيوية", en: "Biophysics 1 — Medical Biophysics" },
-    desc: { ar: "تطبيقات Mechanics, Pressure, Heat, Light, Sound في العلاج الطبيعي.", en: "Applications of Mechanics, Heat, Light & Electricity in Physical Therapy." },
-    price: "399",
-    oldPrice: "550.00",
-    img: "image/biophysics1.png",
-    lessons: []
-  },
-  c_anat3: {
-    id: "c_anat3",
-    type: "single",
-    year: "y2",
-    code: { ar: "2ع", en: "Y2" },
-    category: { ar: "الفرقة الثانية • ترم أول", en: "Year 2 • Term 1" },
-    title: { ar: "Anatomy 3 — التشريح المتقدم", en: "Anatomy 3 — Advanced Regional Anatomy" },
-    desc: { ar: "تشريح Head & neck, Trunk, Nervous system, Major nerves & vessels.", en: "Detailed anatomy of Head, Neck, Trunk & Neuroanatomy." },
-    price: "599",
-    oldPrice: "650.00",
-    img: "image/anatomy3.png",
-    lessons: []
-  },
-  c_biomech2: {
-    id: "c_biomech2",
-    type: "single",
-    year: "y2",
-    code: { ar: "2ع", en: "Y2" },
-    category: { ar: "الفرقة الثانية • ترم أول", en: "Year 2 • Term 1" },
-    title: { ar: "Biomechanics 2 — الميكانيكا الحيوية 2", en: "Biomechanics 2 — Advanced Kinesiology" },
-    desc: { ar: "تحليل مفاصل Shoulder, Elbow, Wrist, Hip, Knee, Ankle, Spine, Gait.", en: "Kinematic and kinetic analysis of Peripheral Joints, Spine & Gait Cycle." },
-    price: "599",
-    oldPrice: "750.00",
-    img: "image/biomechanics2.png",
-    lessons: []
-  },
-  c_hydro: {
-    id: "c_hydro",
-    type: "single",
-    year: "y2",
-    code: { ar: "2ع", en: "Y2" },
-    category: { ar: "الفرقة الثانية • ترم أول", en: "Year 2 • Term 1" },
-    title: { ar: "Hydrotherapy — العلاج المائي", en: "Hydrotherapy — Aquatic Physical Therapy" },
-    desc: { ar: "دراسة Buoyancy, Hydrostatic pressure, Hydrodynamics, Exercises.", en: "Hydrodynamics, buoyancy, aquatic techniques & therapeutic pools." },
-    price: "499",
-    oldPrice: "600.00",
-    img: "image/hydrotherapy.png",
-    lessons: []
-  },
-  c_electro: {
-    id: "c_electro",
-    type: "single",
-    year: "y2",
-    code: { ar: "2ع", en: "Y2" },
-    category: { ar: "الفرقة الثانية • ترم أول", en: "Year 2 • Term 1" },
-    title: { ar: "Electrotherapy — العلاج الكهربائي", en: "Electrotherapy — Clinical Modalities" },
-    desc: { ar: "أجهزة TENS, NMES, Ultrasound, Parameters & Safety.", en: "TENS, NMES, Ultrasound parameters, indications and safety protocols." },
-    price: "399",
-    oldPrice: "500.00",
-    img: "image/electrotherapy.png",
-    lessons: []
-  },
-  c_tests: {
-    id: "c_tests",
-    type: "single",
-    year: "y2",
-    code: { ar: "2ع", en: "Y2" },
-    category: { ar: "الفرقة الثانية • ترم أول", en: "Year 2 • Term 1" },
-    title: { ar: "Tests & Measurements — التقييم والقياسات", en: "Tests & Measurements — Physical Assessment" },
-    desc: { ar: "تطبيقات ROM, Goniometry, MMT, Anthropometry, Functional tests.", en: "Clinical assessment of ROM, Goniometry, MMT and functional tests." },
-    price: "599",
-    oldPrice: "650.00",
-    img: "image/tests_measurements.png",
-    lessons: []
-  },
-  c_neuro: {
-    id: "c_neuro",
-    type: "single",
-    year: "y2",
-    code: { ar: "2ع", en: "Y2" },
-    category: { ar: "الفرقة الثانية • ترم أول", en: "Year 2 • Term 1" },
-    title: { ar: "Neurophysiology — الفسيولوجيا العصبية", en: "Neurophysiology — Clinical Neurophysiology" },
-    desc: { ar: "دراسة Neuron, Synapse, Sensory & Motor systems, Reflexes.", en: "Action potentials, neuromuscular transmission, motor pathways & reflexes." },
-    price: "499",
-    oldPrice: "650.00",
-    img: "image/neurophysiology.png",
     lessons: []
   }
 };
@@ -1517,13 +1348,8 @@ try {
           if (yearsSec) yearsSec.classList.add("hidden");
           if (filterBar) filterBar.classList.add("hidden");
 
-          // 2. إظهار مقررات الفرقة المسجل بها الطالب تلقائياً (y1 أو y2)
-          if (userYear === "y2") {
-            filterCourses("y2");
-          } else {
-            filterCourses("y1");
-          }
-
+// 2. إظهار كورس Anatomy 1 لجميع الطلاب المسجلين
+          filterCourses("all");
           if (window.currentItemData && enrolledCourses.includes(window.currentItemData.id)) {
             window.currentItemData.isEnrolled = true;
           }
