@@ -1,4 +1,4 @@
-let currentLang = "ar";
+ let currentLang = "ar";
 const translations = {
   ar: {
     brand: "KHEDR & PHYSIO",
