@@ -727,32 +727,38 @@ window.renderDynamicLessonsAccordion = function(lessonsList) {
                   </button>
                 </div>
 
-                <!-- حاوية الفيديو المدمجة الملمومة تحت الزر مباشرة -->
+<!-- حاوية الفيديو المدمجة (مكبرة وتدعم التدوير وقائمة الـ 3 نقط) -->
                 <div id="inline_player_${index}" class="hidden pt-2 space-y-2 border-t border-slate-800/80">
-                  <div id="videoContainer_${index}" class="w-full max-w-2xl mx-auto rounded-2xl overflow-hidden bg-black border border-slate-700 aspect-video relative flex items-center justify-center shadow-xl">
+                  <div id="videoContainer_${index}" class="w-full max-w-3xl mx-auto rounded-2xl overflow-hidden bg-black border border-slate-700 aspect-[16/10] sm:aspect-video min-h-[240px] sm:min-h-[360px] relative flex items-center justify-center shadow-2xl">
                     
                     <!-- العلامة المائية للطالب -->
                     <div id="watermark_${index}" class="hidden absolute z-30 pointer-events-none text-slate-300/40 font-bold text-xs md:text-sm tracking-wide transition-all duration-1000 select-none">
                       <span class="wm-text"></span>
                     </div>
 
-                    <!-- زر التكبير الذكي -->
-                    <button type="button" onclick="toggleCustomFullscreen('videoContainer_${index}')" class="absolute top-3 end-3 z-40 bg-black/70 hover:bg-black/90 text-white p-2 rounded-xl border border-white/20 text-xs font-bold transition flex items-center gap-1 cursor-pointer">
-                      <span>⛶</span>
-                      <span class="text-[10px]">ملء الشاشة</span>
-                    </button>
+                    <!-- أزرار التحكم العلوية: تدوير + ملء الشاشة + قائمة الـ 3 نقط -->
+                    <div class="absolute top-2.5 end-2.5 z-40 flex items-center gap-1.5">
+                      <!-- 1. زر التدوير بالعرض -->
+                      <button type="button" onclick="toggleRotateVideo('${index}')" title="تدوير الشاشة بالعرض" class="w-8 h-8 rounded-xl bg-black/75 hover:bg-black/95 text-white border border-white/20 text-xs font-bold transition flex items-center justify-center active:scale-95 cursor-pointer">
+                        🔄
+                      </button>
 
-<iframe id="iframe_${index}" class="w-full h-full border-0 pointer-events-auto" src="" controlslist="nodownload" oncontextmenu="return false;" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-<video id="video_${index}" class="hidden w-full h-full" controls controlsList="nodownload nofullscreen noremoteplayback" disablePictureInPicture disableRemotePlayback playsinline oncontextmenu="return false;"></video>
-</div>
+                      <!-- 2. زر المربع فقط بدون نصوص -->
+                      <button type="button" onclick="toggleCustomFullscreen('videoContainer_${index}')" title="ملء الشاشة" class="w-8 h-8 rounded-xl bg-black/75 hover:bg-black/95 text-white border border-white/20 text-xs font-bold transition flex items-center justify-center active:scale-95 cursor-pointer">
+                        ⛶
+                      </button>
 
-                  <!-- شريط إعدادات الفيديو (السرعة، الجودة، والإغلاق) -->
-                  <div class="flex flex-wrap items-center justify-between gap-2 max-w-2xl mx-auto p-2.5 rounded-xl bg-[#0F1D2D] border border-slate-800">
-                    <div class="flex items-center gap-3">
-                      <!-- اختيار السرعة -->
-                      <div class="flex items-center gap-1.5">
-                        <span class="text-[10px] text-amber-400 font-bold">⚡ السرعة:</span>
-                        <select onchange="changeVideoSpeed('${index}', this.value)" class="bg-[#07111D] border border-slate-700 text-white text-[11px] rounded-lg px-2 py-1 outline-none focus:border-brand cursor-pointer">
+                      <!-- 3. زر الـ 3 نقط للإعدادات -->
+                      <button type="button" onclick="toggleVideoSettingsMenu('${index}')" title="الإعدادات" class="w-8 h-8 rounded-xl bg-black/75 hover:bg-black/95 text-amber-300 border border-white/20 text-sm font-black transition flex items-center justify-center active:scale-95 cursor-pointer">
+                        ⋮
+                      </button>
+                    </div>
+
+                    <!-- قائمة الإعدادات المنسدلة من الـ 3 نقط -->
+                    <div id="settingsMenu_${index}" class="hidden absolute top-12 end-2.5 z-50 p-3 rounded-2xl bg-[#0F1D2D]/95 backdrop-blur-md border border-slate-700 shadow-2xl space-y-2.5 text-xs text-white min-w-[175px]">
+                      <div class="flex items-center justify-between gap-2">
+                        <span class="text-amber-400 font-bold text-[10px]">⚡ السرعة:</span>
+                        <select onchange="changeVideoSpeed('${index}', this.value); toggleVideoSettingsMenu('${index}');" class="bg-[#07111D] border border-slate-700 text-white text-[11px] rounded-lg px-2 py-1 outline-none cursor-pointer">
                           <option value="0.75">0.75x</option>
                           <option value="1" selected>1.0x (عادي)</option>
                           <option value="1.25">1.25x</option>
@@ -761,25 +767,29 @@ window.renderDynamicLessonsAccordion = function(lessonsList) {
                           <option value="2">2.0x</option>
                         </select>
                       </div>
-
-                      <!-- اختيار الجودة -->
-                      <div class="flex items-center gap-1.5">
-                        <span class="text-[10px] text-cyan-400 font-bold">🎬 الجودة:</span>
-                        <select onchange="changeVideoQuality('${index}', this.value)" class="bg-[#07111D] border border-slate-700 text-white text-[11px] rounded-lg px-2 py-1 outline-none focus:border-brand cursor-pointer">
-                          <option value="auto" selected>تلقائي (Auto)</option>
-                          <option value="1080">1080p FHD</option>
-                          <option value="720">720p HD</option>
-                          <option value="480">480p SD</option>
-                          <option value="360">360p توفير البيانات</option>
+                      <div class="flex items-center justify-between gap-2 border-t border-slate-800 pt-2">
+                        <span class="text-cyan-400 font-bold text-[10px]">🎬 الجودة:</span>
+                        <select onchange="changeVideoQuality('${index}', this.value); toggleVideoSettingsMenu('${index}');" class="bg-[#07111D] border border-slate-700 text-white text-[11px] rounded-lg px-2 py-1 outline-none cursor-pointer">
+                          <option value="auto" selected>Auto</option>
+                          <option value="1080">1080p</option>
+                          <option value="720">720p</option>
+                          <option value="480">480p</option>
+                          <option value="360">360p</option>
                         </select>
                       </div>
                     </div>
 
-                    <!-- زر الإغلاق -->
-                    <button type="button" onclick="closeInlineVideo('${index}')" class="text-[11px] font-bold text-rose-400 hover:text-white px-3 py-1 rounded-lg bg-slate-800 border border-slate-700 transition cursor-pointer">
+                    <iframe id="iframe_${index}" class="w-full h-full border-0 pointer-events-auto" src="" controlslist="nodownload" oncontextmenu="return false;" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    <video id="video_${index}" class="hidden w-full h-full object-contain" controls controlsList="nodownload nofullscreen" disablePictureInPicture playsinline oncontextmenu="return false;"></video>
+                  </div>
+
+                  <!-- زر إغلاق الفيديو في الأسفل -->
+                  <div class="flex justify-end max-w-3xl mx-auto pt-1">
+                    <button onclick="closeInlineVideo('${index}')" class="text-[11px] font-bold text-rose-400 hover:text-white px-3.5 py-1.5 rounded-xl bg-slate-800 border border-slate-700 transition cursor-pointer">
                       إغلاق الفيديو ✕
                     </button>
                   </div>
+                </div>
                 </div>
               </div>
             ` : ''}
@@ -896,6 +906,81 @@ window.changeVideoQuality = function(index, quality) {
   let url = vid.src;
 
   // دعم تغيير الدقة لسيرفر Cloudinary
+  if (url.includes("res.cloudinary.com")) {
+    url = url.replace(/\/upload\/(?:[a-zA-Z0-9_,:]+\/)?/, "/upload/");
+
+    let transform = "";
+    if (quality === "1080") transform = "q_auto,w_1920/";
+    else if (quality === "720") transform = "q_auto,w_1280/";
+    else if (quality === "480") transform = "q_auto,w_854/";
+    else if (quality === "360") transform = "q_auto,w_640/";
+
+    if (transform) {
+      url = url.replace("/upload/", `/upload/${transform}`);
+    }
+  }
+
+  vid.src = url;
+  vid.onloadedmetadata = function() {
+    vid.currentTime = currentTime;
+    if (!isPaused) vid.play().catch(() => {});
+    vid.onloadedmetadata = null;
+  };
+};
+
+// فتح وإغلاق قائمة الـ 3 نقط
+window.toggleVideoSettingsMenu = function(index) {
+  const menu = document.getElementById(`settingsMenu_${index}`);
+  if (menu) menu.classList.toggle("hidden");
+};
+
+// تدوير الفيديو لوضع العرض (Landscape) على الموبايل
+window.toggleRotateVideo = async function(index) {
+  const container = document.getElementById(`videoContainer_${index}`);
+  const vid = document.getElementById(`video_${index}`);
+  if (!container) return;
+
+  // 1. الدخول في وضع ملء الشاشة أولاً
+  if (!document.fullscreenElement && !document.webkitFullscreenElement) {
+    if (container.requestFullscreen) {
+      await container.requestFullscreen().catch(() => {});
+    } else if (container.webkitRequestFullscreen) {
+      await container.webkitRequestFullscreen().catch(() => {});
+    } else if (vid && vid.webkitEnterFullscreen) {
+      vid.webkitEnterFullscreen();
+      return;
+    }
+  }
+
+  // 2. قفل الشاشة بالعرض
+  if (screen.orientation && screen.orientation.lock) {
+    try {
+      if (screen.orientation.type.includes("portrait")) {
+        await screen.orientation.lock("landscape");
+      } else {
+        await screen.orientation.lock("portrait");
+      }
+    } catch (err) {
+      console.log("Screen orientation lock:", err);
+    }
+  }
+};
+
+// تغيير سرعة التشغيل
+window.changeVideoSpeed = function(index, speed) {
+  const vid = document.getElementById(`video_${index}`);
+  if (vid) vid.playbackRate = parseFloat(speed);
+};
+
+// تغيير جودة الفيديو بدون إعادة التشغيل من البداية
+window.changeVideoQuality = function(index, quality) {
+  const vid = document.getElementById(`video_${index}`);
+  if (!vid || !vid.src) return;
+
+  const currentTime = vid.currentTime;
+  const isPaused = vid.paused;
+  let url = vid.src;
+
   if (url.includes("res.cloudinary.com")) {
     url = url.replace(/\/upload\/(?:[a-zA-Z0-9_,:]+\/)?/, "/upload/");
 
